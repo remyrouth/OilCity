@@ -14,4 +14,19 @@ public class SettingsManager : Singleton<SettingsManager>
             lbo.UpdateText();
     }
 
+    public void SetLanguage(int languageIndex)
+    {
+        CurrentLanguage = languageIndex switch
+        {
+            0 => Language.English,
+            1 => CurrentLanguage = Language.Polish,
+            _ => Language.English
+        };
+        
+        var languageBasedObjects = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+            .OfType<ILanguageChangeable>();
+        foreach (var lbo in languageBasedObjects)
+            lbo.UpdateText();
+    }
+    
 }
