@@ -1,5 +1,4 @@
-using System;
-
+using UnityEngine;
 public sealed class GeologistController : AOEBuildingController
 {
     public override int TickNumberInterval => 1;
@@ -8,6 +7,6 @@ public sealed class GeologistController : AOEBuildingController
 
     protected override void InvokeAction()
     {
-        throw new NotImplementedException();
+        Debug.Log("Searching for oil...");
     }
 }

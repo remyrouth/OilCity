@@ -1,3 +1,4 @@
+using UnityEngine;
 public sealed class WoodCutterController : AOEBuildingController
 {
     public override int TickNumberInterval => 1;
@@ -6,7 +7,6 @@ public sealed class WoodCutterController : AOEBuildingController
 
     protected override void InvokeAction()
     {
-        //destroy a tree
-        throw new System.NotImplementedException();
+        Debug.Log("Destroying random tree...");
     }
 }
