@@ -12,7 +12,7 @@ public class OilTileMapController : OilMapController
             _oilTileMap = GetComponent<Tilemap>();
         try
         {
-            return _oilTileMap.GetColor(new Vector3Int(x, y)).g / 255;
+            return _oilTileMap.GetColor(new Vector3Int(x, y)).g;
         } catch (Exception)
         {
             return 0;
