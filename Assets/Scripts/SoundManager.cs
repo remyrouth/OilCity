@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     [Header("Music SoundTrackList")]
+    public List<MusicTrack> MusicTrackList = new List<MusicTrack>();
+    private int currentTrackIndex = 0;
+
 
 
     private Camera mainCamera;
@@ -14,16 +18,32 @@ public class SoundManager : MonoBehaviour
 
     private void Start() {
         mainCamera = Camera.main;
+        Invoke("StartMusicTrack", 0f);
     }
     private void Update() {
         UpdateSoundVolumes();
         DeleteExcessSoundClasses();
     }
 
+    private void StartMusicTrack() {
+        AudioClip soundClip = MusicTrackList[currentTrackIndex].musicClip;
+        AudioSource audioSource = mainCamera.gameObject.AddComponent<AudioSource>();
+        float volume = MusicTrackList[currentTrackIndex].musicVolume;
+        SoundClass newSoundClass = new SoundClass(mainCamera.gameObject, false, soundClip.length, audioSource, volume);
+        soundClassList.Add(newSoundClass);
+
+        currentTrackIndex++;
+        if (currentTrackIndex > MusicTrackList.Count - 1) {
+            currentTrackIndex = 0;
+        }
+        Invoke("StartMusicTrack", soundClip.length);
+    }
+
     public void AddSound(GameObject sourceObject, AudioClip soundClip,  bool shouldLoop, float soundVolume) {
         AudioSource audioSource = mainCamera.gameObject.AddComponent<AudioSource>();
         audioSource.clip = soundClip;
         SoundClass newSoundClass = new SoundClass(sourceObject, shouldLoop, soundClip.length, audioSource, soundVolume);
+        soundClassList.Add(newSoundClass);
     }
 
     private void UpdateSoundVolumes() {
@@ -35,7 +55,8 @@ public class SoundManager : MonoBehaviour
     private void DeleteExcessSoundClasses() {
         List<SoundClass> deletionList = new List<SoundClass>();
 
-        // lowers the count down timer on each class
+        // lowers the count down timer on each class,
+        // collects invalid classes
         foreach (SoundClass soundclass in soundClassList) {
             if (!soundclass.ThisClassLoops()) {
                 soundclass.ContinueDeletionCountDown(Time.deltaTime);
@@ -45,15 +66,22 @@ public class SoundManager : MonoBehaviour
             }
         }
 
+        // finally deletes invalid classes
         foreach(SoundClass invalidSoundClass in deletionList) {
             invalidSoundClass.KillClass();
             soundClassList.Remove(invalidSoundClass);
         }
     }
 
+    // Simply a data storage 
+    [Serializable]
+    public class MusicTrack {
+        public AudioClip musicClip;
+        public float musicVolume;
+    }
 
-    // class 
-
+    // Used to keep track of sounds, and change 
+    // their behavior based on said info
     class SoundClass {
         private GameObject referenceObject;
         private AudioClip audioClip;
