@@ -8,13 +8,13 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
     public float AmountStored { get; private set; }
     public FlowType TypeStored { get; private set; }
 
-    public List<IFlowable> GetInputChildren() => null;
-    public void OnTick() { }
+    private IFlowable m_output;
+    private List<IFlowable> m_inputs;
 
     public (FlowType type, float amount) SendFlow()
     {
         float liquidSum = 0;
-        foreach (var child in GetInputChildren())
+        foreach (var child in m_inputs)
         {
             var received = child.SendFlow();
             if (received.amount == 0)
@@ -38,5 +38,46 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
         }
         AmountStored -= liquidGiven;
         return (TypeStored, liquidGiven);
+    }
+
+    void Awake()
+    {
+        m_inputs = new List<IFlowable>();
+    }
+
+    public void AddChild(IFlowable child)
+    {
+        if (!m_inputs.Contains(child))
+        {
+            m_inputs.Add(child);
+        }
+    }
+
+    public void DisownChild(IFlowable child)
+    {
+        if (m_inputs.Contains(child))
+        {
+            m_inputs.Remove(child);
+        }
+    }
+
+    public List<IFlowable> GetChildren()
+    {
+        return m_inputs;
+    }
+
+    public IFlowable GetParent()
+    {
+        return m_output;
+    }
+
+    public void SetParent(IFlowable parent)
+    {
+        m_output = parent;
+    }
+
+    public void OnTick()
+    {
+        Debug.LogWarning("Silo has overflowed " + SendFlow());
     }
 }

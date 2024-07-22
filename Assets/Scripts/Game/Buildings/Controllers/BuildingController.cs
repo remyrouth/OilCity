@@ -6,6 +6,9 @@ public abstract class BuildingController<T> : TileObjectController
 {
     [SerializeField] protected List<TileAction> TileActions; 
     protected T config;
+    /// <summary>
+    /// Initialize controller with given configuration
+    /// </summary>
     public virtual void Initialize(T config)
     {
         this.config = config;
