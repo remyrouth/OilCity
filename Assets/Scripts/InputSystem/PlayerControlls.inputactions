@@ -1,0 +1,34 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "f7492c3b-3ed8-47ce-b276-4414ac5cbce5",
+            "actions": [
+                {
+                    "name": "Toggle PauseMenu",
+                    "type": "Button",
+                    "id": "1030715f-5f2c-4e9c-b150-0476323a7816",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b66e3efb-120d-4eb5-93e4-501dff1be2d0",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
