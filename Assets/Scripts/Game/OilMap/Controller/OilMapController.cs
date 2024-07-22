@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class OilMapController : IAmountGiver<float>
+public abstract class OilMapController : MonoBehaviour, IAmountGiver<float>
 {
     protected Dictionary<Vector2Int, float> alreadyMined;
 
