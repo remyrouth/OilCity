@@ -12,15 +12,14 @@ public abstract class BuildingController<T> : TileObjectController
     public virtual void Initialize(T config)
     {
         this.config = config;
-        //subscribe to TimeManger
-        
+        TimeManager.Instance.RegisterReceiver(gameObject);
         //setup values
 
     }
     public override List<TileAction> GetActions() => TileActions;
     protected virtual void OnDestroy()
     {
-        //unsubscribe from TimeManager
+        TimeManager.Instance.DeregisterReceiver(gameObject);
         //reduce money by config.placementCost
         //reduce satisfaction by config.removalSatisfactionCost
         //play visual effect
