@@ -15,5 +15,11 @@ public abstract class BuildingController<T> : TileObjectController
 
     }
     public override List<TileAction> GetActions() => TileActions;
-
+    protected virtual void OnDestroy()
+    {
+        //unsubscribe from TimeManager
+        //reduce money by config.placementCost
+        //reduce satisfaction by config.removalSatisfactionCost
+        //play visual effect
+    }
 }
