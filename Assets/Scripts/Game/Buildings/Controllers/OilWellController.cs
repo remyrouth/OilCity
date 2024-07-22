@@ -49,4 +49,15 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     {
         Debug.LogWarning("Oil well has overflowed " + SendFlow());
     }
+
+    public bool IsPipeConnected(GameObject other)
+    {
+        if (other.TryGetComponent<PipeController>(out var pipe))
+        {
+            // oil wells can only be connected by draining pipes
+            
+        }
+
+        return false;
+    }
 }
