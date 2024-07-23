@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileSelector : MonoBehaviour
+public class TileSelector : Singleton<TileSelector>
 {
     private void Update()
     {
@@ -13,7 +13,7 @@ public class TileSelector : MonoBehaviour
         }
     }
 
-    private Vector2Int MouseToGrid()
+    public Vector2Int MouseToGrid()
     {
         Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int mouseCellPosition = new Vector2Int(Mathf.CeilToInt(mouseSpotPosition.x), Mathf.CeilToInt(mouseSpotPosition.y));
