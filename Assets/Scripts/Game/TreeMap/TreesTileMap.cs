@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 public class TreesTileMap : TreeMap
 {
     private Tilemap _treesTileMap;
+    private void Awake() => gameObject.SetActive(false);
     public override bool GetValueAtPosition(int x, int y)
     {
         if(_treesTileMap == null)

@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 public class OilTileMapController : OilMapController
 {
     private Tilemap _oilTileMap;
-
+    private void Awake() => gameObject.SetActive(false);
     protected override float GetBaseValue(int x, int y)
     {
         if (_oilTileMap == null)
