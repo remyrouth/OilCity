@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 public class BoardManager : Singleton<BoardManager>
 {
+    [field: SerializeField] public OilMapController OilEvaluator { get; private set; }
     public Dictionary<Vector2Int, TileObjectController> tileDictionary { get; private set; }
     public void Create(Vector2Int position, BuildingScriptableObject buildingSO)
     {

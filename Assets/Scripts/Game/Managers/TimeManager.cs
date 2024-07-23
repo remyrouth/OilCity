@@ -33,6 +33,7 @@ public class TimeManager : Singleton<TimeManager>
     // invariant: contains every tree node component in the game
     private readonly Collection<ITreeNode> m_nodes;
 
+    public float TimePerTick => m_timePerTick;
     private float m_timePerTick;
     private float m_timeElaspedSinceTick;
 

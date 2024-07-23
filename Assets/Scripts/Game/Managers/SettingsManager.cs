@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class SettingsManager : Singleton<SettingsManager>
 {
     public Language CurrentLanguage { get; private set; } = Language.English;
     public float MusicVolume { get; private set; } = 1;
     public float SfxVolume { get; private set; } = 1;
+    public float AmbientVolume { get; private set; } = 1;
 
     public void SetLanguage(Language language)
     {
@@ -14,6 +16,25 @@ public class SettingsManager : Singleton<SettingsManager>
             .OfType<ILanguageChangeable>();
         foreach (var lbo in languageBasedObjects)
             lbo.UpdateText();
+    }
+
+    public event Action<float> OnMusicVolumeChanged, OnSfxVolumeChanged, OnAmbientVolumeChanged;
+
+
+    public void SetMusicVolume(float newValue)
+    {
+        MusicVolume = newValue;
+        OnMusicVolumeChanged?.Invoke(newValue);
+    }
+    public void SetSfxVolume(float newValue)
+    {
+        SfxVolume = newValue;
+        OnSfxVolumeChanged?.Invoke(newValue);
+    }
+    public void SetAmbientVolume(float newValue)
+    {
+        AmbientVolume = newValue;
+        OnAmbientVolumeChanged?.Invoke(newValue);
     }
 
 }
