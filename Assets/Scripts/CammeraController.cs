@@ -88,7 +88,7 @@ public class CammeraController : MonoBehaviour
 
             if (horizontalMax < 15)
             {
-                horizontalMax += ;
+                horizontalMax += 2;
             }
         }
 
