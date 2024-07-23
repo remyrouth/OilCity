@@ -495,8 +495,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIScripts.UIStateMachine, Assembly-CSharp
-        m_MethodName: ChangeState
+        m_TargetAssemblyTypeName: UIScripts.UiManager, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -776,7 +776,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIScripts.UIStateMachine, Assembly-CSharp
+        m_TargetAssemblyTypeName: UIScripts.UiManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 3
         m_Arguments:
@@ -909,8 +909,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIScripts.UIStateMachine, Assembly-CSharp
-        m_MethodName: ChangeState
+        m_TargetAssemblyTypeName: UIScripts.UiManager, Assembly-CSharp
+        m_MethodName: ChangeVisibility
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1256,8 +1256,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIScripts.UIStateMachine, Assembly-CSharp
-        m_MethodName: ChangeState
+        m_TargetAssemblyTypeName: UIScripts.UiManager, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
