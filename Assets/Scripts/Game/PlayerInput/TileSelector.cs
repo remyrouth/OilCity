@@ -5,10 +5,8 @@ public class TileSelector : Singleton<TileSelector>
 {
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetMouseButtonUp(0))
             OnMouseClick();
-        }
     }
 
     public Vector2Int MouseToGrid()
@@ -20,9 +18,14 @@ public class TileSelector : Singleton<TileSelector>
     private void OnMouseClick()
     {
         if (!BoardManager.Instance.IsTileOccupied(MouseToGrid()))
+        {
+            EndFocus();
             return;
+        }
         if (BoardManager.Instance.tileDictionary[MouseToGrid()].TryGetComponent(out TileObjectController building))
             BeginFocus(building);
+        else
+            EndFocus();
     }
 
     [SerializeField] private GameObject _actionPrefab;
@@ -31,12 +34,7 @@ public class TileSelector : Singleton<TileSelector>
     private List<SingleTileActionView> views = new();
     private void BeginFocus(TileObjectController toc)
     {
-        if (views.Count > 0)
-        {
-            for (int i = 0; i < views.Count; i++)
-                Destroy(views[i]);
-            views.Clear();
-        }
+        EndFocus();
         _currentSelected = toc;
         _actionsCanvas.transform.position = _currentSelected.ActionsPivot;
 
