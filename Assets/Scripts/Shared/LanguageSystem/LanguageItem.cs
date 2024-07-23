@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using Game.Managers;
 [CreateAssetMenu]
 public class LanguageItem : ScriptableObject
 {
@@ -8,7 +9,7 @@ public class LanguageItem : ScriptableObject
 
     public override string ToString()
     {
-        int langID = 0;
+        int langID = (int)SettingsManager.Instance.CurrentLanguage;
         if (langID < text.Length && langID >= 0)
             return text[langID];
         Debug.LogError("Couldn't find correct translated text!");
