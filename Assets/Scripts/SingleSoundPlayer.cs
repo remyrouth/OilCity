@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Game.Managers;
 
 public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
 {

@@ -13,6 +13,16 @@ namespace Game.Managers
         public Language CurrentLanguage { get; private set; } = Language.English;
         [SerializeField] private TMP_Dropdown languageDropdown;
 
+
+        public delegate void VolumeChanged(float newVolume);
+        public event VolumeChanged OnSoundEffectVolumeChanged;
+        public event VolumeChanged OnAmbientSoundVolumeChanged;
+        public event VolumeChanged OnMusicVolumeChanged;
+
+        private float soundEffectVolume;
+        private float ambientSoundVolume;
+        private float musicVolume;
+
         private void Awake()
         {
             SetLanguage();
@@ -55,6 +65,47 @@ namespace Game.Managers
                 lbo.UpdateText();
             
             languageDropdown.SetValueWithoutNotify(PlayerPrefs.GetInt("LanguageIndex"));
+        }
+
+
+
+        public float SoundEffectVolume
+        {
+            get { return soundEffectVolume; }
+            set
+            {
+                if (soundEffectVolume != value)
+                {
+                    soundEffectVolume = value;
+                    OnSoundEffectVolumeChanged?.Invoke(soundEffectVolume);
+                }
+            }
+        }
+
+        public float AmbientSoundVolume
+        {
+            get { return ambientSoundVolume; }
+            set
+            {
+                if (ambientSoundVolume != value)
+                {
+                    ambientSoundVolume = value;
+                    OnAmbientSoundVolumeChanged?.Invoke(ambientSoundVolume);
+                }
+            }
+        }
+
+        public float MusicVolume
+        {
+            get { return musicVolume; }
+            set
+            {
+                if (musicVolume != value)
+                {
+                    musicVolume = value;
+                    OnMusicVolumeChanged?.Invoke(musicVolume);
+                }
+            }
         }
     
     }
