@@ -44,7 +44,7 @@ public sealed class GeologistController : AOEBuildingController
     private void ResetWorker()
     {
         _workerVisual.DOKill();
-        Vector3 pos = new Vector3(anchor.x, anchor.y, 0);
+        Vector3 pos = new Vector3(Anchor.x, Anchor.y, 0);
         _workerVisual.DOMove(pos, TimeManager.Instance.TicksPerMinute);
     }
     private void SearchForOil()

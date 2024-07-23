@@ -9,6 +9,6 @@ public class TreesTileMap : TreeMap
     {
         if(_treesTileMap == null)
             _treesTileMap = GetComponent<Tilemap>();
-        return _treesTileMap.GetTile(new Vector3Int(x, y)) != null;
+        return _treesTileMap.HasTile(new Vector3Int(x, y));
     }
 }

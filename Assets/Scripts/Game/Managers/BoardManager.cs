@@ -8,17 +8,23 @@ public class BoardManager : Singleton<BoardManager>
     [field: SerializeField] public OilMapController OilEvaluator { get; private set; }
     [field: SerializeField] public TreeMap TreeEvaluator { get; private set; }
     [SerializeField] private GameObject _treePrefab;
+    [SerializeField] private Transform _treeHolder;
 
-    public Dictionary<Vector2Int, TileObjectController> tileDictionary { get; private set; }
+    public Dictionary<Vector2Int, TileObjectController> tileDictionary { get; private set; } = new();
 
     private void Start()
     {
         for (int i = 0; i < MAP_SIZE_X; i++)
+        {
             for (int j = 0; j < MAP_SIZE_Y; j++)
-                if (TreeEvaluator.GetValueAtPosition(i, j))
-                    tileDictionary.Add(new Vector2Int(i, j)
-                        , Instantiate(_treePrefab, new Vector3(i, j, 0), Quaternion.identity)
-                        .GetComponent<TreeController>());
+            {
+                if (!TreeEvaluator.GetValueAtPosition(i, j))
+                    continue;
+                var obj = Instantiate(_treePrefab, _treeHolder);
+                obj.transform.position = new Vector3(i, j, 0);
+                tileDictionary.Add(new Vector2Int(i, j), obj.GetComponent<TreeController>());
+            }
+        }
     }
 
     public bool Create(Vector2Int position, BuildingScriptableObject buildingSO)

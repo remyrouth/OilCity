@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -13,8 +11,8 @@ public class CameraController : MonoBehaviour
     public float zoomMin = 1f;
     public bool invert = false;
 
-    [SerializeField]
-    private Vector2Int bottomLeftCorner, upperRightCorner;
+    private Vector2Int bottomLeftCorner => Vector2Int.zero;
+    private Vector2Int  upperRightCorner => new Vector2Int(BoardManager.MAP_SIZE_X,BoardManager.MAP_SIZE_Y);
 
     private float _targetZoom;
     private Vector3 _targetPosition;
