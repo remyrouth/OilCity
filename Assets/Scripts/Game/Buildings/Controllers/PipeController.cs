@@ -5,14 +5,6 @@ using static UnityEditor.Rendering.CameraUI;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
 {
-    private enum PipeFlowDirection
-    {
-        Invalid,
-        North,
-        South,
-        East,
-        West
-    }
 
     private IFlowable m_start; // where you get the flow from
     private IFlowable m_end; // where the flow goes to
@@ -21,13 +13,31 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     private Vector2Int m_startPipePos; // position of the start pipe
     private Vector2Int m_endPipePos; // position of the end pipe
 
-    // TODO init method for JUST PIPES
-    /*
-     * will need to set the values of the pipeflow and vector2int properties. needs to be a special constructor.
-     * 
-     * public void MakePipe(int start_pos, int end_pos, start_dir, end_dir);
-    */
+    /// <summary>
+    /// Init method for just pipes. Should be called after the full pipe has been laid.
+    /// </summary>
+    /// <param name="start_pos"></param>
+    /// <param name="end_pos"></param>
+    /// <param name="start_pipe_dir"></param>
+    /// <param name="end_pipe_dir"></param>
+    public void MakePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir)
+    {
+        // get the positions of where input and output source tiles would be relative to the start and end positions of the pipe
+        var child_pos = start_pos + GetPipeFlowDirOffset(start_pipe_dir);
+        var parent_pos = end_pos + GetPipeFlowDirOffset(end_pipe_dir);
 
+        if (BoardManager.Instance.IsTileOccupied(child_pos))
+        {
+            m_start = BoardManager.Instance.tileDictionary[child_pos].GetComponent<IFlowable>();
+        }
+
+        if (BoardManager.Instance.IsTileOccupied(parent_pos))
+        {
+            m_end = BoardManager.Instance.tileDictionary[parent_pos].GetComponent<IFlowable>();
+        }
+    }
+
+    // todo delete this method?
     public void CreateInitialConnections(Vector2Int size)
     {
         // todo fill out the m_start and m_end fields in this method
@@ -36,6 +46,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         // then does that mean we'll have to call TimeManager register again?! I think we need a custom building controller Instantiate definition for pipes...
     }
 
+    #region tree stuff
     public void AddChild(IFlowable child)
     {
         if (m_start == null || !m_start.Equals(child))
@@ -72,6 +83,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     {
         m_end = parent;
     }
+    #endregion
 
     public void OnTick()
     {
@@ -105,7 +117,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         }
     }
 
-    private bool GetCardinalEstimatePipeflowDirection(Vector2Int dest_pos, Vector2Int pipe_pos, out PipeFlowDirection est_flowdir)
+    #region pipe static helper methods
+    public static bool GetCardinalEstimatePipeflowDirection(Vector2Int dest_pos, Vector2Int pipe_pos, out PipeFlowDirection est_flowdir)
     {
         if (pipe_pos.x < dest_pos.x && pipe_pos.y == dest_pos.y)
         {
@@ -131,4 +144,31 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         est_flowdir = PipeFlowDirection.Invalid;
         return false;
     }
+
+    public static Vector2Int GetPipeFlowDirOffset(PipeFlowDirection direction)
+    {
+        switch (direction)
+        {
+            case PipeFlowDirection.North:
+                return Vector2Int.up;
+            case PipeFlowDirection.South:
+                return Vector2Int.down;
+            case PipeFlowDirection.East:
+                return Vector2Int.right;
+            case PipeFlowDirection.West:
+                return Vector2Int.left;
+            default:
+                return Vector2Int.zero;
+        }
+    }
+    #endregion
+}
+
+public enum PipeFlowDirection
+{
+    Invalid,
+    North,
+    South,
+    East,
+    West
 }
