@@ -11,7 +11,7 @@ public class BuildingManager : Singleton<BuildingManager>
         if (_currentPreview != null)
         {
             var mousePos = TileSelector.Instance.MouseToGrid();
-            _currentPreview.transform.position = new Vector3(mousePos.x,mousePos.y,0);
+            _currentPreview.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
             var canBuild = BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, _currentConfig);
             _currentPreview.SetState(canBuild);
         }
@@ -29,14 +29,13 @@ public class BuildingManager : Singleton<BuildingManager>
     private void PlaceIfCan()
     {
         Vector2Int pos = TileSelector.Instance.MouseToGrid();
-        if(_currentConfig == null || _currentPreview == null)
+        if (_currentConfig == null || _currentPreview == null)
             return;
         if (BoardManager.Instance.AreTilesOccupiedForBuilding(pos, _currentConfig))
             _currentPreview.SetState(false);
 
-        _currentConfig.CreateInstance().transform.position = new Vector3(pos.x,pos.y,0);
-
-        CancelBuilding();
+        if (BoardManager.Instance.Create(pos, _currentConfig))
+            CancelBuilding();
     }
     public void BeginBuildingPipe(PipeScriptableObject SO)
     {
