@@ -5,25 +5,8 @@ public abstract class AOEBuildingController : PayrateBuildingController, ITickRe
 {
     public abstract int TickNumberInterval { get; }
     public abstract int Range { get; }
-
-    private int _tickTimer = 0;
-    public void OnTick()
-    {
-        _tickTimer++;
-        if (_tickTimer > TickNumberInterval)
-        {
-            _tickTimer = 0;
-            InvokeAction();
-        }
-    }
-    /// <summary>
-    /// Called repeatedly after 'TickNumberInterval' number of ticks
-    /// </summary>
-    protected abstract void InvokeAction();
-    /// <summary>
-    /// Calculate Set of tiles withing range taking building size into account
-    /// </summary>
-    /// <returns></returns>
+    public abstract void OnTick();
+    
     protected HashSet<Vector2Int> GetTilesInRange()
     {
         Vector2Int anchor = new Vector2Int((int)transform.position.x, (int)transform.position.y);
@@ -41,7 +24,7 @@ public abstract class AOEBuildingController : PayrateBuildingController, ITickRe
                 int xDistance = Mathf.Max(0, anchor.x - currentPos.x, currentPos.x - upperRight.x);
                 int yDistance = Mathf.Max(0, anchor.y - currentPos.y, currentPos.y - upperRight.y);
 
-                if (xDistance <= range && yDistance <= range)
+                if (new Vector2Int(xDistance,yDistance).sqrMagnitude<=range*range)
                     tiles.Add(currentPos);
             }
         }
