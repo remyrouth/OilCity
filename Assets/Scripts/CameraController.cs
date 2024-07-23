@@ -53,17 +53,16 @@ public class CameraController : MonoBehaviour
 
     private void AdjustCameraBounds()
     {
-        float screenRatio = 16 / 9; // Screen.width/Screen.height gives 1 ???
+        float screenRatio = (float)Screen.width / Screen.height;
         Vector3 adjustDelta = Vector3.zero;
-        Debug.Log(screenRatio);
-        if (_cam.transform.position.x - _cam.orthographicSize * screenRatio < bottomLeftCorner.x)
+        if (_targetPosition.x - _cam.orthographicSize * screenRatio < bottomLeftCorner.x)
             adjustDelta.x += 1;
-        if (_cam.transform.position.x + _cam.orthographicSize * screenRatio > upperRightCorner.x)
+        if (_targetPosition.x + _cam.orthographicSize * screenRatio > upperRightCorner.x)
             adjustDelta.x -= 1;
 
-        if (_cam.transform.position.y - _cam.orthographicSize < bottomLeftCorner.y)
+        if (_targetPosition.y - _cam.orthographicSize < bottomLeftCorner.y)
             adjustDelta.y += 1;
-        if (_cam.transform.position.y + _cam.orthographicSize > upperRightCorner.y)
+        if (_targetPosition.y + _cam.orthographicSize > upperRightCorner.y)
             adjustDelta.y -= 1;
         _targetPosition += adjustDelta * Time.deltaTime * 20;
 
