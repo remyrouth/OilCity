@@ -26,6 +26,8 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
         while(building is null)
         {            
             TileObjectController[] tmp = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None);
+            if (tmp.Length <= 0)
+                return;
             int range = Random.Range(0, tmp.Length);
             if (tmp[range].TryGetComponent<TreeController>(out _)) continue;
             building = tmp[range];
