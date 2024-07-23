@@ -1,3 +1,4 @@
+using UnityEngine;
 /// <summary>
 /// An interface for classes that should implement the ability to send flows of oil/kerosene to another object. All classes that do 
 /// so need to know the flows incoming from other sources in addition to having the ability to respond to game ticks (since that is what

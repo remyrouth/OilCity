@@ -14,6 +14,37 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         m_inputs = new List<IFlowable>();
     }
 
+    protected override void CreateInitialConnections()
+    {
+        m_output = null;
+        m_inputs.Clear();
+
+        var position = BoardManager.ConvertWorldspaceToGrid(transform.position);
+        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(position, config.size);
+
+        foreach (var p in peripherals)
+        {
+            if (p.TryGetComponent<PipeController>(out var pipe))
+            {
+                if (pipe.IsInputPipeForTile(position))
+                {
+                    // ping the pipe? display a notif that wells cant have inputs?
+                }
+                else if (pipe.IsOutputPipeForTile(position))
+                {
+                    if (m_output != null)
+                    {
+                        // more than one output pipe discovered
+                        // ping the pipe? display a notif that this pipe isnt going to be used?
+                        // TODO
+                    }
+
+                    m_output = pipe;
+                }
+            }
+        }
+    }
+
     public void AddChild(IFlowable child)
     {
         if (!m_inputs.Contains(child))
@@ -48,5 +79,16 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     public void OnTick()
     {
         Debug.LogWarning("Oil well has overflowed " + SendFlow());
+    }
+
+    public bool IsPipeConnected(GameObject other)
+    {
+        if (other.TryGetComponent<PipeController>(out var pipe))
+        {
+            // oil wells can only be connected by draining pipes
+            
+        }
+
+        return false;
     }
 }
