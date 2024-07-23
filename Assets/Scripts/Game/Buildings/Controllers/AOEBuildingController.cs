@@ -6,22 +6,20 @@ public abstract class AOEBuildingController : PayrateBuildingController, ITickRe
     public abstract int TickNumberInterval { get; }
     public abstract int Range { get; }
     public abstract void OnTick();
-    public Vector2Int anchor => new Vector2Int((int)transform.position.x, (int)transform.position.y);
     protected List<Vector2Int> GetTilesInRange()
     {
-        Vector2Int upperRight = anchor + config.size;
+        Vector2Int upperRight = Anchor + config.size;
         List<Vector2Int> tiles = new();
 
         int range = Range;
 
-
-        for (int x = anchor.x - range; x <= upperRight.x + range; x++)
+        for (int x = Anchor.x - range; x <= upperRight.x + range; x++)
         {
-            for (int y = anchor.y - range; y <= upperRight.y + range; y++)
+            for (int y = Anchor.y - range; y <= upperRight.y + range; y++)
             {
                 Vector2Int currentPos = new Vector2Int(x, y);
-                int xDistance = Mathf.Max(0, anchor.x - currentPos.x, currentPos.x - upperRight.x);
-                int yDistance = Mathf.Max(0, anchor.y - currentPos.y, currentPos.y - upperRight.y);
+                int xDistance = Mathf.Max(0, Anchor.x - currentPos.x, currentPos.x - upperRight.x);
+                int yDistance = Mathf.Max(0, Anchor.y - currentPos.y, currentPos.y - upperRight.y);
 
                 if (new Vector2Int(xDistance,yDistance).sqrMagnitude<=range*range)
                     tiles.Add(currentPos);

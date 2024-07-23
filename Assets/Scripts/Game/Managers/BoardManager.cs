@@ -6,7 +6,6 @@ public class BoardManager : Singleton<BoardManager>
     public const int MAP_SIZE_X = 40;
     public const int MAP_SIZE_Y = 40;
     [field: SerializeField] public OilMapController OilEvaluator { get; private set; }
-
     [field: SerializeField] public TreeMap TreeEvaluator { get; private set; }
     [SerializeField] private GameObject _treePrefab;
 

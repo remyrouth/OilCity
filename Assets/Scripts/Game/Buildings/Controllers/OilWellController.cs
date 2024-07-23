@@ -3,11 +3,27 @@ using UnityEngine;
 
 public sealed class OilWellController : PayrateBuildingController, IFlowable
 {
-    public const float BASE_OIL_RATE = 1;
+    private const float BASE_OIL_RATE = 1;
+
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
 
-    public (FlowType type, float amount) SendFlow() => (FlowType.Oil, BASE_OIL_RATE);
+    public (FlowType type, float amount) SendFlow()
+    {
+        float amountMined = 0;
+        float flowRate = BASE_OIL_RATE / (config.size.x * config.size.y);
+        for (int x = 0; x < config.size.x; x++)
+        {
+            for (int y = 0; y < config.size.y; y++)
+            {
+                float oilAvailable = BoardManager.Instance.OilEvaluator.GetValueAtPosition(x, y);
+                float minedFromTile = Mathf.Clamp(oilAvailable, 0, flowRate);
+                amountMined += minedFromTile;
+                BoardManager.Instance.OilEvaluator.IncreaseAmountMinedAtPosition(x,y,minedFromTile);
+            }
+        }
+        return (FlowType.Oil, amountMined);
+    }
 
     void Awake()
     {
