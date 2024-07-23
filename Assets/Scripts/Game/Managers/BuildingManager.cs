@@ -15,7 +15,7 @@ public class BuildingManager : Singleton<BuildingManager>
             var canBuild = BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, _currentConfig);
             _currentPreview.SetState(canBuild);
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
             OnClicked?.Invoke();
     }
 
