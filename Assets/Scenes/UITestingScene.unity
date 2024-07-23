@@ -663,7 +663,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 79979620}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1681658429}
+        m_TargetAssemblyTypeName: BuildingSelector, Assembly-CSharp
+        m_MethodName: SelectBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Geologist
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &79979620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,7 +1094,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 196080651}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1681658429}
+        m_TargetAssemblyTypeName: BuildingSelector, Assembly-CSharp
+        m_MethodName: SelectBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Refinery
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &196080651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2658,7 +2682,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 860756365}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1681658429}
+        m_TargetAssemblyTypeName: BuildingSelector, Assembly-CSharp
+        m_MethodName: SelectBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Oil Well
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &860756365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3924,7 +3960,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1305025907}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1681658429}
+        m_TargetAssemblyTypeName: BuildingSelector, Assembly-CSharp
+        m_MethodName: SelectBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Silo
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1305025907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4342,6 +4390,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498816711}
   m_CullTransparentMesh: 1
+--- !u!1 &1681658428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1681658430}
+  - component: {fileID: 1681658429}
+  m_Layer: 0
+  m_Name: BuildingSelector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1681658429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681658428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6678a14f3eff07b4cbca0802af3feada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1681658430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681658428}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 618.0727, y: 508.79932, z: 5.0940866}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1684353057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4559,7 +4651,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1711730915}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1681658429}
+        m_TargetAssemblyTypeName: BuildingSelector, Assembly-CSharp
+        m_MethodName: SelectBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Pipe
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1711730915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4744,7 +4848,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1775996487}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1681658429}
+        m_TargetAssemblyTypeName: BuildingSelector, Assembly-CSharp
+        m_MethodName: SelectBuilding
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Wood-Cutter
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1775996487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5526,3 +5642,4 @@ SceneRoots:
   - {fileID: 109292375}
   - {fileID: 1080979336}
   - {fileID: 2733775014041043294}
+  - {fileID: 1681658430}
