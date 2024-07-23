@@ -17,4 +17,5 @@ MonoBehaviour:
   <removalSatisfactionCost>k__BackingField: 10
   <icon>k__BackingField: {fileID: 0}
   <prefab>k__BackingField: {fileID: 3141429110944717563, guid: 5a3dd716dac1c66478429f9a3993cb64, type: 3}
+  <previewPrefab>k__BackingField: {fileID: 3141429110944717563, guid: 4651925815f9a1a41879884489970c47, type: 3}
   <size>k__BackingField: {x: 2, y: 1}
