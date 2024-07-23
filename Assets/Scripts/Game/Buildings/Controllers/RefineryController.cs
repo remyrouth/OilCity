@@ -8,6 +8,37 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
 
+    protected override void CreateInitialConnections()
+    {
+        m_output = null;
+        m_inputs.Clear();
+
+        var position = BoardManager.ConvertWorldspaceToGrid(transform.position);
+        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(position, config.size);
+
+        foreach (var p in peripherals)
+        {
+            if (p.TryGetComponent<PipeController>(out var pipe))
+            {
+                if (pipe.IsInputPipeForTile(position))
+                {
+                    m_inputs.Add(pipe);
+                }
+                else if (pipe.IsOutputPipeForTile(position))
+                {
+                    if (m_output != null)
+                    {
+                        // more than one output pipe discovered
+                        // ping the pipe? display a notif that this pipe isnt going to be used?
+                        // TODO
+                    }
+
+                    m_output = pipe;
+                }
+            }
+        }
+    }
+
     public (FlowType type, float amount) SendFlow()
     {
         float OilSum = 0;

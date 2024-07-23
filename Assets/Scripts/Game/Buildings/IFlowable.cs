@@ -11,12 +11,4 @@ public interface IFlowable : ITreeNode, ITickReceiver
     /// </summary>
     /// <returns>A tuple with the first item being the type of flow conferred and the second item being the amount of flow.</returns>
     (FlowType type, float amount) SendFlow();
-
-    /// <summary>
-    /// Returns true if the given gameobject is a flowable and relevant to this flowable (i.e. if the given object is a refinery
-    /// and we are a pipe, return true if we are piping into/out of the refinery).
-    /// </summary>
-    /// <param name="other"></param>
-    /// <returns></returns>
-    bool IsPipeConnected(GameObject other); 
 }

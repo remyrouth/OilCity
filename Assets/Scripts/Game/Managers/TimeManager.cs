@@ -13,7 +13,7 @@ public class TimeManager : Singleton<TimeManager>
     /// How many ticks occur in a minute. Setting this property changes the ticks per minute, the amount of time per tick (60f / new_ticks),
     /// and the time that has passed since a new tick began (reset to 0).
     /// </summary>
-    public int TicksPerSecond
+    public int TicksPerMinute
     {
         get { return m_ticksPerMinute; }
         set 
@@ -31,7 +31,7 @@ public class TimeManager : Singleton<TimeManager>
     private Collection<ITickReceiver> m_tickableForest;
 
     // invariant: contains every tree node component in the game
-    private Collection<ITreeNode> m_nodes;
+    private readonly Collection<ITreeNode> m_nodes;
 
     private float m_timePerTick;
     private float m_timeElaspedSinceTick;
