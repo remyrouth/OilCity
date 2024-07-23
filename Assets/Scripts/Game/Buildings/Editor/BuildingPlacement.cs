@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace OilCity {
     public class BuildingPlacementTool : MonoBehaviour {
-
+        /*
         [MenuItem("BuildingPlacement/RefreshBuildings")]
         static void RefreshBuildings() {
             var buildings = FindObjectsOfType<BasicBuilding>();
@@ -18,6 +18,6 @@ namespace OilCity {
             Vector2Int position = new Vector2Int(5, 5);
             BuildingScriptableObject buildingSO = BuildingScriptableObject();
         }
-
+        */
     }
 }

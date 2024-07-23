@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace OilCity {
-    public class MouseUI : MonoBehaviour, IpointerEnterHandler, IPointerExitHandler {
+    public class MouseUI : MonoBehaviour{
         
         private CanvasMonitor canvasMonitor = null;
 

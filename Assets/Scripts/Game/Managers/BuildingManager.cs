@@ -1,54 +1,42 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class BuildingManager : Singleton<BuildingManager>
 {
-    private BuildingScriptableObject _currentConfig;
     private BuildingPreview _currentPreview;
-    private Action OnClicked;
-    private void Update()
+    private BuildingScriptableObject _currentBuildingSO;
+
+    private Coroutine _coroutine;
+
+    public void BeginBuilding(BuildingScriptableObject so)
     {
-        if (_currentPreview != null)
+        if (_coroutine != null)
         {
-            var mousePos = TileSelector.Instance.MouseToGrid();
-            _currentPreview.transform.position = new Vector3(mousePos.x,mousePos.y,0);
-            var canBuild = BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, _currentConfig);
-            _currentPreview.SetState(canBuild);
-        }
-        if (Input.GetMouseButtonDown(0))
-            OnClicked?.Invoke();
-    }
-
-    public void BeginBuilding(BuildingScriptableObject SO)
-    {
-        CancelBuilding();
-        _currentConfig = SO;
-        _currentPreview = Instantiate(SO.previewPrefab).GetComponent<BuildingPreview>();
-        OnClicked = PlaceIfCan;
-    }
-    private void PlaceIfCan()
-    {
-        Vector2Int pos = TileSelector.Instance.MouseToGrid();
-        if(_currentConfig == null || _currentPreview == null)
+            Debug.LogError("Already placing another object! Canceling...");
             return;
-        if (BoardManager.Instance.AreTilesOccupiedForBuilding(pos, _currentConfig))
-            _currentPreview.SetState(false);
+        }
 
-        _currentConfig.CreateInstance().transform.position = new Vector3(pos.x,pos.y,0);
+        _currentBuildingSO = so;
+        _currentPreview = Instantiate(so.previewPrefab).GetComponent<BuildingPreview>();
+        _currentPreview.InitSO(so);
 
-        CancelBuilding();
-    }
-    public void BeginBuildingPipe(PipeScriptableObject SO)
-    {
-
+        _coroutine = StartCoroutine(IEDoBuildingProcess());
     }
 
     public void CancelBuilding()
     {
         Destroy(_currentPreview);
-        _currentConfig = null;
         _currentPreview = null;
-        OnClicked = null;
+        _currentBuildingSO = null;
+        _coroutine = null;
+    }
+
+    private IEnumerator IEDoBuildingProcess()
+    {
+        yield return _currentPreview.IEDoBuildProcess();
+
+        CancelBuilding();
     }
 
 }

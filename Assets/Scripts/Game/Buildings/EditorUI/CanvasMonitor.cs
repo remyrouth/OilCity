@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-nameSpace OilCity {
+namespace OilCity {
     public class CanvasMonitor : MonoBehaviour {
 
         // In case we want more "tabs" or options other than selecting buildings
@@ -23,10 +23,6 @@ nameSpace OilCity {
         public void SetActivePanel(ToolboxPanels newActivePanel) {
             BuildingsPanel.gameObject.SetActive(false);
 
-            switch (newActivePanel) {
-                case ToolboxPanels.BuildingsPanel:
-                BuildingsPanel.gameObject.SetActive(true);
-            }
         }
         
     }
