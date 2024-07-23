@@ -6,18 +6,35 @@ public class BoardManager : Singleton<BoardManager>
     public const int MAP_SIZE_X = 40;
     public const int MAP_SIZE_Y = 40;
     [field: SerializeField] public OilMapController OilEvaluator { get; private set; }
+
+    [field: SerializeField] public TreeMap TreeEvaluator { get; private set; }
+    [SerializeField] private GameObject _treePrefab;
+
     public Dictionary<Vector2Int, TileObjectController> tileDictionary { get; private set; }
-    public void Create(Vector2Int position, BuildingScriptableObject buildingSO)
+
+    private void Start()
     {
-        AreTilesOccupiedForBuilding(position, buildingSO);
+        for (int i = 0; i < MAP_SIZE_X; i++)
+            for (int j = 0; j < MAP_SIZE_Y; j++)
+                if (TreeEvaluator.GetValueAtPosition(i, j))
+                    tileDictionary.Add(new Vector2Int(i, j)
+                        , Instantiate(_treePrefab, new Vector3(i, j, 0), Quaternion.identity)
+                        .GetComponent<TreeController>());
+    }
+
+    public bool Create(Vector2Int position, BuildingScriptableObject buildingSO)
+    {
+        if (AreTilesOccupiedForBuilding(position, buildingSO))
+            return false;
         var obj = buildingSO.CreateInstance();
         for (int i = 0; i < buildingSO.size.y; i++)
         {
             for (int j = 0; j < buildingSO.size.x; j++)
             {
-                tileDictionary[position + new Vector2Int(j,i)] = obj;
+                tileDictionary[position + new Vector2Int(j, i)] = obj;
             }
         }
+        return true;
     }
     public bool IsTileOccupied(Vector2Int position)
     {
@@ -33,12 +50,12 @@ public class BoardManager : Singleton<BoardManager>
     }
     public bool AreTilesOccupiedForBuilding(Vector2Int position, BuildingScriptableObject buildingSO)
     {
-        
+
         for (int i = 0; i < buildingSO.size.y; i++)
         {
             for (int j = 0; j < buildingSO.size.x; j++)
             {
-                if (IsTileOccupied(position + new Vector2Int(j,i))) return true;
+                if (IsTileOccupied(position + new Vector2Int(j, i))) return true;
             }
         }
         return false;
@@ -67,7 +84,7 @@ public class BoardManager : Singleton<BoardManager>
                 bool is_bottomleft_corner = (i == 0 && j == 0);
                 bool is_bottomright_corner = (i == 0 && j == right);
 
-                var offset_position = position + new Vector2Int(j,i);
+                var offset_position = position + new Vector2Int(j, i);
 
                 if (is_topleft_corner || is_topright_corner || is_bottomleft_corner || is_bottomright_corner) continue;
                 else if (tileDictionary.TryGetValue(offset_position, out var value))
