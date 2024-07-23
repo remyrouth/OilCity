@@ -40,6 +40,8 @@ public class CameraController : MonoBehaviour
             _targetPosition += new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
             if (invert)
                 _targetPosition *= -1;
+            _targetPosition.y = Mathf.Clamp(_targetPosition.y, bottomLeftCorner.y, upperRightCorner.y);
+            _targetPosition.x = Mathf.Clamp(_targetPosition.x, bottomLeftCorner.x, upperRightCorner.x);
         }
         cameraZoom();
     }
@@ -51,16 +53,17 @@ public class CameraController : MonoBehaviour
 
     private void AdjustCameraBounds()
     {
-        float screenRatio = Screen.height / Screen.width;
+        float screenRatio = 16 / 9; // Screen.width/Screen.height gives 1 ???
         Vector3 adjustDelta = Vector3.zero;
-        if (_cam.transform.position.x - _cam.orthographicSize * 2 < bottomLeftCorner.x)
+        Debug.Log(screenRatio);
+        if (_cam.transform.position.x - _cam.orthographicSize * screenRatio < bottomLeftCorner.x)
             adjustDelta.x += 1;
-        if (_cam.transform.position.x + _cam.orthographicSize * 2 > upperRightCorner.x)
+        if (_cam.transform.position.x + _cam.orthographicSize * screenRatio > upperRightCorner.x)
             adjustDelta.x -= 1;
 
-        if (_cam.transform.position.y - _cam.orthographicSize * 2 * screenRatio < bottomLeftCorner.y)
+        if (_cam.transform.position.y - _cam.orthographicSize < bottomLeftCorner.y)
             adjustDelta.y += 1;
-        if (_cam.transform.position.y + _cam.orthographicSize * 2 * screenRatio > upperRightCorner.y)
+        if (_cam.transform.position.y + _cam.orthographicSize > upperRightCorner.y)
             adjustDelta.y -= 1;
         _targetPosition += adjustDelta * Time.deltaTime * 20;
 
