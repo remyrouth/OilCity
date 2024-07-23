@@ -6,12 +6,11 @@ public abstract class AOEBuildingController : PayrateBuildingController, ITickRe
     public abstract int TickNumberInterval { get; }
     public abstract int Range { get; }
     public abstract void OnTick();
-    
-    protected HashSet<Vector2Int> GetTilesInRange()
+    public Vector2Int anchor => new Vector2Int((int)transform.position.x, (int)transform.position.y);
+    protected List<Vector2Int> GetTilesInRange()
     {
-        Vector2Int anchor = new Vector2Int((int)transform.position.x, (int)transform.position.y);
         Vector2Int upperRight = anchor + config.size;
-        HashSet<Vector2Int> tiles = new();
+        List<Vector2Int> tiles = new();
 
         int range = Range;
 
