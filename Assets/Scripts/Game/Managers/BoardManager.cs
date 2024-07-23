@@ -3,6 +3,8 @@ using System.Linq;
 using UnityEngine;
 public class BoardManager : Singleton<BoardManager>
 {
+    public const int MAP_SIZE_X = 40;
+    public const int MAP_SIZE_Y = 40;
     [field: SerializeField] public OilMapController OilEvaluator { get; private set; }
     public Dictionary<Vector2Int, TileObjectController> tileDictionary { get; private set; }
     public void Create(Vector2Int position, BuildingScriptableObject buildingSO)
