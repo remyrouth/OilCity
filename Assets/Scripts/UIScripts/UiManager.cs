@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace UIScripts
 {
-    public class UIStateMachine : Singleton<UIStateMachine>
+    public class UiManager : Singleton<UiManager>
     {
         [SerializeField] private GameObject[] availableUserInterfaces;
         private GameObject _currentUI;
@@ -18,20 +18,16 @@ namespace UIScripts
             SceneManager.LoadScene(sceneNumber);
         }
         
-        public void ChangeState(int stateIndex)
+        public void ChangeUI(int uiIndex)
         {
             _currentUI.SetActive(false);
-            _currentUI = availableUserInterfaces[stateIndex];
+            _currentUI = availableUserInterfaces[uiIndex];
             _currentUI.SetActive(true);
         }
 
-        public void ExitGame()
+        public void ChangeVisibility(int uiIndex)
         {
-            Application.Quit();
-
-            #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-            #endif
+            availableUserInterfaces[uiIndex].SetActive(!availableUserInterfaces[uiIndex].activeSelf);
         }
     }
 }

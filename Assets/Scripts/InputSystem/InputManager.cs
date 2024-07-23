@@ -34,12 +34,12 @@ namespace InputSystem
         {
             if (_gamePaused)
             {
-                UIStateMachine.Instance.ChangeState(0);
+                UiManager.Instance.ChangeUI(0);
                 Time.timeScale = 1;
             }
             else
             {
-                UIStateMachine.Instance.ChangeState(1);
+                UiManager.Instance.ChangeUI(1);
                 Time.timeScale = 0;
             }
             _gamePaused = !_gamePaused;
