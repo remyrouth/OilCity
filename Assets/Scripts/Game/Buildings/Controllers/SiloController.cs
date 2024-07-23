@@ -59,7 +59,7 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
                 TypeStored = received.type;
             if (received.type != TypeStored)
             {
-                Debug.LogWarning("Refinery just received Kerosene!!!", gameObject);
+                Debug.LogWarning("Refinery just received different fluids!!!", gameObject);
                 continue;
             }
             liquidSum += received.amount;
