@@ -44,7 +44,8 @@ public class BuildingManager : Singleton<BuildingManager>
 
     public void CancelBuilding()
     {
-        Destroy(_currentPreview);
+        if (_currentPreview != null)
+            Destroy(_currentPreview.gameObject);
         _currentConfig = null;
         _currentPreview = null;
         OnClicked = null;

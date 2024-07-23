@@ -31,7 +31,7 @@ public class TimeManager : Singleton<TimeManager>
     private Collection<ITickReceiver> m_tickableForest;
 
     // invariant: contains every tree node component in the game
-    private readonly Collection<ITreeNode> m_nodes;
+    private readonly Collection<ITreeNode> m_nodes = new();
 
     public float TimePerTick => m_timePerTick;
     private float m_timePerTick;

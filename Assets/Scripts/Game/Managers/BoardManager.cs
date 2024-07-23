@@ -32,13 +32,11 @@ public class BoardManager : Singleton<BoardManager>
         if (AreTilesOccupiedForBuilding(position, buildingSO))
             return false;
         var obj = buildingSO.CreateInstance();
+        obj.transform.position = new Vector3(position.x, position.y, 0);
         for (int i = 0; i < buildingSO.size.y; i++)
-        {
             for (int j = 0; j < buildingSO.size.x; j++)
-            {
                 tileDictionary[position + new Vector2Int(j, i)] = obj;
-            }
-        }
+            
         return true;
     }
     public bool IsTileOccupied(Vector2Int position)
@@ -113,10 +111,10 @@ public class BoardManager : Singleton<BoardManager>
 
     public void Destroy(TileObjectController tileObject)
     {
-        foreach (Vector2Int position in tileDictionary.Where(pos => pos.Value == tileObject).Select(pos => pos.Key))
-        {
+        var tiles = tileDictionary.Where(pos => pos.Value == tileObject).Select(pos => pos.Key).ToList();
+        foreach (Vector2Int position in tiles)
             Destroy(position);
-        }
+        Destroy(tileObject.gameObject);
     }
     private void Destroy(Vector2Int position)
     {

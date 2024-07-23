@@ -14,6 +14,8 @@ public abstract class OilMapController : MonoBehaviour, IAmountGiver<float>
     protected abstract float GetBaseValue(int x, int y);
     public float GetValueAtPosition(int x, int y)
     {
-        return GetBaseValue(x, y) - alreadyMined[new Vector2Int(x, y)];
+        if (alreadyMined.ContainsKey(new Vector2Int(x, y)))
+            return GetBaseValue(x, y) - alreadyMined[new Vector2Int(x, y)];
+        return GetBaseValue(x, y);
     }
 }
