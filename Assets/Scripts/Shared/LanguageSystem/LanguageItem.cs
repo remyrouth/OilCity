@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using Game.Managers;
 [CreateAssetMenu]
 public class LanguageItem : ScriptableObject
 {

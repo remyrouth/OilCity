@@ -7,8 +7,12 @@
     <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/UITestingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/UITestingScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Texts/Exit.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Texts/Exit.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Managers/SettingsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Managers/SettingsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shared/LanguageSystem/LanguageItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shared/LanguageSystem/LanguageItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shared/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shared/Singleton.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +94,7 @@
       <updated>1721638861652</updated>
       <workItem from="1721638862524" duration="10000" />
       <workItem from="1721638880782" duration="9675000" />
+      <workItem from="1721719949117" duration="3531000" />
     </task>
     <servers />
   </component>
