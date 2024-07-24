@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 public class MoneyManager : Singleton<MoneyManager> {
 
@@ -11,8 +12,8 @@ public class MoneyManager : Singleton<MoneyManager> {
     
     public float startingMoneyAmount = 100f;
 
-    [SerializeField]
-    private Text moneyText; 
+    [SerializeField] private TMP_Text moneyText;
+
 
     void Start() {
         money = startingMoneyAmount;
