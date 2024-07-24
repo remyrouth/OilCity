@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35647336490869a4fb254fdce3072584, type: 3}
+  m_Script: {fileID: 11500000, guid: 482d5d789f4247e479b276fe16911c51, type: 3}
   m_Name: OilWell
   m_EditorClassIdentifier: 
   <placementCost>k__BackingField: 10
   <removalCost>k__BackingField: 10
   <removalSatisfactionCost>k__BackingField: 10
-  <icon>k__BackingField: {fileID: 0}
+  <icon>k__BackingField: {fileID: -1249563610, guid: c728a01d863e3a24fb1db5da8bbb1737, type: 3}
   <prefab>k__BackingField: {fileID: 5643698438408399773, guid: 3f1efd5d40bcffb4fa0c63319b41af07, type: 3}
+  <previewPrefab>k__BackingField: {fileID: 5643698438408399773, guid: 96af1f85afd0cfa4a98f665bdff4c0b9, type: 3}
   <size>k__BackingField: {x: 2, y: 2}
+  <basePayrate>k__BackingField: 0
+  <payrateLevelDelta>k__BackingField: 0

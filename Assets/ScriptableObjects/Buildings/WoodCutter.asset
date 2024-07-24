@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35647336490869a4fb254fdce3072584, type: 3}
+  m_Script: {fileID: 11500000, guid: 482d5d789f4247e479b276fe16911c51, type: 3}
   m_Name: WoodCutter
   m_EditorClassIdentifier: 
   <placementCost>k__BackingField: 10
   <removalCost>k__BackingField: 10
   <removalSatisfactionCost>k__BackingField: 10
-  <icon>k__BackingField: {fileID: 0}
+  <icon>k__BackingField: {fileID: 1255410039, guid: c728a01d863e3a24fb1db5da8bbb1737, type: 3}
   <prefab>k__BackingField: {fileID: 7535017978457641841, guid: 048d0ae624f0f0e49a5cf9f897a90d63, type: 3}
+  <previewPrefab>k__BackingField: {fileID: 7535017978457641841, guid: 4bae361518b0fed4882c257608979554, type: 3}
   <size>k__BackingField: {x: 4, y: 4}
+  <basePayrate>k__BackingField: 0
+  <payrateLevelDelta>k__BackingField: 0

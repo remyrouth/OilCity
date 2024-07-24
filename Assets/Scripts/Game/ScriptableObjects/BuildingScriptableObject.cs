@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Building", menuName ="Building/Building")]
@@ -10,6 +8,7 @@ public class BuildingScriptableObject : ScriptableObject
     [field: SerializeField] public int removalSatisfactionCost { get; private set; }
     [field: SerializeField] public Sprite icon { get; private set; }
     [field: SerializeField] public GameObject prefab { get; private set; }
+    [field: SerializeField] public GameObject previewPrefab { get; private set; }
     [field: SerializeField] public Vector2Int size { get; private set; }
 
    public virtual TileObjectController CreateInstance()
@@ -19,4 +18,5 @@ public class BuildingScriptableObject : ScriptableObject
         tileObjectController.Initialize(this);
         return tileObjectController;
     }
+    public virtual void BeginBuilding() => BuildingManager.Instance.BeginBuilding(this);
 }

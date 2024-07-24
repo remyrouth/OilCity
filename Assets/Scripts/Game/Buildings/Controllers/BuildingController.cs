@@ -4,25 +4,28 @@ using UnityEngine;
 public abstract class BuildingController<T> : TileObjectController
     where T : BuildingScriptableObject
 {
-    [SerializeField] protected List<TileAction> TileActions; 
+    [SerializeField] protected List<TileAction> TileActions;
     protected T config;
+    public override Vector2Int size => config.size;
     /// <summary>
     /// Initialize controller with given configuration
     /// </summary>
     public virtual void Initialize(T config)
     {
         this.config = config;
-        //subscribe to TimeManger
-        
+        CreateInitialConnections();
+        TimeManager.Instance.RegisterReceiver(gameObject);
         //setup values
 
     }
     public override List<TileAction> GetActions() => TileActions;
     protected virtual void OnDestroy()
     {
-        //unsubscribe from TimeManager
+        TimeManager.Instance.DeregisterReceiver(gameObject);
         //reduce money by config.placementCost
         //reduce satisfaction by config.removalSatisfactionCost
         //play visual effect
     }
+
+    protected virtual void CreateInitialConnections() { }
 }
