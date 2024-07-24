@@ -40,6 +40,7 @@ public class TimeManager : Singleton<TimeManager>
     private void Awake()
     {
         m_tickableForest = new Collection<ITickReceiver>();
+        TicksPerMinute = m_ticksPerMinute;
     }
 
     /// <summary>
