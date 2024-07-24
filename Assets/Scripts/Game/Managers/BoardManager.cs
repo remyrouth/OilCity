@@ -36,7 +36,7 @@ public class BoardManager : Singleton<BoardManager>
         for (int i = 0; i < buildingSO.size.y; i++)
             for (int j = 0; j < buildingSO.size.x; j++)
                 tileDictionary[position + new Vector2Int(j, i)] = obj;
-            
+
         return true;
     }
     public bool IsTileOccupied(Vector2Int position)
@@ -98,6 +98,49 @@ public class BoardManager : Singleton<BoardManager>
         }
 
         return list;
+    }
+
+    /// <summary>
+    /// Gets tiles in range of a TileObjectController
+    /// </summary>
+    /// <param name="building"></param>
+    /// <param name="range"></param>
+    /// <returns></returns>
+    public List<Vector2Int> GetTilesInRange(TileObjectController building, int range)
+    {
+        Vector2Int upperRight = building.Anchor + building.size;
+        List<Vector2Int> tiles = new();
+
+        for (int x = building.Anchor.x - range; x < upperRight.x + range; x++)
+        {
+            for (int y = building.Anchor.y - range; y < upperRight.y + range; y++)
+            {
+                Vector2Int currentPos = new Vector2Int(x, y);
+                if (IsPositionOutsideBoard(currentPos))
+                    continue;
+                int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x);
+                int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y);
+
+                if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
+                    tiles.Add(currentPos);
+            }
+        }
+
+        return tiles;
+    }
+
+    /// <summary>
+    /// Checks if a given position is outside of the board
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    public bool IsPositionOutsideBoard(Vector2Int pos)
+    {
+        if (pos.x < 0 || pos.x >= MAP_SIZE_X)
+            return true;
+        if (pos.y < 0 || pos.y >= MAP_SIZE_Y)
+            return true;
+        return false;
     }
 
     /// <summary>
