@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BackToMenu
   m_EditorClassIdentifier: 
   text:
-  - "Wyjd\u017A do menu"
   - Back to Menu
+  - "Wyjd\u017A do menu"

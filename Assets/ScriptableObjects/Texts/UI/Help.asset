@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Help
   m_EditorClassIdentifier: 
   text:
-  - Pomoc
   - Help
+  - Pomoc

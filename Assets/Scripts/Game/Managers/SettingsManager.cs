@@ -23,6 +23,18 @@ namespace Game.Managers
         private void Awake()
         {
             SetLanguage();
+            if (PlayerPrefs.HasKey("SFXVolume"))
+            {
+                soundEffectVolume = PlayerPrefs.GetFloat("SFXVolume");
+            }
+            if (PlayerPrefs.HasKey("AmbientVolume"))
+            {
+                ambientSoundVolume = PlayerPrefs.GetFloat("AmbientVolume");
+            }
+            if (PlayerPrefs.HasKey("MusicVolume"))
+            {
+                musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+            }
         }
 
         public void SetLanguage(Language newLanguage)
@@ -60,6 +72,7 @@ namespace Game.Managers
                 if (soundEffectVolume != value)
                 {
                     soundEffectVolume = value;
+                    PlayerPrefs.SetFloat("SFXSoundVolume", soundEffectVolume);
                     OnSoundEffectVolumeChanged?.Invoke(soundEffectVolume);
                 }
             }
@@ -73,6 +86,7 @@ namespace Game.Managers
                 if (ambientSoundVolume != value)
                 {
                     ambientSoundVolume = value;
+                    PlayerPrefs.SetFloat("AmbientSoundVolume", ambientSoundVolume);
                     OnAmbientSoundVolumeChanged?.Invoke(ambientSoundVolume);
                 }
             }
@@ -86,11 +100,10 @@ namespace Game.Managers
                 if (musicVolume != value)
                 {
                     musicVolume = value;
+                    PlayerPrefs.SetFloat("MusicVolume", soundEffectVolume);
                     OnMusicVolumeChanged?.Invoke(musicVolume);
                 }
             }
         }
-    
     }
-
 }
