@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35647336490869a4fb254fdce3072584, type: 3}
+  m_Script: {fileID: 11500000, guid: 482d5d789f4247e479b276fe16911c51, type: 3}
   m_Name: Geologist
   m_EditorClassIdentifier: 
   <placementCost>k__BackingField: 10
@@ -19,3 +19,5 @@ MonoBehaviour:
   <prefab>k__BackingField: {fileID: 3141429110944717563, guid: 5a3dd716dac1c66478429f9a3993cb64, type: 3}
   <previewPrefab>k__BackingField: {fileID: 3141429110944717563, guid: 4651925815f9a1a41879884489970c47, type: 3}
   <size>k__BackingField: {x: 2, y: 1}
+  <basePayrate>k__BackingField: 0
+  <payrateLevelDelta>k__BackingField: 0
