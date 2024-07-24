@@ -10,12 +10,9 @@ public class OilTileMapController : OilMapController
     {
         if (_oilTileMap == null)
             _oilTileMap = GetComponent<Tilemap>();
-        try
-        {
-            return _oilTileMap.GetColor(new Vector3Int(x, y)).g;
-        } catch (Exception)
-        {
+        if (!_oilTileMap.HasTile(new Vector3Int(x, y, 0)))
             return 0;
-        }
+        return _oilTileMap.GetColor(new Vector3Int(x, y)).g;
+
     }
 }

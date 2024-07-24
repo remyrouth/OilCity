@@ -7,7 +7,7 @@ public class TileSelector : Singleton<TileSelector>
     public Vector2Int MouseToGrid()
     {
         Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int mouseCellPosition = new Vector2Int(Mathf.CeilToInt(mouseSpotPosition.x), Mathf.CeilToInt(mouseSpotPosition.y));
+        Vector2Int mouseCellPosition = new Vector2Int((int)mouseSpotPosition.x, (int)mouseSpotPosition.y);
         return mouseCellPosition;
     }
     public void OnMouseClick()

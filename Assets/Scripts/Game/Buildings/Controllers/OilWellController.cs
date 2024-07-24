@@ -16,10 +16,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         {
             for (int y = 0; y < config.size.y; y++)
             {
-                float oilAvailable = BoardManager.Instance.OilEvaluator.GetValueAtPosition(x, y);
+                float oilAvailable = BoardManager.Instance.OilEvaluator.GetValueAtPosition(Anchor.x + x, Anchor.y + y);
                 float minedFromTile = Mathf.Clamp(oilAvailable, 0, flowRate);
                 amountMined += minedFromTile;
-                BoardManager.Instance.OilEvaluator.IncreaseAmountMinedAtPosition(x,y,minedFromTile);
+                BoardManager.Instance.OilEvaluator.IncreaseAmountMinedAtPosition(Anchor.x + x, Anchor.y + y, minedFromTile);
             }
         }
         return (FlowType.Oil, amountMined);
