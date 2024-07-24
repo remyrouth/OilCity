@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     public bool invert = false;
 
     private Vector2Int bottomLeftCorner => Vector2Int.zero;
-    private Vector2Int  upperRightCorner => new Vector2Int(BoardManager.MAP_SIZE_X,BoardManager.MAP_SIZE_Y);
+    private Vector2Int upperRightCorner => new Vector2Int(BoardManager.MAP_SIZE_X, BoardManager.MAP_SIZE_Y);
 
     private float _targetZoom;
     private Vector3 _targetPosition;
@@ -35,9 +35,12 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            _targetPosition += new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
+            Vector3 delta = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
+            delta *= _targetZoom / zoomMax;
             if (invert)
-                _targetPosition *= -1;
+                delta *= -1;
+            _targetPosition += delta;
+
             _targetPosition.y = Mathf.Clamp(_targetPosition.y, bottomLeftCorner.y, upperRightCorner.y);
             _targetPosition.x = Mathf.Clamp(_targetPosition.x, bottomLeftCorner.x, upperRightCorner.x);
         }
@@ -46,7 +49,7 @@ public class CameraController : MonoBehaviour
 
     private void cameraZoom()
     {
-        _targetZoom = Mathf.Clamp(_targetZoom + Input.mouseScrollDelta.y, zoomMin, zoomMax);
+        _targetZoom = Mathf.Clamp(_targetZoom - Input.mouseScrollDelta.y, zoomMin, zoomMax);
     }
 
     private void AdjustCameraBounds()
