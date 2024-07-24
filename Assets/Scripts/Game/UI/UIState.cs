@@ -13,7 +13,19 @@ public abstract class UIState : MonoBehaviour
         }
     }
     public abstract GameState type { get; }
-    public virtual void OnEnter() { CanvasGroup.interactable = true; CanvasGroup.alpha = 1; }
+
+    public virtual void OnEnter()
+    {
+        CanvasGroup.interactable = true; 
+        CanvasGroup.alpha = 1;
+        CanvasGroup.blocksRaycasts = true;
+    }
     public virtual void OnUpdate() { }
-    public virtual void OnExit() { CanvasGroup.interactable = false; CanvasGroup.alpha = 0; }
+
+    public virtual void OnExit()
+    {
+        CanvasGroup.interactable = false; 
+        CanvasGroup.alpha = 0;
+        CanvasGroup.blocksRaycasts = false;
+    }
 }
