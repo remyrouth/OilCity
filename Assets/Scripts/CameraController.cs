@@ -29,6 +29,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         HandleCameraMovement();
+        HandleCameraZoom();
         AdjustCameraBounds();
     }
     private void HandleCameraMovement()
@@ -44,10 +45,9 @@ public class CameraController : MonoBehaviour
             _targetPosition.y = Mathf.Clamp(_targetPosition.y, bottomLeftCorner.y, upperRightCorner.y);
             _targetPosition.x = Mathf.Clamp(_targetPosition.x, bottomLeftCorner.x, upperRightCorner.x);
         }
-        cameraZoom();
     }
 
-    private void cameraZoom()
+    private void HandleCameraZoom()
     {
         _targetZoom = Mathf.Clamp(_targetZoom - Input.mouseScrollDelta.y, zoomMin, zoomMax);
     }

@@ -45,9 +45,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8ce1229feb95e4b9e5cf84bab833ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _actionsPivot: {x: 0, y: 0}
   _spriteRenderer: {fileID: 894880373097073525}
   sprites:
-  - {fileID: 21300000, guid: f45c42b57757cc747807b51002506be7, type: 3}
+  - {fileID: 1143323213, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+  - {fileID: -2144104700, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+  - {fileID: -956163203, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+  - {fileID: -1604599271, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+  - {fileID: 1200622861, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+  - {fileID: 228364545, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+  - {fileID: -265133454, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+  - {fileID: 873037789, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
 --- !u!1 &7785336662693661705
 GameObject:
   m_ObjectHideFlags: 0
