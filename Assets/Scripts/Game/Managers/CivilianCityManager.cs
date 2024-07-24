@@ -54,7 +54,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
 
         for (int i = 2; i <= 10; i++)
         {
-             List<Vector2Int> freeTiles = GetTilesInRange(building, i).Where(e => !BoardManager.Instance.IsTileOccupied(e)).ToList();
+             List<Vector2Int> freeTiles = BoardManager.Instance.GetTilesInRange(building, i).Where(e => !BoardManager.Instance.IsTileOccupied(e)).ToList();
             if (freeTiles.Any())
             {
                 Vector2Int pos = freeTiles[Random.Range(0,freeTiles.Count)];
@@ -63,28 +63,5 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
             }
         }
 
-    }
-    //Same code as in the AOEBuilding Controller
-    private List<Vector2Int> GetTilesInRange(TileObjectController building, int range)
-    {
-    Vector2Int upperRight = building.Anchor + building.size;
-        List<Vector2Int> tiles = new();
-
-
-
-        for (int x = building.Anchor.x - range; x <= upperRight.x + range; x++)
-        {
-            for (int y = building.Anchor.y - range; y <= upperRight.y + range; y++)
-            {
-                Vector2Int currentPos = new Vector2Int(x, y);
-                int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x);
-                int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y);
-
-                if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
-                    tiles.Add(currentPos);
-            }
-        }
-
-        return tiles;
     }
 }
