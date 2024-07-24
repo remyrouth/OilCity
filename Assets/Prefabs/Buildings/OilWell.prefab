@@ -129,6 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2968e48d86fa8e54cb23066be75a1036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0, y: 1.25}
+  _actionsPivot: {x: 1, y: 1.5}
   TileActions:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
