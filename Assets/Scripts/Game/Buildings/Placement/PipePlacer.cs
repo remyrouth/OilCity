@@ -8,7 +8,7 @@ using UnityEngine;
 // TODO undoing/canceling pipe placement?
 public class PipePlacer : BuildingPlacer
 {
-    [SerializeField] private SpriteRenderer m_singlePipePreviewPrefab;
+    [SerializeField] private GameObject m_singlePipePreviewPrefab;
 
     private Vector2Int m_start;
     private Vector2Int m_end;
@@ -243,7 +243,7 @@ public class PipePlacer : BuildingPlacer
             }
 
             var pipe = Instantiate(m_so.prefab, m_pointArray[index], Quaternion.identity);
-            pipe.transform.parent = tile_object;
+            pipe.transform.parent = tile_object.transform;
             // TODO this should orient the pipe and change its sprite to match the flow start and end for the segment.
         }
 

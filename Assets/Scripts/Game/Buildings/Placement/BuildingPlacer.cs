@@ -25,7 +25,7 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
     public virtual bool IsValidPlacement(BuildingScriptableObject so)
     {
         var mousePos = TileSelector.Instance.MouseToGrid();
-        return BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so);
+        return !BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so);
     }
 
     public virtual IEnumerator IEDoBuildProcess() 
@@ -36,14 +36,13 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
             UpdatePreview();
 
             yield return null;
-
-            m_wasMouseClicked = false;
         }
 
 
         // create the instance of the thing and set its position
         Vector2Int pos = TileSelector.Instance.MouseToGrid();
         m_so.CreateInstance().transform.position = new Vector3(pos.x, pos.y, 0);
+
     }
 
     public virtual void Cleanup()

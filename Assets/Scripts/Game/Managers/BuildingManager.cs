@@ -58,7 +58,7 @@ public class BuildingManager : Singleton<BuildingManager>
 
     public void CancelBuilding()
     {
-        _currentPlacer.Cleanup();
+        _currentPlacer?.Cleanup();
         _currentPlacer = null;
 
         _currentBuildingSO = null;
