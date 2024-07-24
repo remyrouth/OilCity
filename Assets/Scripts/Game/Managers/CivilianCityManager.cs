@@ -10,6 +10,10 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     private int _tickTimer = 0;
     public int tickNumberInterval = 10;
     
+    /// <summary>
+    /// Checks how much worker satisfaction the player currently has, based on that it changes the tickNumberInterval
+    /// impacting the frequency of InvokeAction execution.
+    /// </summary>
     public void OnTick()
     {
         int currWorkerSatisfaction = WorkerSatisfactionManager.Instance.workerSatisfaction;
@@ -28,39 +32,43 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
             InvokeAction();
         }
     }
-
+    /// <summary>
+    /// Tries to build a civilian building around a player placed building.
+    /// Looks for a building placed by the player to build around, in case no building exists, it stops. After finding a building, checks if any of the nearby tiles are free.
+    /// If doesn't find a free tile, the range in which it tries to place a building increases.
+    /// </summary>
     public void InvokeAction()
     {
         TileObjectController building = null;
-        while(building is null)
-        {            
-            TileObjectController[] tmp = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None);
-            if (tmp.Length <= 0)
-                return;
-            int range = Random.Range(0, tmp.Length);
-            if (tmp[range].TryGetComponent<TreeController>(out _)) continue;
-            building = tmp[range];
-        }
-        bool doFreeTilesExist = false;
-        int i = 2;
-        while (doFreeTilesExist)
+        TileObjectController[] tmpArray = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None);
+        List<TileObjectController> tmpList = tmpArray.ToList();
+        if (tmpList.Count <= 0)
+            return;
+        while (building is null)
         {
-            List<Vector2Int> freeTiles = GetTilesInRange(building, i);
-            if (!freeTiles.Any())
+            if (tmpList.Count <= 0)
+                return;
+            int range = Random.Range(0, tmpList.Count);
+            if (tmpList[range].TryGetComponent<TreeController>(out _))
             {
-                i++;
+                tmpList.RemoveAt(range);
                 continue;
             }
-            else
+            building = tmpList[range];
+        }
+        List<Vector2Int> freeTiles = GetTilesInRange(building, 2).Where(e => !BoardManager.Instance.IsTileOccupied(e)).ToList();
+        for (int i = 3; i >= 10; i++)
+        {
+            if (freeTiles.Any())
             {
                 BoardManager.Instance.Create(freeTiles[Random.Range(0, freeTiles.Count)], civilianBuilding);
-                doFreeTilesExist = true;
+                break;
             }
-            
+            freeTiles = GetTilesInRange(building, i).Where(e => !BoardManager.Instance.IsTileOccupied(e)).ToList();
         }
-        
-    }
 
+    }
+    //Same code as in the AOEBuilding Controller
     private List<Vector2Int> GetTilesInRange(TileObjectController building, int range)
     {
     Vector2Int upperRight = building.Anchor + building.size;

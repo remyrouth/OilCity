@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MoneyManager : Singleton<MoneyManager> {
 
-    public float money;
+    public float money { get; private set; }
     public float minMoneyAmount => 0;
 
     public float saveInterval;
@@ -29,11 +29,6 @@ public class MoneyManager : Singleton<MoneyManager> {
             return false;
         }
     }
-
-    public float GetMoney() {
-        return money;
-    }
-
     public void AddMoney(float amount) {
         money = Mathf.Round(money * 100f) / 100f + Mathf.Round(amount * 100f) / 100f;
     }
