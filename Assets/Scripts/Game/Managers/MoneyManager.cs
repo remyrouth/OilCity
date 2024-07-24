@@ -57,7 +57,7 @@ public class MoneyManager : Singleton<MoneyManager> {
 
     private void UpdateMoneyUI() {
         if (moneyText != null) {
-            moneyText.text = $"Money: {money.ToString("F2)}";
+            moneyText.text = $"Money: {money.ToString("F2")}";
         }
     }
 }
