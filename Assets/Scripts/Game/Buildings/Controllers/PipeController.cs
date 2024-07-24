@@ -89,10 +89,14 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <summary>
     /// Returns a singleton list of the child this pipe sources input from. The list can be modified with no
     /// affect on the pipe itself. Use Add/DisownChild if you need to do that.
+    /// 
+    /// Returns an empty list if the child is null.
     /// </summary>
     /// <returns></returns>
     public List<IFlowable> GetChildren()
     {
+        if (m_child == null) return new List<IFlowable>();
+
         var singleton_list = new List<IFlowable>
         {
             m_child
@@ -135,6 +139,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <returns></returns>
     public (FlowType type, float amount) SendFlow()
     {
+        if (m_child == null) return (FlowType.None, 0f);
+
         return m_child.SendFlow();
     }
 

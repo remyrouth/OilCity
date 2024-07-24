@@ -3,6 +3,7 @@
 /// </summary>
 public enum FlowType
 {
+    None,
     Oil,
     Kerosene
 }

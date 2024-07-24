@@ -4,11 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // TODO undoing/canceling pipe placement?
 public class PipePlacer : BuildingPlacer
 {
     [SerializeField] private GameObject m_singlePipePreviewPrefab;
+    [SerializeField] private float m_pipePreviewZOffset = -0.5f;
 
     private Vector2Int m_start;
     private Vector2Int m_end;
@@ -18,7 +20,7 @@ public class PipePlacer : BuildingPlacer
 
     private SpriteRenderer m_singlePipePreview;
     private LineRenderer m_pathfindingPreview;
-    private Vector3[] m_pointArray;
+    private Vector3[] m_pointArray = new Vector3[0];
 
     /// <summary>
     /// A two-element array where the first index is the pipe-start preview prefab instance reference, and the second index
@@ -29,13 +31,14 @@ public class PipePlacer : BuildingPlacer
     private void Awake()
     {
         m_previewFabInstances = new GameObject[2];
+        m_pathfindingPreview = GetComponent<LineRenderer>();
     }
 
     public override void UpdatePreview()
     {
         var mousePos = TileSelector.Instance.MouseToGrid();
         m_singlePipePreview.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-        var can_be_built = IsValidPlacement(null);
+        var can_be_built = IsValidPlacement(m_so);
 
         m_singlePipePreview.color = new Color(1, 1, 1, can_be_built ? 1 : 0.75f);
 
@@ -43,7 +46,7 @@ public class PipePlacer : BuildingPlacer
         {
             var current_end = TileSelector.Instance.MouseToGrid();
 
-            if (m_start.Equals(current_end)) return; // skip if placing end on start
+            if (m_start.Equals(current_end) || !can_be_built) return; // skip if placing end on start
 
             // use linerenderer rather than creating lots of gameobjects
 
@@ -53,7 +56,7 @@ public class PipePlacer : BuildingPlacer
 
             for (int i = 0; i < list.Count; i++)
             {
-                array[i] = new Vector3(list[i].x, list[i].y, 0);
+                array[i] = new Vector3(list[i].x, list[i].y, m_pipePreviewZOffset);
             }
 
             m_pointArray = array;
@@ -66,31 +69,38 @@ public class PipePlacer : BuildingPlacer
     #region Pathfinding
     private List<Vector2Int> Pathfind(Vector2Int start, Vector2Int end)
     {
-        var frontier = new SimplePriorityQueue<Vector2Int, float>();
+        var frontier = new SimplePriorityQueue<Vector2Int, int>();
 
         var came_from = new Dictionary<Vector2Int, Vector2Int>();
-        var cost_so_far = new Dictionary<Vector2Int, float>();
+        var cost_so_far = new Dictionary<Vector2Int, int>();
 
-        frontier.Enqueue(start, 0f);
+        frontier.Enqueue(start, 0);
         came_from[start] = start;
-        cost_so_far[start] = 0f;
+        cost_so_far[start] = 0;
 
         while (frontier.Count > 0)
         {
             Vector2Int current = frontier.Dequeue();
 
             if (current == end) break;
+            if (current != start && BoardManager.Instance.IsTileOccupied(current)) continue;
 
             Vector2Int[] neighbors = new Vector2Int[] { current + Vector2Int.up, current + Vector2Int.down, current + Vector2Int.left, current + Vector2Int.right };
 
             foreach (Vector2Int npos in neighbors)
             {
-                float new_cost = cost_so_far[current] + (BoardManager.Instance.IsTileOccupied(current) ? 99f : 1f);
+                if ((npos.x < 0 || npos.x >= BoardManager.MAP_SIZE_X)
+                    || (npos.y < 0 || npos.y >= BoardManager.MAP_SIZE_Y))
+                {
+                    continue;
+                }
+
+                int new_cost = cost_so_far[current] + (BoardManager.Instance.IsTileOccupied(current) ? 999 : 1);
 
                 if (!cost_so_far.ContainsKey(npos) || new_cost < cost_so_far[npos])
                 {
                     cost_so_far[npos] = new_cost;
-                    float priority = new_cost + ManhattanDistance(npos, end);
+                    int priority = new_cost + ManhattanDistance(npos, end);
                     frontier.Enqueue(npos, priority);
                     came_from[npos] = current;
                 }
@@ -99,15 +109,15 @@ public class PipePlacer : BuildingPlacer
 
         // path rebuilding
         var path = new List<Vector2Int>();
-        var step_cell = end;
+        var step_pos = end;
 
-        while (came_from.ContainsKey(step_cell))
+        while (came_from.ContainsKey(step_pos))
         {
-            path.Add(step_cell);
+            path.Add(step_pos);
 
-            if (step_cell == start) break;
+            if (step_pos == start) break;
 
-            step_cell = came_from[step_cell];
+            step_pos = came_from[step_pos];
         }
 
         return path;
@@ -139,6 +149,8 @@ public class PipePlacer : BuildingPlacer
         {
             if (BoardManager.Instance.tileDictionary[mousePos].TryGetComponent<IFlowable>(out var flowable))
             {
+                //var flowable = BoardManager.Instance.tileDictionary[mousePos].GetComponent<IFlowable>();
+
                 // logic:
                 // if the start pipe has not been placed yet, then we're in the process of placing the starting pipe.
                 // that means that whatever building was clicked on will be drawn FROM, into the pipe. Therefore, we check
@@ -169,7 +181,7 @@ public class PipePlacer : BuildingPlacer
         m_singlePipePreview = Instantiate(m_singlePipePreviewPrefab.gameObject).GetComponent<SpriteRenderer>();
         m_previewFabInstances[0] = m_singlePipePreview.gameObject;
 
-        while (!Input.GetMouseButtonDown(0) || !IsValidPlacement(m_so))
+        while (!WasMouseClicked || !IsValidPlacement(m_so))
         {
             UpdatePreview();
 
@@ -183,7 +195,7 @@ public class PipePlacer : BuildingPlacer
         m_previewFabInstances[1] = m_singlePipePreview.gameObject; // register that we've prepared the 2nd preview gameobject
 
         // while the player doesn't click or they place in invalid spot, keep waiting and updating
-        while (!Input.GetMouseButtonDown(0) || !IsValidPlacement(m_so))
+        while (!WasMouseClicked || !IsValidPlacement(m_so))
         {
             UpdatePreview();
 
@@ -214,6 +226,7 @@ public class PipePlacer : BuildingPlacer
                 //
                 // there might still be an error if the pipe is length 1. this will only happen if a single pipe
                 // is placed with the same start and end and on a blank tile.
+
                 if (m_pointArray.Length > 1 && BoardManager.Instance.IsTileOccupied(v2i))
                 {
                     if (start_pipe)
@@ -247,7 +260,7 @@ public class PipePlacer : BuildingPlacer
             // TODO this should orient the pipe and change its sprite to match the flow start and end for the segment.
         }
 
-        tile_object.transform.position = new Vector3(m_start.x, m_start.y, 0); // say that the start position of the system is at the first pipe
+        Debug.Log(string.Format("Start Dir {0}, End Dir {1}", m_startDir, m_endDir));
 
         if (!tile_object.TryGetComponent<PipeController>(out var component))
         {
@@ -256,6 +269,11 @@ public class PipePlacer : BuildingPlacer
 
         component.InitializePipe(m_start, m_end, m_startDir, m_endDir);
         component.Initialize(m_so);
+
+        foreach (var value in m_pointArray)
+        {
+            BoardManager.Instance.tileDictionary[Utilities.Vector3ToVector2Int(value)] = component;
+        }
     }
 
     public override void Cleanup()
