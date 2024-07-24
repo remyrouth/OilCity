@@ -5,15 +5,12 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 
-
 namespace Game.Managers
 {
     public class SettingsManager : Singleton<SettingsManager>
     {
         public Language CurrentLanguage { get; private set; } = Language.English;
-        [SerializeField] private TMP_Dropdown languageDropdown;
-
-
+        
         public delegate void VolumeChanged(float newVolume);
         public event VolumeChanged OnSoundEffectVolumeChanged;
         public event VolumeChanged OnAmbientSoundVolumeChanged;
@@ -28,14 +25,9 @@ namespace Game.Managers
             SetLanguage();
         }
 
-        public void SetLanguage(int languageIndex)
+        public void SetLanguage(Language newLanguage)
         {
-            CurrentLanguage = languageIndex switch
-            {
-                0 => Language.English,
-                1 => Language.Polish,
-                _ => Language.English
-            };
+            CurrentLanguage = newLanguage;
         
             var languageBasedObjects = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
                 .OfType<ILanguageChangeable>();
@@ -43,7 +35,6 @@ namespace Game.Managers
                 lbo.UpdateText();
         
             PlayerPrefs.SetString("Language", CurrentLanguage.ToString());
-            PlayerPrefs.SetInt("LanguageIndex", languageDropdown.value);
         }
 
         public void SetLanguage()
@@ -58,16 +49,8 @@ namespace Game.Managers
                 "Polish" => Language.Polish,
                 _ => Language.English
             };
-        
-            var languageBasedObjects = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
-                .OfType<ILanguageChangeable>();
-            foreach (var lbo in languageBasedObjects)
-                lbo.UpdateText();
-            
-            languageDropdown.SetValueWithoutNotify(PlayerPrefs.GetInt("LanguageIndex"));
+            SetLanguage(CurrentLanguage);
         }
-
-
 
         public float SoundEffectVolume
         {
