@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Pause
   m_EditorClassIdentifier: 
   text:
-  - Gra Zatrzymana
   - Game Paused
+  - Gra Zatrzymana

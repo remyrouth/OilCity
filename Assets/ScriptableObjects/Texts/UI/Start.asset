@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Start
   m_EditorClassIdentifier: 
   text:
-  - "Rozpocznij Gr\u0119"
   - Start Game
+  - "Rozpocznij Gr\u0119"

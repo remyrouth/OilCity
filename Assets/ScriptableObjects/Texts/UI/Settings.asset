@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Settings
   m_EditorClassIdentifier: 
   text:
-  - Ustawienia
   - Settings
+  - Ustawienia

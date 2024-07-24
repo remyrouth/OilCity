@@ -18,8 +18,8 @@ public class LanguageItem : ScriptableObject
 }
 public enum Language
 {
-    Polish,
-    English
+    English,
+    Polish
 }
 
 #if UNITY_EDITOR
