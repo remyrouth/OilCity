@@ -8,12 +8,21 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
 {
     [field: SerializeField] private BuildingScriptableObject civilianBuilding;
     private int _tickTimer = 0;
-    public int TickNumberInterval => 10;
+    public int tickNumberInterval = 10;
     
     public void OnTick()
     {
+        int currWorkerSatisfaction = WorkerSatisfactionManager.Instance.workerSatisfaction;
+        if (currWorkerSatisfaction >= 90)
+            tickNumberInterval = 3;
+        else if (currWorkerSatisfaction >= 70)
+            tickNumberInterval = 5;
+        else if (currWorkerSatisfaction >= 50)
+            tickNumberInterval = 8;
+        else
+            tickNumberInterval = 10;
         _tickTimer++;
-        if (_tickTimer > TickNumberInterval)
+        if (_tickTimer > tickNumberInterval)
         {
             _tickTimer = 0;
             InvokeAction();

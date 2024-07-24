@@ -3,14 +3,13 @@ using System.Collections;
 
 public class MoneyManager : Singleton<MoneyManager> {
 
-    public int money;
+    public float money;
+    public float minMoneyAmount => 0;
 
     public float saveInterval;
 
-
-
     void Start() {
-        AddMoney(PlayerPrefs.GetInt("MoneySave", 0));
+        AddMoney(PlayerPrefs.GetFloat("MoneySave", 0));
 
         StartCoroutine("SaveMoney");
     }
@@ -18,24 +17,34 @@ public class MoneyManager : Singleton<MoneyManager> {
     public IEnumerator SaveMoney() {
         while (true) {
             yield return new WaitForSeconds(saveInterval);
-            PlayerPrefs.SetInt("MoneySave", money);
+            PlayerPrefs.SetFloat("MoneySave", Mathf.Round(money*100f)/100f);
         }
     }
 
-    public bool BuyItem(int cost) {
+    public bool BuyItem(float cost) {
         if (money - cost >= 0) {
-            money -= cost;
+            ReduceMoney(cost);
             return true;
         } else {
             return false;
         }
     }
 
-    public int GetMoney() {
+    public float GetMoney() {
         return money;
     }
 
-    public void AddMoney(int amount) {
-        money += amount;
+    public void AddMoney(float amount) {
+        money = Mathf.Round(money * 100f) / 100f + Mathf.Round(amount * 100f) / 100f;
+    }
+    public void ReduceMoney(float amount)
+    {
+        money = Mathf.Round(money * 100f) / 100f - Mathf.Round(amount * 100f) / 100f;
+        if (money < minMoneyAmount)
+            gameOver();
+    }
+    public void gameOver()
+    {
+        Debug.Log("You lost...");
     }
 }
