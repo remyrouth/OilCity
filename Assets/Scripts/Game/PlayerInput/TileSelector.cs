@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class TileSelector : Singleton<TileSelector>
 {
-    private void Update()
-    {
-        if (Input.GetMouseButtonUp(0))
-            OnMouseClick();
-    }
 
     public Vector2Int MouseToGrid()
     {
@@ -15,7 +10,7 @@ public class TileSelector : Singleton<TileSelector>
         Vector2Int mouseCellPosition = new Vector2Int(Mathf.CeilToInt(mouseSpotPosition.x), Mathf.CeilToInt(mouseSpotPosition.y));
         return mouseCellPosition;
     }
-    private void OnMouseClick()
+    public void OnMouseClick()
     {
         if (!BoardManager.Instance.IsTileOccupied(MouseToGrid()))
         {

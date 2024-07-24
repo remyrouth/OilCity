@@ -7,16 +7,16 @@ namespace OilCity {
 
         [MenuItem("BuildingPlacement/RefreshBuildings")]
         static void RefreshBuildings() {
-            var buildings = FindObjectsOfType<BasicBuilding>();
-            foreach (var element in buildings) {
-                element.OnBuild();
-            }
+            //var buildings = FindObjectsOfType<BasicBuilding>();
+            //foreach (var element in buildings) {
+            //    element.OnBuild();
+            //}
         }
 
         [MenuItem("BuildingPlacement/PlaceBuilding")]
         static void PlaceBuilding() {
             Vector2Int position = new Vector2Int(5, 5);
-            BuildingScriptableObject buildingSO = BuildingScriptableObject();
+            //BuildingScriptableObject buildingSO = BuildingScriptableObject();
         }
 
     }

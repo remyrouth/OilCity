@@ -15,13 +15,13 @@ public class BuildingManager : Singleton<BuildingManager>
             var canBuild = BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, _currentConfig);
             _currentPreview.SetState(canBuild);
         }
-        if (Input.GetMouseButtonDown(0))
-            OnClicked?.Invoke();
     }
+    public void OnMouseClick()=>OnClicked?.Invoke();
 
     public void BeginBuilding(BuildingScriptableObject SO)
     {
         CancelBuilding();
+        UIStateMachine.Instance.ChangeState(GameState.BuildingUI);
         _currentConfig = SO;
         _currentPreview = Instantiate(SO.previewPrefab).GetComponent<BuildingPreview>();
         OnClicked = PlaceIfCan;
@@ -49,6 +49,7 @@ public class BuildingManager : Singleton<BuildingManager>
         _currentConfig = null;
         _currentPreview = null;
         OnClicked = null;
+        UIStateMachine.Instance.ChangeState(GameState.GameUI);
     }
 
 }
