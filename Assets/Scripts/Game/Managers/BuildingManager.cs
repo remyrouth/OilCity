@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildingManager : Singleton<BuildingManager>
 {
-    private BuildingPreview _currentPreview;
+    private IPlacer _currentPlacer;
     private BuildingScriptableObject _currentBuildingSO;
 
     private Coroutine _coroutine;
@@ -18,23 +18,24 @@ public class BuildingManager : Singleton<BuildingManager>
         }
 
         _currentBuildingSO = so;
-        _currentPreview = Instantiate(so.previewPrefab).GetComponent<BuildingPreview>();
-        _currentPreview.InitSO(so);
+        _currentPlacer = Instantiate(so.previewPrefab).GetComponent<BuildingPlacer>();
+        _currentPlacer.InitSO(so);
 
         _coroutine = StartCoroutine(IEDoBuildingProcess());
     }
 
     public void CancelBuilding()
     {
-        Destroy(_currentPreview);
-        _currentPreview = null;
+        _currentPlacer.Cleanup();
+        _currentPlacer = null;
+
         _currentBuildingSO = null;
         _coroutine = null;
     }
 
     private IEnumerator IEDoBuildingProcess()
     {
-        yield return _currentPreview.IEDoBuildProcess();
+        yield return _currentPlacer.IEDoBuildProcess();
 
         CancelBuilding();
     }

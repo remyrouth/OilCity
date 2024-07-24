@@ -5,100 +5,147 @@ using static UnityEditor.Rendering.CameraUI;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
 {
+    // only the child is actually invoked; the parent is more so just for establishing the flow tree
+    private IFlowable m_child; // where you get the flow from (the start)
+    private IFlowable m_parent; // where the flow goes to (the end)
 
-    private IFlowable m_start; // where you get the flow from
-    private IFlowable m_end; // where the flow goes to
     private PipeFlowDirection m_startDirection; // the orientation of the start pipe
     private PipeFlowDirection m_endDirection; // the orientation of the end pipe
+
     private Vector2Int m_startPipePos; // position of the start pipe
     private Vector2Int m_endPipePos; // position of the end pipe
 
     /// <summary>
-    /// Init method for just pipes. Should be called after the full pipe has been laid.
+    /// Init method for just pipes. Provides necessary values for functionality.
     /// </summary>
     /// <param name="start_pos"></param>
     /// <param name="end_pos"></param>
     /// <param name="start_pipe_dir"></param>
     /// <param name="end_pipe_dir"></param>
-    public void MakePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir)
+    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir)
     {
-        // get the positions of where input and output source tiles would be relative to the start and end positions of the pipe
-        var child_pos = start_pos + GetPipeFlowDirOffset(start_pipe_dir);
-        var parent_pos = end_pos + GetPipeFlowDirOffset(end_pipe_dir);
+        // notarize all the values passed in
+        m_startPipePos = start_pos;
+        m_endPipePos = end_pos;
 
-        if (BoardManager.Instance.IsTileOccupied(child_pos))
-        {
-            m_start = BoardManager.Instance.tileDictionary[child_pos].GetComponent<IFlowable>();
-        }
-
-        if (BoardManager.Instance.IsTileOccupied(parent_pos))
-        {
-            m_end = BoardManager.Instance.tileDictionary[parent_pos].GetComponent<IFlowable>();
-        }
+        m_startDirection = start_pipe_dir;
+        m_endDirection = end_pipe_dir;
     }
 
-    // todo delete this method?
-    public void CreateInitialConnections(Vector2Int size)
+    protected override void CreateInitialConnections()
     {
         // todo fill out the m_start and m_end fields in this method
         // difficulty with this is that we don't exactly have pipe-laying done, so we don't know when Instantiate will be called.
         // in theory it would be after the end pipe was placed; i.e. after the controller has been made?
         // then does that mean we'll have to call TimeManager register again?! I think we need a custom building controller Instantiate definition for pipes...
+
+        var child_pos = m_startPipePos + Utilities.GetPipeFlowDirOffset(m_startDirection);
+        var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
+
+        if (BoardManager.Instance.IsTileOccupied(child_pos))
+        {
+            m_child = BoardManager.Instance.tileDictionary[child_pos].GetComponent<IFlowable>();
+        }
+
+        if (BoardManager.Instance.IsTileOccupied(parent_pos))
+        {
+            m_parent = BoardManager.Instance.tileDictionary[parent_pos].GetComponent<IFlowable>();
+        }
     }
 
+    /// <summary>
+    /// Pipes can connect to other pipes.
+    /// </summary>
+    /// <returns></returns>
+    public (bool can_input, bool can_output) GetFlowConfig() => (true, true);
+
     #region tree stuff
+    /// <summary>
+    /// If the pipe has no child source or the current child isn't the input child, reassign.
+    /// It isn't possible to "add multiple" children to a pipe because there's only one connection.
+    /// </summary>
+    /// <param name="child"></param>
     public void AddChild(IFlowable child)
     {
-        if (m_start == null || !m_start.Equals(child))
+        if (m_child == null || !m_child.Equals(child))
         {
-            m_start = child;
+            m_child = child;
         }
         
     }
 
+    /// <summary>
+    /// If the given child is equal to the current child, dereference them.
+    /// </summary>
+    /// <param name="child"></param>
     public void DisownChild(IFlowable child)
     {
-        if (m_start.Equals(child))
+        if (m_child.Equals(child))
         {
-            m_start = null;
+            m_child = null;
         }
     }
 
+    /// <summary>
+    /// Returns a singleton list of the child this pipe sources input from. The list can be modified with no
+    /// affect on the pipe itself. Use Add/DisownChild if you need to do that.
+    /// </summary>
+    /// <returns></returns>
     public List<IFlowable> GetChildren()
     {
         var singleton_list = new List<IFlowable>
         {
-            m_start
+            m_child
         };
 
         return singleton_list;
     }
 
+    /// <summary>
+    /// Returns the parent of the pipe; i.e. the destination of the flow from the child.
+    /// </summary>
+    /// <returns></returns>
     public IFlowable GetParent()
     {
-        return m_end;
+        return m_parent;
     }
 
+    /// <summary>
+    /// Sets the flow destination to the given parent.
+    /// </summary>
+    /// <param name="parent"></param>
     public void SetParent(IFlowable parent)
     {
-        m_end = parent;
+        m_parent = parent;
     }
     #endregion
 
+    /// <summary>
+    /// TODO implement more, but for now, just recurses down the tree and reports the amount gathered as overflow. This method is invoked
+    /// directly if a pipe becomes a member of the tickable forest.
+    /// </summary>
     public void OnTick()
     {
         Debug.LogWarning("Pipe has overflowed " + SendFlow());
     }
 
+    /// <summary>
+    /// For a pipe's sendflow method, they just report the flow of their source.
+    /// </summary>
+    /// <returns></returns>
     public (FlowType type, float amount) SendFlow()
     {
-        return m_start.SendFlow();
+        return m_child.SendFlow();
     }
 
+    /// <summary>
+    /// Returns true if the object at the position is the input for this pipe system.
+    /// </summary>
+    /// <param name="tile_pos"></param>
+    /// <returns></returns>
     public bool IsInputPipeForTile(Vector2Int tile_pos)
     {
-        PipeFlowDirection est_flow_dir;
-        if (GetCardinalEstimatePipeflowDirection(tile_pos, m_startPipePos, out est_flow_dir)) return est_flow_dir == m_startDirection;
+        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_startPipePos, out PipeFlowDirection est_flow_dir)) return est_flow_dir == m_startDirection;
         else
         {
             // not within any of the cardinal directions, so auto-false.
@@ -106,69 +153,18 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         }
     }
 
+    /// <summary>
+    /// Returns true if the object at the position is the output object for this pipe system.
+    /// </summary>
+    /// <param name="tile_pos"></param>
+    /// <returns></returns>
     public bool IsOutputPipeForTile(Vector2Int tile_pos)
     {
-        PipeFlowDirection est_flow_dir;
-        if (GetCardinalEstimatePipeflowDirection(tile_pos, m_endPipePos, out est_flow_dir)) return est_flow_dir == m_endDirection;
+        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_endPipePos, out PipeFlowDirection est_flow_dir)) return est_flow_dir == m_endDirection;
         else
         {
             // not within any of the cardinal directions, so auto-false.
             return false;
         }
     }
-
-    #region pipe static helper methods
-    public static bool GetCardinalEstimatePipeflowDirection(Vector2Int dest_pos, Vector2Int pipe_pos, out PipeFlowDirection est_flowdir)
-    {
-        if (pipe_pos.x < dest_pos.x && pipe_pos.y == dest_pos.y)
-        {
-            est_flowdir = PipeFlowDirection.East;
-            return true;
-        }
-        else if (pipe_pos.x > dest_pos.x && pipe_pos.y == dest_pos.y)
-        {
-            est_flowdir = PipeFlowDirection.West;
-            return true;
-        }
-        else if (pipe_pos.x == dest_pos.x && pipe_pos.y > dest_pos.y)
-        {
-            est_flowdir = PipeFlowDirection.South;
-            return true;
-        }
-        else if (pipe_pos.x == dest_pos.x && pipe_pos.y < dest_pos.y)
-        {
-            est_flowdir = PipeFlowDirection.North;
-            return true;
-        }
-
-        est_flowdir = PipeFlowDirection.Invalid;
-        return false;
-    }
-
-    public static Vector2Int GetPipeFlowDirOffset(PipeFlowDirection direction)
-    {
-        switch (direction)
-        {
-            case PipeFlowDirection.North:
-                return Vector2Int.up;
-            case PipeFlowDirection.South:
-                return Vector2Int.down;
-            case PipeFlowDirection.East:
-                return Vector2Int.right;
-            case PipeFlowDirection.West:
-                return Vector2Int.left;
-            default:
-                return Vector2Int.zero;
-        }
-    }
-    #endregion
-}
-
-public enum PipeFlowDirection
-{
-    Invalid,
-    North,
-    South,
-    East,
-    West
 }

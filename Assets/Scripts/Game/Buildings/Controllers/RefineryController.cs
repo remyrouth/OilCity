@@ -39,6 +39,12 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
         }
     }
 
+    /// <summary>
+    /// Refineries can input and output fluid to pipes.
+    /// </summary>
+    /// <returns></returns>
+    public (bool can_input, bool can_output) GetFlowConfig() => (true, true);
+
     public (FlowType type, float amount) SendFlow()
     {
         float OilSum = 0;
@@ -66,6 +72,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
         m_inputs = new List<IFlowable>();
     }
 
+    #region Tree stuff
     public void AddChild(IFlowable child)
     {
         if (!m_inputs.Contains(child))
@@ -96,10 +103,10 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     {
         m_output = parent;
     }
+    #endregion
 
     public void OnTick()
     {
         Debug.LogWarning("Refinery has overflowed " + SendFlow());
     }
-
 }

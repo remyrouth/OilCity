@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class BuildingPreview : MonoBehaviour
+public class BuildingPlacer : MonoBehaviour, IPlacer
 {
+    [SerializeField] private SpriteRenderer m_spriteRenderer;
     protected BuildingScriptableObject m_so;
 
     public void InitSO(BuildingScriptableObject so)
@@ -16,7 +17,7 @@ public class BuildingPreview : MonoBehaviour
         transform.position = new Vector3(mousePos.x, mousePos.y, 0);
         var can_be_built = IsValidPlacement(m_so);
 
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, can_be_built ? 1 : 0.75f);
+        m_spriteRenderer.color = new Color(1, 1, 1, can_be_built ? 1 : 0.75f);
     }
 
     public virtual bool IsValidPlacement(BuildingScriptableObject so)
@@ -39,5 +40,10 @@ public class BuildingPreview : MonoBehaviour
         // create the instance of the thing and set its position
         Vector2Int pos = TileSelector.Instance.MouseToGrid();
         m_so.CreateInstance().transform.position = new Vector3(pos.x, pos.y, 0);
+    }
+
+    public virtual void Cleanup()
+    {
+        Destroy(gameObject);
     }
 }

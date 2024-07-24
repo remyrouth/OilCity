@@ -13,7 +13,7 @@ public abstract class BuildingController<T> : TileObjectController
     public virtual void Initialize(T config)
     {
         this.config = config;
-        CreateInitialConnections();
+        CreateInitialConnections(); // for flowables
         TimeManager.Instance.RegisterReceiver(gameObject);
         //setup values
 

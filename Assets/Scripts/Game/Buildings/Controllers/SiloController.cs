@@ -47,6 +47,8 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
         }
     }
 
+    public (bool can_input, bool can_output) GetFlowConfig() => (true, true);
+
     public (FlowType type, float amount) SendFlow()
     {
         float liquidSum = 0;
