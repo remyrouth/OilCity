@@ -196,6 +196,8 @@ public class PipePlacer : BuildingPlacer
         // issue is that every individual pipe prefab has a controller; bad.
         // instead, it should just be the visual, and there should be an empty gameobject that is the "pipe system"
 
+        var tile_object = m_so.CreateInstance(); //  this should be a PipeSO, and therefore none of the initialization is done.
+
         for (int index = 0; index < m_pointArray.Length; index++)
         {
             bool start_pipe = index == 0;
@@ -241,10 +243,10 @@ public class PipePlacer : BuildingPlacer
             }
 
             var pipe = Instantiate(m_so.prefab, m_pointArray[index], Quaternion.identity);
+            pipe.transform.parent = tile_object;
             // TODO this should orient the pipe and change its sprite to match the flow start and end for the segment.
         }
 
-        var tile_object = m_so.CreateInstance(); //  this should be a PipeSO, and therefore none of the initialization is done.
         tile_object.transform.position = new Vector3(m_start.x, m_start.y, 0); // say that the start position of the system is at the first pipe
 
         if (!tile_object.TryGetComponent<PipeController>(out var component))

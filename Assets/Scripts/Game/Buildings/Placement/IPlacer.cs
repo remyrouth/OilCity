@@ -11,4 +11,6 @@ public interface IPlacer
     IEnumerator IEDoBuildProcess();
 
     void Cleanup();
+
+    void PressMouse();
 }

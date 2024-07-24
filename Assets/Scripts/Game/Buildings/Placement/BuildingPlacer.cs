@@ -6,6 +6,8 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
     [SerializeField] private SpriteRenderer m_spriteRenderer;
     protected BuildingScriptableObject m_so;
 
+    private bool m_wasMouseClicked = false;
+
     public void InitSO(BuildingScriptableObject so)
     {
         m_so = so;
@@ -29,11 +31,13 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
     public virtual IEnumerator IEDoBuildProcess() 
     {
         // keep updating the preview until the player clicks on a valid spot
-        while (!Input.GetMouseButtonDown(0) || !IsValidPlacement(m_so))
+        while (!m_wasMouseClicked || !IsValidPlacement(m_so))
         {
             UpdatePreview();
 
             yield return null;
+
+            m_wasMouseClicked = false;
         }
 
 
@@ -46,4 +50,6 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
     {
         Destroy(gameObject);
     }
+
+    public void PressMouse() => m_wasMouseClicked = true;
 }
