@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5606186727956860122}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 1.5, z: 0}
+  m_LocalPosition: {x: 2, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -129,6 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aaf53d7e4eac204daa84ae95576ffd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0, y: 0}
+  _actionsPivot: {x: 1.5, y: 3}
   TileActions:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
