@@ -61,6 +61,13 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         }
     }
 
+    /// <summary>
+    /// An oil well can only handle output pipes.
+    /// </summary>
+    /// <returns></returns>
+    public (bool can_input, bool can_output) GetFlowConfig() => (false, true);
+
+    #region Tree stuff
     public void AddChild(IFlowable child)
     {
         if (!m_inputs.Contains(child))
@@ -91,20 +98,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     {
         m_output = parent;
     }
+    #endregion
 
     public void OnTick()
     {
         Debug.LogWarning("Oil well has overflowed " + SendFlow());
-    }
-
-    public bool IsPipeConnected(GameObject other)
-    {
-        if (other.TryGetComponent<PipeController>(out var pipe))
-        {
-            // oil wells can only be connected by draining pipes
-            
-        }
-
-        return false;
     }
 }

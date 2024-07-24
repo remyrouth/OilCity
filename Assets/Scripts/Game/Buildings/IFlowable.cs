@@ -11,4 +11,10 @@ public interface IFlowable : ITreeNode, ITickReceiver
     /// </summary>
     /// <returns>A tuple with the first item being the type of flow conferred and the second item being the amount of flow.</returns>
     (FlowType type, float amount) SendFlow();
+
+    /// <summary>
+    /// Can this flowable receive/send flow from/to a pipe?
+    /// </summary>
+    /// <returns></returns>
+    (bool can_input, bool can_output) GetFlowConfig();
 }

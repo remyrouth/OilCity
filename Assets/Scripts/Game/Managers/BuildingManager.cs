@@ -1,55 +1,76 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class BuildingManager : Singleton<BuildingManager>
 {
-    private BuildingScriptableObject _currentConfig;
-    private BuildingPreview _currentPreview;
-    private Action OnClicked;
-    private void Update()
+    private IPlacer _currentPlacer;
+    private BuildingScriptableObject _currentBuildingSO;
+
+    private Coroutine _coroutine;
+
+/*
+    public void BeginBuilding(BuildingScriptableObject so)
     {
-        if (_currentPreview != null)
+        if (_coroutine != null)
         {
             var mousePos = TileSelector.Instance.MouseToGrid();
             _currentPreview.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
             var canBuild = BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, _currentConfig);
             _currentPreview.SetState(canBuild);
         }
-    }
-    public void OnMouseClick()=>OnClicked?.Invoke();
+    }*/
+
+    public void OnMouseClick()=>_currentPlacer?.PressMouse();
 
     public void BeginBuilding(BuildingScriptableObject SO)
     {
         CancelBuilding();
         UIStateMachine.Instance.ChangeState(GameState.BuildingUI);
-        _currentConfig = SO;
-        _currentPreview = Instantiate(SO.previewPrefab).GetComponent<BuildingPreview>();
-        OnClicked = PlaceIfCan;
+        _currentBuildingSO = SO;
+        
+        _currentPlacer = Instantiate(SO.previewPrefab).GetComponent<BuildingPlacer>();
+        _currentPlacer.InitSO(SO);
+
+        _coroutine = StartCoroutine(IEDoBuildingProcess());
+
+        //OnClicked = PlaceIfCan;
     }
+    /*
     private void PlaceIfCan()
     {
         Vector2Int pos = TileSelector.Instance.MouseToGrid();
         if (_currentConfig == null || _currentPreview == null)
             return;
-        if (BoardManager.Instance.AreTilesOccupiedForBuilding(pos, _currentConfig))
-            _currentPreview.SetState(false);
+        }
 
         if (BoardManager.Instance.Create(pos, _currentConfig))
             CancelBuilding();
     }
     public void BeginBuildingPipe(PipeScriptableObject SO)
     {
+        _currentBuildingSO = so;
+        _currentPlacer = Instantiate(so.previewPrefab).GetComponent<BuildingPlacer>();
+        _currentPlacer.InitSO(so);
 
-    }
+        _coroutine = StartCoroutine(IEDoBuildingProcess());
+    }*/
 
     public void CancelBuilding()
     {
-        if (_currentPreview != null)
-            Destroy(_currentPreview.gameObject);
-        _currentConfig = null;
-        _currentPreview = null;
-        OnClicked = null;
+        _currentPlacer.Cleanup();
+        _currentPlacer = null;
+
+        _currentBuildingSO = null;
+        _coroutine = null;
+        
         UIStateMachine.Instance.ChangeState(GameState.GameUI);
     }
 
+    private IEnumerator IEDoBuildingProcess()
+    {
+        yield return _currentPlacer.IEDoBuildProcess();
+
+        CancelBuilding();
+    }
 }
