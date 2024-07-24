@@ -51,12 +51,8 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
 
         // create the instance of the thing and set its position
         Vector2Int pos = TileSelector.Instance.MouseToGrid();
-<<<<<<< Updated upstream
-        BoardManager.Instance.Create(pos, m_so);
-=======
         var value = m_so.CreateInstance();
         value.transform.position = new Vector3(pos.x, pos.y, 0);
->>>>>>> Stashed changes
 
         for (int i = 0; i < m_so.size.y; i++)
             for (int j = 0; j < m_so.size.x; j++)
@@ -67,10 +63,5 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
     {
         Destroy(gameObject);
     }
-
-<<<<<<< Updated upstream
-    public void PressMouse() => m_wasMouseClicked = IsValidPlacement(m_so);
-=======
     public void PressMouse() => WasMouseClicked = true;
->>>>>>> Stashed changes
 }
