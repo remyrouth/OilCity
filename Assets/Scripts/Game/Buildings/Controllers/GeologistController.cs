@@ -16,28 +16,36 @@ public sealed class GeologistController : AOEBuildingController
 
     private HashSet<Vector2Int> _tilesSearched = new();
     private Queue<Action<GeologistController>> _sequenceActions = new();
+
+    public event Action<Vector2Int> OnOilSpotFound;
+
     public override void OnTick()
     {
         if (_sequenceActions.Count == 0)
             GenerateNewSequence();
-        _sequenceActions.Dequeue().Invoke(this);
+        _sequenceActions.Dequeue()?.Invoke(this);
     }
     private void GenerateNewSequence()
-    {   
+    {
         //setup for incoming searching
         _sequenceActions.Enqueue((e) => { e._tilesSearched.Clear(); });
-        
+
+        int numOfSearchingPoint = GetNumberOfSearchingPoints();
         // go to each spot
-        for (int i = 0; i < GetNumberOfSearchingPoints(); i++)
+        for (int i = 0; i < numOfSearchingPoint; i++)
+        {
             _sequenceActions.Enqueue((e) => { e.SearchForOil(); });
-        
+            _sequenceActions.Enqueue(null);
+            _sequenceActions.Enqueue(null);
+        }
+
         //get worker back to building
         _sequenceActions.Enqueue((e) => { e.ResetWorker(); });
-        
+
         //wait for the cooldown
         for (int i = 0; i < TickNumberInterval; i++)
-            _sequenceActions.Enqueue((e) => { });
-        
+            _sequenceActions.Enqueue(null);
+
         //indicate best spot
         _sequenceActions.Enqueue((e) => { e.FinalizeSearching(); });
     }
@@ -45,21 +53,22 @@ public sealed class GeologistController : AOEBuildingController
     {
         _workerVisual.DOKill();
         Vector3 pos = new Vector3(Anchor.x, Anchor.y, 0);
-        _workerVisual.DOMove(pos, TimeManager.Instance.TicksPerMinute);
+        _workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick);
     }
     private void SearchForOil()
     {
         var tile = GetRandomWithinRange();
         if (tile == null)
             return;
-        Vector3 pos = new Vector3(tile!.Value.x, tile!.Value.y);
+        Vector3 pos = new Vector3(tile!.Value.x, tile!.Value.y) + new Vector3(0.5f, 0.5f, 0);
         _workerVisual.DOKill();
-        _workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick / 2);
+        _workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2);
         _tilesSearched.Add(tile!.Value);
     }
     private void FinalizeSearching()
     {
         var bestOilSpot = _tilesSearched
+            .Where(e => !BoardManager.Instance.IsTileOccupied(e)) //make sure that tile is still empty
             .OrderBy(e => BoardManager.Instance.OilEvaluator.GetValueAtPosition(e.x, e.y))
             .FirstOrDefault();
 
@@ -67,7 +76,7 @@ public sealed class GeologistController : AOEBuildingController
             return;
 
         Debug.Log($"Found great oil spot at {bestOilSpot}!");
-        //indicate that position
+        OnOilSpotFound?.Invoke(bestOilSpot);
 
     }
     private Vector2Int? GetRandomWithinRange()
