@@ -277,8 +277,11 @@ public class PipePlacer : BuildingPlacer
 
         for (int index = 0; index < m_pointArray.Length; ++index)
         {
-            // TODO don't include the start/end pipes in the controller map if the space is occupied?
-            BoardManager.Instance.tileDictionary[Utilities.Vector3ToVector2Int(m_pointArray[index])] = component;
+            var v2i = Utilities.Vector3ToVector2Int(m_pointArray[index]);
+
+            if ((index == 0 || index == m_pointArray.Length - 1) && BoardManager.Instance.IsTileOccupied(v2i)) continue;
+
+            BoardManager.Instance.tileDictionary[v2i] = component;
         }
     }
 
