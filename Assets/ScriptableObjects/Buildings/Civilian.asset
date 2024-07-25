@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Civilian
   m_EditorClassIdentifier: 
   <placementCost>k__BackingField: 0
-  <removalCost>k__BackingField: 0
+  <removalCost>k__BackingField: 20
   <removalSatisfactionCost>k__BackingField: 10
   <icon>k__BackingField: {fileID: 0}
   <prefab>k__BackingField: {fileID: 5643698438408399773, guid: ec17399cca5759443a6e71549c548312, type: 3}

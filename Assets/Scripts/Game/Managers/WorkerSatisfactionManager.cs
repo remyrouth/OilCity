@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>
 {
-    public int workerSatisfaction { get; private set; }
+    public int workerSatisfaction;
     public int maxWorkerSatisfaction => 100;
     public int minWorkerSatisfaction => 0;
 
