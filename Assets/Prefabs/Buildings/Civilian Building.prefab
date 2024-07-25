@@ -130,7 +130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actionsPivot: {x: 0, y: 0}
-  TileActions: []
+  TileActions:
+  - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
   _spriteRenderer: {fileID: 4791686998052556758}
   sprites:
   - {fileID: -2025687455, guid: eb249fbcbf3270345bcd643155ef0528, type: 3}

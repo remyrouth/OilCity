@@ -32,9 +32,4 @@ public class MoneyManager : Singleton<MoneyManager> {
         Debug.Log("You lost...");
     }
 
-    private void UpdateMoneyUI() {
-        if (moneyText != null) {
-            moneyText.text = $"Money: {money.ToString("F2")}";
-        }
-    }
 }
