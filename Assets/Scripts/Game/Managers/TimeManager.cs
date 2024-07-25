@@ -9,6 +9,11 @@ using UnityEngine;
 /// </summary>
 public class TimeManager : Singleton<TimeManager>
 {
+#if UNITY_EDITOR
+    [SerializeField] private Gradient m_debugGradient;
+#endif
+
+
     /// <summary>
     /// How many ticks occur in a minute. Setting this property changes the ticks per minute, the amount of time per tick (60f / new_ticks),
     /// and the time that has passed since a new tick began (reset to 0).
@@ -198,4 +203,46 @@ public class TimeManager : Singleton<TimeManager>
         // remove us from the building list of all active nodes
         m_nodes.Remove(node);
     }
+
+    public void OnDrawGizmos()
+    {
+        if (m_tickableForest ==null) return;
+
+        for (int i = 0; i < m_tickableForest.Count; ++i)
+        {
+            Gizmos.color = m_debugGradient.Evaluate(i / (float)m_tickableForest.Count);
+
+            if (!ConvertToClassType<MonoBehaviour>(m_tickableForest[i], out var mono)) continue;
+
+            Gizmos.DrawSphere(mono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, 0.4f);
+
+            if (!ConvertToClassType<ITreeNode>(m_tickableForest[i], out var tree_node)) continue;
+
+            List<ITreeNode> children = new List<ITreeNode>()
+            {
+                tree_node
+            };
+
+            while (children.Count > 0)
+            {
+                var item = children[0];
+                children.RemoveAt(0);
+
+                if (!ConvertToClassType<MonoBehaviour>(item, out var imono)) continue;
+
+                Gizmos.DrawCube(imono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, Vector3.one * 0.35f);
+
+                children.AddRange(item.GetChildren());
+            }
+        }
+    }
+
+#if UNITY_EDITOR
+    private bool ConvertToClassType<T>(object obj, out T mono) where T : class
+    {
+        mono = obj as T;
+        if (mono == null) return false;
+        return true;
+    }
+#endif
 }
