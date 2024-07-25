@@ -28,7 +28,7 @@ public abstract class BuildingController<T> : TileObjectController
     }
     public override bool CheckIfDestroyable()
     {
-        return MoneyManager.Instance.Money >= config.removalCost;
+        return MoneyManager.Instance.money >= config.removalCost;
     }
     protected virtual void CreateInitialConnections() { }
 }
