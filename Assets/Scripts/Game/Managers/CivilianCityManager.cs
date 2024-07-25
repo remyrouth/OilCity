@@ -30,7 +30,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
         else if (currWorkerSatisfaction >= 50)
             tickNumberInterval = 8;
         else
-            tickNumberInterval = 10;
+            tickNumberInterval = 1;
         _tickTimer++;
         if (_tickTimer >= tickNumberInterval)
         {
