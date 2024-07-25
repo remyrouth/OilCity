@@ -1,9 +1,5 @@
-using System;
 using UnityEngine;
 using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEngine.UI;
 
 namespace Game.Managers
 {
@@ -35,6 +31,10 @@ namespace Game.Managers
             {
                 musicVolume = PlayerPrefs.GetFloat("MusicVolume");
             }
+            if (PlayerPrefs.HasKey("CameraInversion"))
+            {
+                CameraController.Instance.invert = PlayerPrefs.GetInt("CameraInversion") == 1;
+            }
         }
 
         public void SetLanguage(Language newLanguage)
@@ -62,6 +62,12 @@ namespace Game.Managers
                 _ => Language.English
             };
             SetLanguage(CurrentLanguage);
+        }
+        
+        public void ToggleCameraMovementInversion()
+        {
+            CameraController.Instance.invert = !CameraController.Instance.invert;
+            PlayerPrefs.SetInt("CameraInversion", CameraController.Instance.invert ? 1 : 0);
         }
 
         public float SoundEffectVolume
