@@ -24,7 +24,7 @@ public class UIStateMachine : Singleton<UIStateMachine>
     {
         ChangeState(initialGameState);
     }
-    public UIState CurrentState;
+    public UIState CurrentState { get; private set; }
 
     /// <summary>
     /// Changes UI state and calls OnExit and OnEntered
@@ -42,7 +42,7 @@ public class UIStateMachine : Singleton<UIStateMachine>
         CurrentState = States[state];
         CurrentState.OnEnter();
     }
-    
+
     /// <summary>
     /// Changes game scene
     /// </summary>

@@ -21,9 +21,9 @@ public class TimeManager : Singleton<TimeManager>
     public int TicksPerMinute
     {
         get { return m_ticksPerMinute; }
-        set 
+        set
         {
-            m_ticksPerMinute = value; 
+            m_ticksPerMinute = value;
             m_timePerTick = 60f / m_ticksPerMinute;
             m_timeElaspedSinceTick = 0;
         }
@@ -204,9 +204,10 @@ public class TimeManager : Singleton<TimeManager>
         m_nodes.Remove(node);
     }
 
+#if UNITY_EDITOR
     public void OnDrawGizmos()
     {
-        if (m_tickableForest ==null) return;
+        if (m_tickableForest == null) return;
 
         for (int i = 0; i < m_tickableForest.Count; ++i)
         {
@@ -237,7 +238,6 @@ public class TimeManager : Singleton<TimeManager>
         }
     }
 
-#if UNITY_EDITOR
     private bool ConvertToClassType<T>(object obj, out T mono) where T : class
     {
         mono = obj as T;
