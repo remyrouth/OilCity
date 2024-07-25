@@ -1,22 +1,28 @@
 using UnityEngine;
-using System.Collections;
 using System;
 
-public class MoneyManager : Singleton<MoneyManager> {
-
+public class MoneyManager : Singleton<MoneyManager>
+{
     public float Money { get; private set; }
 
     public event Action<float> OnMoneyChanged;
-
-    public bool BuyItem(float cost) {
-        if (Money - cost >= 0) {
+    [SerializeField] private float _initialMoney;
+    private void Start()
+    {
+        Money = _initialMoney;
+        OnMoneyChanged?.Invoke(Money);
+    }
+    public bool BuyItem(float cost)
+    {
+        if (Money - cost >= 0)
+        {
             ReduceMoney(cost);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
-    public void AddMoney(float amount) {
+    public void AddMoney(float amount)
+    {
         Money = Mathf.Round(Money * 100f) / 100f + Mathf.Round(amount * 100f) / 100f;
         OnMoneyChanged?.Invoke(Money);
     }
