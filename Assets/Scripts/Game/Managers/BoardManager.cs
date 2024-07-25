@@ -9,7 +9,10 @@ public class BoardManager : Singleton<BoardManager>
     [field: SerializeField] public TreeMap TreeEvaluator { get; private set; }
     [SerializeField] private GameObject _treePrefab;
     [SerializeField] private Transform _treeHolder;
-
+    [System.Serializable]
+    private struct InitialBuilding
+    { public BuildingScriptableObject config; public Vector2Int pos; }
+    [SerializeField] private InitialBuilding[] InitialBuildings;
     public Dictionary<Vector2Int, TileObjectController> tileDictionary { get; private set; } = new();
 
     private void Start()
@@ -25,6 +28,8 @@ public class BoardManager : Singleton<BoardManager>
                 tileDictionary.Add(new Vector2Int(i, j), obj.GetComponent<TreeController>());
             }
         }
+        foreach (var building in InitialBuildings)
+            Create(building.pos, building.config);
     }
 
     public bool Create(Vector2Int position, BuildingScriptableObject buildingSO)
@@ -164,4 +169,17 @@ public class BoardManager : Singleton<BoardManager>
         if (!IsTileOccupied(position)) return;
         tileDictionary.Remove(position);
     }
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        foreach (var building in InitialBuildings)
+        {
+            Vector3 middle = new Vector3(building.pos.x, building.pos.y, 0);
+            middle += new Vector3(building.config.size.x, building.config.size.y, 0)/2;
+            Vector3 size = new Vector3(building.config.size.x, building.config.size.y, 0);
+            Gizmos.DrawCube(middle, size);
+        }
+    }
+#endif
 }
