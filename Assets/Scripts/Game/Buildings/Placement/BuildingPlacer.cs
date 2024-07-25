@@ -36,7 +36,7 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
     public virtual bool IsValidPlacement(BuildingScriptableObject so)
     {
         var mousePos = TileSelector.Instance.MouseToGrid();
-        return !BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so);
+        return !BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so) && m_so.placementCost <= MoneyManager.Instance.Money;
     }
 
     public virtual IEnumerator IEDoBuildProcess()
@@ -47,33 +47,15 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
             UpdatePreview();
             yield return null;
         }
-        
 
         // create the instance of the thing and set its position
-        Vector2Int position = TileSelector.Instance.MouseToGrid();
-        var value = m_so.CreateInstance();
-        value.transform.position = new Vector3(position.x, position.y, 0);
-
-        for (int i = 0; i < m_so.size.y; i++)
-            for (int j = 0; j < m_so.size.x; j++)
-                BoardManager.Instance.tileDictionary.Add(position + new Vector2Int(j, i), value);
-
-        if (MoneyManager.Instance.BuyItem(m_so.placementCost))
-        {
-            // create the instance of the thing and set its position
-            position = TileSelector.Instance.MouseToGrid();
-            m_so.CreateInstance().transform.position = new Vector3(position.x, position.y, 0);
-        }
-        else
-        {
-            Debug.LogWarning("Not enough money to oplace the building.");
-        }
-
+        Vector2Int pos = TileSelector.Instance.MouseToGrid();
+        BoardManager.Instance.Create(pos, m_so);
     }
 
     public virtual void Cleanup()
     {
         Destroy(gameObject);
     }
-    public void PressMouse() => WasMouseClicked = true;
+    public void PressMouse() => WasMouseClicked = IsValidPlacement(m_so);
 }
