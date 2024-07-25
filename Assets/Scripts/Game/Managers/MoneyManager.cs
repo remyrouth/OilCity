@@ -19,8 +19,8 @@ public class MoneyManager : Singleton<MoneyManager> {
         money = startingMoneyAmount;
         UpdateMoneyUI();
 
-        float savedMoney = PlayerPrefs.GetFloat("MoneySave", money);
-        AddMoney(savedMoney - money);
+        // float savedMoney = PlayerPrefs.GetFloat("MoneySave", money);
+        // AddMoney(savedMoney - money);
 
         StartCoroutine("SaveMoney");
     }
