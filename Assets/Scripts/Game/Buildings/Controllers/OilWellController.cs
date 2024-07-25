@@ -40,6 +40,9 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
         foreach (var p in peripherals)
         {
+            GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = p.transform.position;
+            Debug.Log(p.gameObject.name);
+
             if (p.TryGetComponent<PipeController>(out var pipe))
             {
                 if (pipe.IsInputPipeForTile(position))

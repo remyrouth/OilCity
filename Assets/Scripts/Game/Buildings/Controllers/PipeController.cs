@@ -39,8 +39,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         // in theory it would be after the end pipe was placed; i.e. after the controller has been made?
         // then does that mean we'll have to call TimeManager register again?! I think we need a custom building controller Instantiate definition for pipes...
 
-        var child_pos = m_startPipePos + Utilities.GetPipeFlowDirOffset(m_startDirection);
-        var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
+        var child_pos = m_startPipePos;// + Utilities.GetPipeFlowDirOffset(m_startDirection);
+        var parent_pos = m_endPipePos;// + Utilities.GetPipeFlowDirOffset(m_endDirection);
+
+        Debug.DrawLine(Utilities.Vector2IntToVector3(child_pos), Utilities.Vector2IntToVector3(parent_pos), Color.red, 15f);
+        GameObject.CreatePrimitive(PrimitiveType.Cube).transform.position = Utilities.Vector2IntToVector3(child_pos) + new Vector3(0.5f, 0.5f);
 
         if (BoardManager.Instance.IsTileOccupied(child_pos))
         {

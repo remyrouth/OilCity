@@ -54,7 +54,7 @@ public class Utilities
     /// </summary>
     /// <param name="vec"></param>
     /// <returns></returns>
-    public static Vector2Int Vector3ToVector2Int(Vector3 vec) => new(Mathf.FloorToInt(vec.x), Mathf.FloorToInt(vec.x));
+    public static Vector2Int Vector3ToVector2Int(Vector3 vec) => new(Mathf.FloorToInt(vec.x), Mathf.FloorToInt(vec.y));
 
 
     /// <summary>
@@ -62,5 +62,5 @@ public class Utilities
     /// </summary>
     /// <param name="vec"></param>
     /// <returns></returns>
-    public static Vector3 Vector2IntToVector3(Vector3 vec) => new(vec.x, vec.y);
+    public static Vector3 Vector2IntToVector3(Vector2Int vec) => new(vec.x, vec.y);
 }
