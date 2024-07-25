@@ -8,6 +8,12 @@ public class MoneyManager : Singleton<MoneyManager> {
 
     public event Action<float> OnMoneyChanged;
 
+    private void Awake()
+    {
+        Debug.LogWarning("DEV MONEY ADDED");
+        Money = 99999999;
+    }
+
     public bool BuyItem(float cost) {
         if (Money - cost >= 0) {
             ReduceMoney(cost);

@@ -218,10 +218,8 @@ public class TimeManager : Singleton<TimeManager>
 
             if (!ConvertToClassType<ITreeNode>(m_tickableForest[i], out var tree_node)) continue;
 
-            List<ITreeNode> children = new List<ITreeNode>()
-            {
-                tree_node
-            };
+            List<ITreeNode> children = new List<ITreeNode>();
+            children.AddRange(tree_node.GetChildren());
 
             while (children.Count > 0)
             {

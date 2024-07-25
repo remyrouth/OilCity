@@ -182,8 +182,8 @@ public class PipePlacer : BuildingPlacer
         m_wasStartPlaced = false;
         m_startDir = m_endDir = PipeFlowDirection.Invalid;
 
-        m_singlePipePreview = Instantiate(m_singlePipePreviewPrefab.gameObject).GetComponentInChildren<SpriteRenderer>();
-        m_previewFabInstances[0] = m_singlePipePreview.gameObject;
+        m_previewFabInstances[0] = Instantiate(m_singlePipePreviewPrefab.gameObject);
+        m_singlePipePreview = m_previewFabInstances[0].GetComponentInChildren<SpriteRenderer>();
 
         while (!WasMouseClicked || !IsValidPlacement(m_so))
         {
@@ -195,8 +195,8 @@ public class PipePlacer : BuildingPlacer
         m_start = TileSelector.Instance.MouseToGrid(); // record the start position of the pipe
 
         m_wasStartPlaced = true; // register that we've recorded it
-        m_singlePipePreview = Instantiate(m_singlePipePreviewPrefab.gameObject).GetComponentInChildren<SpriteRenderer>(); // prepare the "end-preview" gameobject
-        m_previewFabInstances[1] = m_singlePipePreview.gameObject; // register that we've prepared the 2nd preview gameobject
+        m_previewFabInstances[1] = Instantiate(m_singlePipePreviewPrefab.gameObject);
+        m_singlePipePreview = m_previewFabInstances[1].GetComponentInChildren<SpriteRenderer>();
 
         // while the player doesn't click or they place in invalid spot, keep waiting and updating
         while (!WasMouseClicked || !IsValidPlacement(m_so))
@@ -212,7 +212,7 @@ public class PipePlacer : BuildingPlacer
         // issue is that every individual pipe prefab has a controller; bad.
         // instead, it should just be the visual, and there should be an empty gameobject that is the "pipe system"
 
-        var tile_object = m_so.CreateInstance(); //  this should be a PipeSO, and therefore none of the initialization is done.
+        var tile_object = m_so.CreateInstance(m_start); //  this should be a PipeSO, and therefore none of the initialization is done.
 
         for (int index = 0; index < m_pointArray.Length; index++)
         {
@@ -257,7 +257,8 @@ public class PipePlacer : BuildingPlacer
             // this only really matters for the start and end pipes, but if the tile is occupied, dont draw the pipe there.
             if (!BoardManager.Instance.IsTileOccupied(v2i))
             {
-                var pipe = Instantiate(m_so.prefab, m_pointArray[index] - (Vector3.up + Vector3.right) * HARDCODED_OFFSET, Quaternion.identity);
+                // create the pipe object at the point without the offset and without the initial offset of the parent transform (which is at the m_start position)
+                var pipe = Instantiate(m_so.prefab, m_pointArray[index] - (Vector3.up + Vector3.right) * HARDCODED_OFFSET - Utilities.Vector2IntToVector3(m_start), Quaternion.identity);
                 pipe.transform.parent = tile_object.transform;
                 // TODO this should orient the pipe and change its sprite to match the flow start and end for the segment.
             }
@@ -271,7 +272,8 @@ public class PipePlacer : BuildingPlacer
         }
 
         component.InitializePipe(m_start, m_end, m_startDir, m_endDir);
-        component.Initialize(m_so);
+        component.Initialize(m_so, m_start);
+        component.transform.position = Utilities.Vector2IntToVector3(m_start);
 
         for (int index = 0; index < m_pointArray.Length; ++index)
         {

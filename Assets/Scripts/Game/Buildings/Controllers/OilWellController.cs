@@ -30,26 +30,18 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         m_inputs = new List<IFlowable>();
     }
 
-    protected override void CreateInitialConnections()
+    protected override void CreateInitialConnections(Vector2Int with_position)
     {
         m_output = null;
         m_inputs.Clear();
 
-        var position = BoardManager.ConvertWorldspaceToGrid(transform.position);
-        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(position, config.size);
+        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
 
         foreach (var p in peripherals)
         {
-            GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = p.transform.position;
-            Debug.Log(p.gameObject.name);
-
             if (p.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.IsInputPipeForTile(position))
-                {
-                    // ping the pipe? display a notif that wells cant have inputs?
-                }
-                else if (pipe.IsOutputPipeForTile(position))
+                if (pipe.DoesPipeSystemReceiveInputFromTile(with_position))
                 {
                     if (m_output != null)
                     {
@@ -59,6 +51,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
                     }
 
                     m_output = pipe;
+                }
+                else if (pipe.DoesPipeSystemOutputToTile(with_position))
+                {
+                    // ping the pipe? display a notif that wells cant have inputs?
                 }
             }
         }
