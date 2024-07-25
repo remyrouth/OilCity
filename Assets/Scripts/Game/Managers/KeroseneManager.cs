@@ -1,43 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public class KeroseneManager : MonoBehaviour
+public class KeroseneManager : Singleton<KeroseneManager>
 {
-    private int _tickTimer = 0;
-    public int tickNumberInterval = 15;
-    public float keroseneAmount { get; private set; }
-    public float maxSoldAmount { get; private set; }
-    public float minKeroseneAmount => 0;
-    public float kerosenePricePerLiter;
-    public void OnTick()
-    {        
-        _tickTimer++;
-        if (_tickTimer > tickNumberInterval)
-        {
-            _tickTimer = 0;
-            InvokeAction();
-        }
-    }
-    public void InvokeAction()
+    public float KeroseneAmount { get; private set; }
+    public float MaxSoldAmount { get; private set; }
+    public const float KEROSINE_PRICE = 1;
+
+    public event Action<float> OnKeroseneChanged;
+    public event Action OnKeroseneSold;
+    
+    public void IncreaseAmount(float amount)
     {
-        if(keroseneAmount > minKeroseneAmount)
-            sellKerosene();
+        KeroseneAmount += amount;
+        OnKeroseneChanged?.Invoke(KeroseneAmount);
     }
-    public void increaseAmount(float amount)
+    public void DecreaseAmount(float amount)
     {
-        keroseneAmount += amount;
-    }
-    public void decreaseAmount(float amount)
-    {
-        if (keroseneAmount - amount > minKeroseneAmount)
-            keroseneAmount = minKeroseneAmount;
+        if (KeroseneAmount - amount < 0)
+            KeroseneAmount = 0;
         else
-            keroseneAmount -= amount;
+            KeroseneAmount -= amount;
+        OnKeroseneChanged?.Invoke(KeroseneAmount);
     }
-    public void sellKerosene()
+    public void SellKerosene()
     {
-        MoneyManager.Instance.AddMoney(kerosenePricePerLiter * keroseneAmount);
-        decreaseAmount(keroseneAmount);
+        MoneyManager.Instance.AddMoney(KEROSINE_PRICE * KeroseneAmount);
+        DecreaseAmount(KeroseneAmount);
+        OnKeroseneSold?.Invoke();
     }
 }

@@ -18,7 +18,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
     private AudioSource audioSource;
     private SettingsManager settingsManager;
 
-    private void Awake()
+    private void OnEnable()
     {
         FindObjectOfType<SoundManager>().AddSoundScript(this);
         settingsManager = FindObjectOfType<SettingsManager>();

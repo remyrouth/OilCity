@@ -1,39 +1,15 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-using TMPro;
+using System;
 
 public class MoneyManager : Singleton<MoneyManager> {
 
-    public float money { get; private set; }
-    public float minMoneyAmount => 0;
+    public float Money { get; private set; }
 
-    public float saveInterval;
-    
-    public float startingMoneyAmount = 100f;
-
-    [SerializeField] private TMP_Text moneyText;
-
-
-    void Start() {
-        money = startingMoneyAmount;
-        UpdateMoneyUI();
-
-        // float savedMoney = PlayerPrefs.GetFloat("MoneySave", money);
-        // AddMoney(savedMoney - money);
-
-        StartCoroutine("SaveMoney");
-    }
-
-    public IEnumerator SaveMoney() {
-        while (true) {
-            yield return new WaitForSeconds(saveInterval);
-            PlayerPrefs.SetFloat("MoneySave", Mathf.Round(money*100f)/100f);
-        }
-    }
+    public event Action<float> OnMoneyChanged;
 
     public bool BuyItem(float cost) {
-        if (money - cost >= 0) {
+        if (Money - cost >= 0) {
             ReduceMoney(cost);
             return true;
         } else {
@@ -41,15 +17,15 @@ public class MoneyManager : Singleton<MoneyManager> {
         }
     }
     public void AddMoney(float amount) {
-        money = Mathf.Round(money * 100f) / 100f + Mathf.Round(amount * 100f) / 100f;
-        UpdateMoneyUI();
+        Money = Mathf.Round(Money * 100f) / 100f + Mathf.Round(amount * 100f) / 100f;
+        OnMoneyChanged?.Invoke(Money);
     }
     public void ReduceMoney(float amount)
     {
-        money = Mathf.Round(money * 100f) / 100f - Mathf.Round(amount * 100f) / 100f;
-        if (money < minMoneyAmount)
+        Money = Mathf.Round(Money * 100f) / 100f - Mathf.Round(amount * 100f) / 100f;
+        if (Money < 0)
             gameOver();
-            UpdateMoneyUI();
+        OnMoneyChanged?.Invoke(Money);
     }
     public void gameOver()
     {
