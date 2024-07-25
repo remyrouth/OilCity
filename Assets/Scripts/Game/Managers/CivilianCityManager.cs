@@ -11,15 +11,15 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     private int _tickTimer = 0;
     public int tickNumberInterval = 10;
 
+    public void Start()
+    {
+        TimeManager.Instance.RegisterReceiver(gameObject);
+    }
     /// <summary>
     /// Checks how much worker satisfaction the player currently has, based on that it changes the tickNumberInterval
     /// impacting the frequency of InvokeAction execution.
     /// </summary>
     /// 
-    public void Start()
-    {
-        TimeManager.Instance.RegisterReceiver(gameObject);
-    }
     public void OnTick()
     {
         int currWorkerSatisfaction = WorkerSatisfactionManager.Instance.workerSatisfaction;

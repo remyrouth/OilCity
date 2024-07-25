@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class TileSelector : Singleton<TileSelector>
 {
-
+    /// <summary>
+    /// Returns the mouses position in the grid
+    /// </summary>
+    /// <returns></returns>
     public Vector2Int MouseToGrid()
     {
         Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
