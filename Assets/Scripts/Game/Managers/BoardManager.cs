@@ -14,7 +14,9 @@ public class BoardManager : Singleton<BoardManager>
     { public BuildingScriptableObject config; public Vector2Int pos; }
     [SerializeField] private InitialBuilding[] InitialBuildings;
     public Dictionary<Vector2Int, TileObjectController> tileDictionary { get; private set; } = new();
-
+    /// <summary>
+    /// Generates the forest and the initial buildings
+    /// </summary>
     private void Start()
     {
         for (int i = 0; i < MAP_SIZE_X; i++)
@@ -31,7 +33,12 @@ public class BoardManager : Singleton<BoardManager>
         foreach (var building in InitialBuildings)
             Create(building.pos, building.config);
     }
-
+    /// <summary>
+    /// Creates a building and saves it to the tile dictionary
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="buildingSO"></param>
+    /// <returns></returns>
     public bool Create(Vector2Int position, BuildingScriptableObject buildingSO)
     {
         if (AreTilesOccupiedForBuilding(position, buildingSO))
@@ -44,10 +51,20 @@ public class BoardManager : Singleton<BoardManager>
 
         return true;
     }
+    /// <summary>
+    /// Checks if the specific tile is occupied
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
     public bool IsTileOccupied(Vector2Int position)
     {
         return tileDictionary.ContainsKey(position);
     }
+    /// <summary>
+    /// Checks if any of the tiles from the list are occupied
+    /// </summary>
+    /// <param name="listOfPositions"></param>
+    /// <returns></returns>
     public bool IsTileOccupied(List<Vector2Int> listOfPositions)
     {
         foreach (Vector2Int position in listOfPositions)
@@ -56,6 +73,12 @@ public class BoardManager : Singleton<BoardManager>
         }
         return false;
     }
+    /// <summary>
+    /// Checks if all of the tiles the building would take are free.
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="buildingSO"></param>
+    /// <returns></returns>
     public bool AreTilesOccupiedForBuilding(Vector2Int position, BuildingScriptableObject buildingSO)
     {
 
