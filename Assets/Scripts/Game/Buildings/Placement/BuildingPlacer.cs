@@ -38,11 +38,16 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
             yield return null;
         }
 
-
-        // create the instance of the thing and set its position
-        Vector2Int pos = TileSelector.Instance.MouseToGrid();
-        m_so.CreateInstance().transform.position = new Vector3(pos.x, pos.y, 0);
-
+        if (MoneyManager.Instance.BuyItem(m_so.placementCost))
+        {
+            // create the instance of the thing and set its position
+            Vector2Int pos = TileSelector.Instance.MouseToGrid();
+            m_so.CreateInstance().transform.position = new Vector3(pos.x, pos.y, 0);
+        }
+        else
+        {
+            Debug.LogWarning("Not enough money to oplace the building.");
+        }
     }
 
     public virtual void Cleanup()

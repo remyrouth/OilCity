@@ -4296,7 +4296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveInterval: 0
   startingMoneyAmount: 100
-  moneyText: {fileID: 0}
+  moneyText: {fileID: 1834681489}
 --- !u!1001 &1549644860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4950,6 +4950,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1834681489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2134359973760802461, guid: 9acb7d0c6d73b204ea20ef48062b7838, type: 3}
+  m_PrefabInstance: {fileID: 1549644860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1850073788
 GameObject:
   m_ObjectHideFlags: 0
