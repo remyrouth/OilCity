@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using TMPro;
 
 public class MoneyManager : Singleton<MoneyManager> {
 
@@ -7,9 +9,18 @@ public class MoneyManager : Singleton<MoneyManager> {
     public float minMoneyAmount => 0;
 
     public float saveInterval;
+    
+    public float startingMoneyAmount = 100f;
+
+    [SerializeField] private TMP_Text moneyText;
+
 
     void Start() {
-        AddMoney(PlayerPrefs.GetFloat("MoneySave", 0));
+        money = startingMoneyAmount;
+        UpdateMoneyUI();
+
+        // float savedMoney = PlayerPrefs.GetFloat("MoneySave", money);
+        // AddMoney(savedMoney - money);
 
         StartCoroutine("SaveMoney");
     }
@@ -31,15 +42,23 @@ public class MoneyManager : Singleton<MoneyManager> {
     }
     public void AddMoney(float amount) {
         money = Mathf.Round(money * 100f) / 100f + Mathf.Round(amount * 100f) / 100f;
+        UpdateMoneyUI();
     }
     public void ReduceMoney(float amount)
     {
         money = Mathf.Round(money * 100f) / 100f - Mathf.Round(amount * 100f) / 100f;
         if (money < minMoneyAmount)
             gameOver();
+            UpdateMoneyUI();
     }
     public void gameOver()
     {
         Debug.Log("You lost...");
+    }
+
+    private void UpdateMoneyUI() {
+        if (moneyText != null) {
+            moneyText.text = $"Money: {money.ToString("F2")}";
+        }
     }
 }

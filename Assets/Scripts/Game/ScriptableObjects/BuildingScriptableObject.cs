@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Building", menuName ="Building/Building")]
 public class BuildingScriptableObject : ScriptableObject
 {
-    [field:SerializeField] public int placementCost { get; private set; }
+    [field: SerializeField] public int placementCost { get; private set; }
     [field: SerializeField] public int removalCost { get; private set; }
     [field: SerializeField] public int removalSatisfactionCost { get; private set; }
     [field: SerializeField] public Sprite icon { get; private set; }
