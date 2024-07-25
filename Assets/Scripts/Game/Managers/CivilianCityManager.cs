@@ -30,7 +30,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
         else if (currWorkerSatisfaction >= 50)
             tickNumberInterval = 8;
         else
-            tickNumberInterval = 10;
+            tickNumberInterval = 1;
         _tickTimer++;
         if (_tickTimer >= tickNumberInterval)
         {
@@ -45,7 +45,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     /// </summary>
     public void InvokeAction()
     {
-        var buildings = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None).Where(e=>!(e is TreeController)).ToList();
+        var buildings = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None).Where(e=>!(e is TreeController) && !(e is TrainStationController)).ToList();
 
         if (buildings.Count == 0)
             return;
