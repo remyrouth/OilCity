@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIStateMachine : Singleton<UIStateMachine>
 {
@@ -39,6 +40,16 @@ public class UIStateMachine : Singleton<UIStateMachine>
         CurrentState = States[state];
         CurrentState.OnEnter();
     }
+    
+    /// <summary>
+    /// Changes game scene
+    /// </summary>
+    /// <param name="sceneIndex"></param>
+    public void ChangeScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
+
     private void Update()
     {
         if (CurrentState != null)
@@ -47,4 +58,4 @@ public class UIStateMachine : Singleton<UIStateMachine>
 
 
 }
-public enum GameState { GameUI, MenuUI, BuildingUI, EventUI, EndingUI }
+public enum GameState { MenuUI, PauseUI, GameUI, BuildingUI, EventUI, EndingUI }
