@@ -8,6 +8,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
 {
     [SerializeField]
     private Vector2 yearRange;
+    [SerializeField]
     private float currentyear;
     [SerializeField]
     private float ticksPerYear = 1f;
@@ -56,7 +57,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
 
     private void CheckNextEvent() {
 
-        if (currentEventListIndex < eventsOnTimeLine.Count - 1) {
+        if (currentEventListIndex <= eventsOnTimeLine.Count - 1) {
             float currentPercent = currentyear/yearRange.y;
             TimeLineEvent nextEvent = eventsOnTimeLine[currentEventListIndex];
             float nextEventPercent = nextEvent.GamePercentage;
@@ -79,14 +80,6 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     public void OnTick()
     {
        ContinueimeLine();
-    }
-
-
-    [Serializable]
-    public class TimeLineEvent {
-        [Range(0,1)]
-        public float GamePercentage;
-        public Sprite newspaperSprite = null;
     }
 
     private void SortEventsByPercentage() {
