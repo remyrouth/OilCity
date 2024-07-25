@@ -9,6 +9,7 @@ public class TileObjectController : MonoBehaviour
 
     [SerializeField] private Vector2 _actionsPivot;
     public Vector2 ActionsPivot => Anchor + _actionsPivot;
+    public virtual bool CheckIfDestroyable() => false;
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

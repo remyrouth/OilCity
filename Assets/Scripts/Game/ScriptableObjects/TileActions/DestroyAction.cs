@@ -2,6 +2,9 @@ public class DestroyAction : TileAction
 {
     public override void OnClicked(TileObjectController toc)
     {
-        BoardManager.Instance.Destroy(toc);
+        if (toc.CheckIfDestroyable())
+        {
+            BoardManager.Instance.Destroy(toc);
+        }
     }
 }

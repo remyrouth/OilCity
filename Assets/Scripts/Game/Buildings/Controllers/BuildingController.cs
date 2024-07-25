@@ -22,10 +22,13 @@ public abstract class BuildingController<T> : TileObjectController
     protected virtual void OnDestroy()
     {
         TimeManager.Instance.DeregisterReceiver(gameObject);
-        //reduce money by config.placementCost
-        //reduce satisfaction by config.removalSatisfactionCost
+        WorkerSatisfactionManager.Instance.DecreaseSatisfaction(config.removalSatisfactionCost);
+        MoneyManager.Instance.ReduceMoney(config.removalCost);
         //play visual effect
     }
-
+    public override bool CheckIfDestroyable()
+    {
+        return MoneyManager.Instance.money >= config.removalCost;
+    }
     protected virtual void CreateInitialConnections() { }
 }
