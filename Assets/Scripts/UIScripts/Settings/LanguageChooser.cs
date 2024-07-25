@@ -2,7 +2,7 @@ using Game.Managers;
 using TMPro;
 using UnityEngine;
 
-namespace UIScripts
+namespace UIScripts.Settings
 {
     public class LanguageChooser : MonoBehaviour
     {
