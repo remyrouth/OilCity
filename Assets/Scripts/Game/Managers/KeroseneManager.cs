@@ -9,11 +9,19 @@ public class KeroseneManager : Singleton<KeroseneManager>
     public event Action<float> OnKeroseneChanged;
     public event Action OnKeroseneSold;
     
+    /// <summary>
+    /// Increases the current amount of kerosene owned by the player.
+    /// </summary>
+    /// <param name="amount"></param>
     public void IncreaseAmount(float amount)
     {
         KeroseneAmount += amount;
         OnKeroseneChanged?.Invoke(KeroseneAmount);
     }
+    /// <summary>
+    /// Decreases the current amount of kerosene owned by the player.
+    /// </summary>
+    /// <param name="amount"></param>
     public void DecreaseAmount(float amount)
     {
         if (KeroseneAmount - amount < 0)
@@ -22,6 +30,9 @@ public class KeroseneManager : Singleton<KeroseneManager>
             KeroseneAmount -= amount;
         OnKeroseneChanged?.Invoke(KeroseneAmount);
     }
+    /// <summary>
+    /// Gives the player money for the amount of kerosene sold
+    /// </summary>
     public void SellKerosene()
     {
         MoneyManager.Instance.AddMoney(KEROSINE_PRICE * KeroseneAmount);

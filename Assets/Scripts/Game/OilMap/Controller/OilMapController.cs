@@ -12,6 +12,12 @@ public abstract class OilMapController : MonoBehaviour, IAmountGiver<float>
         alreadyMined[new Vector2Int(x, y)] += amount;
     }
     protected abstract float GetBaseValue(int x, int y);
+    /// <summary>
+    /// Returns the amount of oil that can be found at tile
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     public float GetValueAtPosition(int x, int y)
     {
         if (alreadyMined.ContainsKey(new Vector2Int(x, y)))
