@@ -32,7 +32,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
         else
             tickNumberInterval = 1;
         _tickTimer++;
-        if (_tickTimer > tickNumberInterval)
+        if (_tickTimer >= tickNumberInterval)
         {
             _tickTimer = 0;
             InvokeAction();
