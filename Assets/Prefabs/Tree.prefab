@@ -48,14 +48,14 @@ MonoBehaviour:
   _actionsPivot: {x: 0, y: 0}
   _spriteRenderer: {fileID: 894880373097073525}
   sprites:
-  - {fileID: 1143323213, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
-  - {fileID: -2144104700, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
-  - {fileID: -956163203, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
-  - {fileID: -1604599271, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
-  - {fileID: 1200622861, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
-  - {fileID: 228364545, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
-  - {fileID: -265133454, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
-  - {fileID: 873037789, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+  - {fileID: 1125315471, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: -405919506, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: -1821594624, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: 1229065575, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: 113181427, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: 903961607, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: 1541956559, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: 1986034770, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
 --- !u!1 &7785336662693661705
 GameObject:
   m_ObjectHideFlags: 0
