@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1736a299bdfb9d469b10333527f1d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialGameState: 0
+  initialGameState: 2
   CurrentState: {fileID: 0}
 --- !u!4 &112677847
 Transform:
