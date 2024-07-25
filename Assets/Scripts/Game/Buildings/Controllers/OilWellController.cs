@@ -3,7 +3,7 @@ using UnityEngine;
 
 public sealed class OilWellController : PayrateBuildingController, IFlowable
 {
-    private const float BASE_OIL_RATE = 1;
+    private const float BASE_OIL_RATE = 0.01f;
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
