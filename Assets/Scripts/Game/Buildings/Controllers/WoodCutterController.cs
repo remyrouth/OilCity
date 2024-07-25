@@ -21,7 +21,9 @@ public sealed class WoodCutterController : AOEBuildingController
             InvokeAction();
         }
     }
-
+    /// <summary>
+    /// Checks each tile in range of the building, if its a tree, adds it to a list from which it later chooses a random one to destroy.
+    /// </summary>
     public void InvokeAction()
     {
         List<TileObjectController> trees = new List<TileObjectController>();
