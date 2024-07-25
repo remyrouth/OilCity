@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeroseneManager : MonoBehaviour
+public class KeroseneManager : Singleton<KeroseneManager>
 {
     private int _tickTimer = 0;
     public int tickNumberInterval = 15;
@@ -22,22 +22,22 @@ public class KeroseneManager : MonoBehaviour
     public void InvokeAction()
     {
         if(keroseneAmount > minKeroseneAmount)
-            sellKerosene();
+            SellKerosene();
     }
-    public void increaseAmount(float amount)
+    public void IncreaseAmount(float amount)
     {
         keroseneAmount += amount;
     }
-    public void decreaseAmount(float amount)
+    public void DecreaseAmount(float amount)
     {
-        if (keroseneAmount - amount > minKeroseneAmount)
+        if (keroseneAmount - amount < minKeroseneAmount)
             keroseneAmount = minKeroseneAmount;
         else
             keroseneAmount -= amount;
     }
-    public void sellKerosene()
+    public void SellKerosene()
     {
         MoneyManager.Instance.AddMoney(kerosenePricePerLiter * keroseneAmount);
-        decreaseAmount(keroseneAmount);
+        DecreaseAmount(keroseneAmount);
     }
 }

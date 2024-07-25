@@ -8,7 +8,7 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>
     public int maxWorkerSatisfaction => 100;
     public int minWorkerSatisfaction => 0;
 
-    public void increaseSatisfaction(int amount)
+    public void IncreaseSatisfaction(int amount)
     {
         if (workerSatisfaction + amount > maxWorkerSatisfaction)
             workerSatisfaction = maxWorkerSatisfaction;
@@ -16,17 +16,17 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>
             workerSatisfaction += amount;
     }
 
-    public void decreaseSatisfaction(int amount)
+    public void DecreaseSatisfaction(int amount)
     {
-        if (workerSatisfaction - amount > minWorkerSatisfaction)
+        if (workerSatisfaction - amount < minWorkerSatisfaction)
             workerSatisfaction = minWorkerSatisfaction;
         else
             workerSatisfaction -= amount;
         if (workerSatisfaction <= minWorkerSatisfaction)
-            gameOver();
+            GameOver();
     }
 
-    public void gameOver()
+    public void GameOver()
     {
         Debug.Log("You lost...");
     }
