@@ -16,12 +16,14 @@ public class UIStateMachine : Singleton<UIStateMachine>
                 _states = new();
                 foreach (var state in FindObjectsOfType<UIState>())
                     _states.Add(state.type, state);
-                ChangeState(initialGameState);
             }
             return _states;
         }
     }
-
+    private void Awake()
+    {
+        ChangeState(initialGameState);
+    }
     public UIState CurrentState;
 
     /// <summary>
