@@ -181,16 +181,17 @@ public class TimeManager : Singleton<TimeManager>
 
             // since we disowned them, they have to make it on their own in the vast world
             // i.e. we have to add them to the tickable forest
-            if (m_tickableForest.Contains(node))
-            {
-                m_tickableForest.Add(child);
-            }
+            //
+            // we dont need to check if the current node is in the forest because every node has one
+            // parent. Since we removed that parent, the child node HAS to be a root now.
+            m_tickableForest.Add(child);
         }
 
         // if we have a parent, have them disown us because we've been a terrible kid to them
         // and have failed at every possible opportunity in life.
         //
-        // otherwise, remove ourselves from the tickable forest.
+        // otherwise, remove ourselves from the tickable forest, since if we didn't have a parent
+        // we'd've had to have been a root.
         if (parent != null)
         {
             parent.DisownChild(node);
@@ -228,6 +229,11 @@ public class TimeManager : Singleton<TimeManager>
                 children.RemoveAt(0);
 
                 if (!ConvertToClassType<MonoBehaviour>(item, out var imono)) continue;
+                if (imono == null)
+                {
+                    Debug.Log("Mono has vanished..? " + mono.gameObject.name);
+                    continue;
+                }
 
                 Gizmos.DrawCube(imono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, Vector3.one * 0.35f);
 

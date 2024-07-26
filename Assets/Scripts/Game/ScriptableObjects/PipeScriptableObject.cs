@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PipeScriptableObject : BuildingScriptableObject
 {
+    [SerializeField] private List<TileAction> actionList = new List<TileAction>();
+
     public override TileObjectController CreateInstance(Vector2Int _)
     {
         // this is pretty icky design, but the PipePlacer script is in charge of setting up/passing the values into the pipe controller.
@@ -9,6 +12,10 @@ public class PipeScriptableObject : BuildingScriptableObject
         // so it'll have to do for now.
         //
         // see PipePlacer for why this is an empty gameobject instead of the prefab.
-        return new GameObject("PipeSystem").AddComponent<PipeController>();
+        var go = new GameObject();
+        go.name = "PipeSystem #" + go.GetInstanceID();
+        var component = go.AddComponent<PipeController>();
+        component.SetTileActions(actionList);
+        return component;
     }
 }

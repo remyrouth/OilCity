@@ -19,26 +19,24 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
         {
             if (p.tile.TryGetComponent<PipeController>(out var pipe))
             {
-                Debug.Log("found one");
                 if (pipe.DoesPipeSystemReceiveInputFromTile(p.peripheral_to)) // TODO not with_position, but rather the tile of the building that would be connected to
                 {
-                    Debug.Log("output");
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
                         // ping the pipe? display a notif that this pipe isnt going to be used?
                         // TODO
 
-                        Debug.Log("cut");
                         return;
                     }
 
                     m_output = pipe;
+                    pipe.AddChild(this);
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(p.peripheral_to))
                 {
-                    Debug.Log("input");
                     m_inputs.Add(pipe);
+                    pipe.SetParent(this);
                 }
             }
         }

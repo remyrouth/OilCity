@@ -32,6 +32,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         m_endDirection = end_pipe_dir;
     }
 
+    public void SetTileActions(List<TileAction> actions)
+    {
+        this.TileActions = actions;
+    }
+
     protected override void CreateInitialConnections(Vector2Int _)
     {
         var child_pos = m_startPipePos;
@@ -40,10 +45,14 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (BoardManager.Instance.IsTileOccupied(child_pos))
         {
             var tentative = BoardManager.Instance.tileDictionary[child_pos].GetComponent<IFlowable>();
+            Debug.Log("got " + tentative);
 
             if (tentative.GetParent() == null)
             {
                 m_child = tentative;
+                m_child.SetParent(this);
+
+                Debug.Log("added child");
             }
             else
             {
@@ -54,6 +63,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (BoardManager.Instance.IsTileOccupied(parent_pos))
         {
             m_parent = BoardManager.Instance.tileDictionary[parent_pos].GetComponent<IFlowable>();
+            m_parent.AddChild(this);
         }
     }
 
