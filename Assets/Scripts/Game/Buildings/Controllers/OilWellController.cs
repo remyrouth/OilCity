@@ -39,20 +39,22 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
         foreach (var p in peripherals)
         {
-            if (p.TryGetComponent<PipeController>(out var pipe))
+            if (p.tile.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(with_position))
+                if (pipe.DoesPipeSystemReceiveInputFromTile(p.peripheral_to))
                 {
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
                         // ping the pipe? display a notif that this pipe isnt going to be used?
                         // TODO
+
+                        return;
                     }
 
                     m_output = pipe;
                 }
-                else if (pipe.DoesPipeSystemOutputToTile(with_position))
+                else if (pipe.DoesPipeSystemOutputToTile(p.peripheral_to))
                 {
                     // ping the pipe? display a notif that wells cant have inputs?
                 }

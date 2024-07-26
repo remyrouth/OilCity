@@ -34,20 +34,21 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     protected override void CreateInitialConnections(Vector2Int _)
     {
-        // todo fill out the m_start and m_end fields in this method
-        // difficulty with this is that we don't exactly have pipe-laying done, so we don't know when Instantiate will be called.
-        // in theory it would be after the end pipe was placed; i.e. after the controller has been made?
-        // then does that mean we'll have to call TimeManager register again?! I think we need a custom building controller Instantiate definition for pipes...
-
         var child_pos = m_startPipePos;
-        var parent_pos = m_endPipePos;// + Utilities.GetPipeFlowDirOffset(m_endDirection);
-
-        // Debug.DrawLine(Utilities.Vector2IntToVector3(child_pos), Utilities.Vector2IntToVector3(parent_pos), Color.red, 15f);
-        // GameObject.CreatePrimitive(PrimitiveType.Cube).transform.position = Utilities.Vector2IntToVector3(child_pos) + new Vector3(0.5f, 0.5f);
+        var parent_pos = m_endPipePos;
 
         if (BoardManager.Instance.IsTileOccupied(child_pos))
         {
-            m_child = BoardManager.Instance.tileDictionary[child_pos].GetComponent<IFlowable>();
+            var tentative = BoardManager.Instance.tileDictionary[child_pos].GetComponent<IFlowable>();
+
+            if (tentative.GetParent() == null)
+            {
+                m_child = tentative;
+            }
+            else
+            {
+                Debug.LogWarning("Connection refused: The attempted source object already has a parent!");
+            }
         }
 
         if (BoardManager.Instance.IsTileOccupied(parent_pos))
@@ -180,4 +181,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             return false;
         }
     }
+
+    public (Vector2Int start, Vector2Int end) GetPositions() => (m_startPipePos, m_endPipePos);
 }

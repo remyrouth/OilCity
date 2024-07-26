@@ -98,9 +98,9 @@ public class BoardManager : Singleton<BoardManager>
     /// <param name="position"></param>
     /// <param name="buildingSO"></param>
     /// <returns></returns>
-    public List<TileObjectController> GetPeripheralTileObjectsForBuilding(Vector2Int position, Vector2Int size)
+    public List<(Vector2Int peripheral_to, TileObjectController tile)> GetPeripheralTileObjectsForBuilding(Vector2Int position, Vector2Int size)
     {
-        var list = new List<TileObjectController>();
+        var list = new List<(Vector2Int, TileObjectController)>();
 
         int top = size.y;
         int right = size.x;
@@ -109,18 +109,30 @@ public class BoardManager : Singleton<BoardManager>
         {
             for (int j = -1; j <= right; j++)
             {
+                Vector2Int peripheral_offset = Vector2Int.zero;
+                if (i == top) peripheral_offset.y = -1;
+                else if (i == -1) peripheral_offset.y = 1;
+
+                if (j == right) peripheral_offset.x = -1;
+                else if (j == -1) peripheral_offset.x = 1;
+
                 // for the sake of readability
                 bool is_topleft_corner = (i == top && j == -1);
                 bool is_topright_corner = (i == top && j == right);
                 bool is_bottomleft_corner = (i == -1 && j == -1);
                 bool is_bottomright_corner = (i == -1 && j == right);
+                bool is_center_tile = ( (i != -1 && i != top) && (j != -1 && j != right) );
 
                 var offset_position = position + new Vector2Int(j, i);
 
-                if (is_topleft_corner || is_topright_corner || is_bottomleft_corner || is_bottomright_corner) continue;
+                // debug check view
+                // if (!(is_topleft_corner || is_topright_corner || is_bottomleft_corner || is_bottomright_corner || is_center_tile))
+                //    GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = Utilities.Vector2IntToVector3(offset_position) + new Vector3(0.5f, 0.5f);
+
+                if (is_topleft_corner || is_topright_corner || is_bottomleft_corner || is_bottomright_corner || is_center_tile) continue;
                 else if (tileDictionary.TryGetValue(offset_position, out var value))
                 {
-                    list.Add(value);
+                    list.Add((offset_position + peripheral_offset, value));
                 }
             }
         }

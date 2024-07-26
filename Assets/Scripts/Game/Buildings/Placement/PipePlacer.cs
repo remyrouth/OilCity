@@ -151,10 +151,27 @@ public class PipePlacer : BuildingPlacer
 
         if (BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so))
         {
+            // if we're currently hovering over a pipe, we'll want to make sure the connection place is valid
+            if (BoardManager.Instance.tileDictionary[mousePos].TryGetComponent<PipeController>(out var pipe))
+            {
+                // pipes cannot connect at non-start/end-points
+
+                var pos = pipe.GetPositions();
+
+                // if we're placing the start position, check if it's connecting to the end of the pipe
+                // otherwise, check the opposite
+                if (!m_wasStartPlaced)
+                {
+                    return mousePos.Equals(pos.end);
+                }
+                else
+                {
+                    return mousePos.Equals(pos.start);
+                }
+            }
+
             if (BoardManager.Instance.tileDictionary[mousePos].TryGetComponent<IFlowable>(out var flowable))
             {
-                //var flowable = BoardManager.Instance.tileDictionary[mousePos].GetComponent<IFlowable>();
-
                 // logic:
                 // if the start pipe has not been placed yet, then we're in the process of placing the starting pipe.
                 // that means that whatever building was clicked on will be drawn FROM, into the pipe. Therefore, we check
@@ -266,6 +283,7 @@ public class PipePlacer : BuildingPlacer
 
         Debug.Log(string.Format("Start Dir {0}, End Dir {1}", m_startDir, m_endDir));
 
+        // setup the pipe
         if (!tile_object.TryGetComponent<PipeController>(out var component))
         {
             Debug.LogError("Pipe prefab doesn't have a pipe controller!");
@@ -279,6 +297,7 @@ public class PipePlacer : BuildingPlacer
         {
             var v2i = Utilities.Vector3ToVector2Int(m_pointArray[index]);
 
+            // if we're the start or end pipe and our position is occupied, don't register us as a controller tile
             if ((index == 0 || index == m_pointArray.Length - 1) && BoardManager.Instance.IsTileOccupied(v2i)) continue;
 
             BoardManager.Instance.tileDictionary[v2i] = component;
