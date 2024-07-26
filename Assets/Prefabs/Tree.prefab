@@ -48,14 +48,14 @@ MonoBehaviour:
   _actionsPivot: {x: 0.5, y: 0.5}
   _spriteRenderer: {fileID: 894880373097073525}
   sprites:
-  - {fileID: 1125315471, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: -405919506, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: -1821594624, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 1229065575, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 113181427, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 903961607, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 1541956559, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 1986034770, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: 187601543, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: 1467264967, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: -1619702426, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: 1921891574, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: 1112958727, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: 885915640, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: -1292884710, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: -523096467, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
 --- !u!1 &7785336662693661705
 GameObject:
   m_ObjectHideFlags: 0
