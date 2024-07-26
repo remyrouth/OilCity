@@ -11,11 +11,11 @@ namespace UIScripts.Settings
         
         public void OnEnable()
         {
-            if (CameraController.Instance.invert)
+            if (PlayerPrefs.HasKey("CameraInversion"))
             {
-                cameraInversionToggle.isOn = true;
-                CameraController.Instance.invert = true;
+                cameraInversionToggle.isOn = PlayerPrefs.GetInt("CameraInversion") == 1;
             }
+            
         }
 
         public void ToggleCameraMovementInversion()
