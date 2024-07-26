@@ -143,8 +143,8 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     /// <param name="pipeSprite"></param>
     /// <returns></returns>
-    public void AddTileToXY(Vector3Int position, Sprite pipeSprite) {
-        PlaceTile(position, sprite);
+    public void AddTileToXY(Vector2Int position, Sprite pipeSprite) {
+        PlaceTile(new Vector3Int(position.x, position.y, 0), pipeSprite);
     }
 
     // Method to place a tile with a given sprite at a given position
@@ -161,7 +161,7 @@ public class BoardManager : Singleton<BoardManager>
         newTile.sprite = sprite;
 
         // Set the tile on the tilemap
-        tilemap.SetTile(position, newTile);
+        _pipeTileMap.SetTile(position, newTile);
     }
 
 
