@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using static UnityEditor.Rendering.CameraUI;
+using Unity.VisualScripting;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
 {
@@ -39,27 +40,25 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     protected override void CreateInitialConnections(Vector2Int _)
     {
-        var child_pos = m_startPipePos;
-        var parent_pos = m_endPipePos;
+        var child_pos = m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
+        var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
 
         if (BoardManager.Instance.IsTileOccupied(child_pos))
         {
-            var tentative = BoardManager.Instance.tileDictionary[child_pos].GetComponent<IFlowable>();
-
-            if (tentative.GetParent() == null)
+            if (BoardManager.Instance.tileDictionary[child_pos].TryGetComponent<IFlowable>(out var tentative) && tentative.GetParent() == null)
             {
                 m_child = tentative;
                 m_child.SetParent(this);
             }
             else
             {
-                Debug.LogWarning("Connection refused: The attempted source object already has a parent!");
+                Debug.LogWarning("Connection refused with " + BoardManager.Instance.tileDictionary[child_pos]);
             }
         }
 
-        if (BoardManager.Instance.IsTileOccupied(parent_pos))
+        if (BoardManager.Instance.IsTileOccupied(parent_pos) && BoardManager.Instance.tileDictionary[parent_pos].TryGetComponent<IFlowable>(out var obj))
         {
-            m_parent = BoardManager.Instance.tileDictionary[parent_pos].GetComponent<IFlowable>();
+            m_parent = obj;
             m_parent.AddChild(this);
         }
     }

@@ -264,13 +264,15 @@ public class PipePlacer : BuildingPlacer
                 if (index != 0)
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_startDir);
+                    Debug.Log(m_startDir + " 1");
 
-                    m_start = prior_pipe_pos;
+                    m_start = m_pointList[index];
                     start_ind = index;
                 } 
                 else
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[1], m_pointList[0], out m_startDir);
+                    Debug.Log(m_startDir + " 2");
 
                     m_start = m_pointList[0];
                     start_ind = 0;
@@ -284,14 +286,16 @@ public class PipePlacer : BuildingPlacer
                 // if we've reached a tile no longer open, that means we're at the end of the system
                 if (!is_open_space)
                 {
-                    Utilities.GetCardinalEstimatePipeflowDirection(prior_pipe_pos, m_pointList[index], out m_endDir);
+                    Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_endDir);
+                    Debug.Log(m_endDir + " 1");
 
                     m_end = m_pointList[index - 1];
                     break;
                 }
                 else if (index == m_pointList.Count - 1)
                 {
-                    Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index - 1], m_pointList[index], out m_endDir);
+                    Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], m_pointList[index - 1], out m_endDir);
+                    Debug.Log(m_endDir + " 2");
 
                     m_end = m_pointList[index];
 

@@ -38,12 +38,14 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
         var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
 
-        foreach (var p in peripherals)
+        foreach (var (peripheral_to, tile) in peripherals)
         {
-            if (p.tile.TryGetComponent<PipeController>(out var pipe))
+            if (tile.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(p.peripheral_to))
+                Debug.Log("found");
+                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to))
                 {
+                    Debug.Log("done");
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
@@ -55,7 +57,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
                     m_output = pipe;
                 }
-                else if (pipe.DoesPipeSystemOutputToTile(p.peripheral_to))
+                else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
                     // ping the pipe? display a notif that wells cant have inputs?
                 }
