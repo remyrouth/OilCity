@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class KeroseneManager : Singleton<KeroseneManager>
 {
@@ -9,7 +10,7 @@ public class KeroseneManager : Singleton<KeroseneManager>
     public event Action<float> OnKeroseneChanged;
     public event Action OnKeroseneSold;
 
-    
+
     /// <summary>
     /// Increases the current amount of kerosene owned by the player.
     /// </summary>
@@ -36,8 +37,9 @@ public class KeroseneManager : Singleton<KeroseneManager>
     /// </summary>
     public void SellKerosene()
     {
-        MoneyManager.Instance.AddMoney(KEROSINE_PRICE * MaxSoldAmount);
-        DecreaseAmount(KeroseneAmount);
+        float soldAmount = Mathf.Clamp(KeroseneAmount, 0, MaxSoldAmount);
+        MoneyManager.Instance.AddMoney(KEROSINE_PRICE * soldAmount);
+        DecreaseAmount(soldAmount);
         OnKeroseneSold?.Invoke();
     }
 }
