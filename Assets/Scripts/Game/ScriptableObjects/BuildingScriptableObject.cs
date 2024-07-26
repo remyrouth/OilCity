@@ -16,6 +16,7 @@ public class BuildingScriptableObject : ScriptableObject
         GameObject tmpObject = Instantiate(prefab);
         var tileObjectController = tmpObject.GetComponent<BuildingController<BuildingScriptableObject>>();
         tileObjectController.Initialize(this, spawn_position);
+
         return tileObjectController;
     }
     public virtual void BeginBuilding() => BuildingManager.Instance.BeginBuilding(this);
