@@ -7,7 +7,7 @@ public class PipeScriptableObject : BuildingScriptableObject
 
         // Pipes specifically will go to the tile map to place an object there
         // icon comes from BuildingScriptableObject parent
-        Instance.BoardManager.AddTileToXY(spawn_position, icon);
+        BoardManager.Instance.AddTileToXY(spawn_position, icon);
 
 
         // this is pretty icky design, but the PipePlacer script is in charge of setting up/passing the values into the pipe controller.

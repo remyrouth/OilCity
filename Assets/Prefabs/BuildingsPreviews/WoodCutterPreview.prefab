@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2606268761286938763}
   - component: {fileID: 219184209359849872}
+  - component: {fileID: 3156647748933304969}
   m_Layer: 0
   m_Name: WoodCutterPreview
   m_TagString: Untagged
@@ -130,3 +131,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 1385994140234023666}
+--- !u!114 &3156647748933304969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7535017978457641841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: a235f1dad13395d4c9c0456b357a36cc, type: 3}
+  soundType: 0
