@@ -37,7 +37,7 @@ public class CameraController : Singleton<CameraController>
         if (Input.GetMouseButton(1))
         {
             Vector3 delta = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
-            delta *= _targetZoom / zoomMax;
+            delta *= _targetZoom / zoomMax * sensitivity;
             if (invert)
                 delta *= -1;
             _targetPosition += delta;

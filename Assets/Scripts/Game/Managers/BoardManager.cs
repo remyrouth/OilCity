@@ -43,7 +43,7 @@ public class BoardManager : Singleton<BoardManager>
     {
         if (AreTilesOccupiedForBuilding(position, buildingSO))
             return false;
-        var obj = buildingSO.CreateInstance();
+        var obj = buildingSO.CreateInstance(position);
         obj.transform.position = new Vector3(position.x, position.y, 0);
         for (int i = 0; i < buildingSO.size.y; i++)
             for (int j = 0; j < buildingSO.size.x; j++)
@@ -105,15 +105,15 @@ public class BoardManager : Singleton<BoardManager>
         int top = size.y;
         int right = size.x;
 
-        for (int i = 0; i <= top; i++)
+        for (int i = -1; i <= top; i++)
         {
-            for (int j = 0; j <= right; j++)
+            for (int j = -1; j <= right; j++)
             {
                 // for the sake of readability
-                bool is_topleft_corner = (i == top && j == 0);
+                bool is_topleft_corner = (i == top && j == -1);
                 bool is_topright_corner = (i == top && j == right);
-                bool is_bottomleft_corner = (i == 0 && j == 0);
-                bool is_bottomright_corner = (i == 0 && j == right);
+                bool is_bottomleft_corner = (i == -1 && j == -1);
+                bool is_bottomright_corner = (i == -1 && j == right);
 
                 var offset_position = position + new Vector2Int(j, i);
 

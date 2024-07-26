@@ -11,11 +11,11 @@ public class BuildingScriptableObject : ScriptableObject
     [field: SerializeField] public GameObject previewPrefab { get; private set; }
     [field: SerializeField] public Vector2Int size { get; private set; }
 
-   public virtual TileObjectController CreateInstance()
+   public virtual TileObjectController CreateInstance(Vector2Int spawn_position)
     {
         GameObject tmpObject = Instantiate(prefab);
         var tileObjectController = tmpObject.GetComponent<BuildingController<BuildingScriptableObject>>();
-        tileObjectController.Initialize(this);
+        tileObjectController.Initialize(this, spawn_position);
         return tileObjectController;
     }
     public virtual void BeginBuilding() => BuildingManager.Instance.BeginBuilding(this);

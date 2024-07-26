@@ -5,6 +5,28 @@ using UnityEngine;
 
 public class Utilities
 {
+    public static PipeFlowDirection FlipFlow(PipeFlowDirection direction)
+    {
+        switch (direction)
+        {
+            case PipeFlowDirection.North: return PipeFlowDirection.South;
+            case PipeFlowDirection.South: return PipeFlowDirection.North;
+            case PipeFlowDirection.West: return PipeFlowDirection.East;
+            case PipeFlowDirection.East: return PipeFlowDirection.West;
+            default:
+                throw new ArgumentException("Invalid pipes cannot be flipped.");
+        }
+    }
+
+    /// <summary>
+    /// Given a position for tile and pipe, returns true if they are adjacent in a cardinal direction. Additionally, outputs the potential flow
+    /// direction for the pipe going into the tile. Note that this only gets the flow for pipes that are flowing outward into a tile. If you want
+    /// the flow of a tile into a pipe, you will need to flip the result of this method call.
+    /// </summary>
+    /// <param name="dest_pos"></param>
+    /// <param name="pipe_pos"></param>
+    /// <param name="est_flowdir"></param>
+    /// <returns></returns>
     public static bool GetCardinalEstimatePipeflowDirection(Vector2Int dest_pos, Vector2Int pipe_pos, out PipeFlowDirection est_flowdir)
     {
         if (pipe_pos.x < dest_pos.x && pipe_pos.y == dest_pos.y)

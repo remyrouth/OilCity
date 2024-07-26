@@ -153,7 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialGameState: 2
-  CurrentState: {fileID: 0}
 --- !u!4 &112677847
 Transform:
   m_ObjectHideFlags: 0
@@ -4889,11 +4888,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9b6775a011ca849804b3da13a50e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 500
+  sensitivity: 1
   zoomSensitivty: 0.5
   zoomMax: 10
   zoomMin: 1
-  invert: 0
+  invert: 1
 --- !u!1 &966571178 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9074051008143500652, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
@@ -4954,7 +4953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3af484c7a0f664c92990db3a763307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  workerSatisfaction: 100
+  workerSatisfaction: 20
 --- !u!114 &1148798916
 MonoBehaviour:
   m_ObjectHideFlags: 0

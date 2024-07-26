@@ -27,7 +27,6 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
     public virtual void UpdatePreview()
     {
         var mousePos = TileSelector.Instance.MouseToGrid();
-        if (!this) return;
         transform.position = new Vector3(mousePos.x, mousePos.y, 0);
         var can_be_built = IsValidPlacement(m_so);
 

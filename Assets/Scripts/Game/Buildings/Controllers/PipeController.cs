@@ -32,18 +32,18 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         m_endDirection = end_pipe_dir;
     }
 
-    protected override void CreateInitialConnections()
+    protected override void CreateInitialConnections(Vector2Int _)
     {
         // todo fill out the m_start and m_end fields in this method
         // difficulty with this is that we don't exactly have pipe-laying done, so we don't know when Instantiate will be called.
         // in theory it would be after the end pipe was placed; i.e. after the controller has been made?
         // then does that mean we'll have to call TimeManager register again?! I think we need a custom building controller Instantiate definition for pipes...
 
-        var child_pos = m_startPipePos;// + Utilities.GetPipeFlowDirOffset(m_startDirection);
+        var child_pos = m_startPipePos;
         var parent_pos = m_endPipePos;// + Utilities.GetPipeFlowDirOffset(m_endDirection);
 
-        Debug.DrawLine(Utilities.Vector2IntToVector3(child_pos), Utilities.Vector2IntToVector3(parent_pos), Color.red, 15f);
-        GameObject.CreatePrimitive(PrimitiveType.Cube).transform.position = Utilities.Vector2IntToVector3(child_pos) + new Vector3(0.5f, 0.5f);
+        // Debug.DrawLine(Utilities.Vector2IntToVector3(child_pos), Utilities.Vector2IntToVector3(parent_pos), Color.red, 15f);
+        // GameObject.CreatePrimitive(PrimitiveType.Cube).transform.position = Utilities.Vector2IntToVector3(child_pos) + new Vector3(0.5f, 0.5f);
 
         if (BoardManager.Instance.IsTileOccupied(child_pos))
         {
@@ -148,13 +148,17 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     }
 
     /// <summary>
-    /// Returns true if the object at the position is the input for this pipe system.
+    /// Returns true if the object at the position is the input for this pipe system. i.e. if the tile flows out into the pipe system.
     /// </summary>
     /// <param name="tile_pos"></param>
     /// <returns></returns>
-    public bool IsInputPipeForTile(Vector2Int tile_pos)
+    public bool DoesPipeSystemReceiveInputFromTile(Vector2Int tile_pos)
     {
-        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_startPipePos, out PipeFlowDirection est_flow_dir)) return est_flow_dir == m_startDirection;
+        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_startPipePos, out PipeFlowDirection est_flow_dir)) {
+            // flow is flipped here because the estimate flow direction method operates under the assumption that the pipe is always flowing
+            // into the tile, not the other way around.
+            return Utilities.FlipFlow(est_flow_dir) == m_startDirection;
+        }
         else
         {
             // not within any of the cardinal directions, so auto-false.
@@ -163,11 +167,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     }
 
     /// <summary>
-    /// Returns true if the object at the position is the output object for this pipe system.
+    /// Returns true if the object at the position is the output object for this pipe system. i.e. if the pipe system flows into the tile.
     /// </summary>
     /// <param name="tile_pos"></param>
     /// <returns></returns>
-    public bool IsOutputPipeForTile(Vector2Int tile_pos)
+    public bool DoesPipeSystemOutputToTile(Vector2Int tile_pos)
     {
         if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_endPipePos, out PipeFlowDirection est_flow_dir)) return est_flow_dir == m_endDirection;
         else
