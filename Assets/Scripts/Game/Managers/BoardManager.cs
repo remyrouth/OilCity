@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
 public class BoardManager : Singleton<BoardManager>
 {
     public const int MAP_SIZE_X = 40;
@@ -138,12 +140,30 @@ public class BoardManager : Singleton<BoardManager>
     /// This method was made to allow pipes to appear on a tilemap.
     /// This was done so that there would not be excess pipe 
     /// objects in scene, and the FPS cost would be less.
-    // </summary>
+    /// </summary>
     /// <param name="pipeSprite"></param>
     /// <returns></returns>
-    public void AddTileToXY(Sprite pipeSprite) {
-
+    public void AddTileToXY(Vector2Int position, Sprite pipeSprite) {
+        PlaceTile(new Vector3Int(position.x, position.y, 0), pipeSprite);
     }
+
+    // Method to place a tile with a given sprite at a given position
+    private void PlaceTile(Vector3Int position, Sprite sprite)
+    {
+        if (sprite == null)
+        {
+            Debug.LogWarning("Sprite is null. Cannot place tile.");
+            return;
+        }
+
+        // Create a new Tile and assign the sprite to it
+        Tile newTile = ScriptableObject.CreateInstance<Tile>();
+        newTile.sprite = sprite;
+
+        // Set the tile on the tilemap
+        _pipeTileMap.SetTile(position, newTile);
+    }
+
 
     /// <summary>
     /// Gets tiles in range of a TileObjectController
