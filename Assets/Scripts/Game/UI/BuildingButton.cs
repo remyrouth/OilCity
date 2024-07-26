@@ -6,11 +6,12 @@ public class BuildingButton : MonoBehaviour
 {
     [SerializeField] private BuildingScriptableObject _buildingSO;
     [SerializeField] private TMP_Text _costLabel;
+    [SerializeField] private Image _buildingIcon;
 
     private void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(()=>{_buildingSO.BeginBuilding();});
-        GetComponent<Image>().sprite = _buildingSO.icon;
+        GetComponent<Button>().onClick.AddListener(() => { _buildingSO.BeginBuilding(); });
+        _buildingIcon.sprite = _buildingSO.icon;
         _costLabel.text = _buildingSO.placementCost.ToString();
     }
 }
