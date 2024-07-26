@@ -45,17 +45,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8ce1229feb95e4b9e5cf84bab833ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0, y: 0}
+  _actionsPivot: {x: 0.5, y: 0.5}
   _spriteRenderer: {fileID: 894880373097073525}
   sprites:
-  - {fileID: 1125315471, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: -405919506, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: -1821594624, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 1229065575, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 113181427, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 903961607, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 1541956559, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
-  - {fileID: 1986034770, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
+  - {fileID: 187601543, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: 1467264967, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: -1619702426, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: 1921891574, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: 1112958727, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: 885915640, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: -1292884710, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
+  - {fileID: -523096467, guid: 0f579b0cf218d144faf15159e665ded0, type: 3}
 --- !u!1 &7785336662693661705
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,8 +83,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4221660506428827224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

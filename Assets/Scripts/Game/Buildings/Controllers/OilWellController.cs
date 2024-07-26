@@ -7,7 +7,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
-
+    [SerializeField] private GameObject _spilloutEffect;
     public (FlowType type, float amount) SendFlow()
     {
         float amountMined = 0;
@@ -28,6 +28,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     void Awake()
     {
         m_inputs = new List<IFlowable>();
+        _spilloutEffect.SetActive(false);
     }
 
     protected override void CreateInitialConnections(Vector2Int with_position)
@@ -98,11 +99,16 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     public void SetParent(IFlowable parent)
     {
         m_output = parent;
+        _spilloutEffect.SetActive(false);
     }
     #endregion
 
     public void OnTick()
     {
-        Debug.LogWarning("Oil well has overflowed " + SendFlow());
+        var flow = SendFlow();
+        _spilloutEffect.SetActive(flow.amount>0);
+        if (flow.amount == 0)
+            return;
+        Debug.LogWarning("Oil well has overflowed " + flow);
     }
 }

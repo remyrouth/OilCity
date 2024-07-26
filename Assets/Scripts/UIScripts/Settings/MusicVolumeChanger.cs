@@ -10,7 +10,10 @@ namespace UIScripts.Settings
         
         public void OnEnable()
         {
-            musicSlider.value = SettingsManager.Instance.MusicVolume;
+            if (PlayerPrefs.HasKey("MusicVolume"))
+            {
+                musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+            }
         }
 
         public void SetMusicVolume(float value)

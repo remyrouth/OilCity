@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public sealed class RefineryController : PayrateBuildingController, IFlowable
@@ -7,6 +8,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
+    [SerializeField] private GameObject _spilloutEffect;
 
     protected override void CreateInitialConnections(Vector2Int with_position)
     {
@@ -73,6 +75,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     void Awake()
     {
         m_inputs = new List<IFlowable>();
+        _spilloutEffect.SetActive(false);
     }
 
     #region Tree stuff
@@ -105,11 +108,16 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     public void SetParent(IFlowable parent)
     {
         m_output = parent;
+        _spilloutEffect.SetActive(false);
     }
     #endregion
 
     public void OnTick()
     {
-        Debug.LogWarning("Refinery has overflowed " + SendFlow());
+        var flow = SendFlow();
+        _spilloutEffect.SetActive(flow.amount > 0);
+        if (flow.amount == 0)
+            return;
+        Debug.LogWarning("Refinery has overflowed " + flow);
     }
 }

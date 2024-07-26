@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 public sealed class WoodCutterController : AOEBuildingController
 {
-    public override int TickNumberInterval => 10;
+    public override int TickNumberInterval => 2;
 
     public override int Range => 4;
 
