@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/ui art/background_main_menu.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/ui art/background_main_menu.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/ui art/button main menu.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/ui art/button main menu.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/ui art/oil city main menu.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/ui art/oil city main menu.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
