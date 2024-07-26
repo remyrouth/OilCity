@@ -3,11 +3,12 @@ using System;
 public class KeroseneManager : Singleton<KeroseneManager>
 {
     public float KeroseneAmount { get; private set; }
-    public float MaxSoldAmount { get; private set; }
+    public float MaxSoldAmount;
     public const float KEROSINE_PRICE = 100;
 
     public event Action<float> OnKeroseneChanged;
     public event Action OnKeroseneSold;
+
     
     /// <summary>
     /// Increases the current amount of kerosene owned by the player.
@@ -35,7 +36,7 @@ public class KeroseneManager : Singleton<KeroseneManager>
     /// </summary>
     public void SellKerosene()
     {
-        MoneyManager.Instance.AddMoney(KEROSINE_PRICE * KeroseneAmount);
+        MoneyManager.Instance.AddMoney(KEROSINE_PRICE * MaxSoldAmount);
         DecreaseAmount(KeroseneAmount);
         OnKeroseneSold?.Invoke();
     }
