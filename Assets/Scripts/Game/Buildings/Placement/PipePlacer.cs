@@ -226,6 +226,9 @@ public class PipePlacer : BuildingPlacer
         m_end = TileSelector.Instance.MouseToGrid(); // record the end position of the pipe
         m_singlePipePreview = null; // dereference the preview; we don't need it anymore
 
+        // if we somehow set the start to the end, exit without placing a pipe
+        if (m_start.Equals(m_end)) yield break;
+
         // issue is that every individual pipe prefab has a controller; bad.
         // instead, it should just be the visual, and there should be an empty gameobject that is the "pipe system"
 
