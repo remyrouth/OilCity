@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
 public class BoardManager : Singleton<BoardManager>
 {
     public const int MAP_SIZE_X = 40;
@@ -9,6 +11,8 @@ public class BoardManager : Singleton<BoardManager>
     [field: SerializeField] public TreeMap TreeEvaluator { get; private set; }
     [SerializeField] private GameObject _treePrefab;
     [SerializeField] private Transform _treeHolder;
+    [SerializeField] private Tilemap _pipeTileMap;
+
     [System.Serializable]
     private struct InitialBuilding
     { public BuildingScriptableObject config; public Vector2Int pos; }
@@ -19,6 +23,10 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     private void Start()
     {
+        if (_pipeTileMap == null) {
+            Debug.LogError("You did not attach the pipe tilemap to the board manager in the inspector. This must be done before the game starts");
+        }
+
         for (int i = 0; i < MAP_SIZE_X; i++)
         {
             for (int j = 0; j < MAP_SIZE_Y; j++)
@@ -129,6 +137,35 @@ public class BoardManager : Singleton<BoardManager>
     }
 
     /// <summary>
+    /// This method was made to allow pipes to appear on a tilemap.
+    /// This was done so that there would not be excess pipe 
+    /// objects in scene, and the FPS cost would be less.
+    /// </summary>
+    /// <param name="pipeSprite"></param>
+    /// <returns></returns>
+    public void AddTileToXY(Vector3Int position, Sprite pipeSprite) {
+        PlaceTile(position, sprite);
+    }
+
+    // Method to place a tile with a given sprite at a given position
+    private void PlaceTile(Vector3Int position, Sprite sprite)
+    {
+        if (sprite == null)
+        {
+            Debug.LogWarning("Sprite is null. Cannot place tile.");
+            return;
+        }
+
+        // Create a new Tile and assign the sprite to it
+        Tile newTile = ScriptableObject.CreateInstance<Tile>();
+        newTile.sprite = sprite;
+
+        // Set the tile on the tilemap
+        tilemap.SetTile(position, newTile);
+    }
+
+
+    /// <summary>
     /// Gets tiles in range of a TileObjectController
     /// </summary>
     /// <param name="building"></param>
@@ -148,8 +185,8 @@ public class BoardManager : Singleton<BoardManager>
                     continue;
                 int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x);
                 int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y);
-
-                if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
+                if (x >= building.Anchor.x && x <= upperRight.x-1 && y >= building.Anchor.y && y <= upperRight.y-1) continue;
+                //if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
                     tiles.Add(currentPos);
             }
         }
