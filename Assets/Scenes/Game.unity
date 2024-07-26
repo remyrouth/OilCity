@@ -31342,7 +31342,7 @@ MonoBehaviour:
   <TreeEvaluator>k__BackingField: {fileID: 429824007}
   _treePrefab: {fileID: 2515339657452674456, guid: a70ea04d5a7f73a49aa313ce3b650dc9, type: 3}
   _treeHolder: {fileID: 1246100214}
-  _pipeTileMap: {fileID: 0}
+  _pipeTileMap: {fileID: 2119364391}
   InitialBuildings:
   - config: {fileID: 11400000, guid: e0ace09b1fff326499b0bb8751cc6789, type: 2}
     pos: {x: 25, y: 32}
