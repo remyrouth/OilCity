@@ -9,6 +9,8 @@ public class BoardManager : Singleton<BoardManager>
     [field: SerializeField] public TreeMap TreeEvaluator { get; private set; }
     [SerializeField] private GameObject _treePrefab;
     [SerializeField] private Transform _treeHolder;
+    [SerializeField] private Tilemap _pipeTileMap;
+
     [System.Serializable]
     private struct InitialBuilding
     { public BuildingScriptableObject config; public Vector2Int pos; }
@@ -19,6 +21,10 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     private void Start()
     {
+        if (_pipeTileMap == null) {
+            Debug.LogError("You did not attach the pipe tilemap to the board manager in the inspector. This must be done before the game starts");
+        }
+
         for (int i = 0; i < MAP_SIZE_X; i++)
         {
             for (int j = 0; j < MAP_SIZE_Y; j++)
@@ -126,6 +132,17 @@ public class BoardManager : Singleton<BoardManager>
         }
 
         return list;
+    }
+
+    /// <summary>
+    /// This method was made to allow pipes to appear on a tilemap.
+    /// This was done so that there would not be excess pipe 
+    /// objects in scene, and the FPS cost would be less.
+    // </summary>
+    /// <param name="pipeSprite"></param>
+    /// <returns></returns>
+    public void AddTileToXY(Sprite pipeSprite) {
+
     }
 
     /// <summary>
