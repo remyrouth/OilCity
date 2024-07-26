@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4556,6 +4556,14 @@ PrefabInstance:
       propertyPath: m_text
       value: $$$$
       objectReference: {fileID: 0}
+    - target: {fileID: 7445290891455345815, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 112677846}
+    - target: {fileID: 7445290891455345815, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeScene
+      objectReference: {fileID: 0}
     - target: {fileID: 7697219552286423653, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5134,6 +5142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3af484c7a0f664c92990db3a763307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InitialSatisfaction: 100
 --- !u!114 &1148798916
 MonoBehaviour:
   m_ObjectHideFlags: 0
