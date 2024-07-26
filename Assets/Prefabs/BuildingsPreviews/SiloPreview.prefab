@@ -145,5 +145,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shouldLoop: 0
   maxVolume: 1
-  soundClip: {fileID: 0}
+  soundClip: {fileID: 8300000, guid: 1037d4e0065454e8980c12ac9caaf8fe, type: 3}
   soundType: 0
