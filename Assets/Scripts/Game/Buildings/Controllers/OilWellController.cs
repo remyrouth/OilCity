@@ -42,10 +42,8 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         {
             if (tile.TryGetComponent<PipeController>(out var pipe))
             {
-                Debug.Log("found");
                 if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to))
                 {
-                    Debug.Log("done");
                     if (m_output != null)
                     {
                         // more than one output pipe discovered

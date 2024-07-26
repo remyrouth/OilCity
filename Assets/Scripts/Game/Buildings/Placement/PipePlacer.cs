@@ -55,10 +55,11 @@ public class PipePlacer : BuildingPlacer
 
             // use linerenderer rather than creating lots of gameobjects
 
-            var to_ignore = BoardManager.Instance.IsTileOccupied(m_start) ? BoardManager.Instance.tileDictionary[m_start] : null;
+            var src_to_ignore = BoardManager.Instance.IsTileOccupied(m_start) ? BoardManager.Instance.tileDictionary[m_start] : null;
+            var dest_to_ignore = IsValidPlacement(m_so) && BoardManager.Instance.IsTileOccupied(current_end) ? BoardManager.Instance.tileDictionary[current_end] : null;
 
             // start the A* pathfinding (A* over Djikstras bc i had the code on hand lmao)
-            m_pointList = Pathfind(m_start, current_end, to_ignore);
+            m_pointList = Pathfind(m_start, current_end, src_to_ignore, dest_to_ignore);
             var array = new Vector3[m_pointList.Count];
 
             for (int i = 0; i < m_pointList.Count; i++)
@@ -72,7 +73,7 @@ public class PipePlacer : BuildingPlacer
     }
 
     #region Pathfinding
-    private List<Vector2Int> Pathfind(Vector2Int start, Vector2Int end, TileObjectController to_ignore)
+    private List<Vector2Int> Pathfind(Vector2Int start, Vector2Int end, TileObjectController src_to_ignore, TileObjectController dest_to_ignore)
     {
         var frontier = new SimplePriorityQueue<Vector2Int, int>();
 
@@ -88,7 +89,10 @@ public class PipePlacer : BuildingPlacer
             Vector2Int current = frontier.Dequeue();
 
             if (current == end) break;
-            if (current != start && BoardManager.Instance.IsTileOccupied(current) && !BoardManager.Instance.tileDictionary[current].Equals(to_ignore)) continue;
+            if (current != start 
+                && BoardManager.Instance.IsTileOccupied(current)
+                && !BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore)
+                && !BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore)) continue;
 
             Vector2Int[] neighbors = new Vector2Int[] { current + Vector2Int.right, current + Vector2Int.up, current + Vector2Int.left, current + Vector2Int.down };
 
@@ -100,7 +104,10 @@ public class PipePlacer : BuildingPlacer
                     continue;
                 }
 
-                int new_cost = cost_so_far[current] + (BoardManager.Instance.IsTileOccupied(current) && !BoardManager.Instance.tileDictionary[current].Equals(to_ignore) ? 999 : 1);
+                int new_cost = cost_so_far[current] + (
+                    BoardManager.Instance.IsTileOccupied(current) 
+                    && !BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore)
+                    && !BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore) ? 999 : 1);
 
                 if (!cost_so_far.ContainsKey(npos) || new_cost < cost_so_far[npos])
                 {
@@ -245,7 +252,6 @@ public class PipePlacer : BuildingPlacer
         bool has_placed_start = false;
         bool has_placed_end = false;
         int start_ind = -1;
-        int end_ind = -1;
         Vector2Int prior_pipe_pos = new(-1, -1);
         for (int index = 0; index < m_pointList.Count; index++)
         {
@@ -253,10 +259,8 @@ public class PipePlacer : BuildingPlacer
 
             if (!has_placed_start)
             {
-                Debug.Log("pos " + m_pointList[index]);
                 if (!is_open_space)
                 {
-                    Debug.Log("skipped");
                     prior_pipe_pos = m_pointList[index];
                     continue;
                 }
@@ -264,7 +268,7 @@ public class PipePlacer : BuildingPlacer
                 if (index != 0)
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_startDir);
-                    Debug.Log(m_startDir + " 1");
+                    // Debug.Log(m_startDir + " 1");
 
                     m_start = m_pointList[index];
                     start_ind = index;
@@ -272,7 +276,7 @@ public class PipePlacer : BuildingPlacer
                 else
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[1], m_pointList[0], out m_startDir);
-                    Debug.Log(m_startDir + " 2");
+                    // Debug.Log(m_startDir + " 2");
 
                     m_start = m_pointList[0];
                     start_ind = 0;
@@ -287,7 +291,7 @@ public class PipePlacer : BuildingPlacer
                 if (!is_open_space)
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_endDir);
-                    Debug.Log(m_endDir + " 1");
+                    // Debug.Log(m_endDir + " 1");
 
                     m_end = m_pointList[index - 1];
                     break;
@@ -295,7 +299,7 @@ public class PipePlacer : BuildingPlacer
                 else if (index == m_pointList.Count - 1)
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], m_pointList[index - 1], out m_endDir);
-                    Debug.Log(m_endDir + " 2");
+                    // Debug.Log(m_endDir + " 2");
 
                     m_end = m_pointList[index];
 
@@ -317,8 +321,8 @@ public class PipePlacer : BuildingPlacer
             tile_object.transform.GetChild(i).position = Utilities.Vector2IntToVector3(m_pointList[i + start_ind]) - Utilities.Vector2IntToVector3(m_start);
         }
 
-        GameObject.CreatePrimitive(PrimitiveType.Cube).transform.position = Utilities.Vector2IntToVector3(m_start) + new Vector3(0.5f, 0.5f);
-        GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = Utilities.Vector2IntToVector3(m_end) + new Vector3(0.5f, 0.5f);
+        // GameObject.CreatePrimitive(PrimitiveType.Cube).transform.position = Utilities.Vector2IntToVector3(m_start) + new Vector3(0.5f, 0.5f);
+        // GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = Utilities.Vector2IntToVector3(m_end) + new Vector3(0.5f, 0.5f);
 
         // setup the pipe
         component.InitializePipe(m_start, m_end, m_startDir, m_endDir);
