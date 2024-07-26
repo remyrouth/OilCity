@@ -11,7 +11,10 @@ namespace UIScripts.Settings
 
         public void OnEnable()
         {
-            ambientSlider.value = SettingsManager.Instance.AmbientSoundVolume;
+            if (PlayerPrefs.HasKey("AmbientSoundVolume"))
+            {
+                ambientSlider.value = PlayerPrefs.GetFloat("AmbientSoundVolume");
+            }
         }
 
         public void SetAmbientVolume(float value)

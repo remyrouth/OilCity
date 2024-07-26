@@ -12,29 +12,13 @@ namespace Game.Managers
         public event VolumeChanged OnAmbientSoundVolumeChanged;
         public event VolumeChanged OnMusicVolumeChanged;
 
-        private float soundEffectVolume;
-        private float ambientSoundVolume;
-        private float musicVolume;
+        private float soundEffectVolume = 1f;
+        private float ambientSoundVolume = 1f;
+        private float musicVolume = 1f;
 
         private void Awake()
         {
             SetLanguage();
-            if (PlayerPrefs.HasKey("SFXVolume"))
-            {
-                soundEffectVolume = PlayerPrefs.GetFloat("SFXVolume");
-            }
-            if (PlayerPrefs.HasKey("AmbientVolume"))
-            {
-                ambientSoundVolume = PlayerPrefs.GetFloat("AmbientVolume");
-            }
-            if (PlayerPrefs.HasKey("MusicVolume"))
-            {
-                musicVolume = PlayerPrefs.GetFloat("MusicVolume");
-            }
-            if (PlayerPrefs.HasKey("CameraInversion"))
-            {
-                CameraController.Instance.invert = PlayerPrefs.GetInt("CameraInversion") == 1;
-            }
         }
 
         public void SetLanguage(Language newLanguage)
@@ -106,7 +90,7 @@ namespace Game.Managers
                 if (musicVolume != value)
                 {
                     musicVolume = value;
-                    PlayerPrefs.SetFloat("MusicVolume", soundEffectVolume);
+                    PlayerPrefs.SetFloat("MusicVolume", musicVolume);
                     OnMusicVolumeChanged?.Invoke(musicVolume);
                 }
             }
