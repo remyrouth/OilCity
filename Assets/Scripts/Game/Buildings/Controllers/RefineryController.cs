@@ -106,6 +106,9 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     public void OnTick()
     {
-        Debug.LogWarning("Refinery has overflowed " + SendFlow());
+        var flow = SendFlow();
+        if (flow.amount == 0)
+            return;
+        Debug.LogWarning("Refinery has overflowed " + flow);
     }
 }
