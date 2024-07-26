@@ -4,7 +4,13 @@ using UnityEngine;
 public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>
 {
     public int WorkerSatisfaction { get; private set; }
+    [SerializeField] private int InitialSatisfaction = 100;
     public event Action<int> OnWorkersSatisfactionChanged;
+    private void Start()
+    {
+        WorkerSatisfaction = InitialSatisfaction;
+        OnWorkersSatisfactionChanged?.Invoke(WorkerSatisfaction);
+    }
     public void IncreaseSatisfaction(int amount) => ChangeSatisfaction(amount);
     public void DecreaseSatisfaction(int amount)
     {

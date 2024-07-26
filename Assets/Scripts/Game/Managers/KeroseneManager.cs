@@ -4,7 +4,7 @@ public class KeroseneManager : Singleton<KeroseneManager>
 {
     public float KeroseneAmount { get; private set; }
     public float MaxSoldAmount { get; private set; }
-    public const float KEROSINE_PRICE = 1;
+    public const float KEROSINE_PRICE = 100;
 
     public event Action<float> OnKeroseneChanged;
     public event Action OnKeroseneSold;
