@@ -17,11 +17,6 @@ public class BuildingScriptableObject : ScriptableObject
         var tileObjectController = tmpObject.GetComponent<BuildingController<BuildingScriptableObject>>();
         tileObjectController.Initialize(this, spawn_position);
 
-
-
-        // Pipes specifically will go to the tile map to place an object there
-        Instance.BoardManager.AddTileToXY(spawn_position, icon);
-
         return tileObjectController;
     }
     public virtual void BeginBuilding() => BuildingManager.Instance.BeginBuilding(this);
