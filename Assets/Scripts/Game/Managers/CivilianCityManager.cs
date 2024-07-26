@@ -22,7 +22,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     /// 
     public void OnTick()
     {
-        int currWorkerSatisfaction = WorkerSatisfactionManager.Instance.workerSatisfaction;
+        int currWorkerSatisfaction = WorkerSatisfactionManager.Instance.WorkerSatisfaction;
         if (currWorkerSatisfaction >= 90)
             tickNumberInterval = 3;
         else if (currWorkerSatisfaction >= 70)

@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,8 +12,13 @@ public class WSListenerView : MonoBehaviour
     {
         WorkerSatisfactionManager.Instance.OnWorkersSatisfactionChanged -= UpdateLabel;
     }
+    private float _desiredValue = 1;
+    private void Update()
+    {
+        _image.fillAmount = Mathf.Lerp(_image.fillAmount, _desiredValue, Time.deltaTime * 20);
+    }
     private void UpdateLabel(int newWSvalue)
     {
-        _image.fillAmount = (float)newWSvalue / 100;
+        _desiredValue = (float)newWSvalue / 100;
     }
 }
