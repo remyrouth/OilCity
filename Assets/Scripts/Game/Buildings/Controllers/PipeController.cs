@@ -45,14 +45,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (BoardManager.Instance.IsTileOccupied(child_pos))
         {
             var tentative = BoardManager.Instance.tileDictionary[child_pos].GetComponent<IFlowable>();
-            Debug.Log("got " + tentative);
 
             if (tentative.GetParent() == null)
             {
                 m_child = tentative;
                 m_child.SetParent(this);
-
-                Debug.Log("added child");
             }
             else
             {

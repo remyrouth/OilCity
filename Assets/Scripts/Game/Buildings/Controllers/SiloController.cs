@@ -23,11 +23,11 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
 
         var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
 
-        foreach (var p in peripherals)
+        foreach (var (peripheral_to, tile) in peripherals)
         {
-            if (p.tile.TryGetComponent<PipeController>(out var pipe))
+            if (tile.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(p.peripheral_to))
+                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to))
                 {
                     if (m_output != null)
                     {
@@ -41,7 +41,7 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
                     m_output = pipe;
                     pipe.AddChild(this);
                 }
-                else if (pipe.DoesPipeSystemOutputToTile(p.peripheral_to))
+                else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
                     m_inputs.Add(pipe);
                     pipe.SetParent(this);
@@ -54,7 +54,6 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
 
     public (FlowType type, float amount) SendFlow()
     {
-        Debug.Log(m_output);
         float liquidSum = 0;
         foreach (var child in GetChildren())
         {
@@ -112,7 +111,6 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
     public void SetParent(IFlowable parent)
     {
         m_output = parent;
-        Debug.Log(parent + " " + m_output);
     }
     #endregion
 

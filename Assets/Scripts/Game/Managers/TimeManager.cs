@@ -138,7 +138,8 @@ public class TimeManager : Singleton<TimeManager>
         // therefore we can update their connections with no consequence
         foreach (var child in children)
         {
-            child.SetParent(parent);
+            // 
+            child.SetParent(node);
 
             // if the child was in the forest but now has a parent, remove them from the forest
             if (m_tickableForest.Contains(child))

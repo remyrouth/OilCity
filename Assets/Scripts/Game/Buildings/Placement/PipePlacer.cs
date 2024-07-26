@@ -14,13 +14,13 @@ public class PipePlacer : BuildingPlacer
 
     private Vector2Int m_start;
     private Vector2Int m_end;
-    private PipeFlowDirection m_startDir;
-    private PipeFlowDirection m_endDir;
+    private PipeFlowDirection m_startDir = PipeFlowDirection.Invalid;
+    private PipeFlowDirection m_endDir = PipeFlowDirection.Invalid;
     private bool m_wasStartPlaced = false;
 
     private SpriteRenderer m_singlePipePreview;
     private LineRenderer m_pathfindingPreview;
-    private Vector3[] m_pointArray = new Vector3[0];
+    private List<Vector2Int> m_pointList;
 
     private const float HARDCODED_OFFSET = 0.5f;
 
@@ -39,6 +39,8 @@ public class PipePlacer : BuildingPlacer
 
     public override void UpdatePreview()
     {
+        if (m_singlePipePreview == null) return;
+
         var mousePos = TileSelector.Instance.MouseToGrid();
         m_singlePipePreview.transform.position = new Vector3(mousePos.x + HARDCODED_OFFSET, mousePos.y + HARDCODED_OFFSET, 0);
         var can_be_built = IsValidPlacement(m_so);
@@ -53,24 +55,24 @@ public class PipePlacer : BuildingPlacer
 
             // use linerenderer rather than creating lots of gameobjects
 
-            // start the A* pathfinding (A* over Djikstras bc i had the code on hand lmao)
-            var list = Pathfind(m_start, current_end);
-            Vector3[] array = new Vector3[list.Count];
+            var to_ignore = BoardManager.Instance.IsTileOccupied(m_start) ? BoardManager.Instance.tileDictionary[m_start] : null;
 
-            for (int i = 0; i < list.Count; i++)
+            // start the A* pathfinding (A* over Djikstras bc i had the code on hand lmao)
+            m_pointList = Pathfind(m_start, current_end, to_ignore);
+            var array = new Vector3[m_pointList.Count];
+
+            for (int i = 0; i < m_pointList.Count; i++)
             {
-                array[i] = new Vector3(list[i].x + HARDCODED_OFFSET, list[i].y + HARDCODED_OFFSET, m_pipePreviewZOffset);
+                array[i] = new Vector3(m_pointList[i].x + HARDCODED_OFFSET, m_pointList[i].y + HARDCODED_OFFSET, m_pipePreviewZOffset);
             }
 
-            m_pointArray = array;
-
-            m_pathfindingPreview.positionCount = array.Length;
+            m_pathfindingPreview.positionCount = m_pointList.Count;
             m_pathfindingPreview.SetPositions(array);
         }
     }
 
     #region Pathfinding
-    private List<Vector2Int> Pathfind(Vector2Int start, Vector2Int end)
+    private List<Vector2Int> Pathfind(Vector2Int start, Vector2Int end, TileObjectController to_ignore)
     {
         var frontier = new SimplePriorityQueue<Vector2Int, int>();
 
@@ -86,9 +88,9 @@ public class PipePlacer : BuildingPlacer
             Vector2Int current = frontier.Dequeue();
 
             if (current == end) break;
-            if (current != start && BoardManager.Instance.IsTileOccupied(current)) continue;
+            if (current != start && BoardManager.Instance.IsTileOccupied(current) && !BoardManager.Instance.tileDictionary[current].Equals(to_ignore)) continue;
 
-            Vector2Int[] neighbors = new Vector2Int[] { current + Vector2Int.up, current + Vector2Int.down, current + Vector2Int.left, current + Vector2Int.right };
+            Vector2Int[] neighbors = new Vector2Int[] { current + Vector2Int.right, current + Vector2Int.up, current + Vector2Int.left, current + Vector2Int.down };
 
             foreach (Vector2Int npos in neighbors)
             {
@@ -98,7 +100,7 @@ public class PipePlacer : BuildingPlacer
                     continue;
                 }
 
-                int new_cost = cost_so_far[current] + (BoardManager.Instance.IsTileOccupied(current) ? 999 : 1);
+                int new_cost = cost_so_far[current] + (BoardManager.Instance.IsTileOccupied(current) && !BoardManager.Instance.tileDictionary[current].Equals(to_ignore) ? 999 : 1);
 
                 if (!cost_so_far.ContainsKey(npos) || new_cost < cost_so_far[npos])
                 {
@@ -156,17 +158,17 @@ public class PipePlacer : BuildingPlacer
             {
                 // pipes cannot connect at non-start/end-points
 
-                var pos = pipe.GetPositions();
+                var (start, end) = pipe.GetPositions();
 
                 // if we're placing the start position, check if it's connecting to the end of the pipe
                 // otherwise, check the opposite
                 if (!m_wasStartPlaced)
                 {
-                    return mousePos.Equals(pos.end);
+                    return mousePos.Equals(end);
                 }
                 else
                 {
-                    return mousePos.Equals(pos.start);
+                    return mousePos.Equals(start);
                 }
             }
 
@@ -199,7 +201,7 @@ public class PipePlacer : BuildingPlacer
         m_wasStartPlaced = false;
         m_startDir = m_endDir = PipeFlowDirection.Invalid;
 
-        m_previewFabInstances[0] = Instantiate(m_singlePipePreviewPrefab.gameObject);
+        m_previewFabInstances[0] = Instantiate(m_singlePipePreviewPrefab);
         m_singlePipePreview = m_previewFabInstances[0].GetComponentInChildren<SpriteRenderer>();
 
         while (!WasMouseClicked || !IsValidPlacement(m_so))
@@ -209,10 +211,11 @@ public class PipePlacer : BuildingPlacer
             yield return null;
         }
 
+        // to be reassigned
         m_start = TileSelector.Instance.MouseToGrid(); // record the start position of the pipe
 
         m_wasStartPlaced = true; // register that we've recorded it
-        m_previewFabInstances[1] = Instantiate(m_singlePipePreviewPrefab.gameObject);
+        m_previewFabInstances[1] = Instantiate(m_singlePipePreviewPrefab);
         m_singlePipePreview = m_previewFabInstances[1].GetComponentInChildren<SpriteRenderer>();
 
         // while the player doesn't click or they place in invalid spot, keep waiting and updating
@@ -223,88 +226,100 @@ public class PipePlacer : BuildingPlacer
             yield return null;
         }
 
+        // to be reassigned
         m_end = TileSelector.Instance.MouseToGrid(); // record the end position of the pipe
         m_singlePipePreview = null; // dereference the preview; we don't need it anymore
 
         // if we somehow set the start to the end, exit without placing a pipe
-        if (m_start.Equals(m_end)) yield break;
+        if (m_start.Equals(m_end) || m_pointList.Count < 1) yield break;
 
         // issue is that every individual pipe prefab has a controller; bad.
         // instead, it should just be the visual, and there should be an empty gameobject that is the "pipe system"
 
         var tile_object = m_so.CreateInstance(m_start); //  this should be a PipeSO, and therefore none of the initialization is done.
-
-        for (int index = 0; index < m_pointArray.Length; index++)
-        {
-            bool start_pipe = index == 0;
-            bool end_pipe = index == m_pointArray.Length - 1;
-
-            var v2i = Utilities.Vector3ToVector2Int(m_pointArray[index]);
-
-            // if at start or end of array, calculate the relevant pipe flow direction
-            if (start_pipe || end_pipe)
-            {
-                // there might be an error if the pipe is length 1. this will only happen if a single pipe
-                // is placed with the same start and end and on a blank tile.
-                if (m_pointArray.Length > 1)
-                {
-                    if (start_pipe)
-                    {
-                        Utilities.GetCardinalEstimatePipeflowDirection(
-                            Utilities.Vector3ToVector2Int(m_pointArray[1]), 
-                            Utilities.Vector3ToVector2Int(m_pointArray[0]), 
-                            out m_startDir);
-                    }
-                    else if (end_pipe)
-                    {
-                        int end_index = m_pointArray.Length - 1;
-
-                        Utilities.GetCardinalEstimatePipeflowDirection(
-                            Utilities.Vector3ToVector2Int(m_pointArray[end_index]),
-                            Utilities.Vector3ToVector2Int(m_pointArray[end_index - 1]),
-                            out m_endDir);
-                    }
-                }
-                else if (m_pointArray.Length <= 0)
-                {
-                    // if we have a singleton pipe in the middle of nowhere, I honestly don't know what its defaults should be.
-                    // so they're just gonna be North and South.
-                    m_startDir = PipeFlowDirection.North;
-                    m_endDir = PipeFlowDirection.South;
-                }
-            }
-
-            // this only really matters for the start and end pipes, but if the tile is occupied, dont draw the pipe there.
-            if (!BoardManager.Instance.IsTileOccupied(v2i))
-            {
-                // create the pipe object at the point without the offset and without the initial offset of the parent transform (which is at the m_start position)
-                var pipe = Instantiate(m_so.prefab, m_pointArray[index] - (Vector3.up + Vector3.right) * HARDCODED_OFFSET - Utilities.Vector2IntToVector3(m_start), Quaternion.identity);
-                pipe.transform.parent = tile_object.transform;
-                // TODO this should orient the pipe and change its sprite to match the flow start and end for the segment.
-            }
-        }
-
-        Debug.Log(string.Format("Start Dir {0}, End Dir {1}", m_startDir, m_endDir));
-
-        // setup the pipe
         if (!tile_object.TryGetComponent<PipeController>(out var component))
         {
             Debug.LogError("Pipe prefab doesn't have a pipe controller!");
         }
 
-        component.InitializePipe(m_start, m_end, m_startDir, m_endDir);
-        component.Initialize(m_so, m_start);
-        component.transform.position = Utilities.Vector2IntToVector3(m_start);
-
-        for (int index = 0; index < m_pointArray.Length; ++index)
+        bool has_placed_start = false;
+        bool has_placed_end = false;
+        int start_ind = -1;
+        int end_ind = -1;
+        Vector2Int prior_pipe_pos = new(-1, -1);
+        for (int index = 0; index < m_pointList.Count; index++)
         {
-            var v2i = Utilities.Vector3ToVector2Int(m_pointArray[index]);
+            bool is_open_space = !BoardManager.Instance.IsTileOccupied(m_pointList[index]);
 
-            // if we're the start or end pipe and our position is occupied, don't register us as a controller tile
-            if ((index == 0 || index == m_pointArray.Length - 1) && BoardManager.Instance.IsTileOccupied(v2i)) continue;
+            if (!has_placed_start)
+            {
+                Debug.Log("pos " + m_pointList[index]);
+                if (!is_open_space)
+                {
+                    Debug.Log("skipped");
+                    prior_pipe_pos = m_pointList[index];
+                    continue;
+                }
 
-            BoardManager.Instance.tileDictionary[v2i] = component;
+                if (index != 0)
+                {
+                    Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_startDir);
+
+                    m_start = prior_pipe_pos;
+                    start_ind = index;
+                } 
+                else
+                {
+                    Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[1], m_pointList[0], out m_startDir);
+
+                    m_start = m_pointList[0];
+                    start_ind = 0;
+                }
+
+                has_placed_start = true;
+            }
+            else if (!has_placed_end)
+            {
+                // if we reach this point, we've placed a starting pipe and are now looking to place end pipes
+                // if we've reached a tile no longer open, that means we're at the end of the system
+                if (!is_open_space)
+                {
+                    Utilities.GetCardinalEstimatePipeflowDirection(prior_pipe_pos, m_pointList[index], out m_endDir);
+
+                    m_end = m_pointList[index - 1];
+                    break;
+                }
+                else if (index == m_pointList.Count - 1)
+                {
+                    Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index - 1], m_pointList[index], out m_endDir);
+
+                    m_end = m_pointList[index];
+
+                    has_placed_end = true;
+                }
+            }
+
+            var pipe = Instantiate(m_so.prefab);
+            pipe.transform.parent = tile_object.transform;
+
+            BoardManager.Instance.tileDictionary[m_pointList[index]] = component;
+            // TODO this should orient the pipe and change its sprite to match the flow start and end for the segment.
+
+            prior_pipe_pos = m_pointList[index];
         }
+
+        for (int i = 0; i < tile_object.transform.childCount; i++)
+        {
+            tile_object.transform.GetChild(i).position = Utilities.Vector2IntToVector3(m_pointList[i + start_ind]) - Utilities.Vector2IntToVector3(m_start);
+        }
+
+        GameObject.CreatePrimitive(PrimitiveType.Cube).transform.position = Utilities.Vector2IntToVector3(m_start) + new Vector3(0.5f, 0.5f);
+        GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = Utilities.Vector2IntToVector3(m_end) + new Vector3(0.5f, 0.5f);
+
+        // setup the pipe
+        component.InitializePipe(m_start, m_end, m_startDir, m_endDir);
+        component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
+        component.transform.position = Utilities.Vector2IntToVector3(m_start);
     }
 
     public override void Cleanup()
