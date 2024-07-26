@@ -12,9 +12,9 @@ namespace Game.Managers
         public event VolumeChanged OnAmbientSoundVolumeChanged;
         public event VolumeChanged OnMusicVolumeChanged;
 
-        private float soundEffectVolume = 1f;
-        private float ambientSoundVolume = 1f;
-        private float musicVolume = 1f;
+        private float _soundEffectVolume = 1f;
+        private float _ambientSoundVolume = 1f;
+        private float _musicVolume = 1f;
 
         private void Awake()
         {
@@ -56,43 +56,46 @@ namespace Game.Managers
 
         public float SoundEffectVolume
         {
-            get { return soundEffectVolume; }
+            get => _soundEffectVolume;
             set
             {
-                if (soundEffectVolume != value)
+                if (_soundEffectVolume == value)
                 {
-                    soundEffectVolume = value;
-                    PlayerPrefs.SetFloat("SFXSoundVolume", soundEffectVolume);
-                    OnSoundEffectVolumeChanged?.Invoke(soundEffectVolume);
+                    return;
                 }
+                _soundEffectVolume = value;
+                PlayerPrefs.SetFloat("SFXSoundVolume", _soundEffectVolume);
+                OnSoundEffectVolumeChanged?.Invoke(_soundEffectVolume);
             }
         }
 
         public float AmbientSoundVolume
         {
-            get { return ambientSoundVolume; }
+            get => _ambientSoundVolume; 
             set
             {
-                if (ambientSoundVolume != value)
+                if (_ambientSoundVolume == value)
                 {
-                    ambientSoundVolume = value;
-                    PlayerPrefs.SetFloat("AmbientSoundVolume", ambientSoundVolume);
-                    OnAmbientSoundVolumeChanged?.Invoke(ambientSoundVolume);
+                    return;
                 }
+                _ambientSoundVolume = value;
+                PlayerPrefs.SetFloat("AmbientSoundVolume", _ambientSoundVolume);
+                OnAmbientSoundVolumeChanged?.Invoke(_ambientSoundVolume);
             }
         }
 
         public float MusicVolume
         {
-            get { return musicVolume; }
+            get => _musicVolume; 
             set
             {
-                if (musicVolume != value)
+                if (_musicVolume == value)
                 {
-                    musicVolume = value;
-                    PlayerPrefs.SetFloat("MusicVolume", musicVolume);
-                    OnMusicVolumeChanged?.Invoke(musicVolume);
+                    return;
                 }
+                _musicVolume = value;
+                PlayerPrefs.SetFloat("MusicVolume", _musicVolume);
+                OnMusicVolumeChanged?.Invoke(_musicVolume);
             }
         }
     }
