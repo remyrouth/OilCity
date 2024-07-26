@@ -6,8 +6,8 @@ using System;
 
 public sealed class GeologistController : AOEBuildingController
 {
-    [SerializeField]
-    private Transform _workerVisual;
+    [SerializeField] private Transform _workerVisual;
+    [SerializeField] private GameObject _oilPingPrefab;
     public override int TickNumberInterval => 10;
 
     public override int Range => 4;
@@ -18,6 +18,8 @@ public sealed class GeologistController : AOEBuildingController
     private Queue<Action<GeologistController>> _sequenceActions = new();
 
     public event Action<Vector2Int> OnOilSpotFound;
+
+    private void Awake() => OnOilSpotFound += PingSpot;
 
     public override void OnTick()
     {
@@ -78,6 +80,13 @@ public sealed class GeologistController : AOEBuildingController
         Debug.Log($"Found great oil spot at {bestOilSpot}!");
         OnOilSpotFound?.Invoke(bestOilSpot);
 
+    }
+    private void PingSpot(Vector2Int pos)
+    {
+        var obj = Instantiate(_oilPingPrefab, new Vector3(pos.x, pos.y, -0.01f), Quaternion.identity);
+        obj.transform.localScale = Vector3.zero;
+        obj.transform.DOScale(Vector3.one, 0.25f);
+        Destroy(obj, 10);
     }
     private Vector2Int? GetRandomWithinRange()
     {
