@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
 public class BoardManager : Singleton<BoardManager>
 {
     public const int MAP_SIZE_X = 40;

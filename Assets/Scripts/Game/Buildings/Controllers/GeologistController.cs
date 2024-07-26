@@ -44,12 +44,12 @@ public sealed class GeologistController : AOEBuildingController
         //get worker back to building
         _sequenceActions.Enqueue((e) => { e.ResetWorker(); });
 
+        //indicate best spot
+        _sequenceActions.Enqueue((e) => { e.FinalizeSearching(); });
+
         //wait for the cooldown
         for (int i = 0; i < TickNumberInterval; i++)
             _sequenceActions.Enqueue(null);
-
-        //indicate best spot
-        _sequenceActions.Enqueue((e) => { e.FinalizeSearching(); });
     }
     private void ResetWorker()
     {

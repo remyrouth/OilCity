@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0f579b0cf218d144faf15159e665ded0
+guid: 3491039128138244da0b2547c018963b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spritesheet forest_0
+      name: forest_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2abc62378bef41b4ba595eb5a717dea4
-      internalID: 187601543
+      spriteID: cd4ebd5b17a53de4ebfeb9235638af3f
+      internalID: 1236236862
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet forest_1
+      name: forest_1
       rect:
         serializedVersion: 2
         x: 256
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60ace977dcdcf6a4589135aadf4da245
-      internalID: 1467264967
+      spriteID: 36f820e5f681f254495f7dd2c0e6c8f0
+      internalID: 2028833440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet forest_2
+      name: forest_2
       rect:
         serializedVersion: 2
         x: 512
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30b3d6aa50205114c9e1a86a8025a42c
-      internalID: -1619702426
+      spriteID: a529d5d1ff589d447aa9510224e48853
+      internalID: 773864084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet forest_3
+      name: forest_3
       rect:
         serializedVersion: 2
         x: 768
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed95062b4c6a5cb45be524ed51a168a2
-      internalID: 1921891574
+      spriteID: e1fcb96ce11ff694f912cfb88c2095aa
+      internalID: -106283853
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet forest_4
+      name: forest_4
       rect:
         serializedVersion: 2
         x: 1024
@@ -221,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2207e7384a0f49a4893ba0c318c5e2a4
-      internalID: 1112958727
+      spriteID: 8fde437c0ab906a40b439afca6b8e773
+      internalID: -598503902
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet forest_5
+      name: forest_5
       rect:
         serializedVersion: 2
         x: 1280
@@ -242,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86c9b4e9e20a89e4bab0a2a39b5b8586
-      internalID: 885915640
+      spriteID: 67e5d773a0049d441b369cf2d9c4e2ff
+      internalID: -700504116
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet forest_6
+      name: forest_6
       rect:
         serializedVersion: 2
         x: 1536
@@ -263,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f02fd19269bcd54191e1f7df5bf9653
-      internalID: -1292884710
+      spriteID: 4e0440a155e355e4594222f2bfc11557
+      internalID: -241484797
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet forest_7
+      name: forest_7
       rect:
         serializedVersion: 2
         x: 1792
@@ -284,8 +284,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7bf03b5324cb2146b771d962038aeee
-      internalID: -523096467
+      spriteID: ca376ec5cf3c85146bc4bc2e51f0788e
+      internalID: 1911788907
       vertices: []
       indices: 
       edges: []
@@ -293,7 +293,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: e602de5a72c7e9a47b3af34c162eca7a
     internalID: 0
     vertices: []
     indices: 
@@ -301,14 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      spritesheet forest_0: 187601543
-      spritesheet forest_1: 1467264967
-      spritesheet forest_2: -1619702426
-      spritesheet forest_3: 1921891574
-      spritesheet forest_4: 1112958727
-      spritesheet forest_5: 885915640
-      spritesheet forest_6: -1292884710
-      spritesheet forest_7: -523096467
+      forest_0: 1236236862
+      forest_1: 2028833440
+      forest_2: 773864084
+      forest_3: -106283853
+      forest_4: -598503902
+      forest_5: -700504116
+      forest_6: -241484797
+      forest_7: 1911788907
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
