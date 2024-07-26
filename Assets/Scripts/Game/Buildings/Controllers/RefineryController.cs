@@ -8,18 +8,23 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
 
-    protected override void CreateInitialConnections(Vector2Int with_position)
+    protected override void CreateInitialConnections()
     {
         m_output = null;
         m_inputs.Clear();
 
-        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
+        var position = BoardManager.ConvertWorldspaceToGrid(transform.position);
+        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(position, config.size);
 
         foreach (var p in peripherals)
         {
             if (p.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(with_position))
+                if (pipe.IsInputPipeForTile(position))
+                {
+                    m_inputs.Add(pipe);
+                }
+                else if (pipe.IsOutputPipeForTile(position))
                 {
                     if (m_output != null)
                     {
@@ -29,10 +34,6 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                     }
 
                     m_output = pipe;
-                }
-                else if (pipe.DoesPipeSystemOutputToTile(with_position))
-                {
-                    m_inputs.Add(pipe);
                 }
             }
         }
@@ -106,9 +107,6 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     public void OnTick()
     {
-        var flow = SendFlow();
-        if (flow.amount == 0)
-            return;
-        Debug.LogWarning("Refinery has overflowed " + flow);
+        Debug.LogWarning("Refinery has overflowed " + SendFlow());
     }
 }

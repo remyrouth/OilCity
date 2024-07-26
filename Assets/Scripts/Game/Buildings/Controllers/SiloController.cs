@@ -16,18 +16,23 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
         m_inputs = new List<IFlowable>();
     }
 
-    protected override void CreateInitialConnections(Vector2Int with_position)
+    protected override void CreateInitialConnections()
     {
         m_output = null;
         m_inputs.Clear();
 
-        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
+        var position = BoardManager.ConvertWorldspaceToGrid(transform.position);
+        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(position, config.size);
 
         foreach (var p in peripherals)
         {
             if (p.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(with_position))
+                if (pipe.IsInputPipeForTile(position))
+                {
+                    m_inputs.Add(pipe);
+                }
+                else if (pipe.IsOutputPipeForTile(position))
                 {
                     if (m_output != null)
                     {
@@ -37,10 +42,6 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
                     }
 
                     m_output = pipe;
-                }
-                else if (pipe.DoesPipeSystemOutputToTile(with_position))
-                {
-                    m_inputs.Add(pipe);
                 }
             }
         }

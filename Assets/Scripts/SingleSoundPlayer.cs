@@ -11,9 +11,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
     private bool shouldLoop = false;
     [SerializeField]
     [Range(0, 1)]
-    private float maxVolume = 1f;
-    [SerializeField]
-    private AudioClip soundClip;
+    private float maxVolume = 0f;
     [SerializeField]
     private SoundType soundType = SoundType.SoundEffect;
 
@@ -32,7 +30,6 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
 
         audioSource.volume = maxVolume;
         audioSource.loop = shouldLoop;
-        audioSource.clip = soundClip;
 
         switch (soundType)
         {
@@ -50,16 +47,6 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
                 break;
             default:
                 break;
-        }
-    }
-
-    public void InitializeFromSoundManager(AudioClip musicTrack) {
-        soundType = SoundType.MusicTrack;
-        shouldLoop = false;
-        maxVolume = 1f;
-        soundClip = musicTrack;
-        if (audioSource != null) {
-            audioSource.clip = soundClip;
         }
     }
 

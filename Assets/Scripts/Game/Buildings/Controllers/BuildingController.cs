@@ -10,10 +10,10 @@ public abstract class BuildingController<T> : TileObjectController
     /// <summary>
     /// Initialize controller with given configuration
     /// </summary>
-    public virtual void Initialize(T config, Vector2Int spawn_position)
+    public virtual void Initialize(T config)
     {
         this.config = config;
-        CreateInitialConnections(spawn_position); // for flowables
+        CreateInitialConnections(); // for flowables
         TimeManager.Instance.RegisterReceiver(gameObject);
         //setup values
 
@@ -30,5 +30,5 @@ public abstract class BuildingController<T> : TileObjectController
     {
         return MoneyManager.Instance.Money >= config.removalCost;
     }
-    protected virtual void CreateInitialConnections(Vector2Int with_position) { }
+    protected virtual void CreateInitialConnections() { }
 }

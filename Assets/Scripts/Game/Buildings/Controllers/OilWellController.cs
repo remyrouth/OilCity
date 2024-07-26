@@ -3,7 +3,7 @@ using UnityEngine;
 
 public sealed class OilWellController : PayrateBuildingController, IFlowable
 {
-    private const float BASE_OIL_RATE = 0.01f;
+    private const float BASE_OIL_RATE = 1;
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
@@ -30,18 +30,23 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         m_inputs = new List<IFlowable>();
     }
 
-    protected override void CreateInitialConnections(Vector2Int with_position)
+    protected override void CreateInitialConnections()
     {
         m_output = null;
         m_inputs.Clear();
 
-        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
+        var position = BoardManager.ConvertWorldspaceToGrid(transform.position);
+        var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(position, config.size);
 
         foreach (var p in peripherals)
         {
             if (p.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(with_position))
+                if (pipe.IsInputPipeForTile(position))
+                {
+                    // ping the pipe? display a notif that wells cant have inputs?
+                }
+                else if (pipe.IsOutputPipeForTile(position))
                 {
                     if (m_output != null)
                     {
@@ -51,10 +56,6 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
                     }
 
                     m_output = pipe;
-                }
-                else if (pipe.DoesPipeSystemOutputToTile(with_position))
-                {
-                    // ping the pipe? display a notif that wells cant have inputs?
                 }
             }
         }
@@ -101,9 +102,6 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     public void OnTick()
     {
-        var flow = SendFlow();
-        if (flow.amount == 0)
-            return;
-        Debug.LogWarning("Oil well has overflowed " + flow);
+        Debug.LogWarning("Oil well has overflowed " + SendFlow());
     }
 }

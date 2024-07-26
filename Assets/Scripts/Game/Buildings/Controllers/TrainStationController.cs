@@ -19,7 +19,7 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
 
     public void DisownChild(IFlowable child)
     {
-        if (_children.Contains(child))
+        if (!_children.Contains(child))
             _children.Remove(child);
     }
 
@@ -53,15 +53,15 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     public void SetParent(IFlowable parent) { }
     private void GenerateNewSequence()
     {
+        //setup train
+        _sequenceActions.Enqueue((e) => { e.train.localPosition = e.startPos; });
+
         // wait for interval
         for (int i = 0; i < TRAIN_INTERVAL; i++)
             _sequenceActions.Enqueue(null);
 
-        //setup train
-        _sequenceActions.Enqueue(e => e.train.localPosition = e.startPos);
-
         //train arrives to station and waits
-        _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 2));
+        _sequenceActions.Enqueue((e) => { e.train.DOLocalMove(e.arrivedPos, 2); });
         _sequenceActions.Enqueue(null);
 
         _sequenceActions.Enqueue((e) => { e.SellKerosene(); });
