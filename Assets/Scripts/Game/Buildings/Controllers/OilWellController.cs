@@ -101,6 +101,9 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     public void OnTick()
     {
-        Debug.LogWarning("Oil well has overflowed " + SendFlow());
+        var flow = SendFlow();
+        if (flow.amount == 0)
+            return;
+        Debug.LogWarning("Oil well has overflowed " + flow);
     }
 }

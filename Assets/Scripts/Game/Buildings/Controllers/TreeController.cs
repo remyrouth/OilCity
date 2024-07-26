@@ -7,6 +7,7 @@ public sealed class TreeController : TileObjectController
     private void Awake()
     {
         _spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+        _spriteRenderer.flipX = Random.value > 0.5f;
     }
 
 }
