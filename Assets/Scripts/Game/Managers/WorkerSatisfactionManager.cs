@@ -1,32 +1,21 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>
 {
-    public int workerSatisfaction;
-    public int maxWorkerSatisfaction => 100;
-    public int minWorkerSatisfaction => 0;
+    public int WorkerSatisfaction { get; private set; }
     public event Action<int> OnWorkersSatisfactionChanged;
-    public void IncreaseSatisfaction(int amount)
-    {
-        if (workerSatisfaction + amount > maxWorkerSatisfaction)
-            workerSatisfaction = maxWorkerSatisfaction;
-        else
-            workerSatisfaction += amount;
-        OnWorkersSatisfactionChanged?.Invoke(workerSatisfaction);
-    }
-
+    public void IncreaseSatisfaction(int amount) => ChangeSatisfaction(amount);
     public void DecreaseSatisfaction(int amount)
     {
-        if (workerSatisfaction - amount < minWorkerSatisfaction)
-            workerSatisfaction = minWorkerSatisfaction;
-        else
-            workerSatisfaction -= amount;
-        if (workerSatisfaction <= minWorkerSatisfaction)
+        ChangeSatisfaction(-amount);
+        if (amount == 0)
             GameOver();
-        OnWorkersSatisfactionChanged?.Invoke(workerSatisfaction);
+    }
+    private void ChangeSatisfaction(float delta)
+    {
+        WorkerSatisfaction = (int)Mathf.Clamp(WorkerSatisfaction + delta, 0, 100);
+        OnWorkersSatisfactionChanged?.Invoke(WorkerSatisfaction);
     }
 
     public void GameOver()
