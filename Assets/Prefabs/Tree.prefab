@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f8ce1229feb95e4b9e5cf84bab833ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0, y: 0}
+  _actionsPivot: {x: 0.5, y: 0.5}
   _spriteRenderer: {fileID: 894880373097073525}
   sprites:
   - {fileID: 1125315471, guid: 17b9eddf562f7364cb1825ba6bc5b90a, type: 3}
@@ -83,8 +83,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4221660506428827224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
