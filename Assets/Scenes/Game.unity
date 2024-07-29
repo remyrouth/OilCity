@@ -30388,6 +30388,14 @@ PrefabInstance:
       propertyPath: _closedPosX
       value: -120
       objectReference: {fileID: 0}
+    - target: {fileID: 6490346302571619383, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490346302571619383, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7272326461050934976, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
       propertyPath: m_Name
       value: PlayerUI
