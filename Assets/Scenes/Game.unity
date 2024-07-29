@@ -31158,13 +31158,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cb4d61600fc492d9753b0b1e3adcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yearRange: {x: 0, y: 0}
+  yearRange: {x: 1750, y: 1846}
   currentYear: 0
   ticksPerYear: 1
   currentTick: 4
   eventImageObject: {fileID: 184595959}
   timelineSlider: {fileID: 591897167}
-  eventsOnTimeLine: []
+  eventsOnTimeLine:
+  - {fileID: 11400000, guid: 2918c24cab296452580b348612d6122b, type: 2}
   currentEventListIndex: 0
 --- !u!1 &1246100213
 GameObject:
