@@ -153,29 +153,19 @@ public class BoardManager : Singleton<BoardManager>
     /// This was done so that there would not be excess pipe 
     /// objects in scene, and the FPS cost would be less.
     /// </summary>
-    /// <param name="pipeSprite"></param>
+    /// <param name="tileSprite"></param>
     /// <returns></returns>
-    public void AddTileToXY(Vector2Int position, Sprite pipeSprite) {
-        PlaceTile(new Vector3Int(position.x, position.y, 0), pipeSprite);
-    }
-
-    // Method to place a tile with a given sprite at a given position
-    private void PlaceTile(Vector3Int position, Sprite sprite)
-    {
-        if (sprite == null)
-        {
-            Debug.LogWarning("Sprite is null. Cannot place tile.");
-            return;
-        }
-
+    public void SetPipeTileInSupermap(Vector2Int position, PipeSpriteScript.PipeRotation rot) {
         // Create a new Tile and assign the sprite to it
         Tile newTile = ScriptableObject.CreateInstance<Tile>();
-        newTile.sprite = sprite;
+        newTile.sprite = rot.Sprite;
+        newTile.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, rot.Rotation), new Vector3(0.4f, 0.4f, 1f));
 
         // Set the tile on the tilemap
-        _pipeTileMap.SetTile(position, newTile);
+        _pipeTileMap.SetTile(new Vector3Int(position.x, position.y, 0), newTile);
     }
 
+    public void ClearSupermapTile(Vector2Int position) => _pipeTileMap.SetTile(new Vector3Int(position.x, position.y, 0), null);
 
     /// <summary>
     /// Gets tiles in range of a TileObjectController

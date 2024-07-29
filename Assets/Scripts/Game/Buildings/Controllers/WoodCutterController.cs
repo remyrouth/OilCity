@@ -18,15 +18,28 @@ public sealed class WoodCutterController : AOEBuildingController
     public event Action<Vector2Int> OnTreeCutted;
     public override void OnTick()
     {
+        /*
+         * if (!_active)
+        {
+            TimeManager.Instance.DeregisterReceiver(gameObject);
+            return;
+        }
+        */
+        if (_sequenceActions.Count == 0)
+            GenerateNewSequence();
+        _sequenceActions.Dequeue()?.Invoke(this);
+    }
+
+    private void FixedUpdate()
+    {
+        // done in this timeloop (or Update, if need be) to prevent concurrent modification exceptions
         if (!_active)
         {
             TimeManager.Instance.DeregisterReceiver(gameObject);
             return;
         }
-        if (_sequenceActions.Count == 0)
-            GenerateNewSequence();
-        _sequenceActions.Dequeue()?.Invoke(this);
     }
+
     private void GenerateNewSequence()
     {
         //setup for incoming searching
