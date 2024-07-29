@@ -30920,6 +30920,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecfed7a4a397df840bbb8c4e87104006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_falloffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.13197602
+      outSlope: -0.13197602
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.37528256
+    - serializedVersion: 3
+      time: 0.8981898
+      value: 0.34496805
+      inSlope: -2.657988
+      outSlope: -2.657988
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.034313276
+      outWeight: 0.19648032
+    - serializedVersion: 3
+      time: 1
+      value: 0.05
+      inSlope: -0.37045655
+      outSlope: -0.37045655
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3626883
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   MaxSoldAmount: 0.05
 --- !u!4 &1148798918
 Transform:
@@ -31056,10 +31089,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cb4d61600fc492d9753b0b1e3adcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yearRange: {x: 0, y: 0}
-  currentyear: 0
-  ticksPerYear: 1
-  currentTick: 4
+  yearRange: {x: 1800, y: 1900}
+  currentyear: 1800
+  ticksPerYear: 5
+  currentTick: 0
   eventImageObject: {fileID: 184595959}
   eventsOnTimeLine: []
   currentEventListIndex: 0
@@ -31145,7 +31178,7 @@ MonoBehaviour:
   _pipeTileMap: {fileID: 2119364391}
   InitialBuildings:
   - config: {fileID: 11400000, guid: e0ace09b1fff326499b0bb8751cc6789, type: 2}
-    pos: {x: 25, y: 32}
+    pos: {x: 23, y: 25}
   - config: {fileID: 11400000, guid: 5b4e06f50c5a78444858fa1950e27618, type: 2}
     pos: {x: 17, y: 37}
 --- !u!114 &1321047924
