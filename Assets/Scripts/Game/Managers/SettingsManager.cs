@@ -12,6 +12,7 @@ namespace Game.Managers
         public event VolumeChanged OnAmbientSoundVolumeChanged;
         public event VolumeChanged OnMusicVolumeChanged;
 
+        private float _masterVolume = 1f;
         private float _soundEffectVolume = 1f;
         private float _ambientSoundVolume = 1f;
         private float _musicVolume = 1f;
@@ -54,6 +55,19 @@ namespace Game.Managers
             PlayerPrefs.SetInt("CameraInversion", CameraController.Instance.invert ? 1 : 0);
         }
 
+        public float MasterVolume
+        {
+            get => _masterVolume;
+            set
+            {
+                _masterVolume = value;
+                PlayerPrefs.SetFloat("MasterVolume", _masterVolume);
+                OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+                OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _ambientSoundVolume);
+                OnMusicVolumeChanged?.Invoke(_masterVolume * _musicVolume);
+            } 
+        }
+
         public float SoundEffectVolume
         {
             get => _soundEffectVolume;
@@ -64,8 +78,8 @@ namespace Game.Managers
                     return;
                 }
                 _soundEffectVolume = value;
-                PlayerPrefs.SetFloat("SFXSoundVolume", _soundEffectVolume);
-                OnSoundEffectVolumeChanged?.Invoke(_soundEffectVolume);
+                PlayerPrefs.SetFloat("SoundEffectVolume", _soundEffectVolume);
+                OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
             }
         }
 
@@ -80,7 +94,7 @@ namespace Game.Managers
                 }
                 _ambientSoundVolume = value;
                 PlayerPrefs.SetFloat("AmbientSoundVolume", _ambientSoundVolume);
-                OnAmbientSoundVolumeChanged?.Invoke(_ambientSoundVolume);
+                OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _ambientSoundVolume);
             }
         }
 
@@ -95,7 +109,7 @@ namespace Game.Managers
                 }
                 _musicVolume = value;
                 PlayerPrefs.SetFloat("MusicVolume", _musicVolume);
-                OnMusicVolumeChanged?.Invoke(_musicVolume);
+                OnMusicVolumeChanged?.Invoke(_masterVolume * _musicVolume);
             }
         }
     }

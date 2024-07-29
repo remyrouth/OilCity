@@ -10,9 +10,9 @@ namespace UIScripts.Settings
     
         public void OnEnable()
         {
-            if (PlayerPrefs.HasKey("SFXSoundVolume"))
+            if (PlayerPrefs.HasKey("SoundEffectVolume"))
             {
-                sfxSlider.value = PlayerPrefs.GetFloat("SFXSoundVolume");
+                sfxSlider.value = PlayerPrefs.GetFloat("SoundEffectVolume");
             }
         }
 
