@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PollutionManager : Singleton<PollutionManager>
 {
-    public float PollutionAmount { get; private set; } = 0
+    public float PollutionAmount { get; private set; } = 0;
 
     public event Action<float> OnPollutionChanged;
 
