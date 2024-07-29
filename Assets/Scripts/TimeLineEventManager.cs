@@ -19,6 +19,8 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     private Image eventImageObject;
     [SerializeField]
     private Slider timelineSlider;
+    [SerializeField]
+    private GameObject newsPaperPrefabImage;
 
     [SerializeField]
     private List<TimeLineEvent> eventsOnTimeLine = new List<TimeLineEvent>();
@@ -33,6 +35,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         TimeManager.Instance.RegisterReceiver(gameObject);
         currentYear = yearRange.x;
         SortEventsByPercentage();
+        DisplayEvents();
 
         if (ticksPerYear <= 0f) {
             Debug.LogError("You must have a passage of time greater than 0f");
@@ -43,12 +46,46 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         }
     }
 
+    private void DisplayEvents() {
+        foreach (TimeLineEvent newsEvent in eventsOnTimeLine) {
+            DisplayIndividualEvent(newsEvent);
+        }
+
+    }
+
+    private void DisplayIndividualEvent(TimeLineEvent newsEvent) {
+        Vector3 timelineOldPosition = timelineSlider.gameObject.transform.position;
+
+        Vector3[] worldCorners = new Vector3[4];
+        timelineSlider.GetComponent<RectTransform>().GetWorldCorners(worldCorners);
+        Vector3 start = worldCorners[0]; // Bottom-left corner
+        Vector3 end = worldCorners[2]; // Top-right corner (assuming horizontal slider)
+
+        float targetPercent = newsEvent.GamePercentage;
+        float percent = (end.y - start.x) * targetPercent;
+        float offset = start.x;
+
+
+        float newX = percent+offset;
+        float newY = timelineOldPosition.y;
+        float newZ = timelineOldPosition.z;
+
+        Vector3 matchedPercentagePosition = new Vector3(newX, newY, newZ);
+
+        GameObject newspaperObject = Instantiate(newsPaperPrefabImage,
+        matchedPercentagePosition,
+        timelineSlider.gameObject.transform.rotation);
+
+
+        newspaperObject.transform.SetParent(timelineSlider.gameObject.transform, true);
+    }
+
 
     public void EndTimeLineEvent() {
         eventImageObject.gameObject.SetActive(false);
     }
 
-    private void ContinueimeLine() {
+    private void ContinueTimeLine() {
         currentTick++;
         if (currentTick >= ticksPerYear) {
             if (ticksPerYear <= 0 && timelineSlider != null) {
@@ -101,7 +138,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
 
     public void OnTick()
     {
-       ContinueimeLine();
+       ContinueTimeLine();
     }
 
     private void SortEventsByPercentage() {
