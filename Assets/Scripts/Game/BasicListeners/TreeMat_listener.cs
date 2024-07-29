@@ -9,7 +9,7 @@ public class TreeMat_listener : MonoBehaviour
     }
     private void UpdateValue(float newValue)
     {
-        _treeMaterial.SetFloat("PollutionAmount", newValue);
+        _treeMaterial.SetFloat("_WitherAmount", newValue);
     }
 
 }

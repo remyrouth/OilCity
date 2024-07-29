@@ -9,7 +9,7 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private BuildingScriptableObject _buildingSO;
     [SerializeField] private TMP_Text _costLabel;
     [SerializeField] private Image _buildingIcon;
-    [SerializeField] private GameObject buildingDescriptionPopup;
+    // [SerializeField] private GameObject buildingDescriptionPopup;
 
     public void Awake()
     {
@@ -17,24 +17,24 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         _buildingIcon.sprite = _buildingSO.icon;
         _costLabel.text = _buildingSO.placementCost.ToString();
 
-        if (buildingDescriptionPopup != null)
-        {
-            buildingDescriptionPopup.SetActive(false);
-        }
+        // if (buildingDescriptionPopup != null)
+        // {
+        //     buildingDescriptionPopup.SetActive(false);
+        // }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (buildingDescriptionPopup != null) {
-            buildingDescriptionPopup.SetActive(true);
+        if (PopupDescriptorREAL.Instance != null) {
+            PopupDescriptorREAL.Instance.Show(_buildingSO.description.ToString(), transform.position);
         } 
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (buildingDescriptionPopup != null)
+        if (PopupDescriptorREAL.Instance != null)
         {
-            buildingDescriptionPopup.SetActive(false);
+            PopupDescriptorREAL.Instance.Hide();
         }
     }
 }

@@ -19,5 +19,6 @@ MonoBehaviour:
   <prefab>k__BackingField: {fileID: 3141429110944717563, guid: 5a3dd716dac1c66478429f9a3993cb64, type: 3}
   <previewPrefab>k__BackingField: {fileID: 3141429110944717563, guid: 4651925815f9a1a41879884489970c47, type: 3}
   <size>k__BackingField: {x: 2, y: 1}
+  <description>k__BackingField: {fileID: 11400000, guid: b9137289a378c3e4f88237ded78db3d4, type: 2}
   <basePayrate>k__BackingField: 0
   <payrateLevelDelta>k__BackingField: 0
