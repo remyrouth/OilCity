@@ -29,13 +29,13 @@ public class MoneyManager : Singleton<MoneyManager>
     public void ReduceMoney(float amount)
     {
         Money = Mathf.Round(Money * 100f) / 100f - Mathf.Round(amount * 100f) / 100f;
-        if (Money < 0)
-            gameOver();
+        if (Money <= 0)
+            GameOver();
         OnMoneyChanged?.Invoke(Money);
     }
-    public void gameOver()
+    public void GameOver()
     {
-        Debug.Log("You lost...");
+        UIStateMachine.Instance.ChangeState(GameState.EndingUI);
     }
 
 }

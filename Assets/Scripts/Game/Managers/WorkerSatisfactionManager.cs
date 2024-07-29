@@ -26,6 +26,6 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>
 
     public void GameOver()
     {
-        Debug.Log("You lost...");
+        UIStateMachine.Instance.ChangeState(GameState.EndingUI);
     }
 }
