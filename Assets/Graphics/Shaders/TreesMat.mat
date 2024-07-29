@@ -41,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LivingTrees:
-        m_Texture: {fileID: 2800000, guid: 3491039128138244da0b2547c018963b, type: 3}
+        m_Texture: {fileID: 18700000, guid: e326efca720e1b14aa38e0cb8fa2fdc7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -71,5 +71,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _TreesNoise: 10
+    - _WindNoise: 0
+    - _WindSpeed: 0.1
+    - _WindStrength: 0.1
+    - _WitherAmount: 0
+    - _WitherNoise: 10
     m_Colors: []
   m_BuildTextureStacks: []
