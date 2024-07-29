@@ -70,10 +70,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _TreesNoise: 10
-    - _WindNoise: 0
-    - _WindSpeed: 0.1
-    - _WindStrength: 0.1
+    - _TreesNoise: 1
+    - _WindNoise: 1
+    - _WindSpeed: 0.15
+    - _WindStrength: 0.15
     - _WitherAmount: 0
     - _WitherNoise: 10
     m_Colors: []
