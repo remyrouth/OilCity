@@ -58,13 +58,13 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
             _sequenceActions.Enqueue(null);
 
         //setup train
-        _sequenceActions.Enqueue(e => e.train.localPosition = e.startPos);
+        _sequenceActions.Enqueue(e => { e.DOKill(); e.train.localPosition = e.startPos; });
 
         //train arrives to station and waits
         _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 2));
         _sequenceActions.Enqueue(null);
 
-        _sequenceActions.Enqueue((e) => { e.SellKerosene(); });
+        _sequenceActions.Enqueue((e) => { e.DOKill(); e.SellKerosene(); });
 
         //train leaves
         _sequenceActions.Enqueue((e) => { e.train.DOLocalMove(e.endPos, 2); });

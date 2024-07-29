@@ -1,12 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
 {
-    [field: SerializeField] private List<BuildingScriptableObject> civilianBuilding;
+    [field: SerializeField] private BuildingScriptableObject civilianBuildingSO;
     
     private int _tickTimer = 0;
     public int tickNumberInterval = 10;
@@ -45,20 +43,30 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     /// </summary>
     public void InvokeAction()
     {
-        var buildings = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None).Where(e=>e is not TreeController && e is not TrainStationController).ToList();
+        var buildings = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None)
+            .Where(e=>e is CivilianBuildingController).ToList();
+        var centroidBuildings = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None)
+            .Where(e => e is not TreeController && e is not CivilianBuildingController).ToList();
 
         if (buildings.Count == 0)
             return;
 
-        TileObjectController building = buildings[Random.Range(0, buildings.Count)];
+        Vector2 centroid = Vector2.zero;
+        foreach (var building in centroidBuildings)
+            centroid += building.Anchor;
+        centroid /= centroidBuildings.Count;
+
+        var closest = buildings.OrderBy(e => (e.Anchor - centroid).sqrMagnitude).Take(10).ToList();
+
+        TileObjectController civilianBuilding = closest[Random.Range(0, closest.Count)];
 
         for (int i = 2; i <= 10; i++)
         {
-             List<Vector2Int> freeTiles = BoardManager.Instance.GetTilesInRange(building, i).Where(e => !BoardManager.Instance.IsTileOccupied(e)).ToList();
+             List<Vector2Int> freeTiles = BoardManager.Instance.GetTilesInRange(civilianBuilding, i).Where(e => !BoardManager.Instance.IsTileOccupied(e)).ToList();
             if (freeTiles.Any())
             {
                 Vector2Int pos = freeTiles[Random.Range(0,freeTiles.Count)];
-                BoardManager.Instance.Create(pos, civilianBuilding[Random.Range(0, civilianBuilding.Count)]);     
+                BoardManager.Instance.Create(pos, civilianBuildingSO);     
                 break;
             }
         }
