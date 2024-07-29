@@ -21,8 +21,9 @@ public class SoundManager : MonoBehaviour
 
     private  List<SingleSoundPlayer> soundClipList = new List<SingleSoundPlayer>();
 
-    private void OnAwake() {
-       
+    private void Awake()
+    {
+        AddCameraMusicTrack();
     }
 
     private void AddCameraMusicTrack() {
@@ -32,6 +33,7 @@ public class SoundManager : MonoBehaviour
             cameraMusicPlayer = null;
         }
         cameraMusicPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+
         cameraMusicPlayer.InitializeFromSoundManager(musicTrackList[currentTrackIndex].musicTrack);
         if (currentTrackIndex < musicTrackList.Count - 1) {
             Invoke("AddCameraMusicTrack", musicTrackList[currentTrackIndex].musicTrack.length);
