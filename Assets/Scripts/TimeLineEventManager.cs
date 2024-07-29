@@ -9,7 +9,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     [SerializeField]
     private Vector2 yearRange;
     [SerializeField]
-    private float currentyear;
+    private float currentYear;
     [SerializeField]
     private float ticksPerYear = 1f;
     [SerializeField]
@@ -28,11 +28,15 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     {
         // Register this manager to receive ticks
         TimeManager.Instance.RegisterReceiver(gameObject);
-        currentyear = yearRange.x;
+        currentYear = yearRange.x;
         SortEventsByPercentage();
 
         if (ticksPerYear <= 0f) {
             Debug.LogError("You must have a passage of time greater than 0f");
+        }
+
+        if (timelineSlider == null) {
+            Debug.LogError("timelineSlider not attached");
         }
     }
 
@@ -44,10 +48,20 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     private void ContinueimeLine() {
         currentTick++;
         if (currentTick >= ticksPerYear) {
+            if (ticksPerYear > 0 && timelineSlider != null) {
+                Debug.LogWarning("ticksPerYear or timelineSlider not set up correctly");
+                return;
+            }
+            AlterSlider();
+
             currentTick = 0f;
-            currentyear++;
+            currentYear++;
             CheckNextEvent();
         }
+    }
+
+    private void AlterSlider() {
+        timelineSlider.value = currentYear/yearRange.y;
     }
 
     private void Update() {
@@ -61,7 +75,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     private void CheckNextEvent() {
 
         if (currentEventListIndex <= eventsOnTimeLine.Count - 1) {
-            float currentPercent = currentyear/yearRange.y;
+            float currentPercent = currentYear/yearRange.y;
             TimeLineEvent nextEvent = eventsOnTimeLine[currentEventListIndex];
             float nextEventPercent = nextEvent.GamePercentage;
 
