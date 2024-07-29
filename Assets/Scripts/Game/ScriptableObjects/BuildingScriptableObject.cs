@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Building", menuName ="Building/Building")]
+[CreateAssetMenu(fileName = "New Building", menuName = "Building/Building")]
 public class BuildingScriptableObject : ScriptableObject
 {
     [field: SerializeField] public int placementCost { get; private set; }
@@ -10,9 +10,10 @@ public class BuildingScriptableObject : ScriptableObject
     [field: SerializeField] public GameObject prefab { get; private set; }
     [field: SerializeField] public GameObject previewPrefab { get; private set; }
     [field: SerializeField] public Vector2Int size { get; private set; }
+    [field: SerializeField] public LanguageItem buildingName { get; private set; }
     [field: SerializeField] public LanguageItem description { get; private set; }
 
-   public virtual TileObjectController CreateInstance(Vector2Int spawn_position)
+    public virtual TileObjectController CreateInstance(Vector2Int spawn_position)
     {
         GameObject tmpObject = Instantiate(prefab);
         var tileObjectController = tmpObject.GetComponent<BuildingController<BuildingScriptableObject>>();

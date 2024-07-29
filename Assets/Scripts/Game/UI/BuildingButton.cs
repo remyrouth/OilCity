@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 [RequireComponent(typeof(Button))]
 public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -9,7 +10,8 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private BuildingScriptableObject _buildingSO;
     [SerializeField] private TMP_Text _costLabel;
     [SerializeField] private Image _buildingIcon;
-    // [SerializeField] private GameObject buildingDescriptionPopup;
+    [SerializeField] private PopupDescriptorView _descriptorView;
+
 
     public void Awake()
     {
@@ -17,24 +19,14 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         _buildingIcon.sprite = _buildingSO.icon;
         _costLabel.text = _buildingSO.placementCost.ToString();
 
-        // if (buildingDescriptionPopup != null)
-        // {
-        //     buildingDescriptionPopup.SetActive(false);
-        // }
     }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (PopupDescriptorREAL.Instance != null) {
-            PopupDescriptorREAL.Instance.Show(_buildingSO.description.ToString(), transform.position);
-        } 
+        _descriptorView.BeginFocus(_buildingSO, GetComponent<RectTransform>().anchoredPosition);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (PopupDescriptorREAL.Instance != null)
-        {
-            PopupDescriptorREAL.Instance.Hide();
-        }
+        _descriptorView.EndFocus();
     }
 }

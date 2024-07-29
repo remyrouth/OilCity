@@ -51,7 +51,8 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
 
         // create the instance of the thing and set its position
         Vector2Int pos = TileSelector.Instance.MouseToGrid();
-        BoardManager.Instance.Create(pos, m_so);
+        if (BoardManager.Instance.Create(pos, m_so))
+            MoneyManager.Instance.ReduceMoney(m_so.placementCost);
     }
 
     public virtual void Cleanup()
