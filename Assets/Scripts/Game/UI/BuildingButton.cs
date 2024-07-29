@@ -25,16 +25,16 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (PopupDescriptor.Instance != null) {
-            PopupDescriptor.Instance.Show(_buildingSO.description, transform.position);
+        if (PopupDescriptorREAL.Instance != null) {
+            PopupDescriptorREAL.Instance.Show(_buildingSO.description, transform.position);
         } 
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (PopupDescriptor.Instance != null)
+        if (PopupDescriptorREAL.Instance != null)
         {
-            PopupDescriptor.Instance.Hide();
+            PopupDescriptorREAL.Instance.Hide();
         }
     }
 }
