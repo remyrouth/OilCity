@@ -23,24 +23,28 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
 
         var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
 
-        foreach (var p in peripherals)
+        foreach (var (peripheral_to, tile) in peripherals)
         {
-            if (p.TryGetComponent<PipeController>(out var pipe))
+            if (tile.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(with_position))
+                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to))
                 {
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
                         // ping the pipe? display a notif that this pipe isnt going to be used?
                         // TODO
+
+                        return;
                     }
 
                     m_output = pipe;
+                    pipe.AddChild(this);
                 }
-                else if (pipe.DoesPipeSystemOutputToTile(with_position))
+                else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
                     m_inputs.Add(pipe);
+                    pipe.SetParent(this);
                 }
             }
         }
