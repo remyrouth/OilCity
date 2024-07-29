@@ -26,13 +26,14 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     private void Start()
     {
-        if (_pipeTileMap == null) {
+        if (_pipeTileMap == null)
+        {
             Debug.LogError("You did not attach the pipe tilemap to the board manager in the inspector. This must be done before the game starts");
         }
 
         for (int i = 0; i < MAP_SIZE_X; i++)
         {
-            for (int j = 0; j < MAP_SIZE_Y; j++)
+            for (int j = MAP_SIZE_Y; j >= 0; j--)
             {
                 if (!TreeEvaluator.GetValueAtPosition(i, j))
                     continue;
@@ -133,7 +134,7 @@ public class BoardManager : Singleton<BoardManager>
                 bool is_topright_corner = (i == top && j == right);
                 bool is_bottomleft_corner = (i == -1 && j == -1);
                 bool is_bottomright_corner = (i == -1 && j == right);
-                bool is_center_tile = ( (i != -1 && i != top) && (j != -1 && j != right) );
+                bool is_center_tile = ((i != -1 && i != top) && (j != -1 && j != right));
 
                 var offset_position = position + new Vector2Int(j, i);
 
@@ -159,7 +160,8 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     /// <param name="pipeSprite"></param>
     /// <returns></returns>
-    public void AddTileToXY(Vector2Int position, Sprite pipeSprite) {
+    public void AddTileToXY(Vector2Int position, Sprite pipeSprite)
+    {
         PlaceTile(new Vector3Int(position.x, position.y, 0), pipeSprite);
     }
 
@@ -201,9 +203,9 @@ public class BoardManager : Singleton<BoardManager>
                     continue;
                 int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x);
                 int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y);
-                if (x >= building.Anchor.x && x <= upperRight.x-1 && y >= building.Anchor.y && y <= upperRight.y-1) continue;
+                if (x >= building.Anchor.x && x <= upperRight.x - 1 && y >= building.Anchor.y && y <= upperRight.y - 1) continue;
                 //if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
-                    tiles.Add(currentPos);
+                tiles.Add(currentPos);
             }
         }
 
@@ -252,7 +254,7 @@ public class BoardManager : Singleton<BoardManager>
         foreach (var building in InitialBuildings)
         {
             Vector3 middle = new Vector3(building.pos.x, building.pos.y, 0);
-            middle += new Vector3(building.config.size.x, building.config.size.y, 0)/2;
+            middle += new Vector3(building.config.size.x, building.config.size.y, 0) / 2;
             Vector3 size = new Vector3(building.config.size.x, building.config.size.y, 0);
             Gizmos.DrawCube(middle, size);
         }
