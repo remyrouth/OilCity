@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,7 +14,9 @@ public class BoardManager : Singleton<BoardManager>
     [SerializeField] private Transform _treeHolder;
     [SerializeField] private Tilemap _pipeTileMap;
 
-    [System.Serializable]
+    public event Action<Vector2Int, BuildingScriptableObject> OnBuildingPlaced;
+
+    [Serializable]
     private struct InitialBuilding
     { public BuildingScriptableObject config; public Vector2Int pos; }
     [SerializeField] private InitialBuilding[] InitialBuildings;
@@ -57,6 +60,7 @@ public class BoardManager : Singleton<BoardManager>
             for (int j = 0; j < buildingSO.size.x; j++)
                 tileDictionary[position + new Vector2Int(j, i)] = obj;
 
+        OnBuildingPlaced?.Invoke(position, buildingSO);
         return true;
     }
     /// <summary>
