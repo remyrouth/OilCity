@@ -42,6 +42,8 @@ public class TimeManager : Singleton<TimeManager>
     private float m_timePerTick;
     private float m_timeElaspedSinceTick;
 
+    private readonly Queue<(GameObject obj, bool to_register)> m_objectsToModifyRegistration = new();
+
     private void Awake()
     {
         m_tickableForest = new Collection<ITickReceiver>();
@@ -53,6 +55,8 @@ public class TimeManager : Singleton<TimeManager>
     /// </summary>
     private void FixedUpdate()
     {
+        ProcessRegistrationRequests();
+
         // if we've elapsed more time than the time it takes for a tick to evaluate, start the tick
         if (m_timeElaspedSinceTick >= m_timePerTick)
         {
@@ -71,11 +75,47 @@ public class TimeManager : Singleton<TimeManager>
     }
 
     /// <summary>
+    /// Enqueues the given gameobject as an item to be registered at the start of the next FixedUpdate timeloop.
+    /// </summary>
+    /// <param name="receiver"></param>
+    public void RegisterReceiver(GameObject receiver) => m_objectsToModifyRegistration.Enqueue((receiver, true));
+
+    /// <summary>
+    /// Enqueus the given gameobject as an item to be deregistered at the start of the next FixedUpdate timeloop.
+    /// </summary>
+    /// <param name="receiver"></param>
+    public void DeregisterReceiver(GameObject receiver) => m_objectsToModifyRegistration.Enqueue((receiver, false));
+
+    /// <summary>
+    /// At the start of the FixedUpdate timeloop, iterates through every item registration/deregistration request and
+    /// processes them. This is done because if a object requests to be removed inside of its OnTick method, there
+    /// will be a concurrent modification exception within the OnTick gameloop in the TimeManager script.
+    /// </summary>
+    private void ProcessRegistrationRequests()
+    {
+        while (m_objectsToModifyRegistration.Count > 0)
+        {
+            var (obj, to_register) = m_objectsToModifyRegistration.Dequeue();
+
+            if (to_register)
+            {
+                PreprocessRegister(obj);
+            }
+            else
+            {
+                PreprocessDeregister(obj);
+            }
+        }
+    }
+
+    #region Registration and Deregistration
+
+    /// <summary>
     /// Registers the given gameobject as a tickreciever if it has a component that inherents from the interface.
     /// Additionally, manages the combination of trees that are connected to the input object when called.
     /// </summary>
     /// <param name="receiver"></param>
-    public void RegisterReceiver(GameObject receiver)
+    private void PreprocessRegister(GameObject receiver)
     {
         // if no tickable item is found on the given object, nothing is done
         if (!receiver.TryGetComponent<ITickReceiver>(out var tick_receiver))
@@ -102,7 +142,7 @@ public class TimeManager : Singleton<TimeManager>
     /// the itme remove, sometimes splits the tree into multiple new trees that are added to the forest.
     /// </summary>
     /// <param name="receiver"></param>
-    public void DeregisterReceiver(GameObject receiver)
+    private void PreprocessDeregister(GameObject receiver)
     {
         // if no tickable item is found on the given object, nothing is done
         if (!receiver.TryGetComponent<ITickReceiver>(out var tick_receiver))
@@ -206,6 +246,9 @@ public class TimeManager : Singleton<TimeManager>
         m_nodes.Remove(node);
     }
 
+    #endregion
+
+    #region Debug
 #if UNITY_EDITOR
     public void OnDrawGizmos()
     {
@@ -250,4 +293,5 @@ public class TimeManager : Singleton<TimeManager>
         return true;
     }
 #endif
+    #endregion
 }
