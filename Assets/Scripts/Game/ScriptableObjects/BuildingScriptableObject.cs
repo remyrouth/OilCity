@@ -10,7 +10,7 @@ public class BuildingScriptableObject : ScriptableObject
     [field: SerializeField] public GameObject prefab { get; private set; }
     [field: SerializeField] public GameObject previewPrefab { get; private set; }
     [field: SerializeField] public Vector2Int size { get; private set; }
-    [field: SerializeField] public string description { get; private set; }
+    [field: SerializeField] public LanguageItem description { get; private set; }
 
    public virtual TileObjectController CreateInstance(Vector2Int spawn_position)
     {

@@ -16,7 +16,7 @@ public class PopupDescriptorREAL : MonoBehaviour
         }
         else
         {
-            Destroy(GameObject);
+            Destroy(gameObject);
         }
     }
 
