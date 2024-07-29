@@ -41,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LivingTrees:
-        m_Texture: {fileID: 18700000, guid: e326efca720e1b14aa38e0cb8fa2fdc7, type: 3}
+        m_Texture: {fileID: 18700000, guid: 4b6d3c936df653949803c8cec8b7cad1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _WitheredTrees:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 18700000, guid: c3a98bf61d6abd14ebef0c481080021b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _test:
@@ -75,6 +75,6 @@ Material:
     - _WindSpeed: 1
     - _WindStrength: 0.15
     - _WitherAmount: 0
-    - _WitherNoise: 10
+    - _WitherNoise: 50
     m_Colors: []
   m_BuildTextureStacks: []
