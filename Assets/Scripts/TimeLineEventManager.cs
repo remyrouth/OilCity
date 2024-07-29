@@ -107,6 +107,11 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     }
 
     private void CheckNextEvent() {
+        if (CheckForEndGame()) {
+            GameStateManager.Instance.EndGame();
+            return;
+        }
+
 
         if (currentEventListIndex <= eventsOnTimeLine.Count - 1) {
             TimeLineEvent nextEvent = eventsOnTimeLine[currentEventListIndex];
@@ -124,6 +129,16 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         eventImageObject.sprite = nextEvent.newspaperSprite;
         eventImageObject.gameObject.SetActive(true);
 
+    }
+
+    private bool CheckForEndGame() {
+        bool isNewsPaperUp = eventImageObject.gameObject.activeInHierarchy;
+        if (isNewsPaperUp && GetTimePercentage() > 1f) {
+            return true;
+        }
+
+
+        return false;
     }
 
 

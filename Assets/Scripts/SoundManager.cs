@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-
+    [Serializable]
     public class MusicTrack {
         public AudioClip musicTrack;
         public int musicTrackoreder;

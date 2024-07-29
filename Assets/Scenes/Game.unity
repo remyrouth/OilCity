@@ -31300,6 +31300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d9b17e88279467caa854fefbedcadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuSceneName: MainMenu
 --- !u!1 &1389584170
 GameObject:
   m_ObjectHideFlags: 0
@@ -47533,6 +47534,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44df1ff4c86e043bc85f0edced6f834d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicTrackList:
+  - musicTrack: {fileID: 8300000, guid: 309249dcba869dc498df2c3ec0d79ebc, type: 3}
+    musicTrackoreder: 1
+  - musicTrack: {fileID: 8300000, guid: 07bf6c2980f8b3741ad6ea9020c98a66, type: 3}
+    musicTrackoreder: 2
+  - musicTrack: {fileID: 8300000, guid: 50d0ed8709de4bd46bb4b61a9478980c, type: 3}
+    musicTrackoreder: 3
 --- !u!4 &1858206582
 Transform:
   m_ObjectHideFlags: 0
