@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -30680,6 +30680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825894500}
   - component: {fileID: 825894501}
+  - component: {fileID: 825894502}
   m_Layer: 0
   m_Name: PollutedPP
   m_TagString: Untagged
@@ -30719,6 +30720,18 @@ MonoBehaviour:
   blendDistance: 0
   weight: 0
   sharedProfile: {fileID: 11400000, guid: bb67f4065284e6a44b39757845a57e7d, type: 2}
+--- !u!114 &825894502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825894499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da0a7253a5d54e47904be03ca9b5ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &929915904
 GameObject:
   m_ObjectHideFlags: 0
@@ -31196,6 +31209,7 @@ MonoBehaviour:
   currentTick: 0
   eventImageObject: {fileID: 591897168}
   timelineSlider: {fileID: 591897167}
+  newsPaperPrefabImage: {fileID: 0}
   eventsOnTimeLine:
   - {fileID: 11400000, guid: 2918c24cab296452580b348612d6122b, type: 2}
   currentEventListIndex: 0
@@ -31208,6 +31222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1246100214}
+  - component: {fileID: 1246100215}
   m_Layer: 0
   m_Name: TreeHolder
   m_TagString: Untagged
@@ -31230,6 +31245,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1246100215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246100213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a74edfae6e87fc4c8b85171e3f68899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _treeMaterial: {fileID: 2100000, guid: f49242122f46c0a41a2cacc8c594e31a, type: 2}
 --- !u!1 &1321047921
 GameObject:
   m_ObjectHideFlags: 0
@@ -31243,6 +31271,7 @@ GameObject:
   - component: {fileID: 1321047923}
   - component: {fileID: 1321047922}
   - component: {fileID: 1321047926}
+  - component: {fileID: 1321047927}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -31358,6 +31387,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   civilianBuildingSO: {fileID: 11400000, guid: 4dc4927790111bd48b85327d9c770f91, type: 2}
   tickNumberInterval: 10
+--- !u!114 &1321047927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321047921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd643736b88b724289bd33990bcd4b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1850073788
 GameObject:
   m_ObjectHideFlags: 0
