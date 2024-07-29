@@ -346,17 +346,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171364500}
   m_CullTransparentMesh: 1
---- !u!114 &184595959 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4404575191213909544, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
-  m_PrefabInstance: {fileID: 591897164}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &287986754
 GameObject:
   m_ObjectHideFlags: 0
@@ -30560,6 +30549,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &591897168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6490346302571619383, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+  m_PrefabInstance: {fileID: 591897164}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &739498413
 GameObject:
   m_ObjectHideFlags: 0
@@ -31160,9 +31160,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yearRange: {x: 1750, y: 1846}
   currentYear: 0
-  ticksPerYear: 1
-  currentTick: 4
-  eventImageObject: {fileID: 184595959}
+  ticksPerYear: 2
+  currentTick: 0
+  eventImageObject: {fileID: 591897168}
   timelineSlider: {fileID: 591897167}
   eventsOnTimeLine:
   - {fileID: 11400000, guid: 2918c24cab296452580b348612d6122b, type: 2}
