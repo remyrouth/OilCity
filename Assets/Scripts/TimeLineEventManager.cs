@@ -54,21 +54,16 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     }
 
     private void DisplayIndividualEvent(TimeLineEvent newsEvent) {
-        Vector3 timelineOldPosition = timelineSlider.gameObject.transform.position;
-
         Vector3[] worldCorners = new Vector3[4];
         timelineSlider.GetComponent<RectTransform>().GetWorldCorners(worldCorners);
         Vector3 start = worldCorners[0]; // Bottom-left corner
         Vector3 end = worldCorners[2]; // Top-right corner (assuming horizontal slider)
 
         float targetPercent = newsEvent.GamePercentage;
-        float percent = (end.y - start.x) * targetPercent;
-        float offset = start.x;
-
-
-        float newX = percent+offset;
-        float newY = timelineOldPosition.y;
-        float newZ = timelineOldPosition.z;
+        float sliderWidth = end.x - start.x;
+        float newX = start.x + (sliderWidth * targetPercent);
+        float newY = timelineSlider.transform.position.y;
+        float newZ = timelineSlider.transform.position.z;
 
         Vector3 matchedPercentagePosition = new Vector3(newX, newY, newZ);
 
@@ -76,8 +71,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         matchedPercentagePosition,
         timelineSlider.gameObject.transform.rotation);
 
-
-        newspaperObject.transform.SetParent(timelineSlider.gameObject.transform, true);
+        newspaperObject.transform.SetParent(timelineSlider.transform, true);
     }
 
 
@@ -101,8 +95,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     }
 
     private void AlterSlider() {
-        float timePercentage = (totalYears - currentYear/yearRange.y) / totalYears;
-        timelineSlider.value = timePercentage;
+        timelineSlider.value = GetTimePercentage();
     }
 
     private void Update() {
@@ -116,12 +109,10 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     private void CheckNextEvent() {
 
         if (currentEventListIndex <= eventsOnTimeLine.Count - 1) {
-            float timePercentage = (totalYears - currentYear/yearRange.y) / totalYears;
-            float currentPercent = timePercentage;
             TimeLineEvent nextEvent = eventsOnTimeLine[currentEventListIndex];
             float nextEventPercent = nextEvent.GamePercentage;
 
-            if (currentPercent >= nextEventPercent) {
+            if (GetTimePercentage() >= nextEventPercent) {
                 currentEventListIndex++;
                 TriggerNextEvent(nextEvent);
             }
@@ -150,5 +141,12 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         // Deregister this manager to stop receiving ticks
         TimeManager.Instance.DeregisterReceiver(gameObject);
         eventsOnTimeLine.Clear();
+    }
+
+    private float GetTimePercentage() {
+        // Debug.Log("totalYears: " +  totalYears);
+        float percent = (totalYears - (yearRange.y - currentYear)) / totalYears;
+        // Debug.Log("Percent: " +  percent);
+        return percent;
     }
 }
