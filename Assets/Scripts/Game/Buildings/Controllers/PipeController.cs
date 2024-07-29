@@ -16,6 +16,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     private Vector2Int m_startPipePos; // position of the start pipe
     private Vector2Int m_endPipePos; // position of the end pipe
 
+    private List<Vector2Int> m_pipes;
+
     /// <summary>
     /// Init method for just pipes. Provides necessary values for functionality.
     /// </summary>
@@ -23,7 +25,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="end_pos"></param>
     /// <param name="start_pipe_dir"></param>
     /// <param name="end_pipe_dir"></param>
-    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir)
+    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes)
     {
         // notarize all the values passed in
         m_startPipePos = start_pos;
@@ -31,6 +33,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         m_startDirection = start_pipe_dir;
         m_endDirection = end_pipe_dir;
+
+        m_pipes = pipes;
     }
 
     public void SetTileActions(List<TileAction> actions)
@@ -152,6 +156,17 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (m_child == null) return (FlowType.None, 0f);
 
         return m_child.SendFlow();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        // clear all relevant pipe tiles from supermap
+        foreach (var pos in m_pipes)
+        {
+            BoardManager.Instance.ClearSupermapTile(pos);
+        }
     }
 
     /// <summary>

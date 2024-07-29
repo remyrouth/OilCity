@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-// TODO undoing/canceling pipe placement?
 public class PipePlacer : BuildingPlacer
 {
     [SerializeField] private GameObject m_singlePipePreviewPrefab;
@@ -20,6 +19,7 @@ public class PipePlacer : BuildingPlacer
 
     private SpriteRenderer m_singlePipePreview;
     private LineRenderer m_pathfindingPreview;
+    private PipeSpriteScript m_pipeOrientation;
     private List<Vector2Int> m_pointList;
 
     private const float HARDCODED_OFFSET = 0.5f;
@@ -35,6 +35,7 @@ public class PipePlacer : BuildingPlacer
     {
         m_previewFabInstances = new GameObject[2];
         m_pathfindingPreview = GetComponent<LineRenderer>();
+        m_pipeOrientation = GetComponent<PipeSpriteScript>();
     }
 
     public override void UpdatePreview()
@@ -307,12 +308,12 @@ public class PipePlacer : BuildingPlacer
                 }
             }
 
-            var pipe = Instantiate(m_so.prefab);
-            pipe.transform.parent = tile_object.transform;
+            BoardManager.Instance.SetPipeTileInSupermap(m_pointList[index], m_pipeOrientation.OrientPipes(
+                index > 0 ? m_pointList[index - 1] : new Vector2Int(-1, -1),
+                m_pointList[index],
+                index < m_pointList.Count - 1 ? m_pointList[index + 1] : new Vector2Int(-1, -1)));
 
             BoardManager.Instance.tileDictionary[m_pointList[index]] = component;
-            // TODO this should orient the pipe and change its sprite to match the flow start and end for the segment.
-
             prior_pipe_pos = m_pointList[index];
         }
 
@@ -321,11 +322,8 @@ public class PipePlacer : BuildingPlacer
             tile_object.transform.GetChild(i).position = Utilities.Vector2IntToVector3(m_pointList[i + start_ind]) - Utilities.Vector2IntToVector3(m_start);
         }
 
-        // GameObject.CreatePrimitive(PrimitiveType.Cube).transform.position = Utilities.Vector2IntToVector3(m_start) + new Vector3(0.5f, 0.5f);
-        // GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = Utilities.Vector2IntToVector3(m_end) + new Vector3(0.5f, 0.5f);
-
         // setup the pipe
-        component.InitializePipe(m_start, m_end, m_startDir, m_endDir);
+        component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
         component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
         component.transform.position = Utilities.Vector2IntToVector3(m_start);
     }
