@@ -9,6 +9,8 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
     [SerializeField] private GameObject _spilloutEffect;
+    private int _tickTimer;
+    private int PaymentTimer => 5;
 
     protected override void CreateInitialConnections(Vector2Int with_position)
     {
@@ -114,7 +116,13 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     public void OnTick()
     {
+        _tickTimer++;
         var flow = SendFlow();
+        if(_tickTimer == PaymentTimer)
+        {
+            _tickTimer = 0;
+            PayWorkers();
+        }
         _spilloutEffect.SetActive(flow.amount > 0);
         if (flow.amount == 0)
             return;

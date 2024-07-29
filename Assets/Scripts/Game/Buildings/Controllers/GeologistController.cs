@@ -24,8 +24,13 @@ public sealed class GeologistController : AOEBuildingController
     public override void OnTick()
     {
         if (_sequenceActions.Count == 0)
+        {
             GenerateNewSequence();
+            PayWorkers();
+        }
+
         _sequenceActions.Dequeue()?.Invoke(this);
+        
     }
     private void GenerateNewSequence()
     {
@@ -46,7 +51,6 @@ public sealed class GeologistController : AOEBuildingController
 
         //indicate best spot
         _sequenceActions.Enqueue((e) => { e.FinalizeSearching(); });
-
         //wait for the cooldown
         for (int i = 0; i < TickNumberInterval; i++)
             _sequenceActions.Enqueue(null);
