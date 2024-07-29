@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EventTest1
   m_EditorClassIdentifier: 
   GamePercentage: 0.1
-  newspaperSprite: {fileID: 0}
+  newspaperSprite: {fileID: 21300000, guid: 9c72e2294343f4a67a20fa83fac357f8, type: 3}

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbf7a053447e34f85a70b771720aca6f, type: 3}
   m_Name: EventTest2
   m_EditorClassIdentifier: 
-  GamePercentage: 0
-  newspaperSprite: {fileID: 0}
+  GamePercentage: 0.7
+  newspaperSprite: {fileID: 21300000, guid: 5042f6f85d243436992f00d9d620793e, type: 3}
