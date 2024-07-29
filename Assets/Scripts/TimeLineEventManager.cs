@@ -17,6 +17,9 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     [SerializeField]
     private Image eventImageObject;
     [SerializeField]
+    private Slider timelineSlider;
+
+    [SerializeField]
     private List<TimeLineEvent> eventsOnTimeLine = new List<TimeLineEvent>();
     [SerializeField]
     private int currentEventListIndex = 0; 
