@@ -43,7 +43,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         }
 
         if (start_i == -1 || end_i == -1) throw new ArgumentException("start or end positions were not found in pipe point list!");
-        Debug.Log(start_i + " " + end_i);
+
         m_pipes = pipes.GetRange(start_i, end_i - start_i + 1);
     }
 
@@ -93,10 +93,9 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             var (_, end) = c_pipe.GetPositions();
 
-            is_child_valid = end.Equals(child_end);
+            is_child_valid = end.Equals(child_end) && c_pipe.GetParent() == null; // == null is to prevent stealing a pipe from one that already has a connection
 
             if (is_child_valid) c_pipe.UpdateFlowAndVisual(end, m_startPipePos, true);
-            // todo include self-update if you soft-link the pipes
         }
 
         bool is_parent_valid = true;
@@ -104,10 +103,9 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             var (start, _) = p_pipe.GetPositions();
 
-            is_parent_valid = start.Equals(parent_end);
+            is_parent_valid = start.Equals(parent_end) && p_pipe.GetChildren().Count == 0; // == 0 is to prevent connecting to a pipe that already has a connection
 
             if (is_parent_valid) p_pipe.UpdateFlowAndVisual(start, m_endPipePos, false);
-            // todo include self-update if you soft-link the pipes
         }
 
         return (is_child_valid, is_parent_valid);
@@ -145,7 +143,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             in_pos = pipe;
 
             // if we're a singleton pipe, just assume that our output position is the opposite axis of our input. no way to know for sure.
-            out_pos = m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(flow_direction));
+            out_pos = m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(flow_direction);
         }
         else if (endpoint.Equals(m_endPipePos))
         {
