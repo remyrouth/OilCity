@@ -9,9 +9,10 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
     [SerializeField] private GameObject _spilloutEffect;
+    [SerializeField] private ParticleSystem[] _workingSmokeEffects;
     private int _tickTimer;
     private int PaymentTimer => 5;
-
+    public bool IsWorking { get; private set; } = false;
     protected override void CreateInitialConnections(Vector2Int with_position)
     {
         m_output = null;
@@ -60,11 +61,14 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
             var received = child.SendFlow();
             if (received.type == FlowType.Kerosene)
             {
-                Debug.LogWarning("Refinery just received Kerosene!!!",gameObject);
+                Debug.LogWarning("Refinery just received Kerosene!!!", gameObject);
                 continue;
             }
+            IsWorking = true;
             OilSum += received.amount;
         }
+        IsWorking = OilSum > 0;
+        HandleWorkingEffects();
         if (OilSum > BASE_REFINERY_FLOWRATE)
         {
             float diff = OilSum - BASE_REFINERY_FLOWRATE;
@@ -118,7 +122,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     {
         _tickTimer++;
         var flow = SendFlow();
-        if(_tickTimer == PaymentTimer)
+        if (_tickTimer == PaymentTimer)
         {
             _tickTimer = 0;
             PayWorkers();
@@ -137,5 +141,15 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     protected override void DecreaseProductivity()
     {
         throw new System.NotImplementedException();
+    }
+    private void HandleWorkingEffects()
+    {
+        foreach (var vfx in _workingSmokeEffects)
+        {
+            if (IsWorking)
+                vfx.Play();
+            else
+                vfx.Stop();
+        }
     }
 }
