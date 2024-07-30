@@ -53,6 +53,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveCursor"",
+                    ""type"": ""Value"",
+                    ""id"": ""9a19ddfc-15a9-4413-abeb-59c0a60c5821"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -99,6 +108,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""MoveVertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a50878dc-9853-4997-a1e7-c3e4112c2941"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6eb99e95-e474-483f-b644-14e6de7a12db"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -110,6 +141,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerControls_MoveVertical = m_PlayerControls.FindAction("MoveVertical", throwIfNotFound: true);
         m_PlayerControls_MoveHorizontal = m_PlayerControls.FindAction("MoveHorizontal", throwIfNotFound: true);
         m_PlayerControls_ClickSelect = m_PlayerControls.FindAction("ClickSelect", throwIfNotFound: true);
+        m_PlayerControls_MoveCursor = m_PlayerControls.FindAction("MoveCursor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -174,6 +206,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_MoveVertical;
     private readonly InputAction m_PlayerControls_MoveHorizontal;
     private readonly InputAction m_PlayerControls_ClickSelect;
+    private readonly InputAction m_PlayerControls_MoveCursor;
     public struct PlayerControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -181,6 +214,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @MoveVertical => m_Wrapper.m_PlayerControls_MoveVertical;
         public InputAction @MoveHorizontal => m_Wrapper.m_PlayerControls_MoveHorizontal;
         public InputAction @ClickSelect => m_Wrapper.m_PlayerControls_ClickSelect;
+        public InputAction @MoveCursor => m_Wrapper.m_PlayerControls_MoveCursor;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -199,6 +233,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ClickSelect.started += instance.OnClickSelect;
             @ClickSelect.performed += instance.OnClickSelect;
             @ClickSelect.canceled += instance.OnClickSelect;
+            @MoveCursor.started += instance.OnMoveCursor;
+            @MoveCursor.performed += instance.OnMoveCursor;
+            @MoveCursor.canceled += instance.OnMoveCursor;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -212,6 +249,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ClickSelect.started -= instance.OnClickSelect;
             @ClickSelect.performed -= instance.OnClickSelect;
             @ClickSelect.canceled -= instance.OnClickSelect;
+            @MoveCursor.started -= instance.OnMoveCursor;
+            @MoveCursor.performed -= instance.OnMoveCursor;
+            @MoveCursor.canceled -= instance.OnMoveCursor;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -234,5 +274,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMoveVertical(InputAction.CallbackContext context);
         void OnMoveHorizontal(InputAction.CallbackContext context);
         void OnClickSelect(InputAction.CallbackContext context);
+        void OnMoveCursor(InputAction.CallbackContext context);
     }
 }

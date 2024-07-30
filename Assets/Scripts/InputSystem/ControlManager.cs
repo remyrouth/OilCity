@@ -11,44 +11,30 @@ public class ControlManager : MonoBehaviour
 
     private PlayerInput playerControls;
 
+    private Camera mainCamera;
+
+    
+
+    private void Update() {
+        // Debug.Log(mouseCursorUI.gameObject.transform.position);
+    }
+
     private void Awake() {
+        mainCamera = Camera.main;
         playerControls = new PlayerInput();
+
+        playerControls.PlayerControls.MoveCursor.performed += OnMouseMove;
     }
 
-    public void MoveHorizontal(InputAction.CallbackContext context)
+    void OnMouseMove(InputAction.CallbackContext context)
     {
-        // Get the value from the input context
-        float delta = context.ReadValue<float>();
+        Vector2 mousePosition = context.ReadValue<Vector2>();
+        Vector2 viewportPosition = mainCamera.ScreenToViewportPoint(mousePosition);
+        Vector2 worldObjectScreenPosition = new Vector2(
+            ((viewportPosition.x * canvasRectTransform.sizeDelta.x) - (canvasRectTransform.sizeDelta.x * 0.5f)),
+            ((viewportPosition.y * canvasRectTransform.sizeDelta.y) - (canvasRectTransform.sizeDelta.y * 0.5f)));
 
-        // Calculate the new position
-        Vector2 newPosition = mouseCursorUI.rectTransform.anchoredPosition;
-        newPosition.x += delta;
-
-        // Clamp the position to keep the cursor within the bounds of the canvas
-        float canvasWidth = canvasRectTransform.rect.width;
-        float cursorWidth = mouseCursorUI.rectTransform.rect.width;
-        newPosition.x = Mathf.Clamp(newPosition.x, 0, canvasWidth - cursorWidth);
-
-        // Apply the new position
-        mouseCursorUI.rectTransform.anchoredPosition = newPosition;
-    }
-
-    public void MoveVertical(InputAction.CallbackContext context)
-    {
-        // Get the value from the input context
-        float delta = context.ReadValue<float>();
-
-        // Calculate the new position
-        Vector2 newPosition = mouseCursorUI.rectTransform.anchoredPosition;
-        newPosition.y += delta;
-
-        // Clamp the position to keep the cursor within the bounds of the canvas
-        float canvasHeight = canvasRectTransform.rect.height;
-        float cursorHeight = mouseCursorUI.rectTransform.rect.height;
-        newPosition.y = Mathf.Clamp(newPosition.y, 0, canvasHeight - cursorHeight);
-
-        // Apply the new position
-        mouseCursorUI.rectTransform.anchoredPosition = newPosition;
+        mouseCursorUI.rectTransform.anchoredPosition = worldObjectScreenPosition;
     }
 
     private void OnEnable()
