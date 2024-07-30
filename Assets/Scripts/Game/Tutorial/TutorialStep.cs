@@ -1,17 +1,22 @@
 using UnityEngine;
 
-public class TutorialStep : MonoBehaviour
+namespace Game.Tutorial
 {
-    [SerializeField] private DialogueSO dialogueText;
-    
-    public void OnEnable()
+    public class TutorialStep : MonoBehaviour
     {
-        DialogueUI.Instance.ChangeText(dialogueText);
+        [SerializeField] private DialogueSO dialogueText;
+    
+        public void OnEnable()
+        {
+            DialogueUI.Instance.ChangeText(dialogueText);
+            BuildingPanelUI.Instance.DisableAllButtons();
+        }
+
+        public void FinishStep()
+        {
+            TutorialManager.Instance.GoToNextStep();
+            Destroy(gameObject);
+        }
     }
 
-    public void FinishStep()
-    {
-        TutorialManager.Instance.GoToNextStep();
-        Destroy(gameObject);
-    }
 }
