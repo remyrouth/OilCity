@@ -11,7 +11,7 @@ public sealed class WoodCutterController : AOEBuildingController
         public Transform _workerVisual;
         public Queue<Action<WoodCutterController>> _sequenceActions = new();
         public Vector2Int? _focusedTree = null;
-        public bool _isActive = true;
+        public bool _isActive = true; 
         public WoodCutterWorker(Transform worker)
         {
             _workerVisual = worker;
@@ -19,6 +19,7 @@ public sealed class WoodCutterController : AOEBuildingController
             
         }
     }
+    private int activeWorkerAmount;
 
     public override int TickNumberInterval => 0;
     public override int Range => 4;
@@ -41,6 +42,7 @@ public sealed class WoodCutterController : AOEBuildingController
             for (int j = 0; j < i; j++)
                 _workers[i]._sequenceActions.Enqueue(null);
         }
+        
     }
     public override void OnTick()
     {
@@ -55,9 +57,10 @@ public sealed class WoodCutterController : AOEBuildingController
             TimeManager.Instance.DeregisterReceiver(this);
             return;
         }
+        activeWorkerAmount = _workers.Where(e => e._isActive).Count();
         for (int i = 0; i < _workers.Count; i++)
         {
-            if (_workers[i]._sequenceActions.Count == 0)
+            if (_workers[i]._sequenceActions.Count == 0 && _workers[i]._isActive)
                 GenerateNewSequence(_workers[i]);
 
             _workers[i]._sequenceActions.Dequeue()?.Invoke(this);
@@ -128,13 +131,24 @@ public sealed class WoodCutterController : AOEBuildingController
         tmp._workerVisual.SetParent(transform);
         _workers.Add(tmp);
     }
-    private void FireWorker()
+    private void FireWorker(WoodCutterWorker worker)
     {
-        _workers.Last()._sequenceActions.Clear();
-        _workers.Last()._focusedTree = null;
-        _workers.Last()._sequenceActions.Enqueue((e) => e.FinalizeCutting(_workers.Last()));
-        Destroy(_workers.Last()._workerVisual);
-        _workers.Remove(_workers.Last());
+        worker._isActive = false;
+        activeWorkerAmount = _workers.Where(e => e._isActive).Count();
+        worker._sequenceActions.Clear();
+        worker._focusedTree = null;
+        worker._sequenceActions.Enqueue((e) => e.ResetWorker(worker._workerVisual));
+        worker._sequenceActions.Enqueue(null);
+        worker._sequenceActions.Enqueue((e) => e.DestroyWorker(worker));
+        worker._sequenceActions.Enqueue((e) => e.RemoveFromWorkerList(worker));
+    }
+    private void DestroyWorker(WoodCutterWorker worker)
+    {
+        Destroy(worker._workerVisual.gameObject);
+    }
+    private void RemoveFromWorkerList(WoodCutterWorker worker)
+    {
+        _workers.Remove(worker);
     }
     protected override void IncreaseProductivity()
     {
@@ -145,6 +159,7 @@ public sealed class WoodCutterController : AOEBuildingController
                 break;
             case PaymentMode.HIGH:
                 CreateWorker();
+                _workers.Last()._sequenceActions.Enqueue(null);
                 CreateWorker();
                 break;
             default: 
@@ -156,11 +171,11 @@ public sealed class WoodCutterController : AOEBuildingController
         switch (CurrentPaymentMode)
         {
             case PaymentMode.MEDIUM:
-                FireWorker();
-                FireWorker();
+                FireWorker(_workers[activeWorkerAmount - 1]);
+                FireWorker(_workers[activeWorkerAmount - 1]);
                 break;
             case PaymentMode.LOW:
-                FireWorker();
+                FireWorker(_workers[activeWorkerAmount - 1]);
                 break;
             default: 
                 break;

@@ -57,7 +57,7 @@ MonoBehaviour:
   _demolishEffect: {fileID: 7898816897283889653}
   _workerVisual: {fileID: 1573652123455928838}
   _oilPingPrefab: {fileID: 4624880366324698991, guid: 406be0de4e4b5a241a71b3398e4360b2, type: 3}
-  _workerAmount: 0
+  _workerAmount: 2
 --- !u!1 &3454231192699464068
 GameObject:
   m_ObjectHideFlags: 0
