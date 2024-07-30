@@ -12,7 +12,7 @@ namespace Game.Tutorial
             BuildingPanelUI.Instance.DisableAllButtons();
         }
 
-        public void FinishStep()
+        protected void FinishStep()
         {
             TutorialManager.Instance.GoToNextStep();
             Destroy(gameObject);

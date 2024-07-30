@@ -23,7 +23,7 @@ public class TileSelector : Singleton<TileSelector>
     }
     public void OnMouseClick()
     {
-        if (!enabled || !BoardManager.Instance.IsTileOccupied(MouseToGrid()))
+        if (!selectorEnabled || !BoardManager.Instance.IsTileOccupied(MouseToGrid()))
         {
             EndFocus();
             return;
