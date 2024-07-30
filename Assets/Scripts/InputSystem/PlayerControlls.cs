@@ -35,33 +35,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ClickSelect"",
-                    ""type"": ""Button"",
-                    ""id"": ""5c81563c-f1c6-450b-9c05-1ce864c5eede"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveHorizontal"",
-                    ""type"": ""Value"",
-                    ""id"": ""577e86f4-f5cf-4d0d-bfc0-cd4e5119afa7"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""MoveVertical"",
-                    ""type"": ""Value"",
-                    ""id"": ""e2fd64c2-297b-4cf6-9da4-0d5344e9afc1"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -75,50 +48,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""action"": ""Toggle PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2283fb52-90a0-4c26-9f2e-59ba045bd24d"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ClickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c6d2bcbb-5d67-4632-9f32-e1e141d971e5"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ClickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7271971b-a2e2-45df-8965-b00731575539"",
-                    ""path"": ""<Mouse>/delta/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveHorizontal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""22889945-0593-4c35-ad47-c63dcc045007"",
-                    ""path"": ""<Mouse>/delta/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveVertical"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -128,9 +57,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_TogglePauseMenu = m_UI.FindAction("Toggle PauseMenu", throwIfNotFound: true);
-        m_UI_ClickSelect = m_UI.FindAction("ClickSelect", throwIfNotFound: true);
-        m_UI_MoveHorizontal = m_UI.FindAction("MoveHorizontal", throwIfNotFound: true);
-        m_UI_MoveVertical = m_UI.FindAction("MoveVertical", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -193,17 +119,11 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_TogglePauseMenu;
-    private readonly InputAction m_UI_ClickSelect;
-    private readonly InputAction m_UI_MoveHorizontal;
-    private readonly InputAction m_UI_MoveVertical;
     public struct UIActions
     {
         private @PlayerControlls m_Wrapper;
         public UIActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @TogglePauseMenu => m_Wrapper.m_UI_TogglePauseMenu;
-        public InputAction @ClickSelect => m_Wrapper.m_UI_ClickSelect;
-        public InputAction @MoveHorizontal => m_Wrapper.m_UI_MoveHorizontal;
-        public InputAction @MoveVertical => m_Wrapper.m_UI_MoveVertical;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -216,15 +136,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @TogglePauseMenu.started += instance.OnTogglePauseMenu;
             @TogglePauseMenu.performed += instance.OnTogglePauseMenu;
             @TogglePauseMenu.canceled += instance.OnTogglePauseMenu;
-            @ClickSelect.started += instance.OnClickSelect;
-            @ClickSelect.performed += instance.OnClickSelect;
-            @ClickSelect.canceled += instance.OnClickSelect;
-            @MoveHorizontal.started += instance.OnMoveHorizontal;
-            @MoveHorizontal.performed += instance.OnMoveHorizontal;
-            @MoveHorizontal.canceled += instance.OnMoveHorizontal;
-            @MoveVertical.started += instance.OnMoveVertical;
-            @MoveVertical.performed += instance.OnMoveVertical;
-            @MoveVertical.canceled += instance.OnMoveVertical;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -232,15 +143,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @TogglePauseMenu.started -= instance.OnTogglePauseMenu;
             @TogglePauseMenu.performed -= instance.OnTogglePauseMenu;
             @TogglePauseMenu.canceled -= instance.OnTogglePauseMenu;
-            @ClickSelect.started -= instance.OnClickSelect;
-            @ClickSelect.performed -= instance.OnClickSelect;
-            @ClickSelect.canceled -= instance.OnClickSelect;
-            @MoveHorizontal.started -= instance.OnMoveHorizontal;
-            @MoveHorizontal.performed -= instance.OnMoveHorizontal;
-            @MoveHorizontal.canceled -= instance.OnMoveHorizontal;
-            @MoveVertical.started -= instance.OnMoveVertical;
-            @MoveVertical.performed -= instance.OnMoveVertical;
-            @MoveVertical.canceled -= instance.OnMoveVertical;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -261,8 +163,5 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnTogglePauseMenu(InputAction.CallbackContext context);
-        void OnClickSelect(InputAction.CallbackContext context);
-        void OnMoveHorizontal(InputAction.CallbackContext context);
-        void OnMoveVertical(InputAction.CallbackContext context);
     }
 }
