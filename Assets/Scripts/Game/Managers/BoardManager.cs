@@ -86,6 +86,20 @@ public class BoardManager : Singleton<BoardManager>
         }
         return false;
     }
+
+    /// <summary>
+    /// A helper accessor to get a component at a position. Shorthand for "IsTileOccupied(pos) && tileDict[pos].trygetcomponent(out component)"
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="pos"></param>
+    /// <param name="component"></param>
+    /// <returns></returns>
+    public bool TryGetTypeAt<T>(Vector2Int pos, out T component)
+    {
+        component = default;
+        return IsTileOccupied(pos) && tileDictionary[pos].TryGetComponent(out component);
+    }
+
     /// <summary>
     /// Checks if all of the tiles the building would take are free.
     /// </summary>

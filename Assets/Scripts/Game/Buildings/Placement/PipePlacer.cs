@@ -2,6 +2,7 @@ using Priority_Queue;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -56,8 +57,11 @@ public class PipePlacer : BuildingPlacer
 
             // use linerenderer rather than creating lots of gameobjects
 
-            var src_to_ignore = BoardManager.Instance.IsTileOccupied(m_start) ? BoardManager.Instance.tileDictionary[m_start] : null;
-            var dest_to_ignore = IsValidPlacement(m_so) && BoardManager.Instance.IsTileOccupied(current_end) ? BoardManager.Instance.tileDictionary[current_end] : null;
+            // terser code for the following:
+            //    var src_to_ignore = BoardManager.Instance.IsTileOccupied(m_start) ? BoardManager.Instance.tileDictionary[m_start] : null;
+            //    var dest_to_ignore = IsValidPlacement(m_so) && BoardManager.Instance.IsTileOccupied(current_end) ? BoardManager.Instance.tileDictionary[current_end] : null;
+            BoardManager.Instance.TryGetTypeAt<TileObjectController>(m_start, out var src_to_ignore);
+            BoardManager.Instance.TryGetTypeAt<TileObjectController>(current_end, out var dest_to_ignore);
 
             // start the A* pathfinding (A* over Djikstras bc i had the code on hand lmao)
             m_pointList = Pathfind(m_start, current_end, src_to_ignore, dest_to_ignore);
@@ -89,33 +93,23 @@ public class PipePlacer : BuildingPlacer
         {
             Vector2Int current = frontier.Dequeue();
 
+            bool is_occupied = BoardManager.Instance.IsTileOccupied(current);
+            bool is_ignored = is_occupied && (BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore) || BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore));
+
             if (current == end) break;
-            if (current != start 
-                && BoardManager.Instance.IsTileOccupied(current)
-                && !BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore)
-                && !BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore)) continue;
+            if (current != start && is_occupied && !is_ignored) continue;
 
             Vector2Int[] neighbors = new Vector2Int[] { current + Vector2Int.right, current + Vector2Int.up, current + Vector2Int.left, current + Vector2Int.down };
 
             foreach (Vector2Int npos in neighbors)
             {
-                if ((npos.x < 0 || npos.x >= BoardManager.MAP_SIZE_X)
-                    || (npos.y < 0 || npos.y >= BoardManager.MAP_SIZE_Y))
-                {
-                    continue;
-                }
+                if (BoardManager.Instance.IsPositionOutsideBoard(npos)) continue;
 
                 int cost_mod = 1;
 
                 // "ignored" tiles are still traversable, but more expensive.
-                if (BoardManager.Instance.IsTileOccupied(current) && (BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore) || BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore)))
-                {
-                    cost_mod = 200;
-                }
-                else if (BoardManager.Instance.IsTileOccupied(current))
-                {
-                    cost_mod = 999;
-                }
+                if (is_ignored) cost_mod = 200;
+                else if (is_occupied) cost_mod = 999; 
 
                 int new_cost = cost_so_far[current] + cost_mod;
 
@@ -170,6 +164,7 @@ public class PipePlacer : BuildingPlacer
 
         if (BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so))
         {
+            /* Move this to PipeController neighbor logic
             // if we're currently hovering over a pipe, we'll want to make sure the connection place is valid
             if (BoardManager.Instance.tileDictionary[mousePos].TryGetComponent<PipeController>(out var pipe))
             {
@@ -188,8 +183,9 @@ public class PipePlacer : BuildingPlacer
                     return mousePos.Equals(start);
                 }
             }
+            */
 
-            if (BoardManager.Instance.tileDictionary[mousePos].TryGetComponent<IFlowable>(out var flowable))
+            if (BoardManager.Instance.TryGetTypeAt<IFlowable>(mousePos, out var flowable))
             {
                 // logic:
                 // if the start pipe has not been placed yet, then we're in the process of placing the starting pipe.
@@ -259,6 +255,22 @@ public class PipePlacer : BuildingPlacer
             Debug.LogError("Pipe prefab doesn't have a pipe controller!");
         }
 
+        int pipes_laid = PlacePipes(component);
+
+        // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
+        if (pipes_laid == 0)
+        {
+            yield break;
+        }
+
+        // setup the pipe
+        component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
+        component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
+        component.transform.position = Utilities.Vector2IntToVector3(m_start);
+    }
+
+    private int PlacePipes(PipeController with_component)
+    {
         bool has_placed_start = false;
         bool has_placed_end = false;
         Vector2Int prior_pipe_pos = new(-1, -1);
@@ -283,7 +295,7 @@ public class PipePlacer : BuildingPlacer
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_startDir);
 
                     m_start = m_pointList[index];
-                } 
+                }
                 else // otherwise we can just use the first and second indices.
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[1], m_pointList[0], out m_startDir);
@@ -321,7 +333,7 @@ public class PipePlacer : BuildingPlacer
                 index < m_pointList.Count - 1 ? m_pointList[index + 1] : new Vector2Int(-1, -1)));
 
             // set the controller at the location
-            BoardManager.Instance.tileDictionary[m_pointList[index]] = component;
+            BoardManager.Instance.tileDictionary[m_pointList[index]] = with_component;
 
             // cache current pipe
             prior_pipe_pos = m_pointList[index];
@@ -329,16 +341,7 @@ public class PipePlacer : BuildingPlacer
             pipes_laid++;
         }
 
-        // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
-        if (pipes_laid == 0)
-        {
-            yield break;
-        }
-
-        // setup the pipe
-        component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
-        component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
-        component.transform.position = Utilities.Vector2IntToVector3(m_start);
+        return pipes_laid;
     }
 
     public override void Cleanup()

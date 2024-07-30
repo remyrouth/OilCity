@@ -47,24 +47,48 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         var child_pos = m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
         var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
 
-        if (BoardManager.Instance.IsTileOccupied(child_pos))
+        var (valid_child, valid_parent) = IsValidPipeConnection(child_pos, parent_pos);
+
+        if (valid_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var tentative))
         {
-            if (BoardManager.Instance.tileDictionary[child_pos].TryGetComponent<IFlowable>(out var tentative) && tentative.GetParent() == null)
-            {
-                m_child = tentative;
-                m_child.SetParent(this);
-            }
-            else
-            {
-                Debug.LogWarning("Connection refused with " + BoardManager.Instance.tileDictionary[child_pos]);
-            }
+            m_child = tentative;
+            m_child.SetParent(this);
         }
 
-        if (BoardManager.Instance.IsTileOccupied(parent_pos) && BoardManager.Instance.tileDictionary[parent_pos].TryGetComponent<IFlowable>(out var obj))
+        if (valid_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var obj))
         {
             m_parent = obj;
             m_parent.AddChild(this);
         }
+    }
+
+    /// <summary>
+    /// A helper method for testing to see if the pipe connection would be valid. In all cases except for when
+    /// connecting two pipes at not endpoints, this returns true/true.
+    /// </summary>
+    /// <param name="child_end"></param>
+    /// <param name="parent_end"></param>
+    /// <returns></returns>
+    private (bool valid_child, bool valid_parent) IsValidPipeConnection(Vector2Int child_end, Vector2Int parent_end)
+    {
+        bool is_child_valid = true;
+        if (BoardManager.Instance.TryGetTypeAt<PipeController>(child_end, out var c_pipe))
+        {
+            var (_, end) = c_pipe.GetPositions();
+
+            is_child_valid = end.Equals(child_end);
+        }
+
+        bool is_parent_valid = true;
+        if (BoardManager.Instance.TryGetTypeAt<PipeController>(parent_end, out var p_pipe))
+        {
+            var (start, _) = p_pipe.GetPositions();
+
+            is_child_valid = start.Equals(parent_end);
+        }
+
+
+        return (is_child_valid, is_parent_valid);
     }
 
     /// <summary>
