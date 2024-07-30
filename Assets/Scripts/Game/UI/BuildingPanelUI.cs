@@ -5,7 +5,15 @@ using UnityEngine.UI;
 public class BuildingPanelUI : Singleton<BuildingPanelUI>
 {
     [SerializeField] private List<Button> buildingButtons;
-
+    /// <summary>
+    /// ref for flicker
+    /// 
+    /// method for given index
+    /// 
+    /// moves flicker to highlighted button
+    /// 
+    /// disable when tutorial done
+    /// </summary>
     public void DisableAllButtons()
     {
         foreach (var button in buildingButtons)
