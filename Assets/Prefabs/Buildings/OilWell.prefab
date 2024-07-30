@@ -357,7 +357,7 @@ MonoBehaviour:
   shouldLoop: 1
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: 0b68e08ea119843639e857f602c2638f, type: 3}
-  soundType: 0
+  soundType: 1
 --- !u!1 &9027706675172621410
 GameObject:
   m_ObjectHideFlags: 0

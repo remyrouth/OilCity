@@ -280,6 +280,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8713549890181840385}
   - component: {fileID: 7338960524825124908}
+  - component: {fileID: 4031655360067556307}
+  - component: {fileID: 192428699297560663}
   m_Layer: 0
   m_Name: Refinery
   m_TagString: Untagged
@@ -321,6 +323,38 @@ MonoBehaviour:
   TileActions:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
   _spilloutEffect: {fileID: 6663444001035983070}
+--- !u!114 &4031655360067556307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7259278686903281590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: de75a9aa6d73ce544a1a681048d7bc74, type: 3}
+  soundType: 0
+--- !u!114 &192428699297560663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7259278686903281590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 1
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: cdf8796f97885314386d31d9701d8cc6, type: 3}
+  soundType: 1
 --- !u!1 &8777604325667618820
 GameObject:
   m_ObjectHideFlags: 0

@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5690734109345856486}
   - component: {fileID: 2247090693529544526}
+  - component: {fileID: 5968778246260632616}
   m_Layer: 0
   m_Name: Silo
   m_TagString: Untagged
@@ -133,6 +134,22 @@ MonoBehaviour:
   _actionsPivot: {x: 0.5, y: 0.5}
   TileActions:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
+--- !u!114 &5968778246260632616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2162149197760898577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: fb7defd3ecc6c4db081106443574d47b, type: 3}
+  soundType: 0
 --- !u!1 &5532493767352635794
 GameObject:
   m_ObjectHideFlags: 0
