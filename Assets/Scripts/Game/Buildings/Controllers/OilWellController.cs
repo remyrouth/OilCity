@@ -93,8 +93,6 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     public void SetParent(IFlowable parent)
     {
-        m_output?.DisownChild(this);
-
         m_output = parent;
 
         _spilloutEffect.SetActive(false);

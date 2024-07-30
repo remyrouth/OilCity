@@ -241,6 +241,7 @@ public class PipePlacer : BuildingPlacer
         }
 
         // setup the pipe
+        Debug.Log(string.Format("start {0} end {1} pointstart {2} pointend {3}", m_start, m_end, m_pointList[0], m_pointList[^1]));
         component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
         component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
         component.transform.position = Utilities.Vector2IntToVector3(m_start);

@@ -35,7 +35,16 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         m_startDirection = start_pipe_dir;
         m_endDirection = end_pipe_dir;
 
-        m_pipes = pipes;
+        int start_i = -1, end_i = -1;
+        for (int i = 0; i < pipes.Count; i++)
+        {
+            if (pipes[i].Equals(start_pos)) start_i = i;
+            if (pipes[i].Equals(end_pos)) end_i = i;
+        }
+
+        if (start_i == -1 || end_i == -1) throw new ArgumentException("start or end positions were not found in pipe point list!");
+        Debug.Log(start_i + " " + end_i);
+        m_pipes = pipes.GetRange(start_i, end_i - start_i + 1);
     }
 
     public void SetTileActions(List<TileAction> actions)
@@ -52,8 +61,15 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var obj))
         {
-            obj.SetParent(this);
-            AddChild(obj);
+            if (obj.GetParent() == null)
+            {
+                obj.SetParent(this);
+                AddChild(obj);
+            }
+            else
+            {
+                Debug.LogWarning("Pipe already has a connection! Ignoring...");
+            }
         }
 
         if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj))
@@ -215,8 +231,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="parent"></param>
     public void SetParent(IFlowable parent)
     {
-        m_parent?.DisownChild(this);
-
         m_parent = parent;
     }
     #endregion

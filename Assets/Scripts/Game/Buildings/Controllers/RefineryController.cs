@@ -107,8 +107,6 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     public void SetParent(IFlowable parent)
     {
-        m_output?.DisownChild(this);
-
         m_output = parent;
 
         _spilloutEffect.SetActive(false);

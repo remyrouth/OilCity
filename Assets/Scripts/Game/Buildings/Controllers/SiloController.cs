@@ -110,8 +110,6 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
 
     public void SetParent(IFlowable parent)
     {
-        m_output?.DisownChild(this);
-
         m_output = parent;
     }
     #endregion
