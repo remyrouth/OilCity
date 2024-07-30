@@ -33,11 +33,11 @@ public sealed class WoodCutterController : AOEBuildingController
     private int PaymentTimer => 5;
     public void Start()
     {
+        PaymentModeIncreased += IncreaseProductivity;
+        PaymentModeDecreased += DecreaseProductivity;
         for (int i = 0; i < _workerAmount; i++)
         {
-            var tmp = new WoodCutterWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity), new());
-            tmp._workerVisual.SetParent(transform);
-            _workers.Add(tmp);
+            CreateWorker();
             for (int j = 0; j < i; j++)
                 _workers[i]._sequenceActions.Enqueue(null);
         }
@@ -122,6 +122,37 @@ public sealed class WoodCutterController : AOEBuildingController
         var tile = tiles[UnityEngine.Random.Range(0, tiles.Count)];
         return tiles.ToList()[UnityEngine.Random.Range(0, tiles.Count())];
     }
+    private void CreateWorker()
+    {
+        var tmp = new WoodCutterWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity), new());
+        tmp._workerVisual.SetParent(transform);
+        _workers.Add(tmp);
+    }
+    private void FireWorker()
+    {
+        _workers.Last()._sequenceActions.Clear();
+        _workers.Last()._focusedTree = null;
+        _workers.Last()._sequenceActions.Enqueue((e) => e.FinalizeCutting(_workers.Last()));
+        Destroy(_workers.Last()._workerVisual);
+        _workers.Remove(_workers.Last());
+    }
+    protected override void IncreaseProductivity()
+    {
+        switch (paymentMode)
+        {
+            case PaymentMode.MEDIUM:
+                CreateWorker();
+                break;
+            case PaymentMode.HIGH:
+                CreateWorker();
+                CreateWorker();
+                break;
+            default: 
+                break;
+        }
+    }
+    protected override void DecreaseProductivity()
+    {
 
-
+    }
 }
