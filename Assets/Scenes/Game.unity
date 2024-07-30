@@ -31337,6 +31337,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecfed7a4a397df840bbb8c4e87104006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_falloffCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   MaxSoldAmount: 0.05
 --- !u!4 &1148798918
 Transform:

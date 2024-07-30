@@ -33,8 +33,8 @@ public sealed class WoodCutterController : AOEBuildingController
     private int PaymentTimer => 5;
     public void Start()
     {
-        PaymentModeIncreased += IncreaseProductivity;
-        PaymentModeDecreased += DecreaseProductivity;
+        OnPaymentModeIncreased += IncreaseProductivity;
+        OnPaymentModeDecreased += DecreaseProductivity;
         for (int i = 0; i < _workerAmount; i++)
         {
             CreateWorker();
@@ -138,7 +138,7 @@ public sealed class WoodCutterController : AOEBuildingController
     }
     protected override void IncreaseProductivity()
     {
-        switch (paymentMode)
+        switch (CurrentPaymentMode)
         {
             case PaymentMode.MEDIUM:
                 CreateWorker();

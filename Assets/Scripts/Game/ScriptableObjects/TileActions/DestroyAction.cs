@@ -1,4 +1,4 @@
-public class DestroyAction : TileAction
+public class DestroyAction : ClickableTileAction
 {
     public override void OnClicked(TileObjectController toc)
     {
