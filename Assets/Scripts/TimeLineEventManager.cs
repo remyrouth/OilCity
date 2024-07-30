@@ -148,7 +148,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
 
     private bool CheckForEndGame() {
         bool isNewsPaperUp = eventImageObject.gameObject.activeInHierarchy;
-        if (isNewsPaperUp && GetTimePercentage() > 1f) {
+        if (!isNewsPaperUp && GetTimePercentage() >= 1f) {
             return true;
         }
 
