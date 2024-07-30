@@ -119,4 +119,14 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
             return;
         Debug.LogWarning("Oil well has overflowed " + flow);
     }
+
+    protected override void IncreaseProductivity()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void DecreaseProductivity()
+    {
+        throw new System.NotImplementedException();
+    }
 }

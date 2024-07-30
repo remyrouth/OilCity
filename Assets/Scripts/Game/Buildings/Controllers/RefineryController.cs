@@ -128,4 +128,14 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
             return;
         Debug.LogWarning("Refinery has overflowed " + flow);
     }
+
+    protected override void IncreaseProductivity()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void DecreaseProductivity()
+    {
+        throw new System.NotImplementedException();
+    }
 }

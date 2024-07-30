@@ -99,4 +99,14 @@ public sealed class GeologistController : AOEBuildingController
             return null;
         return tiles.ToList()[UnityEngine.Random.Range(0, tiles.Count())];
     }
+
+    protected override void IncreaseProductivity()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void DecreaseProductivity()
+    {
+        throw new NotImplementedException();
+    }
 }
