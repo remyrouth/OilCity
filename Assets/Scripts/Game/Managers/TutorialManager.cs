@@ -14,7 +14,7 @@ public class TutorialManager : Singleton<TutorialManager>
         set => tutorialEnabled = value;
     }
 
-    private void Awake()
+    private void Start()
     {
         _nextStepIndex = 0;
         if(TutorialEnabled && !SceneManager.GetActiveScene().name.Equals("MainMenu"))

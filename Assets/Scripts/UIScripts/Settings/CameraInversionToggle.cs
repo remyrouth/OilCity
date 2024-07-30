@@ -2,7 +2,6 @@ using Game.Managers;
 using UnityEngine;
 using Toggle = UnityEngine.UI.Toggle;
 
-
 namespace UIScripts.Settings
 {
     public class CameraInversionToggle : MonoBehaviour
@@ -15,12 +14,12 @@ namespace UIScripts.Settings
             {
                 cameraInversionToggle.isOn = PlayerPrefs.GetInt("CameraInversion") == 1;
             }
-            
         }
 
         public void ToggleCameraMovementInversion()
         {
-            SettingsManager.Instance.ToggleCameraMovementInversion();
+            CameraController.Instance.invert = cameraInversionToggle.isOn;
+            PlayerPrefs.SetInt("CameraInversion", CameraController.Instance.invert ? 1 : 0);
         }
     }
 }
