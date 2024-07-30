@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -30134,6 +30134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e8462bb7f63604c99108577adb3841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &591897166 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2985886565897619424, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+  m_PrefabInstance: {fileID: 591897164}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &591897167 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2094826517473116006, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
@@ -30143,6 +30148,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &591897168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2197386086256274969, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+  m_PrefabInstance: {fileID: 591897164}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &739498413
@@ -30235,7 +30251,7 @@ GameObject:
   - component: {fileID: 818914357}
   - component: {fileID: 818914356}
   m_Layer: 0
-  m_Name: SoundManager (1)
+  m_Name: ControlManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30253,8 +30269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5861ebbb1df634f68b2480c93e468621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseCursorUI: {fileID: 0}
-  canvasRectTransform: {fileID: 0}
+  mouseCursorUI: {fileID: 591897168}
+  canvasRectTransform: {fileID: 591897166}
 --- !u!4 &818914357
 Transform:
   m_ObjectHideFlags: 0
