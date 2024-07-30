@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using static UnityEditor.Rendering.CameraUI;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
 {
@@ -47,15 +48,15 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         var child_pos = m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
         var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
 
-        var (valid_child, valid_parent) = IsValidPipeConnection(child_pos, parent_pos);
+        var (connect_to_child, connect_to_parent) = ValidatePipesAndConnect(child_pos, parent_pos);
 
-        if (valid_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var tentative))
+        if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var tentative))
         {
             m_child = tentative;
             m_child.SetParent(this);
         }
 
-        if (valid_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var obj))
+        if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var obj))
         {
             m_parent = obj;
             m_parent.AddChild(this);
@@ -69,7 +70,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="child_end"></param>
     /// <param name="parent_end"></param>
     /// <returns></returns>
-    private (bool valid_child, bool valid_parent) IsValidPipeConnection(Vector2Int child_end, Vector2Int parent_end)
+    private (bool connect_to_child, bool connect_to_parent) ValidatePipesAndConnect(Vector2Int child_end, Vector2Int parent_end)
     {
         bool is_child_valid = true;
         if (BoardManager.Instance.TryGetTypeAt<PipeController>(child_end, out var c_pipe))
@@ -77,6 +78,9 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             var (_, end) = c_pipe.GetPositions();
 
             is_child_valid = end.Equals(child_end);
+
+            if (is_child_valid) c_pipe.UpdateFlowAndVisual(m_startPipePos, child_end, true);
+            // todo include self-update if you soft-link the pipes
         }
 
         bool is_parent_valid = true;
@@ -84,11 +88,61 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             var (start, _) = p_pipe.GetPositions();
 
-            is_child_valid = start.Equals(parent_end);
+            is_parent_valid = start.Equals(parent_end);
+
+            if (is_parent_valid) p_pipe.UpdateFlowAndVisual(m_endPipePos, parent_end, false);
+            // todo include self-update if you soft-link the pipes
         }
 
 
         return (is_child_valid, is_parent_valid);
+    }
+
+    /// <summary>
+    /// Called by another pipe controller when this pipe controller needs to update one of its endpoints to
+    /// flow into the calling pipe controller.
+    /// </summary>
+    public void UpdateFlowAndVisual(Vector2Int endpoint, Vector2Int pipe, bool is_flow_in)
+    {
+        if (!Utilities.GetCardinalEstimatePipeflowDirection(endpoint, pipe, out var flow_direction))
+        {
+            Debug.LogError(string.Format("Pipeflow not adjacent! {0} {1}", endpoint, pipe));
+            return;
+        }
+
+        // if the flow is outward, we need to flip the direction we estimated. That was made with the "pipe->tile"
+        // assumption, not the "tile->pipe" assumption.
+        if (!is_flow_in)
+        {
+            flow_direction = Utilities.FlipFlow(flow_direction);
+        }
+
+        // TODO create primitives at endpoint and start/end pos to see what they're comparing and why the vals are off by 1
+
+        // change flowdir for endpoint
+        if (endpoint.Equals(m_startPipePos))
+        {
+            m_startDirection = flow_direction;
+            Debug.Log("done");
+
+            BoardManager.Instance.SetPipeTileInSupermap(endpoint, BuildingManager.Instance.GetPipeRotation(
+            pipe,
+            endpoint,
+            m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(flow_direction))
+            ));
+        }
+        else if (endpoint.Equals(m_endPipePos))
+        {
+            m_endDirection = flow_direction;
+            Debug.Log("done");
+            BoardManager.Instance.SetPipeTileInSupermap(endpoint, BuildingManager.Instance.GetPipeRotation(
+                m_pipes.Count > 1 ? m_pipes[^1] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(flow_direction)),
+                endpoint,
+                pipe
+                ));
+        }
+
+        // change visual for endpoint
     }
 
     /// <summary>

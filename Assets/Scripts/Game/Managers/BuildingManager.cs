@@ -6,9 +6,15 @@ using static UnityEditor.PlayerSettings;
 public class BuildingManager : Singleton<BuildingManager>
 {
     private IPlacer _currentPlacer;
+    private PipeSpriteScript m_pipeSprites;
     private BuildingScriptableObject _currentBuildingSO;
 
     private Coroutine _coroutine;
+
+    private void Awake()
+    {
+        m_pipeSprites = GetComponent<PipeSpriteScript>();
+    }
 
     public void OnMouseClick()=>_currentPlacer?.PressMouse();
 
@@ -40,5 +46,10 @@ public class BuildingManager : Singleton<BuildingManager>
         yield return _currentPlacer.IEDoBuildProcess();
 
         CancelBuilding();
+    }
+
+    public PipeSpriteScript.PipeRotation GetPipeRotation(Vector2Int in_pos, Vector2Int pos, Vector2Int out_pos)
+    {
+        return m_pipeSprites.OrientPipes(in_pos, pos, out_pos);
     }
 }

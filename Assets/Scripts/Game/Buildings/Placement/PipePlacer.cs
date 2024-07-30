@@ -20,7 +20,6 @@ public class PipePlacer : BuildingPlacer
 
     private SpriteRenderer m_singlePipePreview;
     private LineRenderer m_pathfindingPreview;
-    private PipeSpriteScript m_pipeOrientation;
     private List<Vector2Int> m_pointList;
 
     private const float HARDCODED_OFFSET = 0.5f;
@@ -36,7 +35,6 @@ public class PipePlacer : BuildingPlacer
     {
         m_previewFabInstances = new GameObject[2];
         m_pathfindingPreview = GetComponent<LineRenderer>();
-        m_pipeOrientation = GetComponent<PipeSpriteScript>();
     }
 
     public override void UpdatePreview()
@@ -164,27 +162,6 @@ public class PipePlacer : BuildingPlacer
 
         if (BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so))
         {
-            /* Move this to PipeController neighbor logic
-            // if we're currently hovering over a pipe, we'll want to make sure the connection place is valid
-            if (BoardManager.Instance.tileDictionary[mousePos].TryGetComponent<PipeController>(out var pipe))
-            {
-                // pipes cannot connect at non-start/end-points
-
-                var (start, end) = pipe.GetPositions();
-
-                // if we're placing the start position, check if it's connecting to the end of the pipe
-                // otherwise, check the opposite
-                if (!m_wasStartPlaced)
-                {
-                    return mousePos.Equals(end);
-                }
-                else
-                {
-                    return mousePos.Equals(start);
-                }
-            }
-            */
-
             if (BoardManager.Instance.TryGetTypeAt<IFlowable>(mousePos, out var flowable))
             {
                 // logic:
@@ -327,7 +304,7 @@ public class PipePlacer : BuildingPlacer
             }
 
             // set the pipe in the supermap with its orientation
-            BoardManager.Instance.SetPipeTileInSupermap(m_pointList[index], m_pipeOrientation.OrientPipes(
+            BoardManager.Instance.SetPipeTileInSupermap(m_pointList[index], BuildingManager.Instance.GetPipeRotation(
                 index > 0 ? m_pointList[index - 1] : new Vector2Int(-1, -1),
                 m_pointList[index],
                 index < m_pointList.Count - 1 ? m_pointList[index + 1] : new Vector2Int(-1, -1)));

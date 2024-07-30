@@ -31213,6 +31213,7 @@ GameObject:
   - component: {fileID: 1321047924}
   - component: {fileID: 1321047923}
   - component: {fileID: 1321047922}
+  - component: {fileID: 1321047927}
   - component: {fileID: 1321047926}
   m_Layer: 0
   m_Name: WorldManager
@@ -31327,6 +31328,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   civilianBuildingSO: {fileID: 0}
   tickNumberInterval: 10
+--- !u!114 &1321047927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321047921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c4245878fadf94bbf73bb4e0791e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pipes:
+  - Sprite: {fileID: 21300000, guid: c55bc77f3f3730147a763a3b6ad72fd1, type: 3}
+    Rotation: 0
+    In: 1
+    Out: 1
+  - Sprite: {fileID: 21300000, guid: c55bc77f3f3730147a763a3b6ad72fd1, type: 3}
+    Rotation: 180
+    In: 2
+    Out: 2
+  - Sprite: {fileID: 21300000, guid: c55bc77f3f3730147a763a3b6ad72fd1, type: 3}
+    Rotation: 90
+    In: 3
+    Out: 3
+  - Sprite: {fileID: 21300000, guid: c55bc77f3f3730147a763a3b6ad72fd1, type: 3}
+    Rotation: 270
+    In: 4
+    Out: 4
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 0
+    In: 2
+    Out: 3
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 0
+    In: 4
+    Out: 1
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 270
+    In: 1
+    Out: 3
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 270
+    In: 4
+    Out: 2
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 180
+    In: 1
+    Out: 4
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 180
+    In: 3
+    Out: 2
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 90
+    In: 3
+    Out: 1
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 90
+    In: 2
+    Out: 4
 --- !u!1 &1850073788
 GameObject:
   m_ObjectHideFlags: 0
