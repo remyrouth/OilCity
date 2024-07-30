@@ -1,42 +1,43 @@
 using System;
 using System.Collections.Generic;
+
 public abstract class PayrateBuildingController : BuildingController<PayrateBuildingScriptableObject>
 {
-    public event Action PaymentModeIncreased;
-    public event Action PaymentModeDecreased;
-    protected enum PaymentMode
+    public event Action OnPaymentModeIncreased;
+    public event Action OnPaymentModeDecreased;
+    public enum PaymentMode
     {
         LOW,
         MEDIUM,
         HIGH
     }
-    protected void IncreasePay()
+    public void IncreasePay()
     {
-        switch (paymentMode)
+        switch (CurrentPaymentMode)
         {
             case PaymentMode.LOW:
-                paymentMode = PaymentMode.MEDIUM;
-                PaymentModeIncreased?.Invoke();
+                CurrentPaymentMode = PaymentMode.MEDIUM;
+                OnPaymentModeIncreased?.Invoke();
                 break;
             case PaymentMode.MEDIUM:
-                paymentMode = PaymentMode.HIGH;
-                PaymentModeIncreased?.Invoke();
+                CurrentPaymentMode = PaymentMode.HIGH;
+                OnPaymentModeIncreased?.Invoke();
                 break;
             default:
                 break;
         }
     }
-    protected void DecreasePay() 
+    public void DecreasePay()
     {
-        switch (paymentMode)
+        switch (CurrentPaymentMode)
         {
             case PaymentMode.MEDIUM:
-                paymentMode = PaymentMode.LOW;
-                PaymentModeDecreased?.Invoke();
+                CurrentPaymentMode = PaymentMode.LOW;
+                OnPaymentModeDecreased?.Invoke();
                 break;
             case PaymentMode.HIGH:
-                paymentMode = PaymentMode.MEDIUM;
-                PaymentModeDecreased?.Invoke();
+                CurrentPaymentMode = PaymentMode.MEDIUM;
+                OnPaymentModeDecreased?.Invoke();
                 break;
             default:
                 break;
@@ -46,10 +47,10 @@ public abstract class PayrateBuildingController : BuildingController<PayrateBuil
     protected abstract void IncreaseProductivity();
     protected abstract void DecreaseProductivity();
 
-    protected PaymentMode paymentMode = PaymentMode.LOW;
+    public PaymentMode CurrentPaymentMode { get; protected set; } = PaymentMode.LOW;
     protected void PayWorkers()
     {
-        switch (paymentMode)
+        switch (CurrentPaymentMode)
         {
             case PaymentMode.LOW:
                 MoneyManager.Instance.ReduceMoney(config.basePayrate - config.payrateLevelDelta);
@@ -64,6 +65,17 @@ public abstract class PayrateBuildingController : BuildingController<PayrateBuil
     }
     public int GetIndexOfSatisfaction()
     {
-        return (int)paymentMode - 1;
+        return (int)CurrentPaymentMode - 1;
+    }
+    public override List<TileAction> GetActions() //little hardcoded but u know
+    {
+        var actions = new List<TileAction>();
+        actions.Add(TileActions[0]);
+        if (CurrentPaymentMode != PaymentMode.HIGH)
+            actions.Add(TileActions[1]);
+        actions.Add(TileActions[2]);
+        if (CurrentPaymentMode != PaymentMode.LOW)
+            actions.Add(TileActions[3]);
+        return actions;
     }
 }

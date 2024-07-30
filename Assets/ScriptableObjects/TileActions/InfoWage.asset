@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8980b200ab87da4bbd1adfbb7f34e61, type: 3}
+  m_Name: InfoWage
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyAction
+  icon: {fileID: 0}
+  <prefab>k__BackingField: {fileID: 1767801182589633848, guid: 87d2374cb2839e244ba3d3c96d9dd107, type: 3}
+  <WageIcons>k__BackingField:
+  - {fileID: 1407424610, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
+  - {fileID: -1640207184, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
+  - {fileID: 1807959607, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
