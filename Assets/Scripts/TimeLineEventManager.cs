@@ -97,7 +97,13 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
             currentTick = 0f;
             currentYear++;
             CheckNextEvent();
+
+            AlterPollutionInstance();
         }
+    }
+
+    private void AlterPollutionInstance() {
+        PollutionManager.Instance.ChangePollution(GetTimePercentage());
     }
 
     private void AlterSlider() {
