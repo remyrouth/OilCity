@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Events;
 using Unity.VisualScripting;
 using UnityEngine;
 public sealed class WoodCutterController : AOEBuildingController
@@ -138,6 +139,7 @@ public sealed class WoodCutterController : AOEBuildingController
     }
     protected override void IncreaseProductivity()
     {
+        BuildingEvents.IncreasePayment();
         switch (CurrentPaymentMode)
         {
             case PaymentMode.MEDIUM:
