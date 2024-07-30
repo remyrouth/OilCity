@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class PayrateBuildingScriptableObject : BuildingScriptableObject
 {
-    [field: SerializeField] public int basePayrate { get; private set; }
-    [field: SerializeField] public int payrateLevelDelta { get; private set; }
+    [field: SerializeField] public float basePayrate { get; private set; }
+    [field: SerializeField] public float payrateLevelDelta { get; private set; }
+
 
     public override TileObjectController CreateInstance(Vector2Int with_position)
     {
