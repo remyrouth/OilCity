@@ -50,8 +50,12 @@ MonoBehaviour:
   _actionsPivot: {x: 1, y: 0.5}
   TileActions:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
+  - {fileID: 11400000, guid: 54cfa0dc728251640b9fdbf5e7b19560, type: 2}
+  - {fileID: 11400000, guid: 470db2f59fdf9d64cac17ca5b2a7bd6c, type: 2}
+  - {fileID: 11400000, guid: 1bed6fc2bbe796a41b46fa53cc620c56, type: 2}
   _workerVisual: {fileID: 1573652123455928838}
   _oilPingPrefab: {fileID: 4624880366324698991, guid: 406be0de4e4b5a241a71b3398e4360b2, type: 3}
+  _workerAmount: 0
 --- !u!1 &3454231192699464068
 GameObject:
   m_ObjectHideFlags: 0
