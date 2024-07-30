@@ -11,7 +11,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
 
     public void Start()
     {
-        TimeManager.Instance.RegisterReceiver(gameObject);
+        TimeManager.Instance.RegisterReceiver(this);
     }
     /// <summary>
     /// Checks how much worker satisfaction the player currently has, based on that it changes the tickNumberInterval

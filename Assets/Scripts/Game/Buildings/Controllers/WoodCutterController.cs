@@ -52,7 +52,7 @@ public sealed class WoodCutterController : AOEBuildingController
         }
         if (!_workers.Any(e => e._isActive))
         {
-            TimeManager.Instance.DeregisterReceiver(gameObject);
+            TimeManager.Instance.DeregisterReceiver(this);
             return;
         }
         for (int i = 0; i < _workers.Count; i++)

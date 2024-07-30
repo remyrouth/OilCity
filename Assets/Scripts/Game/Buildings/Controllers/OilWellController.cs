@@ -8,7 +8,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
-    [SerializeField] private GameObject _spilloutEffect;
+    [SerializeField] private ParticleSystem _spilloutEffect;
     private int _tickTimer;
     private int PaymentTimer => 5;
     public (FlowType type, float amount) SendFlow()
@@ -44,7 +44,6 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     void Awake()
     {
         m_inputs = new List<IFlowable>();
-        _spilloutEffect.SetActive(false);
     }
 
     protected override void CreateInitialConnections(Vector2Int with_position)
@@ -115,7 +114,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     public void SetParent(IFlowable parent)
     {
         m_output = parent;
-        _spilloutEffect.SetActive(false);
+        _spilloutEffect.Stop();
     }
     #endregion
 
@@ -128,7 +127,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
             _tickTimer = 0;
             PayWorkers();
         }
-        _spilloutEffect.SetActive(flow.amount>0);
+        if (flow.amount > 0)
+            _spilloutEffect.Play();
+        else
+            _spilloutEffect.Stop();
         if (flow.amount == 0)
             return;
         Debug.LogWarning("Oil well has overflowed " + flow);

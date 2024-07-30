@@ -10,6 +10,7 @@ public class MoneyManager : Singleton<MoneyManager>
     private void Start()
     {
         Money = _initialMoney;
+        OnMoneyChanged += CheckForGameOver;
         OnMoneyChanged?.Invoke(Money);
     }
     public bool BuyItem(float cost)
@@ -33,8 +34,15 @@ public class MoneyManager : Singleton<MoneyManager>
             GameOver();
         OnMoneyChanged?.Invoke(Money);
     }
+
+    private void CheckForGameOver(float newValue)
+    {
+        if (newValue <= 0)
+            GameOver();
+    }
     public void GameOver()
     {
+        Debug.Log("Money reached 0!");
         UIStateMachine.Instance.ChangeState(GameState.EndingUI);
     }
 

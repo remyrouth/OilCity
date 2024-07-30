@@ -7,7 +7,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
-    [SerializeField] private GameObject _spilloutEffect;
+    [SerializeField] private ParticleSystem _spilloutEffect;
     [SerializeField] private ParticleSystem[] _workingSmokeEffects;
     private int _tickTimer;
     private int PaymentTimer => 5;
@@ -80,7 +80,6 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     void Awake()
     {
         m_inputs = new List<IFlowable>();
-        _spilloutEffect.SetActive(false);
     }
 
     #region Tree stuff
@@ -113,7 +112,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     public void SetParent(IFlowable parent)
     {
         m_output = parent;
-        _spilloutEffect.SetActive(false);
+        _spilloutEffect.Stop();
     }
     #endregion
 
@@ -126,7 +125,10 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
             _tickTimer = 0;
             PayWorkers();
         }
-        _spilloutEffect.SetActive(flow.amount > 0);
+        if (flow.amount > 0)
+            _spilloutEffect.Play();
+        else
+            _spilloutEffect.Stop();
         if (flow.amount == 0)
             return;
         Debug.LogWarning("Refinery has overflowed " + flow);
