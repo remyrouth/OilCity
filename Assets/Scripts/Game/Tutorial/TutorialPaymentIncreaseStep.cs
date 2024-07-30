@@ -8,6 +8,7 @@ namespace Game.Tutorial
         {
             BuildingEvents.OnLumberjackPaymentIncrease += FinishStep;
             base.OnEnable();
+            TileSelector.Instance.Enabled = true;
         }
 
         private void OnDisable()
@@ -17,6 +18,7 @@ namespace Game.Tutorial
 
         private new void FinishStep()
         {
+            TileSelector.Instance.Enabled = false;
             base.FinishStep();
         }
     }

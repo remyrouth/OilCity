@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class TileSelector : Singleton<TileSelector>
 {
+    [SerializeField] private bool enabled;
+
+    public bool Enabled
+    {
+        get => enabled;
+        set => enabled = value;
+    }
+
     /// <summary>
     /// Returns the mouses position in the grid
     /// </summary>
@@ -15,7 +23,7 @@ public class TileSelector : Singleton<TileSelector>
     }
     public void OnMouseClick()
     {
-        if (!BoardManager.Instance.IsTileOccupied(MouseToGrid()))
+        if (!enabled || !BoardManager.Instance.IsTileOccupied(MouseToGrid()))
         {
             EndFocus();
             return;

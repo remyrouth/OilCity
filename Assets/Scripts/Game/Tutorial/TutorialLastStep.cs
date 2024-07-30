@@ -22,6 +22,9 @@ namespace Game.Tutorial
             DialogueUI.Instance.DisableDialogue();
             BuildingPanelUI.Instance.EnableAllButtons();
             TimeManager.Instance.TicksPerMinute = 60;
+            TileSelector.Instance.Enabled = true;
+            TutorialManager.Instance.InTutorial = false;
+
             Destroy(gameObject);
         }
     }

@@ -2,14 +2,11 @@ using UnityEngine;
 
 namespace Game.Tutorial
 {
-    public class TutorialFirstStep : TutorialStep
+    public class TutorialDialogueStep : TutorialStep
     {
         private new void OnEnable()
         {
             base.OnEnable();
-            TimeManager.Instance.TicksPerMinute = 0;
-            TileSelector.Instance.Enabled = false;
-            DialogueUI.Instance.EnableDialogue();
         }
 
         private void Update()
@@ -20,5 +17,4 @@ namespace Game.Tutorial
             }
         }
     }
- 
 }
