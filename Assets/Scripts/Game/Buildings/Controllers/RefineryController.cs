@@ -32,13 +32,13 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                         return;
                     }
 
-                    m_output = pipe;
                     pipe.AddChild(this);
+                    SetParent(pipe);
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(p.peripheral_to))
                 {
-                    m_inputs.Add(pipe);
                     pipe.SetParent(this);
+                    AddChild(pipe);
                 }
             }
         }
@@ -107,7 +107,10 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     public void SetParent(IFlowable parent)
     {
+        m_output?.DisownChild(this);
+
         m_output = parent;
+
         _spilloutEffect.SetActive(false);
     }
     #endregion

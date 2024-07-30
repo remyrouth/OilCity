@@ -53,7 +53,8 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
                         return;
                     }
 
-                    m_output = pipe;
+                    pipe.AddChild(this);
+                    SetParent(pipe);
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
@@ -72,18 +73,12 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     #region Tree stuff
     public void AddChild(IFlowable child)
     {
-        if (!m_inputs.Contains(child))
-        {
-            m_inputs.Add(child);
-        }
+        throw new System.InvalidOperationException();
     }
 
     public void DisownChild(IFlowable child)
     {
-        if (m_inputs.Contains(child))
-        {
-            m_inputs.Remove(child);
-        }
+        throw new System.InvalidOperationException();
     }
 
     public List<IFlowable> GetChildren()
@@ -98,7 +93,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     public void SetParent(IFlowable parent)
     {
+        m_output?.DisownChild(this);
+
         m_output = parent;
+
         _spilloutEffect.SetActive(false);
     }
     #endregion
