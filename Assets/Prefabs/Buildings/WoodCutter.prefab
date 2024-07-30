@@ -255,4 +255,4 @@ MonoBehaviour:
   shouldLoop: 1
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: f1d6ec13e85324b128955fcb9de2d00b, type: 3}
-  soundType: 0
+  soundType: 1
