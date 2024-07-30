@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameDataRecorder : MonoBehaviour, ITickReceiver
+public class GameDataRecorder : Singleton<GameDataRecorder>, ITickReceiver
 {
     [field: SerializeField] public int TickNumberInterval { get; private set; } = 10;
-    private List<GameRecord> _records;
+    public readonly List<GameRecord> _records = new();
     private void Start()
     {
-        _records = new();
         TimeManager.Instance.RegisterReceiver(gameObject);
     }
     private int _tickTimer;

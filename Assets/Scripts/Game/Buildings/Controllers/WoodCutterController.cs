@@ -29,19 +29,27 @@ public sealed class WoodCutterController : AOEBuildingController
     //private Vector2Int? _focusedTree = null;
     //private List<Vector2Int> treeList = new();
     public event Action<Vector2Int> OnTreeCutted;
+    private int _tickTimer;
+    private int PaymentTimer => 5;
     public void Start()
     {
+        PaymentModeIncreased += IncreaseProductivity;
+        PaymentModeDecreased += DecreaseProductivity;
         for (int i = 0; i < _workerAmount; i++)
         {
-            var tmp = new WoodCutterWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity), new());
-            tmp._workerVisual.SetParent(transform);
-            _workers.Add(tmp);
+            CreateWorker();
             for (int j = 0; j < i; j++)
                 _workers[i]._sequenceActions.Enqueue(null);
         }
     }
     public override void OnTick()
     {
+        _tickTimer++;
+        if (_tickTimer == PaymentTimer)
+        {
+            _tickTimer = 0;
+            PayWorkers();
+        }
         if (!_workers.Any(e => e._isActive))
         {
             TimeManager.Instance.DeregisterReceiver(gameObject);
@@ -53,6 +61,8 @@ public sealed class WoodCutterController : AOEBuildingController
                 GenerateNewSequence(_workers[i]);
 
             _workers[i]._sequenceActions.Dequeue()?.Invoke(this);
+            if(i == _workers.Count-1)
+                PayWorkers();
         }
     }
     private void GenerateNewSequence(WoodCutterWorker worker)
@@ -112,6 +122,37 @@ public sealed class WoodCutterController : AOEBuildingController
         var tile = tiles[UnityEngine.Random.Range(0, tiles.Count)];
         return tiles.ToList()[UnityEngine.Random.Range(0, tiles.Count())];
     }
+    private void CreateWorker()
+    {
+        var tmp = new WoodCutterWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity), new());
+        tmp._workerVisual.SetParent(transform);
+        _workers.Add(tmp);
+    }
+    private void FireWorker()
+    {
+        _workers.Last()._sequenceActions.Clear();
+        _workers.Last()._focusedTree = null;
+        _workers.Last()._sequenceActions.Enqueue((e) => e.FinalizeCutting(_workers.Last()));
+        Destroy(_workers.Last()._workerVisual);
+        _workers.Remove(_workers.Last());
+    }
+    protected override void IncreaseProductivity()
+    {
+        switch (paymentMode)
+        {
+            case PaymentMode.MEDIUM:
+                CreateWorker();
+                break;
+            case PaymentMode.HIGH:
+                CreateWorker();
+                CreateWorker();
+                break;
+            default: 
+                break;
+        }
+    }
+    protected override void DecreaseProductivity()
+    {
 
-
+    }
 }
