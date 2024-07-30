@@ -60,7 +60,7 @@ public sealed class WoodCutterController : AOEBuildingController
         activeWorkerAmount = _workers.Where(e => e._isActive).Count();
         for (int i = 0; i < _workers.Count; i++)
         {
-            if (_workers[i]._sequenceActions.Count == 0 && _workers[i]._isActive)
+            if (_workers[i]._sequenceActions.Count == 0)
                 GenerateNewSequence(_workers[i]);
 
             _workers[i]._sequenceActions.Dequeue()?.Invoke(this);
