@@ -110,6 +110,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         timelineSlider.value = GetTimePercentage();
     }
 
+    // Simply us checking if there is UI already present, if so, turn it off
     private void Update() {
         if (Input.GetMouseButtonDown(0) && eventImageObject.gameObject.activeSelf)
         {
@@ -118,6 +119,8 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         }
     }
 
+    // This is the method that checks for the next newspaper event,
+    // and has the UI pop up
     private void CheckNextEvent() {
         if (CheckForEndGame()) {
             GameStateManager.Instance.EndGame();
