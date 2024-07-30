@@ -12,10 +12,10 @@ public sealed class WoodCutterController : AOEBuildingController
         public Queue<Action<WoodCutterController>> _sequenceActions = new();
         public Vector2Int? _focusedTree = null;
         public bool _isActive = true;
-        public WoodCutterWorker(Transform worker, Queue<Action<WoodCutterController>> sequenceActions)
+        public WoodCutterWorker(Transform worker)
         {
             _workerVisual = worker;
-            _sequenceActions = sequenceActions;
+            _sequenceActions = new();
             
         }
     }
@@ -124,7 +124,7 @@ public sealed class WoodCutterController : AOEBuildingController
     }
     private void CreateWorker()
     {
-        var tmp = new WoodCutterWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity), new());
+        var tmp = new WoodCutterWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity));
         tmp._workerVisual.SetParent(transform);
         _workers.Add(tmp);
     }
@@ -153,6 +153,17 @@ public sealed class WoodCutterController : AOEBuildingController
     }
     protected override void DecreaseProductivity()
     {
-
+        switch (CurrentPaymentMode)
+        {
+            case PaymentMode.MEDIUM:
+                FireWorker();
+                FireWorker();
+                break;
+            case PaymentMode.LOW:
+                FireWorker();
+                break;
+            default: 
+                break;
+        }
     }
 }

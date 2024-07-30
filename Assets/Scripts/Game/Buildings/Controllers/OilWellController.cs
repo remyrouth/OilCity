@@ -4,6 +4,7 @@ using UnityEngine;
 public sealed class OilWellController : PayrateBuildingController, IFlowable
 {
     private const float BASE_OIL_RATE = 0.01f;
+    private const float OIL_RATE_DELTA = 0.002f;
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
@@ -13,7 +14,20 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     public (FlowType type, float amount) SendFlow()
     {
         float amountMined = 0;
-        float flowRate = BASE_OIL_RATE / (config.size.x * config.size.y);
+        float flowRate = 0f;
+        switch (CurrentPaymentMode)
+        {
+            case PaymentMode.LOW:
+                flowRate = (BASE_OIL_RATE - OIL_RATE_DELTA) / (config.size.x * config.size.y);
+                break;
+            case PaymentMode.MEDIUM:
+                flowRate = BASE_OIL_RATE / (config.size.x * config.size.y);
+                break;
+            case PaymentMode.HIGH:
+                flowRate = (BASE_OIL_RATE + OIL_RATE_DELTA) / (config.size.x * config.size.y);
+                break;
+        }
+        
         for (int x = 0; x < config.size.x; x++)
         {
             for (int y = 0; y < config.size.y; y++)
