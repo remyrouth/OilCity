@@ -3,7 +3,8 @@ using UnityEngine;
 
 public sealed class RefineryController : PayrateBuildingController, IFlowable
 {
-    public const float BASE_REFINERY_FLOWRATE = 1;
+    private float baseRefineryFlowrate;
+    private float keroseneMultiplier;
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
@@ -55,6 +56,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     public (FlowType type, float amount) SendFlow()
     {
         float OilSum = 0;
+        keroseneMultiplier = GetKeroseneMultiplier();
         foreach (var child in m_inputs)
         {
             var received = child.SendFlow();
@@ -64,15 +66,16 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                 continue;
             }
             IsWorking = true;
-            OilSum += received.amount;
+            OilSum += received.amount * keroseneMultiplier;
         }
         IsWorking = OilSum > 0;
         HandleWorkingEffects();
-        if (OilSum > BASE_REFINERY_FLOWRATE)
+        baseRefineryFlowrate = GetBaseRefineryFlowrate();
+        if (OilSum > baseRefineryFlowrate)
         {
-            float diff = OilSum - BASE_REFINERY_FLOWRATE;
+            float diff = OilSum - baseRefineryFlowrate;
             Debug.LogWarning($"Spilled {diff} amount of Kerosene!", gameObject);
-            OilSum = BASE_REFINERY_FLOWRATE;
+            OilSum = baseRefineryFlowrate;
         }
         return (FlowType.Kerosene, OilSum);
     }
@@ -80,6 +83,29 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     void Awake()
     {
         m_inputs = new List<IFlowable>();
+    }
+
+    private float GetBaseRefineryFlowrate()
+    {
+        return CurrentPaymentMode switch
+        {
+            PaymentMode.LOW => 0.5f,
+            PaymentMode.MEDIUM => 1,
+            PaymentMode.HIGH => 2,
+            _ => 0,
+        };
+    }
+    private float GetKeroseneMultiplier()
+    {
+
+        return CurrentPaymentMode switch
+        {
+            PaymentMode.LOW => 0.5f,
+            PaymentMode.MEDIUM => 1,
+            PaymentMode.HIGH => 1.5f,
+            _ => 0,
+        };
+
     }
 
     #region Tree stuff
