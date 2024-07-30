@@ -6,69 +6,97 @@ using System;
 
 public sealed class GeologistController : AOEBuildingController
 {
+    class GeologistWorker
+    {
+        public Transform _workerVisual;
+        public Queue<Action<GeologistController>> _sequenceActions = new();
+        public GeologistWorker(Transform worker) 
+        {
+            _workerVisual = worker;
+            _sequenceActions = new();
+        }
+    }
+    List<GeologistWorker> _workers = new List<GeologistWorker>();
     [SerializeField] private Transform _workerVisual;
     [SerializeField] private GameObject _oilPingPrefab;
+    [SerializeField] private int _workerAmount;
     public override int TickNumberInterval => 10;
 
     public override int Range => 4;
 
-    private int GetNumberOfSearchingPoints() => 3;
+    private int GetNumberOfSearchingPoints()
+    {
+        return CurrentPaymentMode switch
+        {
+            PaymentMode.LOW => 2,
+            PaymentMode.MEDIUM => 3,
+            PaymentMode.HIGH => 4,
+            _ => 0,
+        };
+    }
 
     private HashSet<Vector2Int> _tilesSearched = new();
-    private Queue<Action<GeologistController>> _sequenceActions = new();
 
     public event Action<Vector2Int> OnOilSpotFound;
 
     private void Awake() => OnOilSpotFound += PingSpot;
 
+    public void Start()
+    {
+        OnPaymentModeIncreased += IncreaseProductivity;
+        OnPaymentModeDecreased += DecreaseProductivity;
+        for(int i = 0; i < _workerAmount; i++)
+        {
+            CreateWorker();
+        }
+    }
     public override void OnTick()
     {
-        if (_sequenceActions.Count == 0)
-        {
-            GenerateNewSequence();
+            for (int i = 0; i < _workers.Count; i++)
+            {
+                if (_workers[i]._sequenceActions.Count == 0)
+                    GenerateNewSequence(_workers[i]);
+                _workers[i]._sequenceActions.Dequeue()?.Invoke(this);
+            }
             PayWorkers();
-        }
-
-        _sequenceActions.Dequeue()?.Invoke(this);
-        
     }
-    private void GenerateNewSequence()
+    private void GenerateNewSequence(GeologistWorker worker)
     {
         //setup for incoming searching
-        _sequenceActions.Enqueue((e) => { e._tilesSearched.Clear(); });
+        worker._sequenceActions.Enqueue((e) => { e._tilesSearched.Clear(); });
 
         int numOfSearchingPoint = GetNumberOfSearchingPoints();
         // go to each spot
         for (int i = 0; i < numOfSearchingPoint; i++)
         {
-            _sequenceActions.Enqueue((e) => { e.SearchForOil(); });
-            _sequenceActions.Enqueue(null);
-            _sequenceActions.Enqueue(null);
+            worker._sequenceActions.Enqueue((e) => { e.SearchForOil(worker); });
+            worker._sequenceActions.Enqueue(null);
+            worker._sequenceActions.Enqueue(null);
         }
 
         //get worker back to building
-        _sequenceActions.Enqueue((e) => { e.ResetWorker(); });
+        worker._sequenceActions.Enqueue((e) => { e.ResetWorker(worker); });
 
         //indicate best spot
-        _sequenceActions.Enqueue((e) => { e.FinalizeSearching(); });
+        FinalizeSearching();
         //wait for the cooldown
         for (int i = 0; i < TickNumberInterval; i++)
-            _sequenceActions.Enqueue(null);
+            worker._sequenceActions.Enqueue(null);
     }
-    private void ResetWorker()
+    private void ResetWorker(GeologistWorker worker)
     {
-        _workerVisual.DOKill();
+        worker._workerVisual.DOKill();
         Vector3 pos = new Vector3(Anchor.x, Anchor.y, 0);
-        _workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick);
+        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick);
     }
-    private void SearchForOil()
+    private void SearchForOil(GeologistWorker worker)
     {
         var tile = GetRandomWithinRange();
         if (tile == null)
             return;
         Vector3 pos = new Vector3(tile!.Value.x, tile!.Value.y) + new Vector3(0.5f, 0.5f, 0);
-        _workerVisual.DOKill();
-        _workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2);
+        worker._workerVisual.DOKill();
+        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2);
         _tilesSearched.Add(tile!.Value);
     }
     private void FinalizeSearching()
@@ -98,6 +126,13 @@ public sealed class GeologistController : AOEBuildingController
         if (!tiles.Any())
             return null;
         return tiles.ToList()[UnityEngine.Random.Range(0, tiles.Count())];
+    }
+
+    private void CreateWorker()
+    {
+        var tmp = new GeologistWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity));
+        tmp._workerVisual.SetParent(transform);
+        _workers.Add(tmp);
     }
 
     protected override void IncreaseProductivity()
