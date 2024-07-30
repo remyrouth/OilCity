@@ -41,7 +41,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         DisplayEvents();
 
         m_ticksElapsed = 0;
-        m_totalTicks = (int)((yearRange.y - currentyear) * ticksPerYear);
+        m_totalTicks = (int)((yearRange.y - currentYear) * ticksPerYear);
 
         if (ticksPerYear <= 0f) {
             Debug.LogError("You must have a passage of time greater than 0f");
@@ -150,7 +150,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
 
     public void OnTick()
     {
-        ContinueimeLine();
+        ContinueTimeLine();
         KeroseneManager.Instance.SetFalloffPercentage(m_ticksElapsed / (float)m_totalTicks);
 
         m_ticksElapsed++;
