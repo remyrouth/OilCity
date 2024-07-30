@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.Tutorial;
 using UnityEngine;
 
 public class TutorialStepTen : TutorialStep
