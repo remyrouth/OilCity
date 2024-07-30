@@ -5,10 +5,18 @@ using UnityEngine;
 public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
 {
     [field: SerializeField] private BuildingScriptableObject civilianBuildingSO;
-    
-    private int _tickTimer = 0;
-    public int tickNumberInterval = 10;
 
+    private int _tickTimer = 0;
+    private int _decayTimer = 0;
+    public const int BASE_BUILD_TICK_INTERVAL = 10;
+
+    public const int DECAY_LENGTH = 30;
+    private readonly Queue<(Vector2Int, float)> _destroyedTTL = new();
+
+    private void Awake()
+    {
+        BoardManager.Instance.OnBuildingDestroyed += HandleHouseDecay;
+    }
     public void Start()
     {
         TimeManager.Instance.RegisterReceiver(this);
@@ -20,21 +28,34 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     /// 
     public void OnTick()
     {
-        int currWorkerSatisfaction = WorkerSatisfactionManager.Instance.WorkerSatisfaction;
-        if (currWorkerSatisfaction >= 90)
-            tickNumberInterval = 3;
-        else if (currWorkerSatisfaction >= 70)
-            tickNumberInterval = 5;
-        else if (currWorkerSatisfaction >= 50)
-            tickNumberInterval = 8;
-        else
-            tickNumberInterval = 10;
         _tickTimer++;
-        if (_tickTimer >= tickNumberInterval)
+        _decayTimer++;
+        if (_tickTimer >= GetTickNumberInterval())
         {
             _tickTimer = 0;
             InvokeAction();
         }
+
+        while (_destroyedTTL.Count > 0 && _destroyedTTL.Peek().Item2 <= _decayTimer)
+            _destroyedTTL.Dequeue();
+
+    }
+    private void HandleHouseDecay(Vector2Int pos, TileObjectController toc)
+    {
+        if (toc as CivilianBuildingController == null)
+            return;
+        _destroyedTTL.Enqueue((pos, _decayTimer + DECAY_LENGTH));
+    }
+    private int GetTickNumberInterval()
+    {
+        var cws = WorkerSatisfactionManager.Instance.WorkerSatisfaction;
+        if (cws >= 90)
+            return (int)(BASE_BUILD_TICK_INTERVAL * 0.3f);
+        if (cws >= 70)
+            return (int)(BASE_BUILD_TICK_INTERVAL * 0.5f);
+        if (cws >= 50)
+            return (int)(BASE_BUILD_TICK_INTERVAL * 0.8f);
+        return BASE_BUILD_TICK_INTERVAL;
     }
     /// <summary>
     /// Tries to build a random civilian building around a player placed building.
@@ -44,7 +65,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     public void InvokeAction()
     {
         var buildings = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None)
-            .Where(e=>e is CivilianBuildingController).ToList();
+            .Where(e => e is CivilianBuildingController).ToList();
         var centroidBuildings = FindObjectsByType<TileObjectController>(FindObjectsSortMode.None)
             .Where(e => e is not TreeController && e is not CivilianBuildingController).ToList();
 
@@ -62,11 +83,14 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
 
         for (int i = 2; i <= 10; i++)
         {
-             List<Vector2Int> freeTiles = BoardManager.Instance.GetTilesInRange(civilianBuilding, i).Where(e => !BoardManager.Instance.IsTileOccupied(e)).ToList();
+            List<Vector2Int> freeTiles = BoardManager.Instance
+                .GetTilesInRange(civilianBuilding, i)
+                .Where(e => !BoardManager.Instance.IsTileOccupied(e) && !_destroyedTTL.Any(x => x.Item1 == e))
+                .ToList();
             if (freeTiles.Any())
             {
-                Vector2Int pos = freeTiles[Random.Range(0,freeTiles.Count)];
-                BoardManager.Instance.Create(pos, civilianBuildingSO);     
+                Vector2Int pos = freeTiles[Random.Range(0, freeTiles.Count)];
+                BoardManager.Instance.Create(pos, civilianBuildingSO);
                 break;
             }
         }
