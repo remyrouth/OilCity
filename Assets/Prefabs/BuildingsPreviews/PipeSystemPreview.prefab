@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 482268469478855148}
   - component: {fileID: 4287302825588963559}
   - component: {fileID: 52713718347674511}
+  - component: {fileID: 2175146575197223600}
   m_Layer: 0
   m_Name: PipeSystemPreview
   m_TagString: Untagged
@@ -167,3 +168,65 @@ MonoBehaviour:
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: fb7defd3ecc6c4db081106443574d47b, type: 3}
   soundType: 0
+--- !u!114 &2175146575197223600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7985930009597182815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c4245878fadf94bbf73bb4e0791e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pipes:
+  - Sprite: {fileID: 21300000, guid: c55bc77f3f3730147a763a3b6ad72fd1, type: 3}
+    Rotation: 0
+    In: 1
+    Out: 1
+  - Sprite: {fileID: 21300000, guid: c55bc77f3f3730147a763a3b6ad72fd1, type: 3}
+    Rotation: 180
+    In: 2
+    Out: 2
+  - Sprite: {fileID: 21300000, guid: c55bc77f3f3730147a763a3b6ad72fd1, type: 3}
+    Rotation: 90
+    In: 3
+    Out: 3
+  - Sprite: {fileID: 21300000, guid: c55bc77f3f3730147a763a3b6ad72fd1, type: 3}
+    Rotation: 270
+    In: 4
+    Out: 4
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 0
+    In: 2
+    Out: 3
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 0
+    In: 4
+    Out: 1
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 270
+    In: 1
+    Out: 3
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 270
+    In: 4
+    Out: 2
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 180
+    In: 1
+    Out: 4
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 180
+    In: 3
+    Out: 2
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 90
+    In: 3
+    Out: 1
+  - Sprite: {fileID: 21300000, guid: 3781cae1b858e394299362d6731657de, type: 3}
+    Rotation: 90
+    In: 2
+    Out: 4
+  m_renderer: {fileID: 0}

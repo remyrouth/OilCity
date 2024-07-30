@@ -53,7 +53,8 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
                 break;
         }
 
-
+        audioSource.enabled = false;
+        audioSource.enabled = true;
         audioSource.Play();
     }
 

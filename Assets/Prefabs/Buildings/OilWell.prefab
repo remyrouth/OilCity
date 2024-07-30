@@ -280,6 +280,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5198241070710060224}
   - component: {fileID: 109760215276650363}
+  - component: {fileID: -7377717032735671978}
+  - component: {fileID: 8237504420190010124}
   m_Layer: 0
   m_Name: OilWell
   m_TagString: Untagged
@@ -321,6 +323,38 @@ MonoBehaviour:
   TileActions:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
   _spilloutEffect: {fileID: 5282029759217806657}
+--- !u!114 &-7377717032735671978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5643698438408399773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: 419b3aa8ac1f48c42816399c105fd2f0, type: 3}
+  soundType: 0
+--- !u!114 &8237504420190010124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5643698438408399773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 1
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: 0b68e08ea119843639e857f602c2638f, type: 3}
+  soundType: 0
 --- !u!1 &9027706675172621410
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,10 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     [SerializeField]
     private List<TimeLineEvent> eventsOnTimeLine = new List<TimeLineEvent>();
     [SerializeField]
-    private int currentEventListIndex = 0; 
+    private int currentEventListIndex = 0;
+
+    private int m_ticksElapsed;
+    private int m_totalTicks;
 
     private void Start()
     {
@@ -36,6 +39,9 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         currentYear = yearRange.x;
         SortEventsByPercentage();
         DisplayEvents();
+
+        m_ticksElapsed = 0;
+        m_totalTicks = (int)((yearRange.y - currentYear) * ticksPerYear);
 
         if (ticksPerYear <= 0f) {
             Debug.LogError("You must have a passage of time greater than 0f");
@@ -144,7 +150,10 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
 
     public void OnTick()
     {
-       ContinueTimeLine();
+        ContinueTimeLine();
+        KeroseneManager.Instance.SetFalloffPercentage(m_ticksElapsed / (float)m_totalTicks);
+
+        m_ticksElapsed++;
     }
 
     private void SortEventsByPercentage() {
