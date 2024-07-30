@@ -16,6 +16,13 @@ public class PollutionManager : Singleton<PollutionManager>
         PollutionAmount = Mathf.Clamp01(PollutionAmount + delta);
         OnPollutionChanged?.Invoke(PollutionAmount);
     }
+
+    public void SetPollution(float amount)
+    {
+        PollutionAmount = Mathf.Clamp01(amount);
+        OnPollutionChanged?.Invoke(PollutionAmount);
+    }
+
 #if UNITY_EDITOR
     [Range(0, 1)]
     [SerializeField] private float _amountSlider;

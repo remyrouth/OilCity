@@ -103,7 +103,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     }
 
     private void AlterPollutionInstance() {
-        PollutionManager.Instance.ChangePollution(GetTimePercentage());
+        PollutionManager.Instance.SetPollution(GetTimePercentage());
     }
 
     private void AlterSlider() {
