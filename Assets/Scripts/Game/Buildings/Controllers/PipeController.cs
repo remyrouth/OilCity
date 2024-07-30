@@ -59,7 +59,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         var (connect_to_child, connect_to_parent) = ValidatePipesAndConnect(child_pos, parent_pos);
 
-        if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var obj))
+        if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var obj) && obj.GetFlowConfig().can_output)
         {
             if (obj.GetParent() == null)
             {
@@ -72,7 +72,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             }
         }
 
-        if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj))
+        if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj) && pobj.GetFlowConfig().can_input)
         {
             pobj.AddChild(this);
             SetParent(pobj);
@@ -89,24 +89,26 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     private (bool connect_to_child, bool connect_to_parent) ValidatePipesAndConnect(Vector2Int child_end, Vector2Int parent_end)
     {
         bool is_child_valid = true;
-        if (BoardManager.Instance.TryGetTypeAt<PipeController>(child_end, out var c_pipe))
+        if (BoardManager.Instance.TryGetTypeAt<PipeController>(child_end, out var c_pipe) && c_pipe != this)
         {
             var (_, end) = c_pipe.GetPositions();
 
             is_child_valid = end.Equals(child_end) && c_pipe.GetParent() == null; // == null is to prevent stealing a pipe from one that already has a connection
 
-            if (is_child_valid) c_pipe.UpdateFlowAndVisual(end, m_startPipePos, true);
+            if (is_child_valid) c_pipe.UpdateFlowAndVisual(end, m_startPipePos);
         }
+        else if (c_pipe == this) is_child_valid = false;
 
         bool is_parent_valid = true;
-        if (BoardManager.Instance.TryGetTypeAt<PipeController>(parent_end, out var p_pipe))
+        if (BoardManager.Instance.TryGetTypeAt<PipeController>(parent_end, out var p_pipe) && p_pipe != this)
         {
             var (start, _) = p_pipe.GetPositions();
 
             is_parent_valid = start.Equals(parent_end) && p_pipe.GetChildren().Count == 0; // == 0 is to prevent connecting to a pipe that already has a connection
 
-            if (is_parent_valid) p_pipe.UpdateFlowAndVisual(start, m_endPipePos, false);
+            if (is_parent_valid) p_pipe.UpdateFlowAndVisual(start, m_endPipePos);
         }
+        else if (p_pipe == this) is_parent_valid = false;
 
         return (is_child_valid, is_parent_valid);
     }
@@ -115,7 +117,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// Called by another pipe controller when this pipe controller needs to update one of its endpoints to
     /// flow into the calling pipe controller.
     /// </summary>
-    public void UpdateFlowAndVisual(Vector2Int endpoint, Vector2Int pipe, bool is_flow_in)
+    public void UpdateFlowAndVisual(Vector2Int endpoint, Vector2Int pipe)
     {
         if (!Utilities.GetCardinalEstimatePipeflowDirection(endpoint, pipe, out var flow_direction))
         {
