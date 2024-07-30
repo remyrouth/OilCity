@@ -14,12 +14,21 @@ public class TutorialManager : Singleton<TutorialManager>
         get => tutorialEnabled;
         set => tutorialEnabled = value;
     }
+    
+    private bool _inTutorial;
+
+    public bool InTutorial
+    {
+        get => _inTutorial;
+        set => _inTutorial = value;
+    }
 
     private void Start()
     {
         _nextStepIndex = 0;
         if(TutorialEnabled && !SceneManager.GetActiveScene().name.Equals("MainMenu"))
         {
+            _inTutorial = true;
             GoToNextStep();
         }
     }

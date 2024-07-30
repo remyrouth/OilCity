@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -30113,6 +30113,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8886924847993964782, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+      propertyPath: panels.Array.data[1]
+      value: 
+      objectReference: {fileID: 1166844635}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 9040066141712355550, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
@@ -30201,6 +30205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cb9aef7466dae48a3f690c6bb96365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enabled: 1
   _actionPrefab: {fileID: 1767801182589633848, guid: bff0b0d17b1ee2d4f84b720f47a14731, type: 3}
   _actionsCanvas: {fileID: 1983918454}
 --- !u!4 &763518367
@@ -30695,6 +30700,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <TickNumberInterval>k__BackingField: 1
+--- !u!1 &1166844635 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5378428972849255004, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+  m_PrefabInstance: {fileID: 591897164}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1236219417
 GameObject:
   m_ObjectHideFlags: 0
@@ -30924,7 +30934,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   civilianBuildingSO: {fileID: 11400000, guid: 4dc4927790111bd48b85327d9c770f91, type: 2}
-  tickNumberInterval: 10
 --- !u!114 &1321047927
 MonoBehaviour:
   m_ObjectHideFlags: 0

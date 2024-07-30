@@ -16,7 +16,10 @@ public class PauseMenuUI : UIState
     public override void OnExit()
     {
         base.OnExit();
-        TimeManager.Instance.TicksPerMinute = 60;
+        if (!TutorialManager.Instance.InTutorial)
+        {
+            TimeManager.Instance.TicksPerMinute = 60;
+        }
     }
 
     public void ChangePanel(int panelIndex)
