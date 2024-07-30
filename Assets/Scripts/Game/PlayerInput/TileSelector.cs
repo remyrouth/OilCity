@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class TileSelector : Singleton<TileSelector>
 {
-    [SerializeField] private bool enabled;
+    [SerializeField] private bool selectorEnabled;
 
-    public bool Enabled
+    public bool SelectorEnabled
     {
-        get => enabled;
-        set => enabled = value;
+        get => selectorEnabled;
+        set => selectorEnabled = value;
     }
 
     /// <summary>

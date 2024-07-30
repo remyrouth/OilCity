@@ -8,7 +8,7 @@ namespace Game.Tutorial
         {
             base.OnEnable();
             TimeManager.Instance.TicksPerMinute = 0;
-            TileSelector.Instance.Enabled = false;
+            TileSelector.Instance.SelectorEnabled = false;
             DialogueUI.Instance.EnableDialogue();
         }
 

@@ -22,7 +22,7 @@ namespace Game.Tutorial
             DialogueUI.Instance.DisableDialogue();
             BuildingPanelUI.Instance.EnableAllButtons();
             TimeManager.Instance.TicksPerMinute = 60;
-            TileSelector.Instance.Enabled = true;
+            TileSelector.Instance.SelectorEnabled = true;
             TutorialManager.Instance.InTutorial = false;
 
             Destroy(gameObject);
