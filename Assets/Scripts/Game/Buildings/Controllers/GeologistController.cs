@@ -88,7 +88,8 @@ public sealed class GeologistController : AOEBuildingController
         if (!_workers.Any(e => e._isActive))
             FinalizeSearching();
         //wait for the cooldown
-        for (int i = 0; i < TickNumberInterval; i++)
+        /*for (int i = 0; i < TickNumberInterval-7; i++)*/
+            worker._sequenceActions.Enqueue(null);
             worker._sequenceActions.Enqueue(null);
     }
     private void ResetWorker(GeologistWorker worker)
