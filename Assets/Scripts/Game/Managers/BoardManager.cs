@@ -161,7 +161,8 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     /// <param name="tileSprite"></param>
     /// <returns></returns>
-    public void SetPipeTileInSupermap(Vector2Int position, PipeSpriteScript.PipeRotation rot) {
+    public void SetPipeTileInSupermap(Vector2Int position, PipeSpriteScript.PipeRotation rot)
+    {
         // Create a new Tile and assign the sprite to it
         Tile newTile = ScriptableObject.CreateInstance<Tile>();
         newTile.sprite = rot.Sprite;
@@ -194,8 +195,8 @@ public class BoardManager : Singleton<BoardManager>
                 int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x);
                 int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y);
                 if (x >= building.Anchor.x && x <= upperRight.x - 1 && y >= building.Anchor.y && y <= upperRight.y - 1) continue;
-                //if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
-                tiles.Add(currentPos);
+                if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
+                    tiles.Add(currentPos);
             }
         }
 
