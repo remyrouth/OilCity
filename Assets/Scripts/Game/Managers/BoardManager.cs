@@ -15,6 +15,7 @@ public class BoardManager : Singleton<BoardManager>
     [SerializeField] private Tilemap _pipeTileMap;
 
     public event Action<Vector2Int, BuildingScriptableObject> OnBuildingPlaced;
+    public event Action<Vector2Int, TileObjectController> OnBuildingDestroyed;
 
     [Serializable]
     private struct InitialBuilding
@@ -229,6 +230,7 @@ public class BoardManager : Singleton<BoardManager>
         var tiles = tileDictionary.Where(pos => pos.Value == tileObject).Select(pos => pos.Key).ToList();
         foreach (Vector2Int position in tiles)
             Destroy(position);
+        OnBuildingDestroyed?.Invoke(tileObject.Anchor, tileObject);
         Destroy(tileObject.gameObject);
     }
     private void Destroy(Vector2Int position)

@@ -35,7 +35,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         totalYears = yearRange.y - yearRange.x;
 
         // Register this manager to receive ticks
-        TimeManager.Instance.RegisterReceiver(gameObject);
+        TimeManager.Instance.RegisterReceiver(this);
         currentYear = yearRange.x;
         SortEventsByPercentage();
         DisplayEvents();
@@ -172,7 +172,7 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     private void OnDisable()
     {
         // Deregister this manager to stop receiving ticks
-        TimeManager.Instance.DeregisterReceiver(gameObject);
+        TimeManager.Instance.DeregisterReceiver(this);
         eventsOnTimeLine.Clear();
     }
 

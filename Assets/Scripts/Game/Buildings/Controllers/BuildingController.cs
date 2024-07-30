@@ -15,7 +15,7 @@ public abstract class BuildingController<T> : TileObjectController
     {
         this.config = config;
         CreateInitialConnections(spawn_position); // for flowables
-        TimeManager.Instance.RegisterReceiver(gameObject);
+        TimeManager.Instance.RegisterReceiver(this);
         //setup values
 
     }
@@ -25,7 +25,7 @@ public abstract class BuildingController<T> : TileObjectController
         MakeDestroyEffect();
         WorkerSatisfactionManager.Instance.DecreaseSatisfaction(config.removalSatisfactionCost);
         MoneyManager.Instance.ReduceMoney(config.removalCost);
-        TimeManager.Instance.DeregisterReceiver(gameObject);
+        TimeManager.Instance.DeregisterReceiver(this);
     }
     public override bool CheckIfDestroyable()
     {
@@ -39,6 +39,6 @@ public abstract class BuildingController<T> : TileObjectController
         _demolishEffect.SetParent(null);
         var particleSystem = _demolishEffect.GetComponentInChildren<ParticleSystem>();
         particleSystem.Play();
-        Destroy(_demolishEffect.transform, particleSystem.main.duration);
+        Destroy(_demolishEffect.gameObject, particleSystem.main.duration);
     }
 }

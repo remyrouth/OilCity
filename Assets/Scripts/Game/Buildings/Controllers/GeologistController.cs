@@ -10,16 +10,19 @@ public sealed class GeologistController : AOEBuildingController
     {
         public Transform _workerVisual;
         public Queue<Action<GeologistController>> _sequenceActions = new();
-        public GeologistWorker(Transform worker) 
+        public bool _isActive = false;
+        public GeologistWorker(Transform worker)
         {
             _workerVisual = worker;
             _sequenceActions = new();
+
         }
     }
     List<GeologistWorker> _workers = new List<GeologistWorker>();
     [SerializeField] private Transform _workerVisual;
     [SerializeField] private GameObject _oilPingPrefab;
     [SerializeField] private int _workerAmount;
+    private int activeWorkerAmount;
     public override int TickNumberInterval => 10;
 
     public override int Range => 4;
@@ -45,20 +48,24 @@ public sealed class GeologistController : AOEBuildingController
     {
         OnPaymentModeIncreased += IncreaseProductivity;
         OnPaymentModeDecreased += DecreaseProductivity;
-        for(int i = 0; i < _workerAmount; i++)
+        for (int i = 0; i < _workerAmount; i++)
         {
             CreateWorker();
         }
     }
     public override void OnTick()
     {
-            for (int i = 0; i < _workers.Count; i++)
+        for (int i = 0; i < _workers.Count; i++)
+        {
+            if (_workers[i]._sequenceActions.Count == 0)
             {
-                if (_workers[i]._sequenceActions.Count == 0)
-                    GenerateNewSequence(_workers[i]);
-                _workers[i]._sequenceActions.Dequeue()?.Invoke(this);
+                PayWorkers();
+                GenerateNewSequence(_workers[i]);
+                _workers[i]._isActive = true;
+                activeWorkerAmount = _workers.Where(e => e._isActive).Count(); ;
             }
-            PayWorkers();
+            _workers[i]._sequenceActions.Dequeue()?.Invoke(this);
+        }
     }
     private void GenerateNewSequence(GeologistWorker worker)
     {
@@ -78,13 +85,15 @@ public sealed class GeologistController : AOEBuildingController
         worker._sequenceActions.Enqueue((e) => { e.ResetWorker(worker); });
 
         //indicate best spot
-        FinalizeSearching();
+        if (!_workers.Any(e => e._isActive))
+            FinalizeSearching();
         //wait for the cooldown
         for (int i = 0; i < TickNumberInterval; i++)
             worker._sequenceActions.Enqueue(null);
     }
     private void ResetWorker(GeologistWorker worker)
     {
+        worker._isActive = false;
         worker._workerVisual.DOKill();
         Vector3 pos = new Vector3(Anchor.x, Anchor.y, 0);
         worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick);
@@ -132,16 +141,62 @@ public sealed class GeologistController : AOEBuildingController
     {
         var tmp = new GeologistWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity));
         tmp._workerVisual.SetParent(transform);
+        if (_workers.Count() != 0)
+        {
+            for (int i = 0; i < _workers[0]._sequenceActions.Count; i++)
+            {
+                tmp._sequenceActions.Enqueue(null);
+            }
+        }
         _workers.Add(tmp);
+    }
+    private void FireWorker(GeologistWorker worker)
+    {
+        worker._isActive = false;
+        activeWorkerAmount = _workers.Where(e => e._isActive).Count();
+        worker._sequenceActions.Clear();
+        worker._sequenceActions.Enqueue((e) => e.ResetWorker(worker));
+        worker._sequenceActions.Enqueue(null);
+        worker._sequenceActions.Enqueue((e) => e.DestroyWorker(worker));
+        worker._sequenceActions.Enqueue((e) => e.RemoveFromWorkerList(worker));
+
+    }
+    private void DestroyWorker(GeologistWorker worker)
+    {
+        Destroy(worker._workerVisual.gameObject);
+    }
+    private void RemoveFromWorkerList(GeologistWorker worker)
+    {
+        _workers.Remove(worker);
     }
 
     protected override void IncreaseProductivity()
     {
-        throw new NotImplementedException();
+        switch (CurrentPaymentMode)
+        {
+            case PaymentMode.MEDIUM:
+                CreateWorker();
+                break;
+            case PaymentMode.HIGH:
+                CreateWorker();
+                break;
+            default:
+                break;
+        }
     }
 
     protected override void DecreaseProductivity()
     {
-        throw new NotImplementedException();
+        switch (CurrentPaymentMode)
+        {
+            case PaymentMode.MEDIUM:
+                FireWorker(_workers[activeWorkerAmount - 1]);
+                break;
+            case PaymentMode.LOW:
+                FireWorker(_workers[activeWorkerAmount - 1]);
+                break;
+            default:
+                break;
+        }
     }
 }

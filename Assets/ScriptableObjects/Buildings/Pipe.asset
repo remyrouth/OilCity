@@ -23,3 +23,5 @@ MonoBehaviour:
   <description>k__BackingField: {fileID: 11400000, guid: b9137289a378c3e4f88237ded78db3d4, type: 2}
   actionList:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
+  _oilSpillout: {fileID: 7412738978020014858, guid: 2c9a08c300ccef04aadd10999a3147b2, type: 3}
+  _keroseneSpillout: {fileID: 9164187038662015931, guid: 1f57cb160d652684783782cfce663c12, type: 3}
