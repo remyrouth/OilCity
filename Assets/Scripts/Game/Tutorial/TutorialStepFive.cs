@@ -1,3 +1,4 @@
+using Game.Tutorial;
 using UnityEngine;
 
 public class TutorialStepFive : TutorialStep

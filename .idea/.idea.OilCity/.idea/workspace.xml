@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="" />
+    <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Shaders/TreesMat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Shaders/TreesMat.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +32,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/UI/States/EventUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UIScripts/BuildingSelector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/CameraInversionToggle.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/TutorialToggle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/MasterVolumeChanger.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2jaxCRIke0RiNF6khJXbZ6g8rqX" />

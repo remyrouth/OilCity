@@ -20,6 +20,13 @@ namespace Game.Managers
         private void Awake()
         {
             SetLanguage();
+            SetTutorialEnabled();
+            SetCameraMovementInversion();
+            
+            _masterVolume = PlayerPrefs.GetFloat("MasterVolume");
+            _musicVolume = PlayerPrefs.GetFloat("MusicVolume");;
+            _soundEffectVolume = PlayerPrefs.GetFloat("SoundEffectVolume");;
+            _ambientSoundVolume = PlayerPrefs.GetFloat("AmbientSoundVolume");;
         }
 
         public void SetLanguage(Language newLanguage)
@@ -49,10 +56,21 @@ namespace Game.Managers
             SetLanguage(CurrentLanguage);
         }
         
-        public void ToggleCameraMovementInversion()
+        private void SetCameraMovementInversion()
         {
-            CameraController.Instance.invert = !CameraController.Instance.invert;
-            PlayerPrefs.SetInt("CameraInversion", CameraController.Instance.invert ? 1 : 0);
+
+            if (PlayerPrefs.HasKey("CameraInversion"))
+            {
+                CameraController.Instance.invert = PlayerPrefs.GetInt("CameraInversion") == 1;
+            }
+        }
+        
+        private void SetTutorialEnabled()
+        {
+            if (PlayerPrefs.HasKey("TutorialEnabled"))
+            {
+                TutorialManager.Instance.TutorialEnabled = PlayerPrefs.GetInt("TutorialEnabled") == 1;
+            }
         }
 
         public float MasterVolume

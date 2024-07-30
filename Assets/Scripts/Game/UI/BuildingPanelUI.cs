@@ -6,6 +6,13 @@ public class BuildingPanelUI : Singleton<BuildingPanelUI>
 {
     [SerializeField] private List<Button> buildingButtons;
 
+    public void EnableAllButtons()
+    {
+        foreach (var button in buildingButtons)
+        {
+            button.interactable = true;
+        }
+    }
     public void DisableAllButtons()
     {
         foreach (var button in buildingButtons)
