@@ -47,7 +47,7 @@ public abstract class PayrateBuildingController : BuildingController<PayrateBuil
     protected abstract void IncreaseProductivity();
     protected abstract void DecreaseProductivity();
 
-    public PaymentMode CurrentPaymentMode { get; protected set; } = PaymentMode.LOW;
+    public PaymentMode CurrentPaymentMode { get; protected set; } = PaymentMode.MEDIUM;
     protected void PayWorkers()
     {
         switch (CurrentPaymentMode)
