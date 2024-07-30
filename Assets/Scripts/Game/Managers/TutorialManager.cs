@@ -6,20 +6,19 @@ public class TutorialManager : Singleton<TutorialManager>
 {
     [SerializeField] private List<GameObject> tutorialSteps;
     private int _nextStepIndex;
-    [SerializeField] private bool enabled;
+    [SerializeField] private bool tutorialEnabled;
 
-    public bool Enabled
+    public bool TutorialEnabled
     {
-        get => enabled;
-        set => enabled = value;
+        get => tutorialEnabled;
+        set => tutorialEnabled = value;
     }
 
     private void Awake()
     {
         _nextStepIndex = 0;
-        if(Enabled && !SceneManager.GetActiveScene().name.Equals("MainMenu"))
+        if(TutorialEnabled && !SceneManager.GetActiveScene().name.Equals("MainMenu"))
         {
-            //Todo disable building spawning
             GoToNextStep();
         }
     }

@@ -56,4 +56,4 @@ MonoBehaviour:
   - {fileID: 5550192093337100267, guid: 40b748f9b848ddd4caa68b1bbfcf108e, type: 3}
   - {fileID: 2552893487014461638, guid: 8ba387b1da08d544b955becc644db0b1, type: 3}
   - {fileID: 2848037743336606453, guid: 15a6bc13127b5df4090f04995fa3c418, type: 3}
-  enabled: 1
+  tutorialEnabled: 1
