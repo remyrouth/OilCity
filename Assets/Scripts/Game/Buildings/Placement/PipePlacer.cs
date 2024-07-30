@@ -105,10 +105,19 @@ public class PipePlacer : BuildingPlacer
                     continue;
                 }
 
-                int new_cost = cost_so_far[current] + (
-                    BoardManager.Instance.IsTileOccupied(current) 
-                    && !BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore)
-                    && !BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore) ? 999 : 1);
+                int cost_mod = 1;
+
+                // "ignored" tiles are still traversable, but more expensive.
+                if (BoardManager.Instance.IsTileOccupied(current) && (BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore) || BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore)))
+                {
+                    cost_mod = 200;
+                }
+                else if (BoardManager.Instance.IsTileOccupied(current))
+                {
+                    cost_mod = 999;
+                }
+
+                int new_cost = cost_so_far[current] + cost_mod;
 
                 if (!cost_so_far.ContainsKey(npos) || new_cost < cost_so_far[npos])
                 {
@@ -252,35 +261,34 @@ public class PipePlacer : BuildingPlacer
 
         bool has_placed_start = false;
         bool has_placed_end = false;
-        int start_ind = -1;
         Vector2Int prior_pipe_pos = new(-1, -1);
+        int pipes_laid = 0;
         for (int index = 0; index < m_pointList.Count; index++)
         {
             bool is_open_space = !BoardManager.Instance.IsTileOccupied(m_pointList[index]);
 
             if (!has_placed_start)
             {
+                // if we havent encountered an open space yet, keep pushing the "start" of the pipe to the next index
                 if (!is_open_space)
                 {
                     prior_pipe_pos = m_pointList[index];
                     continue;
                 }
 
+                // if we've found an open space but it's not at the start index (0), then we must use the prior pipe pos to find out
+                // what direction of flow this pipe segment would've had.
                 if (index != 0)
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_startDir);
-                    // Debug.Log(m_startDir + " 1");
 
                     m_start = m_pointList[index];
-                    start_ind = index;
                 } 
-                else
+                else // otherwise we can just use the first and second indices.
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[1], m_pointList[0], out m_startDir);
-                    // Debug.Log(m_startDir + " 2");
 
                     m_start = m_pointList[0];
-                    start_ind = 0;
                 }
 
                 has_placed_start = true;
@@ -292,15 +300,13 @@ public class PipePlacer : BuildingPlacer
                 if (!is_open_space)
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_endDir);
-                    // Debug.Log(m_endDir + " 1");
 
                     m_end = m_pointList[index - 1];
-                    break;
+                    break; // we dont want to add the last pipe as a controller or visually
                 }
                 else if (index == m_pointList.Count - 1)
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], m_pointList[index - 1], out m_endDir);
-                    // Debug.Log(m_endDir + " 2");
 
                     m_end = m_pointList[index];
 
@@ -308,18 +314,25 @@ public class PipePlacer : BuildingPlacer
                 }
             }
 
+            // set the pipe in the supermap with its orientation
             BoardManager.Instance.SetPipeTileInSupermap(m_pointList[index], m_pipeOrientation.OrientPipes(
                 index > 0 ? m_pointList[index - 1] : new Vector2Int(-1, -1),
                 m_pointList[index],
                 index < m_pointList.Count - 1 ? m_pointList[index + 1] : new Vector2Int(-1, -1)));
 
+            // set the controller at the location
             BoardManager.Instance.tileDictionary[m_pointList[index]] = component;
+
+            // cache current pipe
             prior_pipe_pos = m_pointList[index];
+
+            pipes_laid++;
         }
 
-        for (int i = 0; i < tile_object.transform.childCount; i++)
+        // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
+        if (pipes_laid == 0)
         {
-            tile_object.transform.GetChild(i).position = Utilities.Vector2IntToVector3(m_pointList[i + start_ind]) - Utilities.Vector2IntToVector3(m_start);
+            yield break;
         }
 
         // setup the pipe

@@ -22,11 +22,11 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _descriptorView.BeginFocus(_buildingSO, GetComponent<RectTransform>().anchoredPosition);
+        _descriptorView?.BeginFocus(_buildingSO, GetComponent<RectTransform>().anchoredPosition);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _descriptorView.EndFocus();
+        _descriptorView?.EndFocus();
     }
 }
