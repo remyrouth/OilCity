@@ -2,6 +2,7 @@ using Priority_Queue;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Events;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -328,6 +329,7 @@ public class PipePlacer : BuildingPlacer
         component.InitializePipe(m_start, m_end, m_startDir, m_endDir);
         component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
         component.transform.position = Utilities.Vector2IntToVector3(m_start);
+        PipeEvents.PlacePipe();
     }
 
     public override void Cleanup()

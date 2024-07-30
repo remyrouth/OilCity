@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: SecondStep
+  m_Name: Step9
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: "Well well well what do we have here \u2026 a WELL!!!!(HAHA)
-    \u2026 This bad boy makes the whole process possible and might I say one of my
-    finest inventions in fact practically first of its kind."
-  dialogueTextPolish: "Drugi krok. Cze\u015B\u0107 Carlos"
+  dialogueTextEnglish: 'Oh, would you look at that? It seems that it has increased
+    your overall worker satisfaction which means that hopefully they will start moving
+    in soon and you don''t want the worker satisfaction to get too low since that
+    would make all your employees quit which would be horrible.
+
+'
+  dialogueTextPolish: TBD

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3983701520729799909
+--- !u!1 &5550192093337100267
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4374424615092635631}
-  - component: {fileID: 5724384034372446892}
+  - component: {fileID: 8388953426508772104}
+  - component: {fileID: 2040496872489647166}
   m_Layer: 0
-  m_Name: TutorialFirstStep
+  m_Name: TutorialStep_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4374424615092635631
+--- !u!4 &8388953426508772104
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3983701520729799909}
+  m_GameObject: {fileID: 5550192093337100267}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 758.61835, y: 437.52783, z: 1.8633323}
+  m_LocalPosition: {x: 448.48163, y: 424.0861, z: -4.6952033}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5724384034372446892
+--- !u!114 &2040496872489647166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3983701520729799909}
+  m_GameObject: {fileID: 5550192093337100267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13ea65fbb7d2e274e97593aed42399f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 20b5ca8086bad3a4a8583809e28450c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueText: {fileID: 11400000, guid: 54fb3a2420a838340a208acd7aa8620f, type: 2}
-  buildingButtons: {fileID: 0}
+  dialogueText: {fileID: 11400000, guid: e9c34b6c118d0cb4aa8cdd8000712f6d, type: 2}
