@@ -22,6 +22,7 @@ public class PipeScriptableObject : BuildingScriptableObject
         go.name = "PipeSystem #" + go.GetInstanceID();
         var component = go.AddComponent<PipeController>();
         component.SetTileActions(actionList);
+        component.SetActionPivot();
         return component;
     }
 }

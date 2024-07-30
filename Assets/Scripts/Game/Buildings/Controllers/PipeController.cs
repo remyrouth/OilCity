@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System;
+using TMPro;
 using UnityEngine;
-using static UnityEditor.Rendering.CameraUI;
-using Unity.VisualScripting;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
 {
@@ -40,6 +38,10 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     public void SetTileActions(List<TileAction> actions)
     {
         this.TileActions = actions;
+    }
+    public void SetActionPivot()
+    {
+        _actionsPivot =  Vector2.one / 2;
     }
 
     protected override void CreateInitialConnections(Vector2Int _)

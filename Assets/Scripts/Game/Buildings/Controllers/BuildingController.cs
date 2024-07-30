@@ -5,6 +5,7 @@ public abstract class BuildingController<T> : TileObjectController
     where T : BuildingScriptableObject
 {
     [SerializeField] protected List<TileAction> TileActions;
+    [SerializeField] private Transform _demolishEffect;
     protected T config;
     public override Vector2Int size => config.size;
     /// <summary>
@@ -21,14 +22,23 @@ public abstract class BuildingController<T> : TileObjectController
     public override List<TileAction> GetActions() => TileActions;
     protected virtual void OnDestroy()
     {
-        TimeManager.Instance.DeregisterReceiver(gameObject);
+        MakeDestroyEffect();
         WorkerSatisfactionManager.Instance.DecreaseSatisfaction(config.removalSatisfactionCost);
         MoneyManager.Instance.ReduceMoney(config.removalCost);
-        //play visual effect
+        TimeManager.Instance.DeregisterReceiver(gameObject);
     }
     public override bool CheckIfDestroyable()
     {
         return MoneyManager.Instance.Money >= config.removalCost;
     }
     protected virtual void CreateInitialConnections(Vector2Int with_position) { }
+    protected virtual void MakeDestroyEffect()
+    {
+        if (_demolishEffect == null)
+            return;
+        _demolishEffect.SetParent(null);
+        var particleSystem = _demolishEffect.GetComponentInChildren<ParticleSystem>();
+        particleSystem.Play();
+        Destroy(_demolishEffect.transform, particleSystem.main.duration);
+    }
 }
