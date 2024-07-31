@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class ControlManager : MonoBehaviour
+public class ControlManager : Singleton<ControlManager>
 {
     public Image mouseCursorUI; 
     public RectTransform canvasRectTransform;
@@ -24,6 +24,8 @@ public class ControlManager : MonoBehaviour
         playerControls = new PlayerInput();
 
         playerControls.PlayerControls.MoveCursor.performed += OnMouseMove;
+
+        Cursor.visible = false;
     }
 
     void OnMouseMove(InputAction.CallbackContext context)
