@@ -11,6 +11,7 @@ public class TutorialThirdStep : TutorialStep
         BoardManager.Instance.OnBuildingPlaced += FinishStep;
         base.OnEnable();
         BuildingPanelUI.Instance.ToggleButtonInteractable(buttonToUnlockIndex);
+        BuildingPanelUI.Instance.StartFlicker(buttonToUnlockIndex);
     }
 
     private void OnDisable()
