@@ -38,6 +38,8 @@ namespace Game.Managers
             foreach (var lbo in languageBasedObjects)
                 lbo.UpdateText();
         
+            DialogueUI.Instance.ChangeTextLanguage();
+            
             PlayerPrefs.SetString("Language", CurrentLanguage.ToString());
         }
 
