@@ -114,7 +114,7 @@ public sealed class GeologistController : AOEBuildingController
         var bestOilSpot = _tilesSearched
             .Where(e => !BoardManager.Instance.IsTileOccupied(e)) //make sure that tile is still empty
             .OrderBy(e => BoardManager.Instance.OilEvaluator.GetValueAtPosition(e.x, e.y))
-            .FirstOrDefault();
+            .LastOrDefault();
 
         if (bestOilSpot == null)
             return;
