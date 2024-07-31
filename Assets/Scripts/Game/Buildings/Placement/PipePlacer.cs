@@ -121,6 +121,12 @@ public class PipePlacer : BuildingPlacer
             }
         }
 
+        // costly path invalid
+        if (cost_so_far.ContainsKey(end) && cost_so_far[end] > 999)
+        {
+            return new List<Vector2Int>();
+        }
+
         // path rebuilding
         var path = new List<Vector2Int>();
         var step_pos = end;
@@ -219,11 +225,13 @@ public class PipePlacer : BuildingPlacer
         // to be reassigned
         m_end = TileSelector.Instance.MouseToGrid(); // record the end position of the pipe
         m_singlePipePreview = null; // dereference the preview; we don't need it anymore
-        Debug.Log("point count " + m_pointList.Count);  
+
         // if we somehow set the start to the end, exit without placing a pipe
         if (m_start.Equals(m_end) || m_pointList.Count < 1) yield break;
 
         int pipes_laid = PlacePipes();
+
+        Debug.Log(pipes_laid);
 
         // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
         if (pipes_laid == 0)
@@ -270,7 +278,29 @@ public class PipePlacer : BuildingPlacer
     {
         if (m_pointList.Count == 2 && Utilities.GetCardinalEstimatePipeflowDirection(m_end, m_start, out var _))
         {
-            if (BoardManager.Instance.TryGetTypeAt<PipeController>(m_start, out var s_controller) && BoardManager.Instance.TryGetTypeAt<IFlowable>(m_end, out var e_flowable))
+            bool has_start_pipe = BoardManager.Instance.TryGetTypeAt<PipeController>(m_start, out var s_controller);
+            bool has_end_pipe = BoardManager.Instance.TryGetTypeAt<PipeController>(m_end, out var e_controller);
+
+            if (has_start_pipe && has_end_pipe)
+            {
+                if (s_controller.Equals(e_controller) // prevents self-connections
+                    || (s_controller.GetParent() != null && s_controller.GetParent().Equals(e_controller)) // prevents repeated reparenting connections
+                    || s_controller.GetPositions().start.Equals(m_start) // prevents wrong-way connections (start of pipe cannot connect to the end of another pipe)
+                    || e_controller.GetPositions().end.Equals(m_end)) // prevents wrong-way connections (see above, most likely redundant)
+                {
+                    Debug.LogWarning("Invalid pipe connection! See comments for reasoning. Aborting...");
+                    return;
+                }
+
+                s_controller.UpdateFlowAndVisual(m_start, m_end, true);
+                e_controller.UpdateFlowAndVisual(m_end, m_start, false);
+
+                s_controller.SetParent(e_controller);
+                e_controller.AddChild(s_controller);
+
+                TimeManager.Instance.LiteDeregister(s_controller);
+            }
+            else if (has_start_pipe && BoardManager.Instance.TryGetTypeAt<IFlowable>(m_end, out var e_flowable))
             {
                 s_controller.UpdateFlowAndVisual(m_start, m_end, true);
 
@@ -279,7 +309,7 @@ public class PipePlacer : BuildingPlacer
 
                 TimeManager.Instance.LiteDeregister(s_controller);
             }
-            else if (BoardManager.Instance.TryGetTypeAt<IFlowable>(m_start, out var s_flowable) && BoardManager.Instance.TryGetTypeAt<PipeController>(m_end, out var e_controller))
+            else if (BoardManager.Instance.TryGetTypeAt<IFlowable>(m_start, out var s_flowable) && has_end_pipe)
             {
                 e_controller.UpdateFlowAndVisual(m_end, m_start, false);
 
