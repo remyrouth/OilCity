@@ -19,6 +19,13 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     private List<Vector2Int> m_pipes;
 
+#if UNITY_EDITOR
+    private Mesh m_debugMesh;
+
+    public void SetDebugMesh(Mesh debugMesh) => m_debugMesh = debugMesh;
+#endif
+
+
     /// <summary>
     /// Init method for just pipes. Provides necessary values for functionality.
     /// </summary>
@@ -28,6 +35,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="end_pipe_dir"></param>
     public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes)
     {
+        Debug.Log(start_pipe_dir + " " + end_pipe_dir);
+
         // notarize all the values passed in
         m_startPipePos = start_pos;
         m_endPipePos = end_pos;
@@ -56,7 +65,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     {
         var child_pos = m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
         var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
-
+        Debug.Log("start/end " + m_startPipePos + " " + m_endPipePos + " child/parent " + child_pos + " " + parent_pos);
         var (connect_to_child, connect_to_parent) = ValidatePipesAndConnect(child_pos, parent_pos);
 
         if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var obj) && obj.GetFlowConfig().can_output)
@@ -93,9 +102,9 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             var (_, end) = c_pipe.GetPositions();
 
-            is_child_valid = end.Equals(child_end) && c_pipe.GetParent() == null; // == null is to prevent stealing a pipe from one that already has a connection
+            is_child_valid = end.Equals(child_end) && c_pipe.GetOpenStatus().open_end; // to prevent stealing a pipe from one that already has a connection
 
-            if (is_child_valid) c_pipe.UpdateFlowAndVisual(end, m_startPipePos);
+            if (is_child_valid) c_pipe.UpdateFlowAndVisual(end, m_startPipePos, true); // we're connecting to their end, so our start is the endpoint and their end is the pipe. Therefore, flip the flow dir.
         }
         else if (c_pipe == this) is_child_valid = false;
 
@@ -104,9 +113,9 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             var (start, _) = p_pipe.GetPositions();
 
-            is_parent_valid = start.Equals(parent_end) && p_pipe.GetChildren().Count == 0; // == 0 is to prevent connecting to a pipe that already has a connection
+            is_parent_valid = start.Equals(parent_end) && p_pipe.GetOpenStatus().open_start; // to prevent connecting to a pipe that already has a connection
 
-            if (is_parent_valid) p_pipe.UpdateFlowAndVisual(start, m_endPipePos);
+            if (is_parent_valid) p_pipe.UpdateFlowAndVisual(start, m_endPipePos, false); // don't flip the flowdir bc we are flowing into their start from our endpoint.
         }
         else if (p_pipe == this) is_parent_valid = false;
 
@@ -117,7 +126,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// Called by another pipe controller when this pipe controller needs to update one of its endpoints to
     /// flow into the calling pipe controller.
     /// </summary>
-    public void UpdateFlowAndVisual(Vector2Int endpoint, Vector2Int pipe)
+    public void UpdateFlowAndVisual(Vector2Int endpoint, Vector2Int pipe, bool flip_flow)
     {
         if (!Utilities.GetCardinalEstimatePipeflowDirection(endpoint, pipe, out var flow_direction))
         {
@@ -125,37 +134,31 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             return;
         }
 
-        // if the flow is outward, we need to flip the direction we estimated. That was made with the "pipe->tile"
-        // assumption, not the "tile->pipe" assumption.
-        //if (!is_flow_in)
-        //{
-        //    flow_direction = Utilities.FlipFlow(flow_direction);
-        //    Debug.Log("swpaped");
-        //}
-        Debug.Log("flow: " + flow_direction);
+        // endpoint and pipe may refer to the opposite things if we're flowing into the pipe from the endpoint. Therefore, if needed, flip the estimated flow dir.
+        if (flip_flow) flow_direction = Utilities.FlipFlow(flow_direction);
 
         var in_pos = Vector2Int.zero;
         var out_pos = Vector2Int.zero;
+        var my_status = GetOpenStatus();
+
+        Debug.Log("Pos: " + endpoint + " " + pipe);
+        Debug.Log("Flow Direction: " +  flow_direction);
 
         // change flowdir for endpoint
-        if (endpoint.Equals(m_startPipePos))
+        if (endpoint.Equals(m_startPipePos) && my_status.open_start)
         {
-            m_startDirection = flow_direction;
-
             in_pos = pipe;
-
-            // if we're a singleton pipe, just assume that our output position is the opposite axis of our input. no way to know for sure.
-            out_pos = m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(flow_direction);
+            out_pos = m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(m_endDirection);
+            m_startDirection = flow_direction;
         }
-        else if (endpoint.Equals(m_endPipePos))
+        else if (endpoint.Equals(m_endPipePos) && my_status.open_end)
         {
-            m_endDirection = flow_direction;
-
-            // if we're a singleton pipe, just assume that our input position is the opposite axis of our output. no way to know for sure.
-            in_pos = m_pipes.Count > 1 ? m_pipes[^2] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(flow_direction));
-
+            in_pos = m_pipes.Count > 1 ? m_pipes[^2] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
             out_pos = pipe;
+            m_endDirection = flow_direction;
         }
+
+        Debug.Log("positions: " + in_pos + " " + endpoint + " " + out_pos);
 
         // change visual for endpoint
         BoardManager.Instance.ClearSupermapTile(endpoint); // wipe the tile before placing so the transform doesnt get borked
@@ -301,4 +304,42 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     }
 
     public (Vector2Int start, Vector2Int end) GetPositions() => (m_startPipePos, m_endPipePos);
+
+    public (bool open_start, bool open_end) GetOpenStatus() => (m_child == null, m_parent == null);
+
+    void OnDrawGizmos()
+    {
+        var offset = new Vector3(0.5f, 0.5f);
+
+        var s_dir = Utilities.GetPipeFlowDirOffset(m_startDirection);
+        var e_dir = Utilities.GetPipeFlowDirOffset(m_endDirection);
+
+        var s_rot = Quaternion.Euler(-Vector2.SignedAngle(Vector2.up, s_dir) + 90, 90f, 90f);
+        var e_rot = Quaternion.Euler(-Vector2.SignedAngle(Vector2.up, e_dir) + 90, 90f, 90f);
+
+        var s_pos = Utilities.Vector2IntToVector3(m_startPipePos) + offset - Utilities.Vector2IntToVector3(Utilities.GetPipeFlowDirOffset(m_startDirection)) * .35f;
+        var e_pos = Utilities.Vector2IntToVector3(m_endPipePos) + offset + Utilities.Vector2IntToVector3(Utilities.GetPipeFlowDirOffset(m_endDirection)) * .35f;
+
+        if (m_startDirection != PipeFlowDirection.Invalid)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireMesh(m_debugMesh, 0, s_pos, s_rot, new Vector3(0.2f, 0.1f, .2f));
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(s_pos, Vector3.one * 0.2f);
+        }
+
+        if (m_endDirection != PipeFlowDirection.Invalid)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireMesh(m_debugMesh, 0, e_pos, e_rot, new Vector3(0.2f, 0.1f, .2f));
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(e_pos, Vector3.one * 0.2f);
+        }
+    }
 }

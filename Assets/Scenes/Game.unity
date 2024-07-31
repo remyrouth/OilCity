@@ -30355,6 +30355,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5315377285111767561, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315377285111767561, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315377285111767561, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5689709781894781774, guid: b59083f82e0f12f46a7cee93f1c815ec, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -31400,6 +31412,7 @@ GameObject:
   - component: {fileID: 1850073789}
   - component: {fileID: 1850073791}
   - component: {fileID: 1850073790}
+  - component: {fileID: 1850073792}
   m_Layer: 0
   m_Name: ground
   m_TagString: Untagged
@@ -47537,6 +47550,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1850073792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850073788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c237799a310ff3f4fbbd3d29a2344292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1858206580
 GameObject:
   m_ObjectHideFlags: 0

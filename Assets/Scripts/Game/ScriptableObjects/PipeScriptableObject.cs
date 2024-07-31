@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PipeScriptableObject : BuildingScriptableObject
 {
+    [SerializeField] private Mesh m_flowDebugMesh;
     [SerializeField] private List<TileAction> actionList = new List<TileAction>();
 
     public override TileObjectController CreateInstance(Vector2Int _)
@@ -22,6 +23,11 @@ public class PipeScriptableObject : BuildingScriptableObject
         go.name = "PipeSystem #" + go.GetInstanceID();
         var component = go.AddComponent<PipeController>();
         component.SetTileActions(actionList);
+
+#if UNITY_EDITOR
+        component.SetDebugMesh(m_flowDebugMesh);
+#endif
+
         return component;
     }
 }

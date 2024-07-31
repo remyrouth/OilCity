@@ -95,7 +95,7 @@ public class PipePlacer : BuildingPlacer
             bool is_ignored = is_occupied && (BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore) || BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore));
 
             if (current == end) break;
-            if (current != start && is_occupied && !is_ignored) continue;
+            //if (current != start && is_occupied && !is_ignored) continue;
 
             Vector2Int[] neighbors = new Vector2Int[] { current + Vector2Int.right, current + Vector2Int.up, current + Vector2Int.left, current + Vector2Int.down };
 
@@ -219,7 +219,7 @@ public class PipePlacer : BuildingPlacer
         // to be reassigned
         m_end = TileSelector.Instance.MouseToGrid(); // record the end position of the pipe
         m_singlePipePreview = null; // dereference the preview; we don't need it anymore
-
+        Debug.Log("point count " + m_pointList.Count);  
         // if we somehow set the start to the end, exit without placing a pipe
         if (m_start.Equals(m_end) || m_pointList.Count < 1) yield break;
 
@@ -237,6 +237,9 @@ public class PipePlacer : BuildingPlacer
         // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
         if (pipes_laid == 0)
         {
+            IfPipeConnect();
+
+            // Destroy(tile_object.gameObject); TODO re-uncomment this. It's supposed to be destroyed
             yield break;
         }
 
@@ -244,6 +247,35 @@ public class PipePlacer : BuildingPlacer
         component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
         component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
         component.transform.position = Utilities.Vector2IntToVector3(m_start);
+    }
+
+    /// <summary>
+    /// if a no-pipe system was "placed" with a pipe connection possible (i.e. pipe adjacent to building, wanted to establish connection),
+    /// checks and establishes a connection.
+    /// </summary>
+    private void IfPipeConnect()
+    {
+        if (m_pointList.Count == 2 && Utilities.GetCardinalEstimatePipeflowDirection(m_end, m_start, out var _))
+        {
+            if (BoardManager.Instance.TryGetTypeAt<PipeController>(m_start, out var s_controller) && BoardManager.Instance.TryGetTypeAt<IFlowable>(m_end, out var e_flowable))
+            {
+                s_controller.SetParent(e_flowable);
+                e_flowable.AddChild(s_controller);
+
+                s_controller.UpdateFlowAndVisual(m_start, m_end, false);
+            }
+            else if (BoardManager.Instance.TryGetTypeAt<IFlowable>(m_start, out var s_flowable) && BoardManager.Instance.TryGetTypeAt<PipeController>(m_end, out var e_controller))
+            {
+                e_controller.AddChild(s_flowable);
+                s_flowable.SetParent(e_controller);
+
+                e_controller.UpdateFlowAndVisual(m_end, m_start, true);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Shorthand pipe connection failed.");
+        }
     }
 
     private int PlacePipes(PipeController with_component)
@@ -255,6 +287,20 @@ public class PipePlacer : BuildingPlacer
         for (int index = 0; index < m_pointList.Count; index++)
         {
             bool is_open_space = !BoardManager.Instance.IsTileOccupied(m_pointList[index]);
+
+            if (is_open_space)
+            {
+                // set the pipe in the supermap with its orientation
+                BoardManager.Instance.SetPipeTileInSupermap(m_pointList[index], BuildingManager.Instance.GetPipeRotation(
+                    index > 0 ? m_pointList[index - 1] : new Vector2Int(-1, -1),
+                    m_pointList[index],
+                    index < m_pointList.Count - 1 ? m_pointList[index + 1] : new Vector2Int(-1, -1)));
+
+                // set the controller at the location
+                BoardManager.Instance.tileDictionary[m_pointList[index]] = with_component;
+
+                pipes_laid++;
+            }
 
             if (!has_placed_start)
             {
@@ -282,40 +328,22 @@ public class PipePlacer : BuildingPlacer
 
                 has_placed_start = true;
             }
-            else if (!has_placed_end)
+
+            if (!has_placed_end)
             {
-                // if we reach this point, we've placed a starting pipe and are now looking to place end pipes
-                // if we've reached a tile no longer open, that means we're at the end of the system
-                if (!is_open_space)
+                // if we've hit an occupied space or this index is the last, get the flow
+                if (!is_open_space || index == m_pointList.Count - 1)
                 {
                     Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], prior_pipe_pos, out m_endDir);
 
-                    m_end = m_pointList[index - 1];
-                    break; // we dont want to add the last pipe as a controller or visually
-                }
-                else if (index == m_pointList.Count - 1)
-                {
-                    Utilities.GetCardinalEstimatePipeflowDirection(m_pointList[index], m_pointList[index - 1], out m_endDir);
-
-                    m_end = m_pointList[index];
+                    m_end = m_pointList[is_open_space ? index : index - 1];
 
                     has_placed_end = true;
                 }
             }
 
-            // set the pipe in the supermap with its orientation
-            BoardManager.Instance.SetPipeTileInSupermap(m_pointList[index], BuildingManager.Instance.GetPipeRotation(
-                index > 0 ? m_pointList[index - 1] : new Vector2Int(-1, -1),
-                m_pointList[index],
-                index < m_pointList.Count - 1 ? m_pointList[index + 1] : new Vector2Int(-1, -1)));
-
-            // set the controller at the location
-            BoardManager.Instance.tileDictionary[m_pointList[index]] = with_component;
-
             // cache current pipe
             prior_pipe_pos = m_pointList[index];
-
-            pipes_laid++;
         }
 
         return pipes_laid;

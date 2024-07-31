@@ -214,7 +214,7 @@ public class TimeManager : Singleton<TimeManager>
 
     #region Debug
 #if UNITY_EDITOR
-    public void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
         if (m_tickableForest == null) return;
 
