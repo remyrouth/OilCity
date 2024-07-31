@@ -6,15 +6,13 @@ namespace Game.Tutorial
     {
         private new void OnEnable()
         {
+            DialogueUI.Instance.OnDialogueClicked += FinishStep;
             base.OnEnable();
         }
 
-        private void Update()
+        private void OnDisable()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                FinishStep();
-            }
+            DialogueUI.Instance.OnDialogueClicked -= FinishStep;
         }
     }
 }

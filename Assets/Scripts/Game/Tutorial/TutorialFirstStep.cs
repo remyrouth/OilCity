@@ -1,4 +1,3 @@
-using UnityEngine;
 
 namespace Game.Tutorial
 {
@@ -6,19 +5,16 @@ namespace Game.Tutorial
     {
         private new void OnEnable()
         {
+            DialogueUI.Instance.OnDialogueClicked += FinishStep;
             base.OnEnable();
             TimeManager.Instance.TicksPerMinute = 0;
             TileSelector.Instance.SelectorEnabled = false;
             DialogueUI.Instance.EnableDialogue();
         }
 
-        private void Update()
+        private void OnDisable()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                FinishStep();
-            }
+            DialogueUI.Instance.OnDialogueClicked -= FinishStep;
         }
     }
- 
 }

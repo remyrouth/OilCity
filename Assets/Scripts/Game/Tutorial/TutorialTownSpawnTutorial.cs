@@ -10,12 +10,18 @@ namespace Game.Tutorial
         private bool _canContinue;
         private new void OnEnable()
         {
+            DialogueUI.Instance.OnDialogueClicked += FinishStep;
             base.OnEnable();
             _canContinue = false;
             TimeManager.Instance.TicksPerMinute = 60;
             StartCoroutine(Wait());
         }
-
+        
+        private void OnDisable()
+        {
+            DialogueUI.Instance.OnDialogueClicked -= FinishStep;
+        }
+        
         private IEnumerator Wait()
         {
             CameraController.Instance.TargetPosition = targetPosition;
@@ -25,11 +31,11 @@ namespace Game.Tutorial
             TimeManager.Instance.TicksPerMinute = 0;
         }
 
-        private void Update()
+        private new void FinishStep()
         {
-            if (_canContinue && Input.GetMouseButtonDown(0))
+            if (_canContinue)
             {
-                FinishStep();
+                base.FinishStep();
             }
         }
     }
