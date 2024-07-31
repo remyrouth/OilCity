@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,10 +27,13 @@ public class TimeManager : Singleton<TimeManager>
             m_ticksPerMinute = value;
             m_timePerTick = 60f / m_ticksPerMinute;
             m_timeElaspedSinceTick = 0;
+            OnTicksPerMinuteChanged?.Invoke(value);
+            OnTimePerTickChanged?.Invoke(TimePerTick);
         }
     }
     [SerializeField] private int m_ticksPerMinute = 60;
-
+    public event Action<int> OnTicksPerMinuteChanged;
+    public event Action<float> OnTimePerTickChanged;
     // a collection of all the nodes that require an individual OnTick invokation
     // loggers and train stations, for example. individual trees (like a pipe to a refinery) 
     // also exist in this list.
