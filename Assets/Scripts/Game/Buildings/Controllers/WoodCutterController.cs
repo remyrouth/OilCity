@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Events;
-using Unity.VisualScripting;
 using UnityEngine;
 public sealed class WoodCutterController : AOEBuildingController
 {
@@ -12,20 +11,19 @@ public sealed class WoodCutterController : AOEBuildingController
         public Transform _workerVisual;
         public Queue<Action<WoodCutterController>> _sequenceActions = new();
         public Vector2Int? _focusedTree = null;
-        public bool _isActive = true; 
+        public bool _isActive = true;
         public WoodCutterWorker(Transform worker)
         {
             _workerVisual = worker;
             _sequenceActions = new();
-            
         }
     }
+    public const float WORKERS_SPEED = 10;
     private int activeWorkerAmount;
-
     public override int TickNumberInterval => 0;
     public override int Range => 4;
     [SerializeField] private int _workerAmount;
-    [SerializeField] private Transform _workerVisual;
+    [SerializeField] private Transform _workerVisualPrefab;
     private List<WoodCutterWorker> _workers = new List<WoodCutterWorker>();
     //private Queue<Action<WoodCutterController>> _sequenceActions = new();
     //private Vector2Int? _focusedTree = null;
@@ -43,7 +41,7 @@ public sealed class WoodCutterController : AOEBuildingController
             for (int j = 0; j < i; j++)
                 _workers[i]._sequenceActions.Enqueue(null);
         }
-        
+
     }
     public override void OnTick()
     {
@@ -65,7 +63,7 @@ public sealed class WoodCutterController : AOEBuildingController
                 GenerateNewSequence(_workers[i]);
 
             _workers[i]._sequenceActions.Dequeue()?.Invoke(this);
-            if(i == _workers.Count-1)
+            if (i == _workers.Count - 1)
                 PayWorkers();
         }
     }
@@ -86,8 +84,15 @@ public sealed class WoodCutterController : AOEBuildingController
     private void ResetWorker(Transform worker)
     {
         worker.DOKill();
-        Vector3 pos = new Vector3(Anchor.x + 0.5f, Anchor.y, 0);
-        worker.DOMove(pos, TimeManager.Instance.TimePerTick * 2);
+        int index = _workers.Select(e => e._workerVisual).ToList().IndexOf(worker);
+        Vector3 pos = new Vector3(Anchor.x + index * 0.5f, Anchor.y, 0);
+
+        var anim = worker.GetComponent<WorkerVisualAnimator>().Anim;
+        worker.GetComponent<SpriteRenderer>().flipX = pos.x < worker.position.x;
+        anim.SetBool("IsWalking", true);
+
+        worker.DOMove(pos, TimeManager.Instance.TimePerTick * 2)
+            .OnComplete(() => { anim.SetBool("IsWalking", false); });
     }
     private void PickTree(WoodCutterWorker worker)
     {
@@ -96,8 +101,14 @@ public sealed class WoodCutterController : AOEBuildingController
         if (tree == null) return;
         worker._focusedTree = tree;
         Vector3 pos = new Vector3(worker._focusedTree!.Value.x, worker._focusedTree!.Value.y) + new Vector3(0.5f, 0.5f, 0);
+
+        var anim = worker._workerVisual.GetComponent<WorkerVisualAnimator>().Anim;
+        worker._workerVisual.GetComponent<SpriteRenderer>().flipX = pos.x < worker._workerVisual.position.x;
+        anim.SetBool("IsWalking", true);
+
         worker._workerVisual.DOKill();
-        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2);
+        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2)
+            .OnComplete(() => { anim.SetBool("IsWalking", false); anim.SetTrigger("DoAction"); });
     }
     private void FinalizeCutting(WoodCutterWorker worker)
     {
@@ -128,7 +139,9 @@ public sealed class WoodCutterController : AOEBuildingController
     }
     private void CreateWorker()
     {
-        var tmp = new WoodCutterWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity));
+        int index = _workers.Count;
+        Vector3 pos = new Vector3(Anchor.x + index * 0.5f, Anchor.y, 0);
+        var tmp = new WoodCutterWorker(Instantiate(_workerVisualPrefab, pos, Quaternion.identity));
         tmp._workerVisual.SetParent(transform);
         _workers.Add(tmp);
     }
@@ -164,7 +177,7 @@ public sealed class WoodCutterController : AOEBuildingController
                 _workers.Last()._sequenceActions.Enqueue(null);
                 CreateWorker();
                 break;
-            default: 
+            default:
                 break;
         }
     }
@@ -179,7 +192,7 @@ public sealed class WoodCutterController : AOEBuildingController
             case PaymentMode.LOW:
                 FireWorker(_workers[activeWorkerAmount - 1]);
                 break;
-            default: 
+            default:
                 break;
         }
     }

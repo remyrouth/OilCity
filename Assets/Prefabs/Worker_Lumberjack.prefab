@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 883866055064839064}
   - component: {fileID: 7903910020555444394}
   m_Layer: 0
-  m_Name: Worker
+  m_Name: Worker_Lumberjack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 0.14999999, y: 0.14999999, z: 0.14999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 3270306656179796501}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 308d7908e5886eb48a4f5559faa8c128, type: 2}
+  m_Controller: {fileID: 22100000, guid: 2d81fc2d290d29645aed86d12b32f5be, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
