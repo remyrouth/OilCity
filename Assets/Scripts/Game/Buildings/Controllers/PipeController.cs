@@ -35,8 +35,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="end_pipe_dir"></param>
     public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes)
     {
-        Debug.Log(start_pipe_dir + " " + end_pipe_dir);
-
         // notarize all the values passed in
         m_startPipePos = start_pos;
         m_endPipePos = end_pos;
@@ -65,7 +63,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     {
         var child_pos = m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
         var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
-        Debug.Log("start/end " + m_startPipePos + " " + m_endPipePos + " child/parent " + child_pos + " " + parent_pos);
+
         var (connect_to_child, connect_to_parent) = ValidatePipesAndConnect(child_pos, parent_pos);
 
         if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var obj) && obj.GetFlowConfig().can_output)
@@ -141,9 +139,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         var out_pos = Vector2Int.zero;
         var my_status = GetOpenStatus();
 
-        Debug.Log("Pos: " + endpoint + " " + pipe);
-        Debug.Log("Flow Direction: " +  flow_direction);
-
         // change flowdir for endpoint
         if (endpoint.Equals(m_startPipePos) && my_status.open_start)
         {
@@ -157,8 +152,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             out_pos = pipe;
             m_endDirection = flow_direction;
         }
-
-        Debug.Log("positions: " + in_pos + " " + endpoint + " " + out_pos);
 
         // change visual for endpoint
         BoardManager.Instance.ClearSupermapTile(endpoint); // wipe the tile before placing so the transform doesnt get borked
@@ -244,7 +237,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// </summary>
     public void OnTick()
     {
-        Debug.LogWarning("Pipe has overflowed " + SendFlow());
+        Debug.LogWarning(string.Format("{0} has overflowed {1}", gameObject.name, SendFlow()));
     }
 
     /// <summary>

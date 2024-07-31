@@ -129,6 +129,15 @@ public class TimeManager : Singleton<TimeManager>
     }
 
     /// <summary>
+    /// Removes the object from the forest without disconnecting any parents or children.
+    /// </summary>
+    /// <param name="obj"></param>
+    public void LiteDeregister(ITickReceiver obj)
+    {
+        m_tickableForest.Remove(obj);
+    }
+
+    /// <summary>
     /// Helper method that, given a flowable, binds it bidirectionally to its reported children and parent,
     /// potentially reducing the number of trees in the forest.
     /// </summary>

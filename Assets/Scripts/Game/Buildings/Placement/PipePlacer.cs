@@ -223,6 +223,16 @@ public class PipePlacer : BuildingPlacer
         // if we somehow set the start to the end, exit without placing a pipe
         if (m_start.Equals(m_end) || m_pointList.Count < 1) yield break;
 
+        int pipes_laid = PlacePipes();
+
+        // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
+        if (pipes_laid == 0)
+        {
+            IfPipeConnect();
+
+            yield break;
+        }
+
         // issue is that every individual pipe prefab has a controller; bad.
         // instead, it should just be the visual, and there should be an empty gameobject that is the "pipe system"
 
@@ -232,15 +242,18 @@ public class PipePlacer : BuildingPlacer
             Debug.LogError("Pipe prefab doesn't have a pipe controller!");
         }
 
-        int pipes_laid = PlacePipes(component);
-
-        // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
-        if (pipes_laid == 0)
+        // place controllers in the valid positions
+        bool in_bounds = false;
+        for (int i = 0; i < m_pointList.Count; ++i)
         {
-            IfPipeConnect();
+            if (!in_bounds && m_pointList[i].Equals(m_start)) in_bounds = true;
 
-            // Destroy(tile_object.gameObject); TODO re-uncomment this. It's supposed to be destroyed
-            yield break;
+            if (in_bounds)
+            {
+                BoardManager.Instance.tileDictionary[m_pointList[i]] = component;
+            }
+
+            if (in_bounds && m_pointList[i].Equals(m_end)) in_bounds = false;
         }
 
         // setup the pipe
@@ -259,17 +272,21 @@ public class PipePlacer : BuildingPlacer
         {
             if (BoardManager.Instance.TryGetTypeAt<PipeController>(m_start, out var s_controller) && BoardManager.Instance.TryGetTypeAt<IFlowable>(m_end, out var e_flowable))
             {
+                s_controller.UpdateFlowAndVisual(m_start, m_end, true);
+
                 s_controller.SetParent(e_flowable);
                 e_flowable.AddChild(s_controller);
 
-                s_controller.UpdateFlowAndVisual(m_start, m_end, false);
+                TimeManager.Instance.LiteDeregister(s_controller);
             }
             else if (BoardManager.Instance.TryGetTypeAt<IFlowable>(m_start, out var s_flowable) && BoardManager.Instance.TryGetTypeAt<PipeController>(m_end, out var e_controller))
             {
+                e_controller.UpdateFlowAndVisual(m_end, m_start, false);
+
                 e_controller.AddChild(s_flowable);
                 s_flowable.SetParent(e_controller);
 
-                e_controller.UpdateFlowAndVisual(m_end, m_start, true);
+                TimeManager.Instance.LiteDeregister(s_flowable);
             }
         }
         else
@@ -278,7 +295,7 @@ public class PipePlacer : BuildingPlacer
         }
     }
 
-    private int PlacePipes(PipeController with_component)
+    private int PlacePipes()
     {
         bool has_placed_start = false;
         bool has_placed_end = false;
@@ -295,9 +312,6 @@ public class PipePlacer : BuildingPlacer
                     index > 0 ? m_pointList[index - 1] : new Vector2Int(-1, -1),
                     m_pointList[index],
                     index < m_pointList.Count - 1 ? m_pointList[index + 1] : new Vector2Int(-1, -1)));
-
-                // set the controller at the location
-                BoardManager.Instance.tileDictionary[m_pointList[index]] = with_component;
 
                 pipes_laid++;
             }
