@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueTextEnglish: 'Now we should make a Refinery. This is used to make oil into
     Kerosene which we sell at a way higher price than we do oil. '
-  dialogueTextPolish: TBD
+  dialogueTextPolish: "Zbuduj rafineri\u0119."
