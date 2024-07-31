@@ -18,8 +18,8 @@ namespace UIScripts.Settings
 
         public void ToggleCameraMovementInversion()
         {
-            CameraController.Instance.invert = cameraInversionToggle.isOn;
-            PlayerPrefs.SetInt("CameraInversion", CameraController.Instance.invert ? 1 : 0);
+            CameraController.Instance.Invert = cameraInversionToggle.isOn;
+            PlayerPrefs.SetInt("CameraInversion", CameraController.Instance.Invert ? 1 : 0);
         }
     }
 }
