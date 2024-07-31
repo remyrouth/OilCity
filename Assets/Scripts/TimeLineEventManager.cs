@@ -1,10 +1,8 @@
 using System.Collections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class TimeLineEventManager : MonoBehaviour, ITickReceiver
+public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiver
 {
     [SerializeField]
     private Vector2 yearRange;
@@ -15,12 +13,8 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
     private float ticksPerYear = 1f;
     [SerializeField]
     private float currentTick = 4f;
-    [SerializeField]
-    private Image eventImageObject;
-    [SerializeField]
-    private Slider timelineSlider;
-    [SerializeField]
-    private GameObject newsPaperPrefabImage;
+
+    [SerializeField] private EventUI _eventUI;
 
     [SerializeField]
     private List<TimeLineEvent> eventsOnTimeLine = new List<TimeLineEvent>();
@@ -43,56 +37,57 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         m_ticksElapsed = 0;
         m_totalTicks = (int)((yearRange.y - currentYear) * ticksPerYear);
 
-        if (ticksPerYear <= 0f) {
+        if (ticksPerYear <= 0f)
+        {
             Debug.LogError("You must have a passage of time greater than 0f");
         }
 
-        if (timelineSlider == null) {
-            Debug.LogError("timelineSlider not attached");
-        }
     }
 
-    private void DisplayEvents() {
-        foreach (TimeLineEvent newsEvent in eventsOnTimeLine) {
+    private void DisplayEvents()
+    {
+        foreach (TimeLineEvent newsEvent in eventsOnTimeLine)
+        {
             DisplayIndividualEvent(newsEvent);
         }
 
     }
-
+    [SerializeField] private RectTransform _timelineSlider;
+    [SerializeField] private GameObject _newsPaperPrefabImage;
     private void DisplayIndividualEvent(TimeLineEvent newsEvent) {
         Vector3[] worldCorners = new Vector3[4];
-        timelineSlider.GetComponent<RectTransform>().GetWorldCorners(worldCorners);
+        _timelineSlider.GetWorldCorners(worldCorners);
         Vector3 start = worldCorners[0]; // Bottom-left corner
         Vector3 end = worldCorners[2]; // Top-right corner (assuming horizontal slider)
 
         float targetPercent = newsEvent.GamePercentage;
         float sliderWidth = end.x - start.x;
         float newX = start.x + (sliderWidth * targetPercent);
-        float newY = timelineSlider.transform.position.y;
-        float newZ = timelineSlider.transform.position.z;
+        float newY = _timelineSlider.transform.position.y;
+        float newZ = _timelineSlider.transform.position.z;
 
         Vector3 matchedPercentagePosition = new Vector3(newX, newY, newZ);
 
-        GameObject newspaperObject = Instantiate(newsPaperPrefabImage,
+        GameObject newspaperObject = Instantiate(_newsPaperPrefabImage,
         matchedPercentagePosition,
-        timelineSlider.gameObject.transform.rotation);
-
-        newspaperObject.transform.SetParent(timelineSlider.transform, true);
+        _timelineSlider.gameObject.transform.rotation);
+        newspaperObject.transform.SetParent(_timelineSlider.transform, true);
+        newspaperObject.GetComponent<RectTransform>().sizeDelta = Vector2.one*64;
+        newspaperObject.GetComponent<RectTransform>().localScale = Vector2.one;
     }
 
 
-    public void EndTimeLineEvent() {
-        eventImageObject.gameObject.SetActive(false);
-    }
 
-    private void ContinueTimeLine() {
+    private void ContinueTimeLine()
+    {
         currentTick++;
-        if (currentTick >= ticksPerYear) {
-            if (ticksPerYear <= 0 && timelineSlider != null) {
-                Debug.LogWarning("ticksPerYear or timelineSlider not set up correctly");
+        if (currentTick >= ticksPerYear)
+        {
+            if (ticksPerYear <= 0)
+            {
+                Debug.LogWarning("ticksPerYear not set up correctly");
                 return;
             }
-            AlterSlider();
             MoneyManager.Instance.ReduceMoney(MoneyManager.Instance.Quota);
             currentTick = 0f;
             currentYear++;
@@ -101,37 +96,30 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         }
     }
 
-    private void AlterPollutionInstance() {
+    private void AlterPollutionInstance()
+    {
         PollutionManager.Instance.SetPollution(GetTimePercentage());
     }
 
-    private void AlterSlider() {
-        timelineSlider.value = GetTimePercentage();
-    }
-
-    // Simply us checking if there is UI already present, if so, turn it off
-    private void Update() {
-        if (Input.GetMouseButtonDown(0) && eventImageObject.gameObject.activeSelf)
-        {
-            eventImageObject.sprite = null;
-            eventImageObject.gameObject.SetActive(false);
-        }
-    }
 
     // This is the method that checks for the next newspaper event,
     // and has the UI pop up
-    private void CheckNextEvent() {
-        if (CheckForEndGame()) {
+    private void CheckNextEvent()
+    {
+        if (CheckForEndGame())
+        {
             GameStateManager.Instance.EndGame();
             return;
         }
 
 
-        if (currentEventListIndex <= eventsOnTimeLine.Count - 1) {
+        if (currentEventListIndex <= eventsOnTimeLine.Count - 1)
+        {
             TimeLineEvent nextEvent = eventsOnTimeLine[currentEventListIndex];
             float nextEventPercent = nextEvent.GamePercentage;
 
-            if (GetTimePercentage() >= nextEventPercent) {
+            if (GetTimePercentage() >= nextEventPercent)
+            {
                 currentEventListIndex++;
                 TriggerNextEvent(nextEvent);
             }
@@ -139,15 +127,14 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
 
     }
 
-    private void TriggerNextEvent(TimeLineEvent nextEvent) {
-        eventImageObject.sprite = nextEvent.newspaperSprite;
-        eventImageObject.gameObject.SetActive(true);
+    private void TriggerNextEvent(TimeLineEvent nextEvent) => _eventUI.TriggerEvent(nextEvent);
 
-    }
 
-    private bool CheckForEndGame() {
-        bool isNewsPaperUp = eventImageObject.gameObject.activeInHierarchy;
-        if (!isNewsPaperUp && GetTimePercentage() >= 1f) {
+    private bool CheckForEndGame()
+    {
+        bool isNewsPaperUp = UIStateMachine.Instance.CurrentStateType == GameState.EventUI;
+        if (!isNewsPaperUp && GetTimePercentage() >= 1f)
+        {
             return true;
         }
 
@@ -164,7 +151,8 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         m_ticksElapsed++;
     }
 
-    private void SortEventsByPercentage() {
+    private void SortEventsByPercentage()
+    {
         eventsOnTimeLine.Sort((a, b) => a.GamePercentage.CompareTo(b.GamePercentage));
     }
 
@@ -175,7 +163,8 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
         eventsOnTimeLine.Clear();
     }
 
-    private float GetTimePercentage() {
+    public float GetTimePercentage()
+    {
         // Debug.Log("totalYears: " +  totalYears);
         float percent = (totalYears - (yearRange.y - currentYear)) / totalYears;
         // Debug.Log("Percent: " +  percent);

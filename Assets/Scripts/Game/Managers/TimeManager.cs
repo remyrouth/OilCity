@@ -37,7 +37,7 @@ public class TimeManager : Singleton<TimeManager>
     // a collection of all the nodes that require an individual OnTick invokation
     // loggers and train stations, for example. individual trees (like a pipe to a refinery) 
     // also exist in this list.
-    private Collection<ITickReceiver> m_tickableForest;
+    private Collection<ITickReceiver> m_tickableForest = new();
 
     // invariant: contains every tree node component in the game
     private readonly Collection<ITreeNode> m_nodes = new();
@@ -50,7 +50,6 @@ public class TimeManager : Singleton<TimeManager>
 
     private void Awake()
     {
-        m_tickableForest = new Collection<ITickReceiver>();
         TicksPerMinute = m_ticksPerMinute;
     }
 
