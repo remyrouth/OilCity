@@ -28,24 +28,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""4fbc5626-2e15-4b75-b38f-90cc4b58c40f"",
             ""actions"": [
                 {
-                    ""name"": ""MoveVertical"",
-                    ""type"": ""Value"",
-                    ""id"": ""19358081-8e16-4c38-a0a3-3eade6de7c88"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""MoveHorizontal"",
-                    ""type"": ""Value"",
-                    ""id"": ""cbdbb1af-1231-43f9-9078-e446f3a92199"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""ClickSelect"",
                     ""type"": ""Button"",
                     ""id"": ""b834963c-8930-4e73-bf5e-ef96a0b0376c"",
@@ -59,6 +41,33 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""9a19ddfc-15a9-4413-abeb-59c0a60c5821"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveLeftStick"",
+                    ""type"": ""Button"",
+                    ""id"": ""840520f3-63e7-4bac-b99d-3262c84cb324"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveLeftStickHorizontal"",
+                    ""type"": ""Value"",
+                    ""id"": ""f0a74434-6e86-43eb-93be-b45a3832b817"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveLeftStickVertical"",
+                    ""type"": ""Value"",
+                    ""id"": ""2ccccd78-4b00-41f3-a564-51f3dc175ff4"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -89,34 +98,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7af7aa87-7479-4f36-b1cc-e17d75248db8"",
-                    ""path"": ""<Mouse>/delta/x"",
+                    ""id"": ""27008919-ae20-4151-a886-b52a67a1b68d"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveHorizontal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7ba43670-b47d-41db-b2ca-82cb61c6b182"",
-                    ""path"": ""<Mouse>/delta/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveVertical"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a50878dc-9853-4997-a1e7-c3e4112c2941"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveCursor"",
+                    ""action"": ""ClickSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -130,6 +117,39 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""MoveCursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1dff6e8c-8cd7-45b3-904e-66ace0c4b5eb"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeftStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d38a1bf-95b6-4efb-a36b-f02619487ca2"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeftStickHorizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e9e64442-0add-402d-b15a-91185d51c43e"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeftStickVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -138,10 +158,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
 }");
         // PlayerControls
         m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
-        m_PlayerControls_MoveVertical = m_PlayerControls.FindAction("MoveVertical", throwIfNotFound: true);
-        m_PlayerControls_MoveHorizontal = m_PlayerControls.FindAction("MoveHorizontal", throwIfNotFound: true);
         m_PlayerControls_ClickSelect = m_PlayerControls.FindAction("ClickSelect", throwIfNotFound: true);
         m_PlayerControls_MoveCursor = m_PlayerControls.FindAction("MoveCursor", throwIfNotFound: true);
+        m_PlayerControls_MoveLeftStick = m_PlayerControls.FindAction("MoveLeftStick", throwIfNotFound: true);
+        m_PlayerControls_MoveLeftStickHorizontal = m_PlayerControls.FindAction("MoveLeftStickHorizontal", throwIfNotFound: true);
+        m_PlayerControls_MoveLeftStickVertical = m_PlayerControls.FindAction("MoveLeftStickVertical", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -203,18 +224,20 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // PlayerControls
     private readonly InputActionMap m_PlayerControls;
     private List<IPlayerControlsActions> m_PlayerControlsActionsCallbackInterfaces = new List<IPlayerControlsActions>();
-    private readonly InputAction m_PlayerControls_MoveVertical;
-    private readonly InputAction m_PlayerControls_MoveHorizontal;
     private readonly InputAction m_PlayerControls_ClickSelect;
     private readonly InputAction m_PlayerControls_MoveCursor;
+    private readonly InputAction m_PlayerControls_MoveLeftStick;
+    private readonly InputAction m_PlayerControls_MoveLeftStickHorizontal;
+    private readonly InputAction m_PlayerControls_MoveLeftStickVertical;
     public struct PlayerControlsActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MoveVertical => m_Wrapper.m_PlayerControls_MoveVertical;
-        public InputAction @MoveHorizontal => m_Wrapper.m_PlayerControls_MoveHorizontal;
         public InputAction @ClickSelect => m_Wrapper.m_PlayerControls_ClickSelect;
         public InputAction @MoveCursor => m_Wrapper.m_PlayerControls_MoveCursor;
+        public InputAction @MoveLeftStick => m_Wrapper.m_PlayerControls_MoveLeftStick;
+        public InputAction @MoveLeftStickHorizontal => m_Wrapper.m_PlayerControls_MoveLeftStickHorizontal;
+        public InputAction @MoveLeftStickVertical => m_Wrapper.m_PlayerControls_MoveLeftStickVertical;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -224,34 +247,40 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerControlsActionsCallbackInterfaces.Add(instance);
-            @MoveVertical.started += instance.OnMoveVertical;
-            @MoveVertical.performed += instance.OnMoveVertical;
-            @MoveVertical.canceled += instance.OnMoveVertical;
-            @MoveHorizontal.started += instance.OnMoveHorizontal;
-            @MoveHorizontal.performed += instance.OnMoveHorizontal;
-            @MoveHorizontal.canceled += instance.OnMoveHorizontal;
             @ClickSelect.started += instance.OnClickSelect;
             @ClickSelect.performed += instance.OnClickSelect;
             @ClickSelect.canceled += instance.OnClickSelect;
             @MoveCursor.started += instance.OnMoveCursor;
             @MoveCursor.performed += instance.OnMoveCursor;
             @MoveCursor.canceled += instance.OnMoveCursor;
+            @MoveLeftStick.started += instance.OnMoveLeftStick;
+            @MoveLeftStick.performed += instance.OnMoveLeftStick;
+            @MoveLeftStick.canceled += instance.OnMoveLeftStick;
+            @MoveLeftStickHorizontal.started += instance.OnMoveLeftStickHorizontal;
+            @MoveLeftStickHorizontal.performed += instance.OnMoveLeftStickHorizontal;
+            @MoveLeftStickHorizontal.canceled += instance.OnMoveLeftStickHorizontal;
+            @MoveLeftStickVertical.started += instance.OnMoveLeftStickVertical;
+            @MoveLeftStickVertical.performed += instance.OnMoveLeftStickVertical;
+            @MoveLeftStickVertical.canceled += instance.OnMoveLeftStickVertical;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
         {
-            @MoveVertical.started -= instance.OnMoveVertical;
-            @MoveVertical.performed -= instance.OnMoveVertical;
-            @MoveVertical.canceled -= instance.OnMoveVertical;
-            @MoveHorizontal.started -= instance.OnMoveHorizontal;
-            @MoveHorizontal.performed -= instance.OnMoveHorizontal;
-            @MoveHorizontal.canceled -= instance.OnMoveHorizontal;
             @ClickSelect.started -= instance.OnClickSelect;
             @ClickSelect.performed -= instance.OnClickSelect;
             @ClickSelect.canceled -= instance.OnClickSelect;
             @MoveCursor.started -= instance.OnMoveCursor;
             @MoveCursor.performed -= instance.OnMoveCursor;
             @MoveCursor.canceled -= instance.OnMoveCursor;
+            @MoveLeftStick.started -= instance.OnMoveLeftStick;
+            @MoveLeftStick.performed -= instance.OnMoveLeftStick;
+            @MoveLeftStick.canceled -= instance.OnMoveLeftStick;
+            @MoveLeftStickHorizontal.started -= instance.OnMoveLeftStickHorizontal;
+            @MoveLeftStickHorizontal.performed -= instance.OnMoveLeftStickHorizontal;
+            @MoveLeftStickHorizontal.canceled -= instance.OnMoveLeftStickHorizontal;
+            @MoveLeftStickVertical.started -= instance.OnMoveLeftStickVertical;
+            @MoveLeftStickVertical.performed -= instance.OnMoveLeftStickVertical;
+            @MoveLeftStickVertical.canceled -= instance.OnMoveLeftStickVertical;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -271,9 +300,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
     public interface IPlayerControlsActions
     {
-        void OnMoveVertical(InputAction.CallbackContext context);
-        void OnMoveHorizontal(InputAction.CallbackContext context);
         void OnClickSelect(InputAction.CallbackContext context);
         void OnMoveCursor(InputAction.CallbackContext context);
+        void OnMoveLeftStick(InputAction.CallbackContext context);
+        void OnMoveLeftStickHorizontal(InputAction.CallbackContext context);
+        void OnMoveLeftStickVertical(InputAction.CallbackContext context);
     }
 }
