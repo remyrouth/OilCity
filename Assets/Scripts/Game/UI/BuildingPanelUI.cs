@@ -29,6 +29,7 @@ public class BuildingPanelUI : Singleton<BuildingPanelUI>
 
     public void StartFlicker(int buttonIndex)
     {
+        Debug.Log($"StartFlciker called for button index {buttonIndex}");
         var buildingButton = buildingButtons[buttonIndex].GetComponent<BuildingButton>();
         if (buildingButton != null)
         {
@@ -42,6 +43,7 @@ public class BuildingPanelUI : Singleton<BuildingPanelUI>
 
     public void StopFlicker(int buttonIndex)
     {
+        Debug.Log($"StopFlicker called for button index {buttonIndex}");
         var buildingButton = buildingButtons[buttonIndex].GetComponent<BuildingButton>();
         if (buildingButton != null)
         {
