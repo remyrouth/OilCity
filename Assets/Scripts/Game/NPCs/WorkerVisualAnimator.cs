@@ -15,6 +15,10 @@ public class WorkerVisualAnimator : MonoBehaviour
             return _anim;
         }
     }
+    private void Start()
+    {
+        UpdateSpeed(TimeManager.Instance.TicksPerMinute);
+    }
     private void OnEnable()
     {
         TimeManager.Instance.OnTicksPerMinuteChanged += UpdateSpeed;
