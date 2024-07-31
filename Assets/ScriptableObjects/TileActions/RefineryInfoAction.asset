@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8980b200ab87da4bbd1adfbb7f34e61, type: 3}
-  m_Name: InfoWage
+  m_Script: {fileID: 11500000, guid: 36a5daac4b361ca44aee82461f4a2fa8, type: 3}
+  m_Name: RefineryInfoAction
   m_EditorClassIdentifier: Assembly-CSharp::DestroyAction
-  icon: {fileID: 0}
+  icon: {fileID: -585200834, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
   <prefab>k__BackingField: {fileID: 1767801182589633848, guid: 87d2374cb2839e244ba3d3c96d9dd107, type: 3}
-  <WageIcons>k__BackingField:
-  - {fileID: 1407424610, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
-  - {fileID: -1640207184, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
-  - {fileID: 1807959607, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}

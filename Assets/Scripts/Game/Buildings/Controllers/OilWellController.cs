@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     [SerializeField] private ParticleSystem _spilloutEffect;
     private int _tickTimer;
     private int PaymentTimer => 5;
+    public event Action<float> OnOilMined;
     public (FlowType type, float amount) SendFlow()
     {
         float amountMined = 0;
@@ -38,6 +40,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
                 BoardManager.Instance.OilEvaluator.IncreaseAmountMinedAtPosition(Anchor.x + x, Anchor.y + y, minedFromTile);
             }
         }
+        OnOilMined?.Invoke(amountMined);
         return (FlowType.Oil, amountMined);
     }
 

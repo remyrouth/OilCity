@@ -22,7 +22,7 @@ public sealed class GeologistController : AOEBuildingController
     [SerializeField] private Transform _workerVisual;
     [SerializeField] private GameObject _oilPingPrefab;
     [SerializeField] private int _workerAmount;
-    private int activeWorkerAmount;
+    public int activeWorkerAmount { get;private set; }
     public override int TickNumberInterval => 10;
 
     public override int Range => 4;

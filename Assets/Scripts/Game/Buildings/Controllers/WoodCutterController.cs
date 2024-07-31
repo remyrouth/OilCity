@@ -31,6 +31,7 @@ public sealed class WoodCutterController : AOEBuildingController
     public event Action<Vector2Int> OnTreeCutted;
     private int _tickTimer;
     private int PaymentTimer => 5;
+    public int WorkersCount => _workers.Count;
     public void Start()
     {
         OnPaymentModeIncreased += IncreaseProductivity;

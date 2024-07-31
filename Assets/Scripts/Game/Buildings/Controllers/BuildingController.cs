@@ -6,7 +6,7 @@ public abstract class BuildingController<T> : TileObjectController
 {
     [SerializeField] protected List<TileAction> TileActions;
     [SerializeField] private Transform _demolishEffect;
-    protected T config;
+    public T config { get; protected set; }
     public override Vector2Int size => config.size;
     /// <summary>
     /// Initialize controller with given configuration

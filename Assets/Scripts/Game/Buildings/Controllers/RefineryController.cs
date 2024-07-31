@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     private int _tickTimer;
     private int PaymentTimer => 5;
     public bool IsWorking { get; private set; } = false;
+    public event Action<float> OnKeroseneProduced;
     protected override void CreateInitialConnections(Vector2Int with_position)
     {
         m_output = null;
@@ -77,6 +79,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
             Debug.LogWarning($"Spilled {diff} amount of Kerosene!", gameObject);
             OilSum = baseRefineryFlowrate;
         }
+        OnKeroseneProduced?.Invoke(OilSum);
         return (FlowType.Kerosene, OilSum);
     }
 
