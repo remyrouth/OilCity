@@ -6,10 +6,10 @@ namespace Game.Tutorial
         private new void OnEnable()
         {
             DialogueUI.Instance.OnDialogueClicked += FinishStep;
+            DialogueUI.Instance.EnableDialogue();
             base.OnEnable();
             TimeManager.Instance.TicksPerMinute = 0;
             TileSelector.Instance.SelectorEnabled = false;
-            DialogueUI.Instance.EnableDialogue();
         }
 
         private void OnDisable()

@@ -12,6 +12,10 @@ public sealed class ParticlesSpeed_listener : MonoBehaviour
             return _particles;
         }
     }
+    private void Start()
+    {
+        UpdateSpeed(TimeManager.Instance.TicksPerMinute);
+    }
     private void OnEnable()
     {
         TimeManager.Instance.OnTicksPerMinuteChanged += UpdateSpeed;
@@ -25,7 +29,7 @@ public sealed class ParticlesSpeed_listener : MonoBehaviour
         if (newTickRate == 0 && Particles.isPlaying)
             Particles.Pause();
         else
-            if (Particles.isPaused)
+            if (Particles.isPaused && newTickRate != 0)
             Particles.Play();
     }
 }

@@ -8,6 +8,7 @@ namespace Game.Tutorial
         {
             BuildingEvents.OnLumberjackPaymentIncrease += FinishStep;
             base.OnEnable();
+            TimeManager.Instance.TicksPerMinute = 60;
             TileSelector.Instance.SelectorEnabled = true;
         }
 

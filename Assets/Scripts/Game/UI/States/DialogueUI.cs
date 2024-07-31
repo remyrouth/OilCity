@@ -9,6 +9,8 @@ public class DialogueUI : Singleton<DialogueUI>
     [SerializeField] private TextMeshProUGUI text;
     private DialogueSO _currentDialogue;
 
+    public DialogueSO CurrentDialogue => _currentDialogue;
+
     public event Action OnDialogueClicked;
     
     public void EnableDialogue()
