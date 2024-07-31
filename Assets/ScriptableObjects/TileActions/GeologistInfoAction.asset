@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a5daac4b361ca44aee82461f4a2fa8, type: 3}
+  m_Script: {fileID: 11500000, guid: 87972bb63fd9775458fcab2c1c37a4c7, type: 3}
   m_Name: GeologistInfoAction
   m_EditorClassIdentifier: Assembly-CSharp::DestroyAction
   icon: {fileID: -585200834, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
-  <prefab>k__BackingField: {fileID: 1767801182589633848, guid: 87d2374cb2839e244ba3d3c96d9dd107, type: 3}
+  <prefab>k__BackingField: {fileID: 1767801182589633848, guid: 36e1d6ddee6af4943a28d5825564376e, type: 3}
