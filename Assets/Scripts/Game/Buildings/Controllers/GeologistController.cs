@@ -19,6 +19,7 @@ public sealed class GeologistController : AOEBuildingController
         }
     }
     List<GeologistWorker> _workers = new List<GeologistWorker>();
+    List<GeologistWorker> _firedWorkers = new List<GeologistWorker>();
     [SerializeField] private Transform _workerVisual;
     [SerializeField] private GameObject _oilPingPrefab;
     [SerializeField] private int _workerAmount;
@@ -55,6 +56,16 @@ public sealed class GeologistController : AOEBuildingController
     }
     public override void OnTick()
     {
+        for (int i = _workers.Count - 1; i >= 3; i--)
+        {
+            FireWorker(_workers[i]);
+        }
+        for (int i = _firedWorkers.Count - 1; i >= 0; i--)
+        {
+            _firedWorkers[i]._sequenceActions.Dequeue()?.Invoke(this);
+            if (_firedWorkers[i]._sequenceActions.Count == 0)
+                _firedWorkers.RemoveAt(i);
+        }
         for (int i = 0; i < _workers.Count; i++)
         {
             if (_workers[i]._sequenceActions.Count == 0)
@@ -153,22 +164,18 @@ public sealed class GeologistController : AOEBuildingController
     }
     private void FireWorker(GeologistWorker worker)
     {
+        _firedWorkers.Add(worker);
+        _workers.Remove(worker);
         worker._isActive = false;
         activeWorkerAmount = _workers.Where(e => e._isActive).Count();
         worker._sequenceActions.Clear();
         worker._sequenceActions.Enqueue((e) => e.ResetWorker(worker));
         worker._sequenceActions.Enqueue(null);
         worker._sequenceActions.Enqueue((e) => e.DestroyWorker(worker));
-        worker._sequenceActions.Enqueue((e) => e.RemoveFromWorkerList(worker));
-
     }
     private void DestroyWorker(GeologistWorker worker)
     {
         Destroy(worker._workerVisual.gameObject);
-    }
-    private void RemoveFromWorkerList(GeologistWorker worker)
-    {
-        _workers.Remove(worker);
     }
 
     protected override void IncreaseProductivity()

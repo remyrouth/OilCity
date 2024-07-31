@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 311998142569495418}
-  - component: {fileID: 8403687053315844564}
+  - component: {fileID: 5708948891213181241}
   m_Layer: 0
   m_Name: TutorialStep_9
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8403687053315844564
+--- !u!114 &5708948891213181241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7424512619486693478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c30940cd4344a09a9fb8c65020d6d7e, type: 3}
+  m_Script: {fileID: 11500000, guid: ed139cbd0ce2dcc40aa91a313566047d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 11400000, guid: 81a5f354ea417584f8239815a297602b, type: 2}

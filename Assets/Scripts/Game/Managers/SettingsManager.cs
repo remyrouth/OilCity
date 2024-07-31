@@ -39,7 +39,7 @@ namespace Game.Managers
             foreach (var lbo in languageBasedObjects)
                 lbo.UpdateText();
 
-            if (!SceneManager.GetActiveScene().name.Equals("MainMenu"))
+            if (!SceneManager.GetActiveScene().name.Equals("MainMenu") && DialogueUI.Instance.CurrentDialogue is not null)
             {
                 DialogueUI.Instance.ChangeTextLanguage();
             }
