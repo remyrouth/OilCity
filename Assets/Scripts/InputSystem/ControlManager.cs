@@ -10,10 +10,10 @@ public class ControlManager : Singleton<ControlManager>
     private PlayerInput playerControls;
     private Camera mainCamera;
     private InputType lastUsedInput = InputType.None;
+    public delegate void Buttontrigger();
+    public event Buttontrigger leftClickActivationButtontrigger;
     private Vector2 lastMousePosition;
     private Vector2 lastStickInput;
-
-
     private enum InputType
     {
         None,
@@ -32,6 +32,7 @@ public class ControlManager : Singleton<ControlManager>
         playerControls.PlayerControls.MoveCursor.performed += OnMouseMove;
         playerControls.PlayerControls.MoveLeftStick.performed += OnLeftStickMove;
         playerControls.PlayerControls.MoveLeftStick.canceled += LeftStickUsageUpdate;
+        playerControls.PlayerControls.ClickSelect.performed += OnSelectionButtonTrigger;
 
 
 
@@ -69,6 +70,11 @@ public class ControlManager : Singleton<ControlManager>
     {
         lastUsedInput = InputType.Stick;
         lastStickInput = context.ReadValue<Vector2>();
+    }
+
+    private void OnSelectionButtonTrigger(InputAction.CallbackContext context)
+    {
+        leftClickActivationButtontrigger?.Invoke();
     }
 
     private void UpdateCursorPosition(Vector2 input)
@@ -114,4 +120,5 @@ public class ControlManager : Singleton<ControlManager>
     {
         playerControls.Disable();
     }
+
 }
