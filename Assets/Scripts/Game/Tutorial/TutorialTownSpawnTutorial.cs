@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Tutorial
 {
-    public class TutorialSpawnTutorial : TutorialStep
+    public class TutorialTownSpawnTutorial : TutorialStep
     {
         [SerializeField] private Vector3 targetPosition;
         [SerializeField] private float targetZoom;
@@ -22,6 +22,7 @@ namespace Game.Tutorial
             CameraController.Instance.TargetZoom = targetZoom;
             yield return new WaitForSeconds(5);
             _canContinue = true;
+            TimeManager.Instance.TicksPerMinute = 0;
         }
 
         private void Update()

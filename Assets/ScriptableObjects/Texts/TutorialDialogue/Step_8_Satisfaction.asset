@@ -10,8 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step4
+  m_Name: Step_8_Satisfaction
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: 'Oh no it seems like the oil well has started pumping oil
-    out of the ground we need to get the oil from the well to the refinery. '
+  dialogueTextEnglish: 'Oh, would you look at that? It seems that it has increased
+    your overall worker satisfaction which means that hopefully they will start moving
+    in soon and you don''t want the worker satisfaction to get too low since that
+    would make all your employees quit which would be horrible.
+
+'
   dialogueTextPolish: TBD
