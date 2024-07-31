@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 11400000, guid: bc78865371f958140b37f436c86cddc5, type: 2}
   targetPosition: {x: 21, y: 34, z: -10}
-  targetZoom: 5
+  targetZoom: 6

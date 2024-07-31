@@ -48,4 +48,4 @@ MonoBehaviour:
   buildingName: Refinery
   buttonToUnlockIndex: 2
   targetPosition: {x: 21, y: 34, z: -10}
-  targetZoom: 5
+  targetZoom: 6
