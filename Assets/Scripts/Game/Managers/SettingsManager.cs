@@ -61,7 +61,7 @@ namespace Game.Managers
 
             if (PlayerPrefs.HasKey("CameraInversion"))
             {
-                CameraController.Instance.invert = PlayerPrefs.GetInt("CameraInversion") == 1;
+                CameraController.Instance.Invert = PlayerPrefs.GetInt("CameraInversion") == 1;
             }
         }
         
