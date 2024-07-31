@@ -29738,7 +29738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5833955198162113319, guid: e9be32e6e29b0df48b68b3d9bd97782c, type: 3}
       propertyPath: tutorialEnabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6525879330455550516, guid: e9be32e6e29b0df48b68b3d9bd97782c, type: 3}
       propertyPath: m_Name
@@ -30548,6 +30548,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuSceneName: MainMenu
+--- !u!114 &1755972032 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5514326931419509997, guid: 633a53a529bff7945b511daff03bc261, type: 3}
+  m_PrefabInstance: {fileID: 8138862772309404937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7cd7fb14f93b8c47957c18342349ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1850073788
 GameObject:
   m_ObjectHideFlags: 0
@@ -47681,7 +47692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a02990ed10d21da49a0a4e6985da4f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildingPanel: {fileID: 0}
+  _buildingPanel: {fileID: 1755972032}
 --- !u!114 &4480793108913016866
 MonoBehaviour:
   m_ObjectHideFlags: 0
