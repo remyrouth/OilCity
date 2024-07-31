@@ -56,10 +56,6 @@ public sealed class GeologistController : AOEBuildingController
     }
     public override void OnTick()
     {
-        for (int i = _workers.Count - 1; i >= 3; i--)
-        {
-            FireWorker(_workers[i]);
-        }
         for (int i = _firedWorkers.Count - 1; i >= 0; i--)
         {
             _firedWorkers[i]._sequenceActions.Dequeue()?.Invoke(this);
@@ -129,10 +125,20 @@ public sealed class GeologistController : AOEBuildingController
 
         if (bestOilSpot == null)
             return;
-
+        FireWorkersIfNeeded();
         Debug.Log($"Found great oil spot at {bestOilSpot}!");
         OnOilSpotFound?.Invoke(bestOilSpot);
 
+    }
+    private void FireWorkersIfNeeded()
+    {
+        if(_workers.Count() > 3)
+        {
+            for (int i = _workers.Count() - 1; i >= 3; i--)
+            {
+                FireWorker(_workers[i]);
+            }
+        }
     }
     private void PingSpot(Vector2Int pos)
     {
@@ -198,10 +204,10 @@ public sealed class GeologistController : AOEBuildingController
         switch (CurrentPaymentMode)
         {
             case PaymentMode.MEDIUM:
-                FireWorker(_workers[activeWorkerAmount - 1]);
+                FireWorker(_workers[_workers.Count() - 1]);
                 break;
             case PaymentMode.LOW:
-                FireWorker(_workers[activeWorkerAmount - 1]);
+                FireWorker(_workers[_workers.Count() - 1]);
                 break;
             default:
                 break;
