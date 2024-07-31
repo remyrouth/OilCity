@@ -41,7 +41,7 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         StopFlicker();
     }
 
-    private void StartFlicker()
+    public void StartFlicker()
     {
         if (_highlightImage != null)
         {
@@ -51,7 +51,7 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    private void StopFlicker()
+    public void StopFlicker()
     {
         if (_highlightImage != null)
         {

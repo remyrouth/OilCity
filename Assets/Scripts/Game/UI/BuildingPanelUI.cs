@@ -26,5 +26,30 @@ public class BuildingPanelUI : Singleton<BuildingPanelUI>
     {
         buildingButtons[buttonIndex].interactable = !buildingButtons[buttonIndex].interactable;
     }
-    
+
+    public void StartFlicker(int buttonIndex)
+    {
+        var buildingButton = buildingButtons[buttonIndex].GetComponent<BuildingButton>();
+        if (buildingButton != null)
+        {
+            buildingButton.StartFlicker();
+        }
+        else
+        {
+            Debug.LogError("BuildingButton component not found on the button.");
+        }
+    }
+
+    public void StopFlicker(int buttonIndex)
+    {
+        var buildingButton = buildingButtons[buttonIndex].GetComponent<BuildingButton>();
+        if (buildingButton != null)
+        {
+            buildingButton.StopFlicker();
+        }
+        else
+        {
+            Debug.LogError("BuildingButton component not found on the button.");
+        }
+    }
 }
