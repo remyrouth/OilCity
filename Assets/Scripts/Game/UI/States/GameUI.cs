@@ -26,6 +26,8 @@ public class GameUI : UIState
 
     private void MouseClick() {
         // Debug.Log("Mouse Clicked from ControlManager delegate");
+        if (UIStateMachine.Instance.CurrentStateType != type)
+            return;
         if (!EventSystem.current.IsPointerOverGameObject()) {
             TileSelector.Instance.OnMouseClick();
         }
