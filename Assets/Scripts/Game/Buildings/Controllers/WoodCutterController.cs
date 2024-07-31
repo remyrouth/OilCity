@@ -75,6 +75,7 @@ public sealed class WoodCutterController : AOEBuildingController
         // go to spot
         worker._sequenceActions.Enqueue((e) => { e.PickTree(worker); });
         worker._sequenceActions.Enqueue(null);
+        worker._sequenceActions.Enqueue(null);
         worker._sequenceActions.Enqueue((e) => { e.FinalizeCutting(worker); });
 
         //wait for the cooldown
@@ -107,7 +108,7 @@ public sealed class WoodCutterController : AOEBuildingController
         anim.SetBool("IsWalking", true);
 
         worker._workerVisual.DOKill();
-        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2)
+        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2.25f)
             .OnComplete(() => { anim.SetBool("IsWalking", false); anim.SetTrigger("DoAction"); });
     }
     private void FinalizeCutting(WoodCutterWorker worker)
