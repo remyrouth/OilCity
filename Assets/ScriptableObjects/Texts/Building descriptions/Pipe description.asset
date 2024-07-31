@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Pipe description
   m_EditorClassIdentifier: 
   text:
-  - testing
-  - testowanie
+  - Transports oil
+  - Transportuje olej

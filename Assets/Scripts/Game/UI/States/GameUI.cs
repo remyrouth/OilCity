@@ -7,13 +7,35 @@ public class GameUI : UIState
 
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private BuildingPanelView _buildingPanel;
+
+    private ControlManager controlManager;
     
     public override void OnUpdate()
     {
-        if (!Input.GetMouseButtonDown(0))
-            return;
-        if (!EventSystem.current.IsPointerOverGameObject())
+
+    }
+
+    private void Start() {
+        controlManager = FindObjectOfType<ControlManager>();
+        if (controlManager != null) {
+            controlManager.leftClickActivationButtontrigger += MouseClick;
+        } else {
+            Debug.LogError("ControlManager not found in the scene.");
+        }
+    }
+
+    private void MouseClick() {
+        // Debug.Log("Mouse Clicked from ControlManager delegate");
+        if (!EventSystem.current.IsPointerOverGameObject()) {
             TileSelector.Instance.OnMouseClick();
+        }
+    }
+
+
+    private void OnDestroy() {
+        if (controlManager != null) {
+            controlManager.leftClickActivationButtontrigger -= MouseClick;
+        }
     }
 
     public void ChangeDialoguePanelVisibility()

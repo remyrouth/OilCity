@@ -7,13 +7,14 @@ public class GameDataRecorder : Singleton<GameDataRecorder>, ITickReceiver
     public readonly List<GameRecord> _records = new();
     private void Start()
     {
-        TimeManager.Instance.RegisterReceiver(gameObject);
+        TimeManager.Instance.RegisterReceiver(this);
     }
+
     private int _tickTimer;
     public void OnTick()
     {
         _tickTimer++;
-        if (_tickTimer <= TickNumberInterval)
+        if (_tickTimer < TickNumberInterval)
             return;
         _tickTimer = 0;
         TakeSnapshot();

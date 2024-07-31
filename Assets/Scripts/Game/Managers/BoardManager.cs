@@ -15,6 +15,7 @@ public class BoardManager : Singleton<BoardManager>
     [SerializeField] private Tilemap _pipeTileMap;
 
     public event Action<Vector2Int, BuildingScriptableObject> OnBuildingPlaced;
+    public event Action<Vector2Int, TileObjectController> OnBuildingDestroyed;
 
     [Serializable]
     private struct InitialBuilding
@@ -174,7 +175,8 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     /// <param name="tileSprite"></param>
     /// <returns></returns>
-    public void SetPipeTileInSupermap(Vector2Int position, PipeSpriteScript.PipeRotation rot) {
+    public void SetPipeTileInSupermap(Vector2Int position, PipeSpriteScript.PipeRotation rot)
+    {
         // Create a new Tile and assign the sprite to it
         Tile newTile = ScriptableObject.CreateInstance<Tile>();
         newTile.sprite = rot.Sprite;
@@ -197,18 +199,18 @@ public class BoardManager : Singleton<BoardManager>
         Vector2Int upperRight = building.Anchor + building.size;
         List<Vector2Int> tiles = new();
 
-        for (int x = building.Anchor.x - range; x < upperRight.x + range; x++)
+        for (int x = building.Anchor.x - range; x < upperRight.x + range-1; x++)
         {
-            for (int y = building.Anchor.y - range; y < upperRight.y + range; y++)
+            for (int y = building.Anchor.y - range; y < upperRight.y + range-1; y++)
             {
                 Vector2Int currentPos = new Vector2Int(x, y);
                 if (IsPositionOutsideBoard(currentPos))
                     continue;
-                int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x);
-                int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y);
+                int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x+1);
+                int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y+1);
                 if (x >= building.Anchor.x && x <= upperRight.x - 1 && y >= building.Anchor.y && y <= upperRight.y - 1) continue;
-                //if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
-                tiles.Add(currentPos);
+                if (new Vector2Int(xDistance, yDistance).sqrMagnitude < range * range)
+                    tiles.Add(currentPos);
             }
         }
 
@@ -243,6 +245,7 @@ public class BoardManager : Singleton<BoardManager>
         var tiles = tileDictionary.Where(pos => pos.Value == tileObject).Select(pos => pos.Key).ToList();
         foreach (Vector2Int position in tiles)
             Destroy(position);
+        OnBuildingDestroyed?.Invoke(tileObject.Anchor, tileObject);
         Destroy(tileObject.gameObject);
     }
     private void Destroy(Vector2Int position)

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public abstract class SingleGraphView : MonoBehaviour
@@ -17,7 +16,6 @@ public abstract class SingleGraphView : MonoBehaviour
     public abstract void PopulateGraph();
     protected void PopulateGraph(List<float> values)
     {
-        var size = GetComponent<RectTransform>().sizeDelta;
         var max = values.Max();
         List<Vector2> points = new();
         for (int i = 0; i < values.Count; i++)

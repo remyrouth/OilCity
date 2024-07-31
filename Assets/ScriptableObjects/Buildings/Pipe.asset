@@ -19,8 +19,9 @@ MonoBehaviour:
   <prefab>k__BackingField: {fileID: 5643698438408399773, guid: e8b181e337c33bf4c8a7a0b7f999785d, type: 3}
   <previewPrefab>k__BackingField: {fileID: 7985930009597182815, guid: a3db034b263f0e14d9c19f93fac0c235, type: 3}
   <size>k__BackingField: {x: 1, y: 1}
-  <buildingName>k__BackingField: {fileID: 0}
-  <description>k__BackingField: {fileID: 0}
-  m_flowDebugMesh: {fileID: -2432090755550338912, guid: c7309ae32cff9ef4fa19b167aa5c7ec3, type: 3}
+  <buildingName>k__BackingField: {fileID: 11400000, guid: dda8208c5269b2b48ac298ae28128023, type: 2}
+  <description>k__BackingField: {fileID: 11400000, guid: b9137289a378c3e4f88237ded78db3d4, type: 2}
   actionList:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
+  _oilSpillout: {fileID: 7412738978020014858, guid: 2c9a08c300ccef04aadd10999a3147b2, type: 3}
+  _keroseneSpillout: {fileID: 9164187038662015931, guid: 1f57cb160d652684783782cfce663c12, type: 3}

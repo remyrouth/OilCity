@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,14 +27,17 @@ public class TimeManager : Singleton<TimeManager>
             m_ticksPerMinute = value;
             m_timePerTick = 60f / m_ticksPerMinute;
             m_timeElaspedSinceTick = 0;
+            OnTicksPerMinuteChanged?.Invoke(value);
+            OnTimePerTickChanged?.Invoke(TimePerTick);
         }
     }
     [SerializeField] private int m_ticksPerMinute = 60;
-
+    public event Action<int> OnTicksPerMinuteChanged;
+    public event Action<float> OnTimePerTickChanged;
     // a collection of all the nodes that require an individual OnTick invokation
     // loggers and train stations, for example. individual trees (like a pipe to a refinery) 
     // also exist in this list.
-    private Collection<ITickReceiver> m_tickableForest;
+    private Collection<ITickReceiver> m_tickableForest = new();
 
     // invariant: contains every tree node component in the game
     private readonly Collection<ITreeNode> m_nodes = new();
@@ -46,7 +50,6 @@ public class TimeManager : Singleton<TimeManager>
 
     private void Awake()
     {
-        m_tickableForest = new Collection<ITickReceiver>();
         TicksPerMinute = m_ticksPerMinute;
     }
 
@@ -62,10 +65,8 @@ public class TimeManager : Singleton<TimeManager>
             m_timeElaspedSinceTick -= m_timePerTick;
 
             // activate all tick listeners
-            foreach (ITickReceiver receiver in m_tickableForest)
-            {
-                receiver.OnTick();
-            }
+            for (int i = m_tickableForest.Count - 1; i >= 0; i--)
+                m_tickableForest[i].OnTick();
         }
 
         // increment time
@@ -79,12 +80,12 @@ public class TimeManager : Singleton<TimeManager>
     /// Additionally, manages the combination of trees that are connected to the input object when called.
     /// </summary>
     /// <param name="receiver"></param>
-    public void RegisterReceiver(GameObject receiver)
+    public void RegisterReceiver(MonoBehaviour receiver)
     {
         // if no tickable item is found on the given object, nothing is done
-        if (!receiver.TryGetComponent<ITickReceiver>(out var tick_receiver))
+        if (receiver as ITickReceiver == null)
         {
-            Debug.Log(string.Format("No tick receiver found on gameobject {0}. Skipping...", receiver.name));
+            Debug.Log(string.Format("No tick receiver given. Skipping..."));
             return;
         }
 
@@ -94,11 +95,10 @@ public class TimeManager : Singleton<TimeManager>
         // otherwise, if no flowable component is found, we know that it's something that doesn't deal with flow
         // but needs ticks. Like a logger cabin or a geologist's hut. Hence, we'll just add it to the tickable forest
         // as its own singleton tree.
-        if (receiver.TryGetComponent<IFlowable>(out var flow_node)) HandleRegister(flow_node);
+        if (receiver is IFlowable flow_node)
+            HandleRegister(flow_node);
         else
-        {
-            m_tickableForest.Add(tick_receiver);
-        }
+            m_tickableForest.Add(receiver as ITickReceiver);
     }
 
     /// <summary>
@@ -106,12 +106,12 @@ public class TimeManager : Singleton<TimeManager>
     /// the itme remove, sometimes splits the tree into multiple new trees that are added to the forest.
     /// </summary>
     /// <param name="receiver"></param>
-    public void DeregisterReceiver(GameObject receiver)
+    public void DeregisterReceiver(MonoBehaviour receiver)
     {
         // if no tickable item is found on the given object, nothing is done
-        if (!receiver.TryGetComponent<ITickReceiver>(out var tick_receiver))
+        if (receiver as ITickReceiver == null)
         {
-            Debug.Log(string.Format("No tick receiver found on gameobject {0}. Skipping...", receiver.name));
+            Debug.Log(string.Format("No tick receiver given. Skipping..."));
             return;
         }
 
@@ -121,11 +121,11 @@ public class TimeManager : Singleton<TimeManager>
         // otherwise, if no flowable component is found, we know that it's something that doesn't deal with flow
         // but needs ticks. Like a logger cabin or a geologist's hut. Hence, we'll just add it to the tickable forest
         // as its own singleton tree.
-        if (receiver.TryGetComponent<IFlowable>(out var flow_node)) HandleDeregister(flow_node);
+        if (receiver is IFlowable flow_node)
+            HandleDeregister(flow_node);
         else
-        {
-            m_tickableForest.Remove(tick_receiver);
-        }
+            m_tickableForest.Remove(receiver as ITickReceiver);
+
     }
 
     /// <summary>

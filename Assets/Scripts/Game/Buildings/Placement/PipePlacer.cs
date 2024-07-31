@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Game.Events;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -268,6 +269,7 @@ public class PipePlacer : BuildingPlacer
         component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
         component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
         component.transform.position = Utilities.Vector2IntToVector3(m_start);
+        PipeEvents.PlacePipe();
     }
 
     /// <summary>

@@ -10,5 +10,6 @@ public class EndingUI : UIState
         base.OnEnter();
         foreach (var graph in _graphs)
             graph.PopulateGraph();
+        TimeManager.Instance.TicksPerMinute = 0;
     }
 }

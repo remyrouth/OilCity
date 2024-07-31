@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a5daac4b361ca44aee82461f4a2fa8, type: 3}
+  m_Name: OilInfoAction
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyAction
+  icon: {fileID: -585200834, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
+  <prefab>k__BackingField: {fileID: 1767801182589633848, guid: 87d2374cb2839e244ba3d3c96d9dd107, type: 3}

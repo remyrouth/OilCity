@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System;
+using TMPro;
 using UnityEngine;
 using static UnityEditor.Rendering.CameraUI;
 using Unity.VisualScripting;
@@ -57,6 +57,16 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     public void SetTileActions(List<TileAction> actions)
     {
         this.TileActions = actions;
+    }
+    public void SetActionPivot()
+    {
+        _actionsPivot = Vector2.one / 2;
+    }
+    private PipeSpillageEffect _oilSpillout, _keroseneSpillout;
+    public void SetParticleSystems(GameObject _oil, GameObject _kerosene)
+    {
+        _oilSpillout = Instantiate(_oil, transform).GetComponent<PipeSpillageEffect>();
+        _keroseneSpillout = Instantiate(_kerosene, transform).GetComponent<PipeSpillageEffect>();
     }
 
     protected override void CreateInitialConnections(Vector2Int _)
@@ -178,7 +188,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             m_child = child;
         }
-        
+
     }
 
     /// <summary>
@@ -228,6 +238,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     public void SetParent(IFlowable parent)
     {
         m_parent = parent;
+        _oilSpillout.Stop();
+        _keroseneSpillout.Stop();
     }
     #endregion
 
@@ -237,7 +249,18 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// </summary>
     public void OnTick()
     {
-        Debug.LogWarning(string.Format("{0} has overflowed {1}", gameObject.name, SendFlow()));
+        var received = SendFlow();
+        Debug.LogWarning(string.Format("{0} has overflowed {1}", gameObject.name, received));
+
+        if (received.type == FlowType.Oil && received.amount > 0)
+            _oilSpillout.Play(m_endPipePos, m_endDirection);
+        else
+            _oilSpillout.Stop();
+
+        if (received.type == FlowType.Kerosene && received.amount > 0)
+            _keroseneSpillout.Play(m_endPipePos, m_endDirection);
+        else
+            _keroseneSpillout.Stop();
     }
 
     /// <summary>
@@ -254,7 +277,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        
+
         // clear all relevant pipe tiles from supermap
         foreach (var pos in m_pipes)
         {
@@ -269,7 +292,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <returns></returns>
     public bool DoesPipeSystemReceiveInputFromTile(Vector2Int tile_pos)
     {
-        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_startPipePos, out PipeFlowDirection est_flow_dir)) {
+        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_startPipePos, out PipeFlowDirection est_flow_dir))
+        {
             // flow is flipped here because the estimate flow direction method operates under the assumption that the pipe is always flowing
             // into the tile, not the other way around.
             return Utilities.FlipFlow(est_flow_dir) == m_startDirection;

@@ -24,6 +24,12 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         AddCameraMusicTrack();
+        Camera.main.gameObject.GetComponent<AudioSource>().enabled = false;
+        
+    }
+
+    private void Start() {
+        Camera.main.gameObject.GetComponent<AudioSource>().enabled = true;
     }
 
     private void AddCameraMusicTrack() {
