@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 namespace Game.Managers
 {
@@ -37,7 +38,12 @@ namespace Game.Managers
                 .OfType<ILanguageChangeable>();
             foreach (var lbo in languageBasedObjects)
                 lbo.UpdateText();
-        
+
+            if (!SceneManager.GetActiveScene().name.Equals("MainMenu"))
+            {
+                DialogueUI.Instance.ChangeTextLanguage();
+            }
+
             PlayerPrefs.SetString("Language", CurrentLanguage.ToString());
         }
 

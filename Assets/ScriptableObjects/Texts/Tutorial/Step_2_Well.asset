@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step8
+  m_Name: Step_2_Well
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: Hmm I think we can speed up this process by increasing the
-    lumberjacks wages.
+  dialogueTextEnglish: "Well well well what do we have here \u2026 a WELL!!!!(HAHA)
+    \u2026 This bad boy makes the whole process possible and might I say one of my
+    finest inventions in fact practically first of its kind."
   dialogueTextPolish: TBD

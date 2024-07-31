@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step3
+  m_Name: Step_6_LumberJack
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: 'Now we should make a Refinery. This is used to make oil into
-    Kerosene which we sell at a way higher price than we do oil. '
+  dialogueTextEnglish: Well now that we really are out of the woods lets try to make
+    some space in these woods. Go ahead and place a LumberJack, so they can begin
+    making space.
   dialogueTextPolish: TBD

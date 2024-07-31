@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3879921978850794355
+--- !u!1 &8467326613042981488
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 458511718399267427}
-  - component: {fileID: 8333490074074986069}
+  - component: {fileID: 1311489085502484094}
+  - component: {fileID: 5941973919856589666}
   m_Layer: 0
   m_Name: TutorialStep_3
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &458511718399267427
+--- !u!4 &1311489085502484094
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3879921978850794355}
+  m_GameObject: {fileID: 8467326613042981488}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 758.61835, y: 437.52783, z: 1.8633323}
@@ -32,18 +32,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8333490074074986069
+--- !u!114 &5941973919856589666
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3879921978850794355}
+  m_GameObject: {fileID: 8467326613042981488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f4689b165547b44883f71a001999f17, type: 3}
+  m_Script: {fileID: 11500000, guid: 409ed984a8fe49dda2727ce73486df95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 11400000, guid: 6b7aeffeb46c45f448e4b30441e8ac5e, type: 2}
   buildingName: Refinery
   buttonToUnlockIndex: 2
+  targetPosition: {x: 21, y: 34, z: -10}
+  targetZoom: 5
