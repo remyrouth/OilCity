@@ -93,11 +93,10 @@ public class TimeLineEventManager : MonoBehaviour, ITickReceiver
                 return;
             }
             AlterSlider();
-
+            MoneyManager.Instance.ReduceMoney(MoneyManager.Instance.Quota);
             currentTick = 0f;
             currentYear++;
             CheckNextEvent();
-
             AlterPollutionInstance();
         }
     }
