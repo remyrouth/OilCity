@@ -185,17 +185,17 @@ public class BoardManager : Singleton<BoardManager>
         Vector2Int upperRight = building.Anchor + building.size;
         List<Vector2Int> tiles = new();
 
-        for (int x = building.Anchor.x - range; x < upperRight.x + range; x++)
+        for (int x = building.Anchor.x - range; x < upperRight.x + range-1; x++)
         {
-            for (int y = building.Anchor.y - range; y < upperRight.y + range; y++)
+            for (int y = building.Anchor.y - range; y < upperRight.y + range-1; y++)
             {
                 Vector2Int currentPos = new Vector2Int(x, y);
                 if (IsPositionOutsideBoard(currentPos))
                     continue;
-                int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x);
-                int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y);
+                int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x+1);
+                int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y+1);
                 if (x >= building.Anchor.x && x <= upperRight.x - 1 && y >= building.Anchor.y && y <= upperRight.y - 1) continue;
-                if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
+                if (new Vector2Int(xDistance, yDistance).sqrMagnitude < range * range)
                     tiles.Add(currentPos);
             }
         }
