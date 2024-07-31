@@ -17,9 +17,13 @@ public class TileSelector : Singleton<TileSelector>
     /// <returns></returns>
     public Vector2Int MouseToGrid()
     {
-        Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int mouseCellPosition = new Vector2Int((int)mouseSpotPosition.x, (int)mouseSpotPosition.y);
-        return mouseCellPosition;
+        Vector3 mouseCursorPosition = Camera.main.ScreenToWorldPoint(ControlManager.Instance.RetrieveMousePosition());
+        Vector2Int cursorCellPosition = new Vector2Int((int)mouseCursorPosition.x, (int)mouseCursorPosition.y);
+        return cursorCellPosition;
+
+        // Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Vector2Int mouseCellPosition = new Vector2Int((int)mouseSpotPosition.x, (int)mouseSpotPosition.y);
+        // return mouseCellPosition;
     }
     public void OnMouseClick()
     {
