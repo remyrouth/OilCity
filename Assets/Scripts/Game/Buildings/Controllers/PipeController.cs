@@ -49,7 +49,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             if (pipes[i].Equals(end_pos)) end_i = i;
         }
 
-        if (start_i == -1 || end_i == -1) throw new ArgumentException("start or end positions were not found in pipe point list!");
+        if (start_i == -1 || end_i == -1) throw new System.ArgumentException("start or end positions were not found in pipe point list!");
 
         m_pipes = pipes.GetRange(start_i, end_i - start_i + 1);
     }
