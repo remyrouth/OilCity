@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -30316,12 +30316,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yearRange: {x: 1750, y: 1846}
   currentYear: 0
-  ticksPerYear: 2
+  ticksPerYear: 4
   currentTick: 0
   _eventUI: {fileID: 5767077434741795117}
-  eventsOnTimeLine:
-  - {fileID: 11400000, guid: 2918c24cab296452580b348612d6122b, type: 2}
-  - {fileID: 11400000, guid: 175878a97dfbd4f88b7437cc379b15cf, type: 2}
+  eventsOnTimeLine: []
   currentEventListIndex: 0
   _timelineSlider: {fileID: 1275232603}
   _newsPaperPrefabImage: {fileID: 6747949654655670300, guid: 9e464b3aa97a648afbded8f833e7c1de, type: 3}
@@ -48614,19 +48612,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 331593445608634086, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 331593445608634086, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 331593445608634086, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 113.6
       objectReference: {fileID: 0}
     - target: {fileID: 331593445608634086, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -792.8
       objectReference: {fileID: 0}
     - target: {fileID: 813224343219479989, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMax.y
@@ -48838,6 +48836,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3148575281093996499, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4537241464617687712, guid: 633a53a529bff7945b511daff03bc261, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4563100091876967046, guid: 633a53a529bff7945b511daff03bc261, type: 3}

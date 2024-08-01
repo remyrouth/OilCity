@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public sealed class RefineryController : PayrateBuildingController, IFlowable
@@ -73,12 +74,20 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
         IsWorking = OilSum > 0;
         HandleWorkingEffects();
         baseRefineryFlowrate = GetBaseRefineryFlowrate();
+
         if (OilSum > baseRefineryFlowrate)
         {
             float diff = OilSum - baseRefineryFlowrate;
             Debug.LogWarning($"Spilled {diff} amount of Kerosene!", gameObject);
             OilSum = baseRefineryFlowrate;
+
+            _spilloutEffect.Play();
         }
+        else
+        {
+            _spilloutEffect.Stop();
+        }
+
         OnKeroseneProduced?.Invoke(OilSum);
         return (FlowType.Kerosene, OilSum);
     }
@@ -90,13 +99,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     private float GetBaseRefineryFlowrate()
     {
-        return CurrentPaymentMode switch
-        {
-            PaymentMode.LOW => 0.5f,
-            PaymentMode.MEDIUM => 1,
-            PaymentMode.HIGH => 2,
-            _ => 0,
-        };
+        return OilWellController.BASE_OIL_RATE * ((int)CurrentPaymentMode + 1);
     }
     private float GetKeroseneMultiplier()
     {
