@@ -31,7 +31,7 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
         transform.position = new Vector3(mousePos.x, mousePos.y, 0);
         var can_be_built = IsValidPlacement(m_so);
 
-        m_spriteRenderer.color = new Color(1, can_be_built ? 1 : 0, can_be_built ? 1 : 0, can_be_built ? 1 : 0.75f);
+        m_spriteRenderer.color = new Color(1, can_be_built ? 1 : 0, can_be_built ? 1 : 0, can_be_built ? 0.75f : 0.25f);
     }
 
     public virtual bool IsValidPlacement(BuildingScriptableObject so)
@@ -51,7 +51,8 @@ public class BuildingPlacer : MonoBehaviour, IPlacer
 
         // create the instance of the thing and set its position
         Vector2Int pos = TileSelector.Instance.MouseToGrid();
-        BoardManager.Instance.Create(pos, m_so);
+        if (BoardManager.Instance.Create(pos, m_so))
+            MoneyManager.Instance.ReduceMoney(m_so.placementCost);
     }
 
     public virtual void Cleanup()

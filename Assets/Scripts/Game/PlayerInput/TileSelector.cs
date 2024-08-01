@@ -3,19 +3,31 @@ using UnityEngine;
 
 public class TileSelector : Singleton<TileSelector>
 {
+    [SerializeField] private bool selectorEnabled;
+
+    public bool SelectorEnabled
+    {
+        get => selectorEnabled;
+        set => selectorEnabled = value;
+    }
+
     /// <summary>
     /// Returns the mouses position in the grid
     /// </summary>
     /// <returns></returns>
     public Vector2Int MouseToGrid()
     {
-        Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int mouseCellPosition = new Vector2Int((int)mouseSpotPosition.x, (int)mouseSpotPosition.y);
-        return mouseCellPosition;
+        Vector3 mouseCursorPosition = Camera.main.ScreenToWorldPoint(ControlManager.Instance.RetrieveMousePosition());
+        Vector2Int cursorCellPosition = new Vector2Int((int)mouseCursorPosition.x, (int)mouseCursorPosition.y);
+        return cursorCellPosition;
+
+        // Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Vector2Int mouseCellPosition = new Vector2Int((int)mouseSpotPosition.x, (int)mouseSpotPosition.y);
+        // return mouseCellPosition;
     }
     public void OnMouseClick()
     {
-        if (!BoardManager.Instance.IsTileOccupied(MouseToGrid()))
+        if (!selectorEnabled || !BoardManager.Instance.IsTileOccupied(MouseToGrid()))
         {
             EndFocus();
             return;
@@ -29,7 +41,7 @@ public class TileSelector : Singleton<TileSelector>
     [SerializeField] private GameObject _actionPrefab;
     [SerializeField] private Canvas _actionsCanvas;
     private TileObjectController _currentSelected;
-    private List<SingleTileActionView> views = new();
+    private List<GameObject> views = new();
     private void BeginFocus(TileObjectController toc)
     {
         EndFocus();
@@ -42,9 +54,9 @@ public class TileSelector : Singleton<TileSelector>
 
         for (int i = 0; i < actions.Count; i++)
         {
-            var visual = Instantiate(_actionPrefab, _actionsCanvas.transform)
-                .GetComponent<SingleTileActionView>();
-            visual.Initialize(actions[i], i * 180 / actions.Count, _currentSelected, this);
+            float angle = -75 + i * 50;
+            var visual = actions[i].Create(_actionsCanvas.transform
+                , angle, _currentSelected, this);
             views.Add(visual);
         }
     }

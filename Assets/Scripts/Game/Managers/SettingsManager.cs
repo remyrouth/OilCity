@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 namespace Game.Managers
 {
@@ -12,6 +13,7 @@ namespace Game.Managers
         public event VolumeChanged OnAmbientSoundVolumeChanged;
         public event VolumeChanged OnMusicVolumeChanged;
 
+        private float _masterVolume = 1f;
         private float _soundEffectVolume = 1f;
         private float _ambientSoundVolume = 1f;
         private float _musicVolume = 1f;
@@ -19,6 +21,13 @@ namespace Game.Managers
         private void Awake()
         {
             SetLanguage();
+            SetTutorialEnabled();
+            SetCameraMovementInversion();
+            
+            _masterVolume = PlayerPrefs.GetFloat("MasterVolume");
+            _musicVolume = PlayerPrefs.GetFloat("MusicVolume");;
+            _soundEffectVolume = PlayerPrefs.GetFloat("SoundEffectVolume");;
+            _ambientSoundVolume = PlayerPrefs.GetFloat("AmbientSoundVolume");;
         }
 
         public void SetLanguage(Language newLanguage)
@@ -29,7 +38,12 @@ namespace Game.Managers
                 .OfType<ILanguageChangeable>();
             foreach (var lbo in languageBasedObjects)
                 lbo.UpdateText();
-        
+
+            if (!SceneManager.GetActiveScene().name.Equals("MainMenu") && DialogueUI.Instance.CurrentDialogue is not null)
+            {
+                DialogueUI.Instance.ChangeTextLanguage();
+            }
+
             PlayerPrefs.SetString("Language", CurrentLanguage.ToString());
         }
 
@@ -48,10 +62,34 @@ namespace Game.Managers
             SetLanguage(CurrentLanguage);
         }
         
-        public void ToggleCameraMovementInversion()
+        private void SetCameraMovementInversion()
         {
-            CameraController.Instance.invert = !CameraController.Instance.invert;
-            PlayerPrefs.SetInt("CameraInversion", CameraController.Instance.invert ? 1 : 0);
+
+            if (PlayerPrefs.HasKey("CameraInversion"))
+            {
+                CameraController.Instance.Invert = PlayerPrefs.GetInt("CameraInversion") == 1;
+            }
+        }
+        
+        private void SetTutorialEnabled()
+        {
+            if (PlayerPrefs.HasKey("TutorialEnabled"))
+            {
+                TutorialManager.Instance.TutorialEnabled = PlayerPrefs.GetInt("TutorialEnabled") == 1;
+            }
+        }
+
+        public float MasterVolume
+        {
+            get => _masterVolume;
+            set
+            {
+                _masterVolume = value;
+                PlayerPrefs.SetFloat("MasterVolume", _masterVolume);
+                OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+                OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _ambientSoundVolume);
+                OnMusicVolumeChanged?.Invoke(_masterVolume * _musicVolume);
+            } 
         }
 
         public float SoundEffectVolume
@@ -64,8 +102,8 @@ namespace Game.Managers
                     return;
                 }
                 _soundEffectVolume = value;
-                PlayerPrefs.SetFloat("SFXSoundVolume", _soundEffectVolume);
-                OnSoundEffectVolumeChanged?.Invoke(_soundEffectVolume);
+                PlayerPrefs.SetFloat("SoundEffectVolume", _soundEffectVolume);
+                OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
             }
         }
 
@@ -80,7 +118,7 @@ namespace Game.Managers
                 }
                 _ambientSoundVolume = value;
                 PlayerPrefs.SetFloat("AmbientSoundVolume", _ambientSoundVolume);
-                OnAmbientSoundVolumeChanged?.Invoke(_ambientSoundVolume);
+                OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _ambientSoundVolume);
             }
         }
 
@@ -95,7 +133,7 @@ namespace Game.Managers
                 }
                 _musicVolume = value;
                 PlayerPrefs.SetFloat("MusicVolume", _musicVolume);
-                OnMusicVolumeChanged?.Invoke(_musicVolume);
+                OnMusicVolumeChanged?.Invoke(_masterVolume * _musicVolume);
             }
         }
     }

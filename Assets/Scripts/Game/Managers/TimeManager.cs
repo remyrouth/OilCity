@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,14 +27,17 @@ public class TimeManager : Singleton<TimeManager>
             m_ticksPerMinute = value;
             m_timePerTick = 60f / m_ticksPerMinute;
             m_timeElaspedSinceTick = 0;
+            OnTicksPerMinuteChanged?.Invoke(value);
+            OnTimePerTickChanged?.Invoke(TimePerTick);
         }
     }
     [SerializeField] private int m_ticksPerMinute = 60;
-
+    public event Action<int> OnTicksPerMinuteChanged;
+    public event Action<float> OnTimePerTickChanged;
     // a collection of all the nodes that require an individual OnTick invokation
     // loggers and train stations, for example. individual trees (like a pipe to a refinery) 
     // also exist in this list.
-    private Collection<ITickReceiver> m_tickableForest;
+    private Collection<ITickReceiver> m_tickableForest = new();
 
     // invariant: contains every tree node component in the game
     private readonly Collection<ITreeNode> m_nodes = new();
@@ -42,9 +46,10 @@ public class TimeManager : Singleton<TimeManager>
     private float m_timePerTick;
     private float m_timeElaspedSinceTick;
 
+    private readonly Queue<(GameObject obj, bool to_register)> m_objectsToModifyRegistration = new();
+
     private void Awake()
     {
-        m_tickableForest = new Collection<ITickReceiver>();
         TicksPerMinute = m_ticksPerMinute;
     }
 
@@ -60,27 +65,27 @@ public class TimeManager : Singleton<TimeManager>
             m_timeElaspedSinceTick -= m_timePerTick;
 
             // activate all tick listeners
-            foreach (ITickReceiver receiver in m_tickableForest)
-            {
-                receiver.OnTick();
-            }
+            for (int i = m_tickableForest.Count - 1; i >= 0; i--)
+                m_tickableForest[i].OnTick();
         }
 
         // increment time
         m_timeElaspedSinceTick += Time.fixedDeltaTime;
     }
 
+    #region Registration and Deregistration
+
     /// <summary>
     /// Registers the given gameobject as a tickreciever if it has a component that inherents from the interface.
     /// Additionally, manages the combination of trees that are connected to the input object when called.
     /// </summary>
     /// <param name="receiver"></param>
-    public void RegisterReceiver(GameObject receiver)
+    public void RegisterReceiver(MonoBehaviour receiver)
     {
         // if no tickable item is found on the given object, nothing is done
-        if (!receiver.TryGetComponent<ITickReceiver>(out var tick_receiver))
+        if (receiver as ITickReceiver == null)
         {
-            Debug.Log(string.Format("No tick receiver found on gameobject {0}. Skipping...", receiver.name));
+            Debug.Log(string.Format("No tick receiver given. Skipping..."));
             return;
         }
 
@@ -90,11 +95,10 @@ public class TimeManager : Singleton<TimeManager>
         // otherwise, if no flowable component is found, we know that it's something that doesn't deal with flow
         // but needs ticks. Like a logger cabin or a geologist's hut. Hence, we'll just add it to the tickable forest
         // as its own singleton tree.
-        if (receiver.TryGetComponent<IFlowable>(out var flow_node)) HandleRegister(flow_node);
+        if (receiver is IFlowable flow_node)
+            HandleRegister(flow_node);
         else
-        {
-            m_tickableForest.Add(tick_receiver);
-        }
+            m_tickableForest.Add(receiver as ITickReceiver);
     }
 
     /// <summary>
@@ -102,12 +106,12 @@ public class TimeManager : Singleton<TimeManager>
     /// the itme remove, sometimes splits the tree into multiple new trees that are added to the forest.
     /// </summary>
     /// <param name="receiver"></param>
-    public void DeregisterReceiver(GameObject receiver)
+    public void DeregisterReceiver(MonoBehaviour receiver)
     {
         // if no tickable item is found on the given object, nothing is done
-        if (!receiver.TryGetComponent<ITickReceiver>(out var tick_receiver))
+        if (receiver as ITickReceiver == null)
         {
-            Debug.Log(string.Format("No tick receiver found on gameobject {0}. Skipping...", receiver.name));
+            Debug.Log(string.Format("No tick receiver given. Skipping..."));
             return;
         }
 
@@ -117,11 +121,20 @@ public class TimeManager : Singleton<TimeManager>
         // otherwise, if no flowable component is found, we know that it's something that doesn't deal with flow
         // but needs ticks. Like a logger cabin or a geologist's hut. Hence, we'll just add it to the tickable forest
         // as its own singleton tree.
-        if (receiver.TryGetComponent<IFlowable>(out var flow_node)) HandleDeregister(flow_node);
+        if (receiver is IFlowable flow_node)
+            HandleDeregister(flow_node);
         else
-        {
-            m_tickableForest.Remove(tick_receiver);
-        }
+            m_tickableForest.Remove(receiver as ITickReceiver);
+
+    }
+
+    /// <summary>
+    /// Removes the object from the forest without disconnecting any parents or children.
+    /// </summary>
+    /// <param name="obj"></param>
+    public void LiteDeregister(ITickReceiver obj)
+    {
+        m_tickableForest.Remove(obj);
     }
 
     /// <summary>
@@ -138,7 +151,8 @@ public class TimeManager : Singleton<TimeManager>
         // therefore we can update their connections with no consequence
         foreach (var child in children)
         {
-            child.SetParent(parent);
+            // 
+            child.SetParent(node);
 
             // if the child was in the forest but now has a parent, remove them from the forest
             if (m_tickableForest.Contains(child))
@@ -181,16 +195,17 @@ public class TimeManager : Singleton<TimeManager>
 
             // since we disowned them, they have to make it on their own in the vast world
             // i.e. we have to add them to the tickable forest
-            if (m_tickableForest.Contains(node))
-            {
-                m_tickableForest.Add(child);
-            }
+            //
+            // we dont need to check if the current node is in the forest because every node has one
+            // parent. Since we removed that parent, the child node HAS to be a root now.
+            m_tickableForest.Add(child);
         }
 
         // if we have a parent, have them disown us because we've been a terrible kid to them
         // and have failed at every possible opportunity in life.
         //
-        // otherwise, remove ourselves from the tickable forest.
+        // otherwise, remove ourselves from the tickable forest, since if we didn't have a parent
+        // we'd've had to have been a root.
         if (parent != null)
         {
             parent.DisownChild(node);
@@ -204,8 +219,11 @@ public class TimeManager : Singleton<TimeManager>
         m_nodes.Remove(node);
     }
 
+    #endregion
+
+    #region Debug
 #if UNITY_EDITOR
-    public void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
         if (m_tickableForest == null) return;
 
@@ -228,6 +246,11 @@ public class TimeManager : Singleton<TimeManager>
                 children.RemoveAt(0);
 
                 if (!ConvertToClassType<MonoBehaviour>(item, out var imono)) continue;
+                if (imono == null)
+                {
+                    Debug.Log("Mono has vanished..? " + mono.gameObject.name);
+                    continue;
+                }
 
                 Gizmos.DrawCube(imono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, Vector3.one * 0.35f);
 
@@ -243,4 +266,5 @@ public class TimeManager : Singleton<TimeManager>
         return true;
     }
 #endif
+    #endregion
 }

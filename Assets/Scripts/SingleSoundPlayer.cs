@@ -33,6 +33,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         audioSource.volume = maxVolume;
         audioSource.loop = shouldLoop;
         audioSource.clip = soundClip;
+        
 
         switch (soundType)
         {
@@ -51,6 +52,10 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
             default:
                 break;
         }
+
+        audioSource.enabled = false;
+        audioSource.enabled = true;
+        audioSource.Play();
     }
 
     public void InitializeFromSoundManager(AudioClip musicTrack) {
