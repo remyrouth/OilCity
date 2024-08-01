@@ -30210,11 +30210,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_falloffCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.12011115
+      outSlope: -0.12011115
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.080503955
+    - serializedVersion: 3
+      time: 0.8582313
+      value: 0.25281632
+      inSlope: -2.6154437
+      outSlope: -2.6154437
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04683308
+      outWeight: 0.31918755
+    - serializedVersion: 3
+      time: 1
+      value: 0.05
+      inSlope: 0.18753259
+      outSlope: 0.18753259
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.78650856
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  MaxSoldAmount: 0.05
+  MaxSoldAmount: 0.75
 --- !u!4 &1148798918
 Transform:
   m_ObjectHideFlags: 0
