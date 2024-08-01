@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482d5d789f4247e479b276fe16911c51, type: 3}
   m_Name: Refinery
   m_EditorClassIdentifier: 
-  <placementCost>k__BackingField: 10
+  <placementCost>k__BackingField: 40
   <removalCost>k__BackingField: 10
   <removalSatisfactionCost>k__BackingField: 10
   <icon>k__BackingField: {fileID: 393123212, guid: c728a01d863e3a24fb1db5da8bbb1737, type: 3}

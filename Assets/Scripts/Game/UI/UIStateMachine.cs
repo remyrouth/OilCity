@@ -45,15 +45,6 @@ public class UIStateMachine : Singleton<UIStateMachine>
         CurrentState.OnEnter();
     }
 
-    /// <summary>
-    /// Changes game scene
-    /// </summary>
-    /// <param name="sceneIndex"></param>
-    public void ChangeScene(int sceneIndex)
-    {
-        SceneManager.LoadScene(sceneIndex);
-    }
-
     private void Update()
     {
         if (CurrentState != null)
