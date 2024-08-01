@@ -222,6 +222,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 4791686998052556758}
   sprites:
   - {fileID: 21300000, guid: 205175eeb85f1874c862b75b9eea7cc5, type: 3}
+  - {fileID: 21300000, guid: 8abeadcdfb399f84981297dbbc28c463, type: 3}
 --- !u!1001 &4014746066639891484
 PrefabInstance:
   m_ObjectHideFlags: 0
