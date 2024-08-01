@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class PipeScriptableObject : BuildingScriptableObject
 {
+    [SerializeField] private Mesh m_flowDebugMesh;
     [SerializeField] private List<TileAction> actionList = new List<TileAction>();
-
+    [SerializeField] private GameObject _oilSpillout, _keroseneSpillout;
     public override TileObjectController CreateInstance(Vector2Int _)
     {
 
@@ -22,6 +23,13 @@ public class PipeScriptableObject : BuildingScriptableObject
         go.name = "PipeSystem #" + go.GetInstanceID();
         var component = go.AddComponent<PipeController>();
         component.SetTileActions(actionList);
+
+#if UNITY_EDITOR
+        component.SetDebugMesh(m_flowDebugMesh);
+#endif
+
+        component.SetActionPivot();
+        component.SetParticleSystems(_oilSpillout, _keroseneSpillout);
         return component;
     }
 }

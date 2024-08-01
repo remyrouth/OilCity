@@ -11,32 +11,38 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, I
     public event Action<int> OnWorkersSatisfactionChanged;
     private void Start()
     {
-        TimeManager.Instance.RegisterReceiver(gameObject);
+        TimeManager.Instance.RegisterReceiver(this);
         WorkerSatisfaction = InitialSatisfaction;
+        OnWorkersSatisfactionChanged += CheckForGameOver;
         OnWorkersSatisfactionChanged?.Invoke(WorkerSatisfaction);
     }
     public void IncreaseSatisfaction(int amount) => ChangeSatisfaction(amount);
     public void DecreaseSatisfaction(int amount)
     {
         ChangeSatisfaction(-amount);
-        if (amount == 0)
-            GameOver();
+
     }
     private void ChangeSatisfaction(float delta)
     {
         WorkerSatisfaction = (int)Mathf.Clamp(WorkerSatisfaction + delta, 0, 100);
         OnWorkersSatisfactionChanged?.Invoke(WorkerSatisfaction);
     }
+    private void CheckForGameOver(int newValue)
+    {
+        if (newValue <= 0)
+            GameOver();
+    }
 
     public void GameOver()
     {
+        Debug.Log("Workers satifaction reached 0!");
         UIStateMachine.Instance.ChangeState(GameState.EndingUI);
     }
 
     public void OnTick()
     {
         _tickTimer++;
-        if(_tickTimer == PaymentTimer)
+        if (_tickTimer == PaymentTimer)
         {
             _tickTimer = 0;
             ChangeSatisfaction(BoardManager.Instance.tileDictionary.Values.OfType<PayrateBuildingController>().Select(e => e.GetIndexOfSatisfaction()).Sum());

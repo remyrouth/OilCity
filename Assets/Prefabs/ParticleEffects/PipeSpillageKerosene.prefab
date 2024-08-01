@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9164187038662015931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3078646448589800364}
+  - component: {fileID: 2870410685169219053}
+  - component: {fileID: -4982582497158830375}
+  m_Layer: 0
+  m_Name: PipeSpillageKerosene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3078646448589800364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9164187038662015931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3802644784540009572}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2870410685169219053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9164187038662015931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f348130312a4a504b966e342d9a76a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleSystem: {fileID: 7177192778842100076}
+  _pivot: {fileID: 3802644784540009572}
+--- !u!114 &-4982582497158830375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9164187038662015931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ed6920b10dce94c8e4614b3a1f1703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &4792373069599007760
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3078646448589800364}
+    m_Modifications:
+    - target: {fileID: 2385622629105612156, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142095692498722253, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142095692498722253, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142095692498722253, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778128376835705344, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_Name
+      value: KeroseneSpillout
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+--- !u!4 &3802644784540009572 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8522033850550263924, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+  m_PrefabInstance: {fileID: 4792373069599007760}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7177192778842100076 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2385622629105612156, guid: 74e95133dc0d63b4fba6325635cb7beb, type: 3}
+  m_PrefabInstance: {fileID: 4792373069599007760}
+  m_PrefabAsset: {fileID: 0}

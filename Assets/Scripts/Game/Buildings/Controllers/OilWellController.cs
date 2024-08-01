@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
-    [SerializeField] private GameObject _spilloutEffect;
+    [SerializeField] private ParticleSystem _spilloutEffect;
     private int _tickTimer;
     private int PaymentTimer => 5;
+    public event Action<float> OnOilMined;
     public (FlowType type, float amount) SendFlow()
     {
         float amountMined = 0;
@@ -38,13 +40,13 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
                 BoardManager.Instance.OilEvaluator.IncreaseAmountMinedAtPosition(Anchor.x + x, Anchor.y + y, minedFromTile);
             }
         }
+        OnOilMined?.Invoke(amountMined);
         return (FlowType.Oil, amountMined);
     }
 
     void Awake()
     {
         m_inputs = new List<IFlowable>();
-        _spilloutEffect.SetActive(false);
     }
 
     protected override void CreateInitialConnections(Vector2Int with_position)
@@ -69,7 +71,8 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
                         return;
                     }
 
-                    m_output = pipe;
+                    pipe.AddChild(this);
+                    SetParent(pipe);
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
@@ -88,18 +91,12 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     #region Tree stuff
     public void AddChild(IFlowable child)
     {
-        if (!m_inputs.Contains(child))
-        {
-            m_inputs.Add(child);
-        }
+        throw new System.InvalidOperationException();
     }
 
     public void DisownChild(IFlowable child)
     {
-        if (m_inputs.Contains(child))
-        {
-            m_inputs.Remove(child);
-        }
+        throw new System.InvalidOperationException();
     }
 
     public List<IFlowable> GetChildren()
@@ -115,7 +112,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     public void SetParent(IFlowable parent)
     {
         m_output = parent;
-        _spilloutEffect.SetActive(false);
+        _spilloutEffect.Stop();
     }
     #endregion
 
@@ -128,7 +125,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
             _tickTimer = 0;
             PayWorkers();
         }
-        _spilloutEffect.SetActive(flow.amount>0);
+        if (flow.amount > 0)
+            _spilloutEffect.Play();
+        else
+            _spilloutEffect.Stop();
         if (flow.amount == 0)
             return;
         Debug.LogWarning("Oil well has overflowed " + flow);

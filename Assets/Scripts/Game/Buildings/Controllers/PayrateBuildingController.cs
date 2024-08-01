@@ -71,9 +71,9 @@ public abstract class PayrateBuildingController : BuildingController<PayrateBuil
     {
         var actions = new List<TileAction>();
         actions.Add(TileActions[0]);
+        actions.Add(TileActions[1]);
         if (CurrentPaymentMode != PaymentMode.HIGH)
-            actions.Add(TileActions[1]);
-        actions.Add(TileActions[2]);
+            actions.Add(TileActions[2]);
         if (CurrentPaymentMode != PaymentMode.LOW)
             actions.Add(TileActions[3]);
         return actions;

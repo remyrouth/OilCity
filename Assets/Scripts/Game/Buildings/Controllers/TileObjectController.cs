@@ -7,7 +7,7 @@ public class TileObjectController : MonoBehaviour
     public virtual Vector2Int size => new Vector2Int(1, 1);
     public Vector2Int Anchor => new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
-    [SerializeField] private Vector2 _actionsPivot;
+    [SerializeField] protected Vector2 _actionsPivot;
     public Vector2 ActionsPivot => Anchor + _actionsPivot;
     public virtual bool CheckIfDestroyable() => false;
 #if UNITY_EDITOR

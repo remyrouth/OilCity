@@ -38,13 +38,13 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
                         return;
                     }
 
-                    m_output = pipe;
                     pipe.AddChild(this);
+                    SetParent(pipe);
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
-                    m_inputs.Add(pipe);
                     pipe.SetParent(this);
+                    AddChild(pipe);
                 }
             }
         }

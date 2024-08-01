@@ -1,3 +1,4 @@
+using System;
 using Game.Managers;
 using TMPro;
 using UnityEngine;
@@ -6,6 +7,11 @@ public class DialogueUI : Singleton<DialogueUI>
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI text;
+    private DialogueSO _currentDialogue;
+
+    public DialogueSO CurrentDialogue => _currentDialogue;
+
+    public event Action OnDialogueClicked;
     
     public void EnableDialogue()
     {
@@ -14,16 +20,28 @@ public class DialogueUI : Singleton<DialogueUI>
     
     public void ChangeText(DialogueSO dialogueText)
     {
+        _currentDialogue = dialogueText;
+        ChangeTextLanguage();
+    }
+    
+    public void ChangeTextLanguage()
+    {
         text.text = SettingsManager.Instance.CurrentLanguage switch
         {
-            Language.English => dialogueText.DialogueTextEnglish,
-            Language.Polish => dialogueText.DialogueTextPolish,
-            _ => dialogueText.DialogueTextEnglish
+            Language.English => _currentDialogue.DialogueTextEnglish,
+            Language.Polish => _currentDialogue.DialogueTextPolish,
+            _ => _currentDialogue.DialogueTextEnglish
         };
     }
+    
 
     public void DisableDialogue()
     {
         panel.SetActive(false);
+    }
+
+    public void ClickDialogue()
+    {
+        OnDialogueClicked?.Invoke();
     }
 }

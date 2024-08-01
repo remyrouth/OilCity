@@ -33,6 +33,8 @@ public class SoundManager : MonoBehaviour
     }
 
     private void AddCameraMusicTrack() {
+        if (currentTrackIndex >= musicTrackList.Count) return; // dev bugfix
+
         if (cameraMusicPlayer != null) {
             cameraMusicPlayer.enabled = false;
             Destroy(cameraMusicPlayer);

@@ -1,17 +1,20 @@
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public sealed class RefineryController : PayrateBuildingController, IFlowable
 {
-    public const float BASE_REFINERY_FLOWRATE = 1;
+    private float baseRefineryFlowrate;
+    private float keroseneMultiplier;
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
-    [SerializeField] private GameObject _spilloutEffect;
+    [SerializeField] private ParticleSystem _spilloutEffect;
+    [SerializeField] private ParticleSystem[] _workingSmokeEffects;
     private int _tickTimer;
     private int PaymentTimer => 5;
-
+    public bool IsWorking { get; private set; } = false;
+    public event Action<float> OnKeroseneProduced;
     protected override void CreateInitialConnections(Vector2Int with_position)
     {
         m_output = null;
@@ -34,13 +37,13 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                         return;
                     }
 
-                    m_output = pipe;
                     pipe.AddChild(this);
+                    SetParent(pipe);
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(p.peripheral_to))
                 {
-                    m_inputs.Add(pipe);
                     pipe.SetParent(this);
+                    AddChild(pipe);
                 }
             }
         }
@@ -55,29 +58,57 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     public (FlowType type, float amount) SendFlow()
     {
         float OilSum = 0;
+        keroseneMultiplier = GetKeroseneMultiplier();
         foreach (var child in m_inputs)
         {
             var received = child.SendFlow();
             if (received.type == FlowType.Kerosene)
             {
-                Debug.LogWarning("Refinery just received Kerosene!!!",gameObject);
+                Debug.LogWarning("Refinery just received Kerosene!!!", gameObject);
                 continue;
             }
-            OilSum += received.amount;
+            IsWorking = true;
+            OilSum += received.amount * keroseneMultiplier;
         }
-        if (OilSum > BASE_REFINERY_FLOWRATE)
+        IsWorking = OilSum > 0;
+        HandleWorkingEffects();
+        baseRefineryFlowrate = GetBaseRefineryFlowrate();
+        if (OilSum > baseRefineryFlowrate)
         {
-            float diff = OilSum - BASE_REFINERY_FLOWRATE;
+            float diff = OilSum - baseRefineryFlowrate;
             Debug.LogWarning($"Spilled {diff} amount of Kerosene!", gameObject);
-            OilSum = BASE_REFINERY_FLOWRATE;
+            OilSum = baseRefineryFlowrate;
         }
+        OnKeroseneProduced?.Invoke(OilSum);
         return (FlowType.Kerosene, OilSum);
     }
 
     void Awake()
     {
         m_inputs = new List<IFlowable>();
-        _spilloutEffect.SetActive(false);
+    }
+
+    private float GetBaseRefineryFlowrate()
+    {
+        return CurrentPaymentMode switch
+        {
+            PaymentMode.LOW => 0.5f,
+            PaymentMode.MEDIUM => 1,
+            PaymentMode.HIGH => 2,
+            _ => 0,
+        };
+    }
+    private float GetKeroseneMultiplier()
+    {
+
+        return CurrentPaymentMode switch
+        {
+            PaymentMode.LOW => 0.5f,
+            PaymentMode.MEDIUM => 1,
+            PaymentMode.HIGH => 1.5f,
+            _ => 0,
+        };
+
     }
 
     #region Tree stuff
@@ -110,7 +141,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     public void SetParent(IFlowable parent)
     {
         m_output = parent;
-        _spilloutEffect.SetActive(false);
+        _spilloutEffect.Stop();
     }
     #endregion
 
@@ -118,12 +149,15 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     {
         _tickTimer++;
         var flow = SendFlow();
-        if(_tickTimer == PaymentTimer)
+        if (_tickTimer == PaymentTimer)
         {
             _tickTimer = 0;
             PayWorkers();
         }
-        _spilloutEffect.SetActive(flow.amount > 0);
+        if (flow.amount > 0)
+            _spilloutEffect.Play();
+        else
+            _spilloutEffect.Stop();
         if (flow.amount == 0)
             return;
         Debug.LogWarning("Refinery has overflowed " + flow);
@@ -137,5 +171,15 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     protected override void DecreaseProductivity()
     {
         throw new System.NotImplementedException();
+    }
+    private void HandleWorkingEffects()
+    {
+        foreach (var vfx in _workingSmokeEffects)
+        {
+            if (IsWorking)
+                vfx.Play();
+            else
+                vfx.Stop();
+        }
     }
 }

@@ -3,19 +3,31 @@ using UnityEngine;
 
 public class TileSelector : Singleton<TileSelector>
 {
+    [SerializeField] private bool selectorEnabled;
+
+    public bool SelectorEnabled
+    {
+        get => selectorEnabled;
+        set => selectorEnabled = value;
+    }
+
     /// <summary>
     /// Returns the mouses position in the grid
     /// </summary>
     /// <returns></returns>
     public Vector2Int MouseToGrid()
     {
-        Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int mouseCellPosition = new Vector2Int((int)mouseSpotPosition.x, (int)mouseSpotPosition.y);
-        return mouseCellPosition;
+        Vector3 mouseCursorPosition = Camera.main.ScreenToWorldPoint(ControlManager.Instance.RetrieveMousePosition());
+        Vector2Int cursorCellPosition = new Vector2Int((int)mouseCursorPosition.x, (int)mouseCursorPosition.y);
+        return cursorCellPosition;
+
+        // Vector3 mouseSpotPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Vector2Int mouseCellPosition = new Vector2Int((int)mouseSpotPosition.x, (int)mouseSpotPosition.y);
+        // return mouseCellPosition;
     }
     public void OnMouseClick()
     {
-        if (!BoardManager.Instance.IsTileOccupied(MouseToGrid()))
+        if (!selectorEnabled || !BoardManager.Instance.IsTileOccupied(MouseToGrid()))
         {
             EndFocus();
             return;
