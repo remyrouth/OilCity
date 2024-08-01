@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2828041994234162438
 Transform:
   m_ObjectHideFlags: 0
@@ -221,10 +221,7 @@ MonoBehaviour:
   _demolishEffect: {fileID: 8761643116081482731}
   _spriteRenderer: {fileID: 4791686998052556758}
   sprites:
-  - {fileID: -2025687455, guid: eb249fbcbf3270345bcd643155ef0528, type: 3}
-  - {fileID: -1389183322, guid: eb249fbcbf3270345bcd643155ef0528, type: 3}
-  - {fileID: 2051925339, guid: eb249fbcbf3270345bcd643155ef0528, type: 3}
-  - {fileID: -818296197, guid: eb249fbcbf3270345bcd643155ef0528, type: 3}
+  - {fileID: 21300000, guid: 205175eeb85f1874c862b75b9eea7cc5, type: 3}
 --- !u!1001 &4014746066639891484
 PrefabInstance:
   m_ObjectHideFlags: 0

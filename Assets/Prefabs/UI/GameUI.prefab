@@ -891,6 +891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 726597521106143784}
   - component: {fileID: 1274643607549978679}
+  - component: {fileID: 943227410789739235}
   m_Layer: 5
   m_Name: TimeLineSlider
   m_TagString: Untagged
@@ -959,7 +960,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 3242167812822637667}
   m_FillRect: {fileID: 242802174693393268}
   m_HandleRect: {fileID: 2153134046971118565}
@@ -971,6 +972,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &943227410789739235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130502025029952718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8efe6a2237baaf4a93e1a34d380fc9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2153266780463025944
 GameObject:
   m_ObjectHideFlags: 0

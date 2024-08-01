@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class EventUI : UIState
@@ -6,6 +7,23 @@ public class EventUI : UIState
     public override GameState type => GameState.EventUI;
     private TimeLineEvent _currentEvent;
     [SerializeField] private Image _image;
+
+
+    private void Start()
+    {
+        ControlManager.Instance.leftClickActivationButtontrigger += MouseClick;
+    }
+    private void OnDestroy()
+    {
+        ControlManager.Instance.leftClickActivationButtontrigger -= MouseClick;
+    }
+    private void MouseClick()
+    {
+        if (UIStateMachine.Instance.CurrentStateType != type)
+            return;
+        UIStateMachine.Instance.ChangeState(GameState.GameUI);
+    }
+
     public override void OnEnter()
     {
         base.OnEnter();
@@ -17,11 +35,6 @@ public class EventUI : UIState
     {
         base.OnExit();
         TimeManager.Instance.TicksPerMinute = 60;
-    }
-    public override void OnUpdate()
-    {
-        if (Input.GetMouseButtonDown(0))
-            UIStateMachine.Instance.ChangeState(GameState.GameUI);
     }
     public void TriggerEvent(TimeLineEvent nextEvent)
     {
