@@ -50,7 +50,7 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
         }
     }
 
-    public (bool can_input, bool can_output) GetFlowConfig() => (true, true);
+    public (bool can_input, bool can_output) GetInOutConfig() => (true, true);
 
     public (FlowType type, float amount) SendFlow()
     {
@@ -118,5 +118,10 @@ public sealed class SiloController : BuildingController<BuildingScriptableObject
     {
         // if this is called directly, that means there is no output for this building
         Debug.LogWarning("Silo has overflowed " + SendFlow());
+    }
+
+    public (FlowType in_type, FlowType out_type) GetFlowConfig()
+    {
+        throw new System.NotImplementedException();
     }
 }

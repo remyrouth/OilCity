@@ -11,14 +11,15 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private TMP_Text _costLabel;
     [SerializeField] private Image _buildingIcon;
     [SerializeField] private PopupDescriptorView _descriptorView;
-    [SerializeField] private Image _highlightImage;
+    private Image _highlightImage;
 
     private Color _originalColor;
-    private Color _highlightColor = Color.black;
-
+    private Color _highlightColor;
+    private bool _isFlickering;
 
     public void Awake()
     {
+        _highlightImage = GetComponent<Image>();
         GetComponent<Button>().onClick.AddListener(() => { _buildingSO.BeginBuilding(); });
         _buildingIcon.sprite = _buildingSO.icon;
         _costLabel.text = _buildingSO.placementCost.ToString();
@@ -27,41 +28,38 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             _originalColor = _highlightImage.color;
             _highlightColor = new Color(1f, 1f, 0f, 0.5f);
+            _isFlickering = false;
         }
     }
-
-    //     public void OnPointerEnter(PointerEventData eventData)
-    // {
-    //     _descriptorView?.BeginFocus(_buildingSO, GetComponent<RectTransform>().anchoredPosition);
-    // }
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         _descriptorView?.BeginFocus(_buildingSO, GetComponent<RectTransform>().anchoredPosition);
-        StartFlicker();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         _descriptorView?.EndFocus();
-        StopFlicker();
     }
 
-    public void StartFlicker()
+    public void ToggleHighlight()
     {
         if (_highlightImage != null)
         {
-            _highlightImage.DOColor(_highlightColor, 1f)
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetEase(Ease.InOutSine);
-        }
-    }
-
-    public void StopFlicker()
-    {
-        if (_highlightImage != null)
-        {
-            _highlightImage.DOKill();
-            _highlightImage.color = _originalColor;
+            if (!_isFlickering)
+            {
+                _highlightImage.DOColor(_highlightColor, 1f)
+                    .SetLoops(-1, LoopType.Yoyo)
+                    .SetEase(Ease.InOutSine);
+                _isFlickering = true;
+            }
+            else
+            {
+                _highlightImage.DOKill();
+                _highlightImage.color = _originalColor; 
+                _isFlickering = false;
+            }
+            
         }
     }
 }

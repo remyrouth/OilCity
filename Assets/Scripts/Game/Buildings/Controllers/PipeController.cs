@@ -4,6 +4,8 @@ using UnityEngine;
 using static UnityEditor.Rendering.CameraUI;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using static UnityEditor.PlayerSettings;
+using DG.Tweening;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
 {
@@ -19,12 +21,20 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     private List<Vector2Int> m_pipes;
 
+    private GameObject m_connection;
+    private GameObject m_noConnection;
+
 #if UNITY_EDITOR
     private Mesh m_debugMesh;
 
     public void SetDebugMesh(Mesh debugMesh) => m_debugMesh = debugMesh;
 #endif
 
+    public void SetConnectionIndicators(GameObject connection, GameObject noConnection)
+    {
+        m_connection = connection;
+        m_noConnection = noConnection;
+    }
 
     /// <summary>
     /// Init method for just pipes. Provides necessary values for functionality.
@@ -76,7 +86,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         var (connect_to_child, connect_to_parent) = ValidatePipesAndConnect(child_pos, parent_pos);
 
-        if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var obj) && obj.GetFlowConfig().can_output)
+        if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var obj) && obj.GetInOutConfig().can_output)
         {
             if (obj.GetParent() == null)
             {
@@ -89,7 +99,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             }
         }
 
-        if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj) && pobj.GetFlowConfig().can_input)
+        if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj) && pobj.GetInOutConfig().can_input)
         {
             pobj.AddChild(this);
             SetParent(pobj);
@@ -170,11 +180,19 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             BuildingManager.Instance.GetPipeRotation(in_pos, endpoint, out_pos));
     }
 
+    private void PingSpot(GameObject ping, Vector3 pos)
+    {
+        var obj = Instantiate(ping, pos + Vector3.forward * 2f, Quaternion.identity);
+        obj.transform.localScale = Vector3.zero;
+        obj.transform.DOScale(Vector3.one, 0.25f);
+        Destroy(obj, 1);
+    }
+
     /// <summary>
     /// Pipes can connect to other pipes.
     /// </summary>
     /// <returns></returns>
-    public (bool can_input, bool can_output) GetFlowConfig() => (true, true);
+    public (bool can_input, bool can_output) GetInOutConfig() => (true, true);
 
     #region tree stuff
     /// <summary>
@@ -187,6 +205,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (m_child == null || !m_child.Equals(child))
         {
             m_child = child;
+            PingSpot(m_connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
 
     }
@@ -200,6 +219,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (m_child != null && m_child.Equals(child))
         {
             m_child = null;
+            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
     }
 
@@ -237,6 +257,15 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="parent"></param>
     public void SetParent(IFlowable parent)
     {
+        if (parent != null)
+        {
+            PingSpot(m_connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
+        }
+        else
+        {
+            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
+        }
+
         m_parent = parent;
         _oilSpillout.Stop();
         _keroseneSpillout.Stop();
@@ -277,6 +306,14 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     protected override void OnDestroy()
     {
         base.OnDestroy();
+
+        var openings = GetOpenStatus();
+
+        if (!openings.open_start)
+            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
+
+        if (!openings.open_end)
+            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
 
         // clear all relevant pipe tiles from supermap
         foreach (var pos in m_pipes)
@@ -323,6 +360,13 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     public (Vector2Int start, Vector2Int end) GetPositions() => (m_startPipePos, m_endPipePos);
 
     public (bool open_start, bool open_end) GetOpenStatus() => (m_child == null, m_parent == null);
+
+    public (FlowType in_type, FlowType out_type) GetFlowConfig()
+    {
+        var through_flow = m_child == null ? FlowType.None : m_child.GetFlowConfig().out_type;
+
+        return (through_flow, through_flow);
+    }
 
     void OnDrawGizmos()
     {

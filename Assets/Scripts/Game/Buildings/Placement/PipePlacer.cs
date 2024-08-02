@@ -7,11 +7,16 @@ using Game.Events;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEditor.ShaderGraph;
 
 public class PipePlacer : BuildingPlacer
 {
     [SerializeField] private GameObject m_singlePipePreviewPrefab;
     [SerializeField] private float m_pipePreviewZOffset = -0.5f;
+
+    [Space(10)]
+
+    [SerializeField] private Gradient m_lineGradient;
 
     private Vector2Int m_start;
     private Vector2Int m_end;
@@ -25,6 +30,8 @@ public class PipePlacer : BuildingPlacer
 
     private const float HARDCODED_OFFSET = 0.5f;
 
+    private bool m_shouldUpdatePathfinding;
+    private Vector2Int m_previousPosition;
 
     /// <summary>
     /// A two-element array where the first index is the pipe-start preview prefab instance reference, and the second index
@@ -36,7 +43,24 @@ public class PipePlacer : BuildingPlacer
     {
         m_previewFabInstances = new GameObject[2];
         m_pathfindingPreview = GetComponent<LineRenderer>();
+        m_pathfindingPreview.colorGradient = m_lineGradient;
+
+        m_pointList = new List<Vector2Int>();
     }
+
+    #region callbacks
+    private void OnEnable()
+    {
+        BuildingEvents.OnCivilianBuildingSpawn += ForcePathfindingUpdate;
+    }
+
+    private void OnDisable()
+    {
+        BuildingEvents.OnCivilianBuildingSpawn -= ForcePathfindingUpdate;
+    }
+    #endregion
+
+    private void ForcePathfindingUpdate() => m_shouldUpdatePathfinding = true;
 
     public override void UpdatePreview()
     {
@@ -50,9 +74,15 @@ public class PipePlacer : BuildingPlacer
 
         if (m_wasStartPlaced)
         {
-            var current_end = TileSelector.Instance.MouseToGrid();
+            // if we weren't forced to update pathfinding, perform our manual checks to see if we should pathfind this frame:
+            // - is there a path to find? (i.e. start isnt end)
+            // - is the current position in a valid placement?
+            // - did we move our mouse to a new position?
+            if (!m_shouldUpdatePathfinding) m_shouldUpdatePathfinding = m_start.Equals(mousePos) || !can_be_built || m_previousPosition.Equals(mousePos);
 
-            if (m_start.Equals(current_end) || !can_be_built) return; // skip if placing end on start
+            m_previousPosition = mousePos;
+
+            if (!m_shouldUpdatePathfinding) return;
 
             // use linerenderer rather than creating lots of gameobjects
 
@@ -60,10 +90,10 @@ public class PipePlacer : BuildingPlacer
             //    var src_to_ignore = BoardManager.Instance.IsTileOccupied(m_start) ? BoardManager.Instance.tileDictionary[m_start] : null;
             //    var dest_to_ignore = IsValidPlacement(m_so) && BoardManager.Instance.IsTileOccupied(current_end) ? BoardManager.Instance.tileDictionary[current_end] : null;
             BoardManager.Instance.TryGetTypeAt<TileObjectController>(m_start, out var src_to_ignore);
-            BoardManager.Instance.TryGetTypeAt<TileObjectController>(current_end, out var dest_to_ignore);
+            BoardManager.Instance.TryGetTypeAt<TileObjectController>(mousePos, out var dest_to_ignore);
 
             // start the A* pathfinding (A* over Djikstras bc i had the code on hand lmao)
-            m_pointList = Pathfind(m_start, current_end, src_to_ignore, dest_to_ignore);
+            m_pointList = Pathfind(m_start, mousePos, src_to_ignore, dest_to_ignore);
             var array = new Vector3[m_pointList.Count];
 
             for (int i = 0; i < m_pointList.Count; i++)
@@ -73,6 +103,7 @@ public class PipePlacer : BuildingPlacer
 
             m_pathfindingPreview.positionCount = m_pointList.Count;
             m_pathfindingPreview.SetPositions(array);
+
         }
     }
 
@@ -92,11 +123,11 @@ public class PipePlacer : BuildingPlacer
         {
             Vector2Int current = frontier.Dequeue();
 
-            bool is_occupied = BoardManager.Instance.IsTileOccupied(current);
-            bool is_ignored = is_occupied && (BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore) || BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore));
+            bool is_current_occupied = BoardManager.Instance.IsTileOccupied(current);
+            bool is_current_src_occupied = is_current_occupied && BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore);
+            bool is_current_dest_occupied = is_current_occupied && BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore);
 
             if (current == end) break;
-            //if (current != start && is_occupied && !is_ignored) continue;
 
             Vector2Int[] neighbors = new Vector2Int[] { current + Vector2Int.right, current + Vector2Int.up, current + Vector2Int.left, current + Vector2Int.down };
 
@@ -104,11 +135,24 @@ public class PipePlacer : BuildingPlacer
             {
                 if (BoardManager.Instance.IsPositionOutsideBoard(npos)) continue;
 
+                // traversal logic:
+                // - if this tile is occupied (and not ignored), it is uber expensive
+                // - if this tile is a src/dest and the neighbor is the opposite, it is uber expensive
+                // - if this tile is a src, it is slightly expensive
+                // - if this tile is a dest, it is slightly expensive
+
+                // these manual checks are faster than the TryGetAt method, due to no reliance on TryGetComponent
+                bool is_neighbor_occupied = BoardManager.Instance.IsTileOccupied(npos);
+                bool is_neighbor_src = is_neighbor_occupied && BoardManager.Instance.tileDictionary[npos].Equals(src_to_ignore);
+                bool is_neighbor_dest = is_neighbor_occupied && BoardManager.Instance.tileDictionary[npos].Equals(dest_to_ignore);
+
                 int cost_mod = 1;
 
-                // "ignored" tiles are still traversable, but more expensive.
-                if (is_ignored) cost_mod = 200;
-                else if (is_occupied) cost_mod = 999; 
+                if ((is_current_occupied && !is_current_src_occupied && !is_current_dest_occupied)
+                    || (is_current_src_occupied && is_neighbor_dest)
+                    || (is_current_dest_occupied && is_neighbor_src)) cost_mod = 999;
+                else if (is_neighbor_dest || is_neighbor_src) cost_mod = 15;
+
 
                 int new_cost = cost_so_far[current] + cost_mod;
 
@@ -171,6 +215,8 @@ public class PipePlacer : BuildingPlacer
         {
             if (BoardManager.Instance.TryGetTypeAt<IFlowable>(mousePos, out var flowable))
             {
+                // flowable.GetConnectionPositions(m_wasStartPlaced);
+
                 // logic:
                 // if the start pipe has not been placed yet, then we're in the process of placing the starting pipe.
                 // that means that whatever building was clicked on will be drawn FROM, into the pipe. Therefore, we check
@@ -179,7 +225,7 @@ public class PipePlacer : BuildingPlacer
                 // same thing goes for the end pipe. since the building at the end of the pipe receives the flow from said 
                 // pipe, we need to check to see if the building can actually take that flow.
 
-                var flow_config = flowable.GetFlowConfig();
+                var flow_config = flowable.GetInOutConfig();
                 return m_wasStartPlaced ? flow_config.can_input : flow_config.can_output;
             }
 
@@ -193,6 +239,32 @@ public class PipePlacer : BuildingPlacer
         }
     }
 
+    private void UpdateCurrentSinglePreview(bool is_tentative_placement_valid)
+    {
+        if (m_singlePipePreview == null) return;
+
+        // if we're the first placed spot, we don't care how long the pointlist length is
+        bool rhs = !m_wasStartPlaced || m_pointList.Count != 0;
+
+        m_singlePipePreview.color = is_tentative_placement_valid && rhs ? Color.green : Color.red;
+    }
+
+    private IEnumerator IEWaitForValidPositionClicked()
+    {
+        while (true)
+        {
+            UpdatePreview();
+
+            bool is_placement_valid = IsValidPlacement(m_so);
+
+            UpdateCurrentSinglePreview(is_placement_valid);
+
+            if (WasMouseClicked && is_placement_valid) break;
+
+            yield return null;
+        }
+    }
+
     public override IEnumerator IEDoBuildProcess()
     {
         m_wasStartPlaced = false;
@@ -201,27 +273,25 @@ public class PipePlacer : BuildingPlacer
         m_previewFabInstances[0] = Instantiate(m_singlePipePreviewPrefab);
         m_singlePipePreview = m_previewFabInstances[0].GetComponentInChildren<SpriteRenderer>();
 
-        while (!WasMouseClicked || !IsValidPlacement(m_so))
-        {
-            UpdatePreview();
-
-            yield return null;
-        }
+        yield return StartCoroutine(IEWaitForValidPositionClicked());
 
         // to be reassigned
         m_start = TileSelector.Instance.MouseToGrid(); // record the start position of the pipe
+
+        bool did_occupy_start = false;
+        // if space is open, occupy it with the preview tilecontroller so that no building can slide into the "open" spot
+        if (!BoardManager.Instance.IsTileOccupied(m_start))
+        {
+            BoardManager.Instance.tileDictionary[m_start] = m_previewFabInstances[0].GetComponent<TileObjectController>();
+            did_occupy_start = true;
+        }
 
         m_wasStartPlaced = true; // register that we've recorded it
         m_previewFabInstances[1] = Instantiate(m_singlePipePreviewPrefab);
         m_singlePipePreview = m_previewFabInstances[1].GetComponentInChildren<SpriteRenderer>();
 
         // while the player doesn't click or they place in invalid spot, keep waiting and updating
-        while (!WasMouseClicked || !IsValidPlacement(m_so))
-        {
-            UpdatePreview();
-
-            yield return null;
-        }
+        yield return StartCoroutine(IEWaitForValidPositionClicked());
 
         // to be reassigned
         m_end = TileSelector.Instance.MouseToGrid(); // record the end position of the pipe
@@ -230,9 +300,14 @@ public class PipePlacer : BuildingPlacer
         // if we somehow set the start to the end, exit without placing a pipe
         if (m_start.Equals(m_end) || m_pointList.Count < 1) yield break;
 
-        int pipes_laid = PlacePipes();
+        // if we registered a "fake" controller to occupy the start, remove it before placement
+        if (did_occupy_start)
+        {
+            // not great to modify the map outside of the class, but there's no neater method present in the manager to do so.
+            BoardManager.Instance.tileDictionary.Remove(m_start);
+        }
 
-        Debug.Log(pipes_laid);
+        int pipes_laid = PlacePipes();
 
         // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
         if (pipes_laid == 0)
@@ -397,6 +472,12 @@ public class PipePlacer : BuildingPlacer
 
     public override void Cleanup()
     {
+        var tile_controller = m_previewFabInstances[0].GetComponent<TileObjectController>();
+        if (BoardManager.Instance.TryGetTypeAt<TileObjectController>(m_start, out var tc) && tc.Equals(tile_controller))
+        {
+            BoardManager.Instance.tileDictionary.Remove(m_start);
+        }
+
         Destroy(m_previewFabInstances[0]);
         Destroy(m_previewFabInstances[1]);
         Destroy(gameObject);
