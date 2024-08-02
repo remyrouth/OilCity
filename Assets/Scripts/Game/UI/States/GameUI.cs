@@ -15,17 +15,18 @@ public class GameUI : UIState
 
     private void Start()
     {
-        ControlManager.Instance.leftClickActivationButtontrigger += MouseClick;
+        ControlManager.Instance.leftClickActivationButtontrigger += LeftMouseClick;
     }
     private void OnDestroy()
     {
-        ControlManager.Instance.leftClickActivationButtontrigger -= MouseClick;
+        ControlManager.Instance.leftClickActivationButtontrigger -= LeftMouseClick;
     }
 
-    private void MouseClick()
+    private void LeftMouseClick()
     {
-        if (UIStateMachine.Instance.CurrentStateType != type)
+        if (UIStateMachine.Instance.CurrentStateType != type) {
             return;
+        }
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             TileSelector.Instance.OnMouseClick();

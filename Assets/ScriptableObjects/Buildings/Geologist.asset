@@ -15,7 +15,7 @@ MonoBehaviour:
   <placementCost>k__BackingField: 10
   <removalCost>k__BackingField: 10
   <removalSatisfactionCost>k__BackingField: 10
-  <icon>k__BackingField: {fileID: -1273380084, guid: c728a01d863e3a24fb1db5da8bbb1737, type: 3}
+  <icon>k__BackingField: {fileID: 21300000, guid: ecb3f8975286f1f40acf638ea6b69e9f, type: 3}
   <prefab>k__BackingField: {fileID: 3141429110944717563, guid: 5a3dd716dac1c66478429f9a3993cb64, type: 3}
   <previewPrefab>k__BackingField: {fileID: 3141429110944717563, guid: 4651925815f9a1a41879884489970c47, type: 3}
   <size>k__BackingField: {x: 2, y: 2}
