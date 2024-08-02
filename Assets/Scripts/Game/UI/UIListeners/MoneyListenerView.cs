@@ -26,7 +26,7 @@ public class MoneyListenerView : MonoBehaviour
         _currentValue += DELTA * Mathf.Sign(_targetValue - _currentValue);
         if (Mathf.Abs(_currentValue - _targetValue) < DELTA)
             _currentValue = _targetValue;
-        _label.text = _currentValue.ToString("C");
+        _label.text = _currentValue.ToString("0.00");
     }
     private void UpdateLabel(float newWSvalue)
     {
