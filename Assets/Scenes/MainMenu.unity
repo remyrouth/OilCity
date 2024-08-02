@@ -1703,6 +1703,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 464099741}
     m_Modifications:
+    - target: {fileID: 4174658326879343076, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a1b27b5990e7e0f4dbdacc16ade9ee32, type: 2}
+    - target: {fileID: 4174658326879343076, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6498521742922468023, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_Name
       value: CreditsPanel
