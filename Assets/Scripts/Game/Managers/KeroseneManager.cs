@@ -6,6 +6,7 @@ public class KeroseneManager : Singleton<KeroseneManager>
     [SerializeField] private AnimationCurve m_falloffCurve;
 
     public float KeroseneAmount { get; private set; }
+    public float KeroseneSumAmount { get; private set; } = 0;
     public float MaxSoldAmount;
     public const float KEROSINE_PRICE = 100;
 
@@ -23,7 +24,8 @@ public class KeroseneManager : Singleton<KeroseneManager>
     /// <param name="amount"></param>
     public void IncreaseAmount(float amount)
     {
-        KeroseneAmount += amount * 100;
+        KeroseneAmount += amount;
+        KeroseneSumAmount += amount;
         OnKeroseneChanged?.Invoke(KeroseneAmount);
     }
     /// <summary>
