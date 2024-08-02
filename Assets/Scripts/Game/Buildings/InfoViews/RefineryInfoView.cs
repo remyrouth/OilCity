@@ -21,6 +21,6 @@ public class RefineryInfoView : BuildingInfoView<RefineryInfoTileAction, Refiner
     }
     private void UpdateKeroseneLabel(float newValue)
     {
-        _productivityLabel.text = $"Currently: {newValue} kerosene/tick";
+        _productivityLabel.text = $"Currently: {(newValue * 10000).ToString("0.00")} kerosene/tick";
     }
 }

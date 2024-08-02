@@ -21,6 +21,6 @@ public class OilWellInfoView : BuildingInfoView<OilWellInfoTileAction, OilWellCo
     }
     private void UpdateOilLabel(float newValue)
     {
-        _productivityLabel.text = $"Currently: {newValue} oil/tick";
+        _productivityLabel.text = $"Currently: {(newValue*10000).ToString("0.00")} oil/tick";
     }
 }
