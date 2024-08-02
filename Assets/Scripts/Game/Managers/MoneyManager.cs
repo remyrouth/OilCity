@@ -31,19 +31,17 @@ public class MoneyManager : Singleton<MoneyManager>
     {
         Money = Mathf.Round(Money * 100f) / 100f - Mathf.Round(amount * 100f) / 100f;
         if (Money <= 0)
-            GameOver();
+            GameStateManager.Instance.EndGame();
         OnMoneyChanged?.Invoke(Money);
     }
 
     private void CheckForGameOver(float newValue)
     {
         if (newValue <= 0)
-            GameOver();
-    }
-    public void GameOver()
-    {
-        Debug.Log("Money reached 0!");
-        UIStateMachine.Instance.ChangeState(GameState.EndingUI);
+        {
+            Money = newValue;
+            GameStateManager.Instance.EndGame();            
+        }
     }
 
 }
