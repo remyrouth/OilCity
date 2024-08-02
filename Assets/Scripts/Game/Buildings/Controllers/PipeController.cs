@@ -182,7 +182,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     private void PingSpot(GameObject ping, Vector3 pos)
     {
-        var obj = Instantiate(ping, pos + Vector3.back * 0.01f, Quaternion.identity);
+        var obj = Instantiate(ping, pos + Vector3.forward * 2f, Quaternion.identity);
         obj.transform.localScale = Vector3.zero;
         obj.transform.DOScale(Vector3.one, 0.25f);
         Destroy(obj, 1);
@@ -257,7 +257,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="parent"></param>
     public void SetParent(IFlowable parent)
     {
-        Debug.Log("called " + parent);
         if (parent != null)
         {
             PingSpot(m_connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
