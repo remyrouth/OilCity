@@ -96,13 +96,22 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             else
             {
                 Debug.LogWarning("Pipe already has a connection! Ignoring...");
+                PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
+        }
+        else
+        {
+            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
 
         if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj) && pobj.GetInOutConfig().can_input)
         {
             pobj.AddChild(this);
             SetParent(pobj);
+        }
+        else
+        {
+            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
         }
     }
 
@@ -182,10 +191,15 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     private void PingSpot(GameObject ping, Vector3 pos)
     {
-        var obj = Instantiate(ping, pos + Vector3.forward * 2f, Quaternion.identity);
+        var obj = Instantiate(ping, pos + Vector3.forward * 2f + Vector3.right * 0.5f + Vector3.up, Quaternion.identity);
         obj.transform.localScale = Vector3.zero;
-        obj.transform.DOScale(Vector3.one, 0.25f);
-        Destroy(obj, 1);
+       // obj.transform.DOScale(Vector3.one, 0.25f);
+        Destroy(obj, 2f);
+
+        var sequence = DOTween.Sequence();
+        sequence.Append(obj.transform.DOScale(Vector3.one, 0.25f));
+        sequence.AppendInterval(1.5f);
+        sequence.Append(obj.transform.DOScale(Vector3.zero, 0.25f));
     }
 
     /// <summary>
@@ -219,7 +233,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (m_child != null && m_child.Equals(child))
         {
             m_child = null;
-            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
+            // PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
     }
 
@@ -257,14 +271,16 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="parent"></param>
     public void SetParent(IFlowable parent)
     {
+        
         if (parent != null)
         {
             PingSpot(m_connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
         }
         else
         {
-            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
+            //PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
         }
+        
 
         m_parent = parent;
         _oilSpillout.Stop();
@@ -306,14 +322,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     protected override void OnDestroy()
     {
         base.OnDestroy();
-
-        var openings = GetOpenStatus();
-
-        if (!openings.open_start)
-            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
-
-        if (!openings.open_end)
-            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
 
         // clear all relevant pipe tiles from supermap
         foreach (var pos in m_pipes)
