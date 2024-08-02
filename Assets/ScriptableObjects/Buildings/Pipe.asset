@@ -26,3 +26,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
   _oilSpillout: {fileID: 7412738978020014858, guid: 2c9a08c300ccef04aadd10999a3147b2, type: 3}
   _keroseneSpillout: {fileID: 9164187038662015931, guid: 1f57cb160d652684783782cfce663c12, type: 3}
+  m_connection: {fileID: 4624880366324698991, guid: 27f93976abce7ac41a06bac47d172572, type: 3}
+  m_noConnection: {fileID: 4624880366324698991, guid: 34db478054f6f364e99edd89a5f61e02, type: 3}
