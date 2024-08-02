@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5968778246260632616}
   - component: {fileID: 4474127972465849482}
   m_Layer: 0
-  m_Name: Entertainment Building
+  m_Name: Cinema
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

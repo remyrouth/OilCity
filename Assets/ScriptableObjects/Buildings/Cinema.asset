@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 482d5d789f4247e479b276fe16911c51, type: 3}
-  m_Name: Entertainment
+  m_Name: Cinema
   m_EditorClassIdentifier: 
   <placementCost>k__BackingField: 10
   <removalCost>k__BackingField: 10
