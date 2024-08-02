@@ -18,6 +18,4 @@ public interface IFlowable : ITreeNode, ITickReceiver
     /// </summary>
     /// <returns></returns>
     (bool can_input, bool can_output) GetFlowConfig();
-
-    //List<Vector2Int> GetConnectionPositions(bool for_input);
 }

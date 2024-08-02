@@ -33,15 +33,6 @@ public class PipePlacer : BuildingPlacer
     private bool m_shouldUpdatePathfinding;
     private Vector2Int m_previousPosition;
 
-    public enum FlowPlacementState
-    {
-        Input,
-        Output,
-        None
-    }
-
-    private HashSet<FlowPlacementState> m_availableStates;
-
     /// <summary>
     /// A two-element array where the first index is the pipe-start preview prefab instance reference, and the second index
     /// is the pipe-end preview prefab instance reference.
@@ -55,8 +46,6 @@ public class PipePlacer : BuildingPlacer
         m_pathfindingPreview.colorGradient = m_lineGradient;
 
         m_pointList = new List<Vector2Int>();
-
-        m_availableStates = new HashSet<FlowPlacementState>() { FlowPlacementState.Output, FlowPlacementState.Input, FlowPlacementState.None };
     }
 
     #region callbacks
@@ -237,11 +226,7 @@ public class PipePlacer : BuildingPlacer
                 // pipe, we need to check to see if the building can actually take that flow.
 
                 var flow_config = flowable.GetFlowConfig();
-
-                bool valid_input = m_availableStates.Contains(FlowPlacementState.Output) && flow_config.can_input;
-                bool valid_output = m_availableStates.Contains(FlowPlacementState.Input) && flow_config.can_output;
-
-                return valid_input || valid_output;
+                return m_wasStartPlaced ? flow_config.can_input : flow_config.can_output;
             }
 
             // is occupied, but by a non-flow building
@@ -277,18 +262,6 @@ public class PipePlacer : BuildingPlacer
             if (WasMouseClicked && is_placement_valid) break;
 
             yield return null;
-        }
-
-        //if we have a flowable at the point, use it to determine the state. Otherwise, the state defaults.
-        if ( BoardManager.Instance.TryGetTypeAt<IFlowable>(TileSelector.Instance.MouseToGrid(), out var flowable))
-        {
-            var config = flowable.GetFlowConfig();
-
-            // if you start your pipe at a building that can output flow (e.g. well), the pipe defaults to outputting flow from that building to the dest
-            if (config.can_output) m_availableStates = FlowPlacementState.Output;
-
-            // otherwise, if you start your pipe at a building that can input flow (e.g. train station), the pipe defaults to inputting flow from the dest to that building
-            if (config.can_input) m_availableStates = FlowPlacementState.Input;
         }
     }
 
@@ -368,7 +341,7 @@ public class PipePlacer : BuildingPlacer
         }
 
         // setup the pipe
-        component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList, m_availableStates);
+        component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
         component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
         component.transform.position = Utilities.Vector2IntToVector3(m_start);
         PipeEvents.PlacePipe();
