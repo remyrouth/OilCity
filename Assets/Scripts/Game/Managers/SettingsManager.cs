@@ -25,6 +25,12 @@ namespace Game.Managers
             // " Music:" +_musicVolume);
         }
 
+        private void Start() {
+            OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+            OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+            OnMusicVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+        }
+
         private void Awake()
         {
             SetLanguage();
