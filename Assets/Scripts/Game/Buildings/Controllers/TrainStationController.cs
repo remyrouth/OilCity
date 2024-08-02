@@ -25,7 +25,7 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
 
     public List<IFlowable> GetChildren() => _children;
 
-    public (bool can_input, bool can_output) GetFlowConfig() => (true, false);
+    public (bool can_input, bool can_output) GetInOutConfig() => (true, false);
 
     public IFlowable GetParent() => null;
 
@@ -71,4 +71,9 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
         _sequenceActions.Enqueue(null);
     }
     private void SellKerosene() { KeroseneManager.Instance.SellKerosene(); }
+
+    public (FlowType in_type, FlowType out_type) GetFlowConfig()
+    {
+        return (FlowType.Kerosene, FlowType.None);
+    }
 }

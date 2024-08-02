@@ -225,7 +225,7 @@ public class PipePlacer : BuildingPlacer
                 // same thing goes for the end pipe. since the building at the end of the pipe receives the flow from said 
                 // pipe, we need to check to see if the building can actually take that flow.
 
-                var flow_config = flowable.GetFlowConfig();
+                var flow_config = flowable.GetInOutConfig();
                 return m_wasStartPlaced ? flow_config.can_input : flow_config.can_output;
             }
 
