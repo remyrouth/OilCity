@@ -10,7 +10,7 @@ namespace Game.Tutorial
         {
             PipeEvents.OnPipePlaced += FinishStep;
             base.OnEnable();
-            BuildingPanelUI.Instance.ToggleButtonInteractable(buttonToUnlockIndex);
+            BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
         }
     
         private void OnDisable()
@@ -20,6 +20,7 @@ namespace Game.Tutorial
     
         private new void FinishStep()
         {
+            BuildingPanelUI.Instance.ToggleHighlight(buttonToUnlockIndex);
             base.FinishStep();
         }
     }
