@@ -72,7 +72,7 @@ public class BoardManager : Singleton<BoardManager>
     /// <returns></returns>
     public bool IsTileOccupied(Vector2Int position)
     {
-        return tileDictionary.ContainsKey(position);
+        return tileDictionary.ContainsKey(position) || IsPositionOutsideBoard(position);
     }
     /// <summary>
     /// Checks if any of the tiles from the list are occupied
