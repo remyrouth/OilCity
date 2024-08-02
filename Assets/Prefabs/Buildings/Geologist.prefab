@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 54cfa0dc728251640b9fdbf5e7b19560, type: 2}
   - {fileID: 11400000, guid: 1bed6fc2bbe796a41b46fa53cc620c56, type: 2}
   _demolishEffect: {fileID: 7898816897283889653}
-  _workerVisual: {fileID: 2605606135709966149, guid: b3f62d8bf92abc348809a9c213312d86, type: 3}
+  _workerVisual: {fileID: 3270306656179796501, guid: cfb0a534a2460fc41b81cda26d3936d0, type: 3}
   _oilPingPrefab: {fileID: 4624880366324698991, guid: 406be0de4e4b5a241a71b3398e4360b2, type: 3}
   _workerAmount: 2
 --- !u!114 &5616467301197565736
