@@ -48,21 +48,7 @@ public abstract class PayrateBuildingController : BuildingController<PayrateBuil
     protected abstract void DecreaseProductivity();
 
     public PaymentMode CurrentPaymentMode { get; protected set; } = PaymentMode.MEDIUM;
-    protected void PayWorkers()
-    {
-        switch (CurrentPaymentMode)
-        {
-            case PaymentMode.LOW:
-                MoneyManager.Instance.ReduceMoney(config.basePayrate - config.payrateLevelDelta);
-                break;
-            case PaymentMode.MEDIUM:
-                MoneyManager.Instance.ReduceMoney(config.basePayrate);
-                break;
-            case PaymentMode.HIGH:
-                MoneyManager.Instance.ReduceMoney(config.basePayrate + config.payrateLevelDelta);
-                break;
-        }
-    }
+    protected void PayWorkers() => MoneyManager.Instance.ReduceMoney(config.basePayrate + ((int)CurrentPaymentMode) * config.payrateLevelDelta);
     public int GetIndexOfSatisfaction()
     {
         return (int)CurrentPaymentMode - 1;

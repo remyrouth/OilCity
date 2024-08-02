@@ -30200,7 +30200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e21cabf69d67d459c3f6b1183fae05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialMoney: 100
+  _initialMoney: 1000
 --- !u!114 &1148798917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30246,7 +30246,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  MaxSoldAmount: 0.75
+  MaxSoldAmount: 10
 --- !u!4 &1148798918
 Transform:
   m_ObjectHideFlags: 0

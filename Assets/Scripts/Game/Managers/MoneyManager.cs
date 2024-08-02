@@ -4,7 +4,7 @@ using System;
 public class MoneyManager : Singleton<MoneyManager>
 {
     public float Money { get; private set; }
-    public float Quota => 0.1f;
+    public float Quota => 0f;
     public event Action<float> OnMoneyChanged;
     [SerializeField] private float _initialMoney;
     private void Start()
