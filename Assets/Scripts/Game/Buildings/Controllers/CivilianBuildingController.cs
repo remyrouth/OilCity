@@ -1,3 +1,4 @@
+using Game.Events;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public sealed class CivilianBuildingController : BuildingController<BuildingScri
     private void Awake()
     {
         _spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+
+        BuildingEvents.OnCivilianSpawn();
     }
     public override List<TileAction> GetActions()
     {

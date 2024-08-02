@@ -474,7 +474,6 @@ MonoBehaviour:
   _costLabel: {fileID: 3379540850887970862}
   _buildingIcon: {fileID: 1538017140152623306}
   _descriptorView: {fileID: 2396290219433005572}
-  _highlightImage: {fileID: 0}
 --- !u!1 &1570669957819057836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,7 +2391,6 @@ MonoBehaviour:
   _costLabel: {fileID: 6903835150062357868}
   _buildingIcon: {fileID: 1026888810989479542}
   _descriptorView: {fileID: 2396290219433005572}
-  _highlightImage: {fileID: 0}
 --- !u!1 &4253085775199026028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2578,12 +2576,12 @@ GameObject:
   - component: {fileID: 6149407821289925625}
   - component: {fileID: 7514022595911066724}
   m_Layer: 5
-  m_Name: Silo
+  m_Name: Cinema
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &331593445608634086
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2633,7 +2631,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 181bf8faeee43dd4f804a4897d0c4447, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acaf9cddeb0f16646a1c16276723e0ad, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2699,11 +2697,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb9769390f5cdc43a5b2ce4278c9b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildingSO: {fileID: 11400000, guid: 6d87e534c45ae8440bdcf515a83f16c4, type: 2}
+  _buildingSO: {fileID: 11400000, guid: fad4c292642a1034099105282faa63ad, type: 2}
   _costLabel: {fileID: 7709340847678183273}
   _buildingIcon: {fileID: 8677646580629759170}
   _descriptorView: {fileID: 2396290219433005572}
-  _highlightImage: {fileID: 0}
 --- !u!1 &4565518139216997918
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,7 +3961,6 @@ MonoBehaviour:
   _costLabel: {fileID: 5952274796298915341}
   _buildingIcon: {fileID: 1327320740640595363}
   _descriptorView: {fileID: 2396290219433005572}
-  _highlightImage: {fileID: 0}
 --- !u!1 &6783537638018371988
 GameObject:
   m_ObjectHideFlags: 0
@@ -4180,7 +4176,6 @@ MonoBehaviour:
   _costLabel: {fileID: 4149645750934621128}
   _buildingIcon: {fileID: 9181135777894968004}
   _descriptorView: {fileID: 2396290219433005572}
-  _highlightImage: {fileID: 0}
 --- !u!1 &7442762021412640538
 GameObject:
   m_ObjectHideFlags: 0
@@ -4774,7 +4769,6 @@ MonoBehaviour:
   _costLabel: {fileID: 6784759547723116171}
   _buildingIcon: {fileID: 7407798283922271280}
   _descriptorView: {fileID: 2396290219433005572}
-  _highlightImage: {fileID: 0}
 --- !u!1 &8103556131370468326
 GameObject:
   m_ObjectHideFlags: 0

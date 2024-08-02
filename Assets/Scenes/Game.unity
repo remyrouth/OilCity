@@ -29744,6 +29744,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6525879330455550516, guid: e9be32e6e29b0df48b68b3d9bd97782c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30200,7 +30204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e21cabf69d67d459c3f6b1183fae05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialMoney: 100
+  _initialMoney: 1000
 --- !u!114 &1148798917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30246,7 +30250,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  MaxSoldAmount: 0.75
+  MaxSoldAmount: 10
 --- !u!4 &1148798918
 Transform:
   m_ObjectHideFlags: 0
@@ -48076,19 +48080,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 331593445608634086, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 331593445608634086, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 331593445608634086, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 113.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 331593445608634086, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -792.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 567583143869113363, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_Sprite
@@ -48501,10 +48505,6 @@ PrefabInstance:
     - target: {fileID: 4273800916369824674, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -290
-      objectReference: {fileID: 0}
-    - target: {fileID: 4537241464617687712, guid: 633a53a529bff7945b511daff03bc261, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4563100091876967046, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMax.y
