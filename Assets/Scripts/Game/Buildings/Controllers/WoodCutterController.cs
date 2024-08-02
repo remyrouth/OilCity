@@ -69,8 +69,6 @@ public sealed class WoodCutterController : AOEBuildingController
                 GenerateNewSequence(_workers[i]);
 
             _workers[i]._sequenceActions.Dequeue()?.Invoke(this);
-            if (i == _workers.Count - 1)
-                PayWorkers();
         }
     }
     private void GenerateNewSequence(WoodCutterWorker worker)

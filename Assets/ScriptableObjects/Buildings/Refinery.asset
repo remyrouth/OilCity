@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482d5d789f4247e479b276fe16911c51, type: 3}
   m_Name: Refinery
   m_EditorClassIdentifier: 
-  <placementCost>k__BackingField: 40
-  <removalCost>k__BackingField: 10
-  <removalSatisfactionCost>k__BackingField: 10
+  <placementCost>k__BackingField: 500
+  <removalCost>k__BackingField: 400
+  <removalSatisfactionCost>k__BackingField: 15
   <icon>k__BackingField: {fileID: 21300000, guid: 8907a77b88ead574b80a2e20b05f713b, type: 3}
   <prefab>k__BackingField: {fileID: 7259278686903281590, guid: df2865aff0a88324e8aa48ed201f62c9, type: 3}
   <previewPrefab>k__BackingField: {fileID: 7259278686903281590, guid: 572e149c8c88f284abd68e35f823fde9, type: 3}
   <size>k__BackingField: {x: 4, y: 2}
   <buildingName>k__BackingField: {fileID: 11400000, guid: 8a5da6562644ffb458c6d1bec93842f4, type: 2}
   <description>k__BackingField: {fileID: 11400000, guid: 203c8c7dedbbc6a4a848e7ea7dcef06c, type: 2}
-  <basePayrate>k__BackingField: 0.02
-  <payrateLevelDelta>k__BackingField: 0
+  <basePayrate>k__BackingField: 100
+  <payrateLevelDelta>k__BackingField: 80

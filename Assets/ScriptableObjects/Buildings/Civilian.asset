@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Civilian
   m_EditorClassIdentifier: 
   <placementCost>k__BackingField: 0
-  <removalCost>k__BackingField: 20
+  <removalCost>k__BackingField: 250
   <removalSatisfactionCost>k__BackingField: 10
   <icon>k__BackingField: {fileID: 0}
   <prefab>k__BackingField: {fileID: 5643698438408399773, guid: ec17399cca5759443a6e71549c548312, type: 3}
   <previewPrefab>k__BackingField: {fileID: 0}
   <size>k__BackingField: {x: 1, y: 1}
+  <buildingName>k__BackingField: {fileID: 0}
+  <description>k__BackingField: {fileID: 0}
