@@ -47,15 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actionsPivot: {x: 0.5, y: 0.5}
   _spriteRenderer: {fileID: 894880373097073525}
-  sprites:
-  - {fileID: 1236236862, guid: 3491039128138244da0b2547c018963b, type: 3}
-  - {fileID: 2028833440, guid: 3491039128138244da0b2547c018963b, type: 3}
-  - {fileID: 773864084, guid: 3491039128138244da0b2547c018963b, type: 3}
-  - {fileID: -106283853, guid: 3491039128138244da0b2547c018963b, type: 3}
-  - {fileID: -598503902, guid: 3491039128138244da0b2547c018963b, type: 3}
-  - {fileID: -700504116, guid: 3491039128138244da0b2547c018963b, type: 3}
-  - {fileID: -241484797, guid: 3491039128138244da0b2547c018963b, type: 3}
-  - {fileID: 1911788907, guid: 3491039128138244da0b2547c018963b, type: 3}
 --- !u!1 &7785336662693661705
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +99,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f49242122f46c0a41a2cacc8c594e31a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

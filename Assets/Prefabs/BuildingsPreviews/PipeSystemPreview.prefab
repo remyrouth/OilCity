@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2634154432309862596}
   - component: {fileID: 482268469478855148}
   - component: {fileID: 4287302825588963559}
-  - component: {fileID: 52713718347674511}
   m_Layer: 0
   m_Name: PipeSystemPreview
   m_TagString: Untagged
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 7985930009597182815}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.345966, y: 23.375422, z: 22.55765}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -70,7 +69,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ce068905b60506846a0736cecc247212, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,7 +99,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.40163994
+        value: 0.15
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -143,7 +142,7 @@ LineRenderer:
     numCornerVertices: 16
     numCapVertices: 4
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
@@ -151,19 +150,3 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &52713718347674511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7985930009597182815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shouldLoop: 0
-  maxVolume: 1
-  soundClip: {fileID: 8300000, guid: fb7defd3ecc6c4db081106443574d47b, type: 3}
-  soundType: 0

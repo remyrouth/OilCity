@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,7 +14,10 @@ public class BoardManager : Singleton<BoardManager>
     [SerializeField] private Transform _treeHolder;
     [SerializeField] private Tilemap _pipeTileMap;
 
-    [System.Serializable]
+    public event Action<Vector2Int, BuildingScriptableObject> OnBuildingPlaced;
+    public event Action<Vector2Int, TileObjectController> OnBuildingDestroyed;
+
+    [Serializable]
     private struct InitialBuilding
     { public BuildingScriptableObject config; public Vector2Int pos; }
     [SerializeField] private InitialBuilding[] InitialBuildings;
@@ -23,13 +27,14 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     private void Start()
     {
-        if (_pipeTileMap == null) {
+        if (_pipeTileMap == null)
+        {
             Debug.LogError("You did not attach the pipe tilemap to the board manager in the inspector. This must be done before the game starts");
         }
 
         for (int i = 0; i < MAP_SIZE_X; i++)
         {
-            for (int j = 0; j < MAP_SIZE_Y; j++)
+            for (int j = MAP_SIZE_Y; j >= 0; j--)
             {
                 if (!TreeEvaluator.GetValueAtPosition(i, j))
                     continue;
@@ -57,6 +62,7 @@ public class BoardManager : Singleton<BoardManager>
             for (int j = 0; j < buildingSO.size.x; j++)
                 tileDictionary[position + new Vector2Int(j, i)] = obj;
 
+        OnBuildingPlaced?.Invoke(position, buildingSO);
         return true;
     }
     /// <summary>
@@ -81,6 +87,20 @@ public class BoardManager : Singleton<BoardManager>
         }
         return false;
     }
+
+    /// <summary>
+    /// A helper accessor to get a component at a position. Shorthand for "IsTileOccupied(pos) && tileDict[pos].trygetcomponent(out component)"
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="pos"></param>
+    /// <param name="component"></param>
+    /// <returns></returns>
+    public bool TryGetTypeAt<T>(Vector2Int pos, out T component)
+    {
+        component = default;
+        return IsTileOccupied(pos) && tileDictionary[pos].TryGetComponent(out component);
+    }
+
     /// <summary>
     /// Checks if all of the tiles the building would take are free.
     /// </summary>
@@ -106,9 +126,9 @@ public class BoardManager : Singleton<BoardManager>
     /// <param name="position"></param>
     /// <param name="buildingSO"></param>
     /// <returns></returns>
-    public List<TileObjectController> GetPeripheralTileObjectsForBuilding(Vector2Int position, Vector2Int size)
+    public List<(Vector2Int peripheral_to, TileObjectController tile)> GetPeripheralTileObjectsForBuilding(Vector2Int position, Vector2Int size)
     {
-        var list = new List<TileObjectController>();
+        var list = new List<(Vector2Int, TileObjectController)>();
 
         int top = size.y;
         int right = size.x;
@@ -117,18 +137,30 @@ public class BoardManager : Singleton<BoardManager>
         {
             for (int j = -1; j <= right; j++)
             {
+                Vector2Int peripheral_offset = Vector2Int.zero;
+                if (i == top) peripheral_offset.y = -1;
+                else if (i == -1) peripheral_offset.y = 1;
+
+                if (j == right) peripheral_offset.x = -1;
+                else if (j == -1) peripheral_offset.x = 1;
+
                 // for the sake of readability
                 bool is_topleft_corner = (i == top && j == -1);
                 bool is_topright_corner = (i == top && j == right);
                 bool is_bottomleft_corner = (i == -1 && j == -1);
                 bool is_bottomright_corner = (i == -1 && j == right);
+                bool is_center_tile = ((i != -1 && i != top) && (j != -1 && j != right));
 
                 var offset_position = position + new Vector2Int(j, i);
 
-                if (is_topleft_corner || is_topright_corner || is_bottomleft_corner || is_bottomright_corner) continue;
+                // debug check view
+                // if (!(is_topleft_corner || is_topright_corner || is_bottomleft_corner || is_bottomright_corner || is_center_tile))
+                //    GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = Utilities.Vector2IntToVector3(offset_position) + new Vector3(0.5f, 0.5f);
+
+                if (is_topleft_corner || is_topright_corner || is_bottomleft_corner || is_bottomright_corner || is_center_tile) continue;
                 else if (tileDictionary.TryGetValue(offset_position, out var value))
                 {
-                    list.Add(value);
+                    list.Add((offset_position + peripheral_offset, value));
                 }
             }
         }
@@ -141,29 +173,20 @@ public class BoardManager : Singleton<BoardManager>
     /// This was done so that there would not be excess pipe 
     /// objects in scene, and the FPS cost would be less.
     /// </summary>
-    /// <param name="pipeSprite"></param>
+    /// <param name="tileSprite"></param>
     /// <returns></returns>
-    public void AddTileToXY(Vector2Int position, Sprite pipeSprite) {
-        PlaceTile(new Vector3Int(position.x, position.y, 0), pipeSprite);
-    }
-
-    // Method to place a tile with a given sprite at a given position
-    private void PlaceTile(Vector3Int position, Sprite sprite)
+    public void SetPipeTileInSupermap(Vector2Int position, PipeSpriteScript.PipeRotation rot)
     {
-        if (sprite == null)
-        {
-            Debug.LogWarning("Sprite is null. Cannot place tile.");
-            return;
-        }
-
         // Create a new Tile and assign the sprite to it
         Tile newTile = ScriptableObject.CreateInstance<Tile>();
-        newTile.sprite = sprite;
+        newTile.sprite = rot.Sprite;
+        newTile.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, rot.Rotation), new Vector3(0.4f, 0.4f, 1f));
 
         // Set the tile on the tilemap
-        _pipeTileMap.SetTile(position, newTile);
+        _pipeTileMap.SetTile(new Vector3Int(position.x, position.y, 0), newTile);
     }
 
+    public void ClearSupermapTile(Vector2Int position) => _pipeTileMap.SetTile(new Vector3Int(position.x, position.y, 0), null);
 
     /// <summary>
     /// Gets tiles in range of a TileObjectController
@@ -176,17 +199,17 @@ public class BoardManager : Singleton<BoardManager>
         Vector2Int upperRight = building.Anchor + building.size;
         List<Vector2Int> tiles = new();
 
-        for (int x = building.Anchor.x - range; x < upperRight.x + range; x++)
+        for (int x = building.Anchor.x - range; x < upperRight.x + range-1; x++)
         {
-            for (int y = building.Anchor.y - range; y < upperRight.y + range; y++)
+            for (int y = building.Anchor.y - range; y < upperRight.y + range-1; y++)
             {
                 Vector2Int currentPos = new Vector2Int(x, y);
                 if (IsPositionOutsideBoard(currentPos))
                     continue;
-                int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x);
-                int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y);
-                if (x >= building.Anchor.x && x <= upperRight.x-1 && y >= building.Anchor.y && y <= upperRight.y-1) continue;
-                //if (new Vector2Int(xDistance, yDistance).sqrMagnitude <= range * range)
+                int xDistance = Mathf.Max(0, building.Anchor.x - currentPos.x, currentPos.x - upperRight.x+1);
+                int yDistance = Mathf.Max(0, building.Anchor.y - currentPos.y, currentPos.y - upperRight.y+1);
+                if (x >= building.Anchor.x && x <= upperRight.x - 1 && y >= building.Anchor.y && y <= upperRight.y - 1) continue;
+                if (new Vector2Int(xDistance, yDistance).sqrMagnitude < range * range)
                     tiles.Add(currentPos);
             }
         }
@@ -222,6 +245,7 @@ public class BoardManager : Singleton<BoardManager>
         var tiles = tileDictionary.Where(pos => pos.Value == tileObject).Select(pos => pos.Key).ToList();
         foreach (Vector2Int position in tiles)
             Destroy(position);
+        OnBuildingDestroyed?.Invoke(tileObject.Anchor, tileObject);
         Destroy(tileObject.gameObject);
     }
     private void Destroy(Vector2Int position)
@@ -236,7 +260,7 @@ public class BoardManager : Singleton<BoardManager>
         foreach (var building in InitialBuildings)
         {
             Vector3 middle = new Vector3(building.pos.x, building.pos.y, 0);
-            middle += new Vector3(building.config.size.x, building.config.size.y, 0)/2;
+            middle += new Vector3(building.config.size.x, building.config.size.y, 0) / 2;
             Vector3 size = new Vector3(building.config.size.x, building.config.size.y, 0);
             Gizmos.DrawCube(middle, size);
         }

@@ -4,12 +4,13 @@ using System;
 public class MoneyManager : Singleton<MoneyManager>
 {
     public float Money { get; private set; }
-
+    public float Quota => 0.1f;
     public event Action<float> OnMoneyChanged;
     [SerializeField] private float _initialMoney;
     private void Start()
     {
         Money = _initialMoney;
+        OnMoneyChanged += CheckForGameOver;
         OnMoneyChanged?.Invoke(Money);
     }
     public bool BuyItem(float cost)
@@ -29,13 +30,20 @@ public class MoneyManager : Singleton<MoneyManager>
     public void ReduceMoney(float amount)
     {
         Money = Mathf.Round(Money * 100f) / 100f - Mathf.Round(amount * 100f) / 100f;
-        if (Money < 0)
-            gameOver();
+        if (Money <= 0)
+            GameOver();
         OnMoneyChanged?.Invoke(Money);
     }
-    public void gameOver()
+
+    private void CheckForGameOver(float newValue)
     {
-        Debug.Log("You lost...");
+        if (newValue <= 0)
+            GameOver();
+    }
+    public void GameOver()
+    {
+        Debug.Log("Money reached 0!");
+        UIStateMachine.Instance.ChangeState(GameState.EndingUI);
     }
 
 }

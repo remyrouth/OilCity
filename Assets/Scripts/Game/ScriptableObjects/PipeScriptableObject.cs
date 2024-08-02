@@ -1,13 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PipeScriptableObject : BuildingScriptableObject
 {
-    public override TileObjectController CreateInstance(Vector2Int spawn_position)
+    [SerializeField] private Mesh m_flowDebugMesh;
+    [SerializeField] private List<TileAction> actionList = new List<TileAction>();
+    [SerializeField] private GameObject _oilSpillout, _keroseneSpillout;
+    public override TileObjectController CreateInstance(Vector2Int _)
     {
 
         // Pipes specifically will go to the tile map to place an object there
         // icon comes from BuildingScriptableObject parent
-        BoardManager.Instance.AddTileToXY(spawn_position, icon);
+        // BoardManager.Instance.AddTileToXY(spawn_position, icon);
 
 
         // this is pretty icky design, but the PipePlacer script is in charge of setting up/passing the values into the pipe controller.
@@ -15,6 +19,17 @@ public class PipeScriptableObject : BuildingScriptableObject
         // so it'll have to do for now.
         //
         // see PipePlacer for why this is an empty gameobject instead of the prefab.
-        return new GameObject("PipeSystem").AddComponent<PipeController>();
+        var go = new GameObject();
+        go.name = "PipeSystem #" + go.GetInstanceID();
+        var component = go.AddComponent<PipeController>();
+        component.SetTileActions(actionList);
+
+#if UNITY_EDITOR
+        component.SetDebugMesh(m_flowDebugMesh);
+#endif
+
+        component.SetActionPivot();
+        component.SetParticleSystems(_oilSpillout, _keroseneSpillout);
+        return component;
     }
 }

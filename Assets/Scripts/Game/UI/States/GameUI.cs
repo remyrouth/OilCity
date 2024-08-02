@@ -7,14 +7,32 @@ public class GameUI : UIState
 
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private BuildingPanelView _buildingPanel;
-    
+
     public override void OnUpdate()
     {
-        if (!Input.GetMouseButtonDown(0))
+
+    }
+
+    private void Start()
+    {
+        ControlManager.Instance.leftClickActivationButtontrigger += MouseClick;
+    }
+    private void OnDestroy()
+    {
+        ControlManager.Instance.leftClickActivationButtontrigger -= MouseClick;
+    }
+
+    private void MouseClick()
+    {
+        if (UIStateMachine.Instance.CurrentStateType != type)
             return;
         if (!EventSystem.current.IsPointerOverGameObject())
+        {
             TileSelector.Instance.OnMouseClick();
+        }
     }
+
+
 
     public void ChangeDialoguePanelVisibility()
     {
