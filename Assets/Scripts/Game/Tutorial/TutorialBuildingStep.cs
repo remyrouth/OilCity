@@ -11,7 +11,7 @@ namespace Game.Tutorial
         {
             BoardManager.Instance.OnBuildingPlaced += FinishStep;
             base.OnEnable();
-            BuildingPanelUI.Instance.ToggleButtonInteractable(buttonToUnlockIndex);
+            BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
         }
 
         private void OnDisable()
@@ -23,6 +23,7 @@ namespace Game.Tutorial
         {
             if (buildingSO.name.Equals(buildingName))
             {
+                BuildingPanelUI.Instance.ToggleHighlight(buttonToUnlockIndex);
                 FinishStep();
             }
         }
