@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7866105078467607210}
   - component: {fileID: 2439577691430875232}
-  - component: {fileID: -5536128372258601147}
   m_Layer: 0
   m_Name: GeologistPreview
   m_TagString: Untagged
@@ -47,22 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 1606976885837455653}
---- !u!114 &-5536128372258601147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3141429110944717563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shouldLoop: 0
-  maxVolume: 1
-  soundClip: {fileID: 8300000, guid: a235f1dad13395d4c9c0456b357a36cc, type: 3}
-  soundType: 0
 --- !u!1 &3698709323282262050
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +119,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c912404ada28cdd4b85c7151faa3ef68, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8546d18eff0b1491db918a4ed5cf467f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_FlipX: 0
   m_FlipY: 0
