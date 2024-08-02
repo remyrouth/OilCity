@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 391d7a0a73275444d8e6b979f274a34a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ac9bd6fe3b824a94496707b42de5022e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -149,13 +149,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actionsPivot: {x: 0, y: 0}
   TileActions:
+  - {fileID: 11400000, guid: 4fe9c879c18242946a6388d657b2e78a, type: 2}
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
   - {fileID: 11400000, guid: 54cfa0dc728251640b9fdbf5e7b19560, type: 2}
-  - {fileID: 11400000, guid: 470db2f59fdf9d64cac17ca5b2a7bd6c, type: 2}
   - {fileID: 11400000, guid: 1bed6fc2bbe796a41b46fa53cc620c56, type: 2}
   _demolishEffect: {fileID: 0}
   _workerSatisfactionIncreaseValue: 10
   _workerSatisfactionDelta: 5
+  CurrentSatisfactionIncreaseValue: 0
 --- !u!1 &5532493767352635794
 GameObject:
   m_ObjectHideFlags: 0
