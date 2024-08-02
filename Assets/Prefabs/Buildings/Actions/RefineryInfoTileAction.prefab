@@ -53,6 +53,8 @@ MonoBehaviour:
   _rendererPivot: {fileID: 7412211723027621600}
   _renderer: {fileID: 4361634898538877468}
   _buildingInfoView: {fileID: 2194906766153754678}
+  _normalPivot: {x: 70, y: 80}
+  _upsideDownPivot: {x: 70, y: -80}
 --- !u!1 &2270143420941757402
 GameObject:
   m_ObjectHideFlags: 0

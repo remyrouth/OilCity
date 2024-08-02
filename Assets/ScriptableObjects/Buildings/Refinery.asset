@@ -18,7 +18,7 @@ MonoBehaviour:
   <icon>k__BackingField: {fileID: 393123212, guid: c728a01d863e3a24fb1db5da8bbb1737, type: 3}
   <prefab>k__BackingField: {fileID: 7259278686903281590, guid: df2865aff0a88324e8aa48ed201f62c9, type: 3}
   <previewPrefab>k__BackingField: {fileID: 7259278686903281590, guid: 572e149c8c88f284abd68e35f823fde9, type: 3}
-  <size>k__BackingField: {x: 4, y: 3}
+  <size>k__BackingField: {x: 4, y: 2}
   <buildingName>k__BackingField: {fileID: 11400000, guid: 8a5da6562644ffb458c6d1bec93842f4, type: 2}
   <description>k__BackingField: {fileID: 11400000, guid: 203c8c7dedbbc6a4a848e7ea7dcef06c, type: 2}
   <basePayrate>k__BackingField: 0.02

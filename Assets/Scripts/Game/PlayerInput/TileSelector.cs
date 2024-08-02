@@ -46,17 +46,30 @@ public class TileSelector : Singleton<TileSelector>
     {
         EndFocus();
         _currentSelected = toc;
-        _actionsCanvas.transform.position = _currentSelected.ActionsPivot;
+        bool fanUpsideDown = toc.ActionsPivot.y > BoardManager.MAP_SIZE_Y - 3;
+        if (fanUpsideDown)
+            _actionsCanvas.transform.position
+                = new Vector3(_currentSelected.ActionsPivot.x, _currentSelected.Anchor.y, 0);
+        else
+            _actionsCanvas.transform.position = _currentSelected.ActionsPivot;
 
         var actions = _currentSelected.GetActions();
         if (actions.Count == 0)
             EndFocus();
-
+        ShowActionFan(actions, fanUpsideDown);
+    }
+    private void ShowActionFan(List<TileAction> actions, bool upsideDown)
+    {
         for (int i = 0; i < actions.Count; i++)
         {
-            float angle = -75 + i * 50;
+            float angle;
+            if (upsideDown)
+                angle = -105 - i * 50;
+            else
+                angle = -75 + i * 50;
+
             var visual = actions[i].Create(_actionsCanvas.transform
-                , angle, _currentSelected, this);
+                , angle, _currentSelected, this, upsideDown);
             views.Add(visual);
         }
     }

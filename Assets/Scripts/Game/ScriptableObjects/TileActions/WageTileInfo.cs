@@ -9,8 +9,8 @@ public class WageTileInfo : TileAction
         return WageIcons[(int)payRated.CurrentPaymentMode];
     }
     [field: SerializeField] public Sprite[] WageIcons { get; protected set; }
-    public override GameObject Create(Transform pivot, float rotation, TileObjectController toc, TileSelector ts)
+    public override GameObject Create(Transform pivot, float rotation, TileObjectController toc, TileSelector ts, bool upsideDown)
     {
-        return base.Create(pivot, rotation, toc, ts);
+        return base.Create(pivot, rotation, toc, ts, upsideDown);
     }
 }
