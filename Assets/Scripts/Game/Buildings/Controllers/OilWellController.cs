@@ -86,7 +86,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     /// An oil well can only handle output pipes.
     /// </summary>
     /// <returns></returns>
-    public (bool can_input, bool can_output) GetInOutConfig() => (false, true);
+    public (bool can_input, bool can_output) GetInOutConfig() => (false, m_output == null);
 
     #region Tree stuff
     public void AddChild(IFlowable child)
