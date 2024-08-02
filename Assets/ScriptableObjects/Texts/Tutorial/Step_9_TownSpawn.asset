@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_9_TownSpawn
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: 'Perfect it seems like people have started to move into town
-    this is likely due to the higher worker satisfaction as the better it is the
-    more likely people are to move in. Which is incredible because it means we are
-    helping the people here. Now I don''t expect this to have to be the case but
-    if a house is in your way that you really need to remove. You can pay the family
-    to move out and remove their house. However no one in the community would like
-    that.
-
-'
-  dialogueTextPolish: TBD
+  dialogueTextEnglish: Perfect, it seems like people have started moving into town,
+    likely due to the high worker satisfaction. The better it is, the more people
+    will want to move in, which is incredible because it means we're helping the
+    community here. If a house is in your way and you need to remove it, you can
+    pay the family to move out. However, the community won't like that.
+  dialogueTextPolish: "Wygl\u0105da na to, \u017Ce ludzie zacz\u0119li si\u0119 wprowadza\u0107
+    do miasta. Tak jak wspomnia\u0142em, prawdopodobnie jest to zwi\u0105zane z wysokim
+    zadowoleniem pracownik\xF3w. Je\u017Celi jakie\u015B domostwo stoi ci na drodze
+    mo\u017Cesz im zap\u0142aci\u0107, aby si\u0119 wyprowadzili, a ty b\u0119dziesz
+    m\xF3g\u0142 wyburzy\u0107 budynek. Jednak\u017Ce uwa\u017Caj, bo mieszka\u0144com
+    si\u0119 to nie spodoba, co obni\u017Cy zadowolenie.   "
