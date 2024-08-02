@@ -30194,6 +30194,7 @@ MonoBehaviour:
   zoomMax: 6
   zoomMin: 1
   invert: 1
+  _camSmoothness: 18
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0

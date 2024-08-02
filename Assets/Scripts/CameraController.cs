@@ -8,6 +8,7 @@ public class CameraController : Singleton<CameraController>
     public float zoomMax = 10f;
     public float zoomMin = 1f;
     [SerializeField] private bool invert;
+    [SerializeField][Range(0, 20)] private float _camSmoothness;
     public bool Invert
     {
         get => invert;
@@ -81,33 +82,33 @@ public class CameraController : Singleton<CameraController>
             adjustDelta.y -= 1;
         _targetPosition += adjustDelta * Time.deltaTime * 20;
     }
-    
+
     private void LateUpdate()
     {
         _cam.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, _targetZoom, Time.deltaTime * 20);
-        transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * 10);
+        transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * _camSmoothness);
     }
-    #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
 
-            Vector3 origin = new();
-            Vector3 end = new();
-            origin.x = bottomLeftCorner.x;
-            origin.y = bottomLeftCorner.y;
-            end.x = bottomLeftCorner.x;
-            end.y = upperRightCorner.y;
-            Gizmos.DrawLine(origin, end);
-            origin = end;
-            end.x = upperRightCorner.x;
-            Gizmos.DrawLine(origin, end);
-            origin = end;
-            end.y = bottomLeftCorner.y;
-            Gizmos.DrawLine(origin, end);
-            origin = end;
-            end.x = bottomLeftCorner.x;
-            Gizmos.DrawLine(origin, end);
-        }
-    #endif
+        Vector3 origin = new();
+        Vector3 end = new();
+        origin.x = bottomLeftCorner.x;
+        origin.y = bottomLeftCorner.y;
+        end.x = bottomLeftCorner.x;
+        end.y = upperRightCorner.y;
+        Gizmos.DrawLine(origin, end);
+        origin = end;
+        end.x = upperRightCorner.x;
+        Gizmos.DrawLine(origin, end);
+        origin = end;
+        end.y = bottomLeftCorner.y;
+        Gizmos.DrawLine(origin, end);
+        origin = end;
+        end.x = bottomLeftCorner.x;
+        Gizmos.DrawLine(origin, end);
+    }
+#endif
 }
