@@ -23,7 +23,7 @@ public class KeroseneManager : Singleton<KeroseneManager>
     /// <param name="amount"></param>
     public void IncreaseAmount(float amount)
     {
-        KeroseneAmount += amount;
+        KeroseneAmount += amount * 100;
         OnKeroseneChanged?.Invoke(KeroseneAmount);
     }
     /// <summary>

@@ -30380,7 +30380,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  MaxSoldAmount: 0.75
+  MaxSoldAmount: 100
 --- !u!4 &1148798918
 Transform:
   m_ObjectHideFlags: 0
