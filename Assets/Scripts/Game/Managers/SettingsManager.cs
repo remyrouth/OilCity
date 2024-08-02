@@ -18,6 +18,19 @@ namespace Game.Managers
         private float _ambientSoundVolume = 1f;
         private float _musicVolume = 1f;
 
+        public void Update() {
+            // Debug.Log("MasterVolume:" + _masterVolume + 
+            // "  SoundEffect:" + _soundEffectVolume + 
+            // " AmbientSound:" + _ambientSoundVolume + 
+            // " Music:" +_musicVolume);
+        }
+
+        private void Start() {
+            OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+            OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+            OnMusicVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+        }
+
         private void Awake()
         {
             SetLanguage();

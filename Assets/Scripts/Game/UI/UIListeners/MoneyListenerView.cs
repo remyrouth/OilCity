@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class MoneyListenerView : MonoBehaviour
@@ -12,18 +12,19 @@ public class MoneyListenerView : MonoBehaviour
     }
     private void Start()
     {
-        _label.text = _currentValue.ToString("C");
+        _label.text = _currentValue.ToString("0.00");
     }
     private void OnDestroy()
     {
         MoneyManager.Instance.OnMoneyChanged -= UpdateLabel;
     }
+    private const int DELTA = 10;
     private void FixedUpdate()
     {
         if (_targetValue == _currentValue)
             return;
-        _currentValue += Mathf.Sign(_targetValue - _currentValue);
-        if (Mathf.Abs(_currentValue - _targetValue) < 1)
+        _currentValue += DELTA * Mathf.Sign(_targetValue - _currentValue);
+        if (Mathf.Abs(_currentValue - _targetValue) < DELTA)
             _currentValue = _targetValue;
         _label.text = _currentValue.ToString("C");
     }

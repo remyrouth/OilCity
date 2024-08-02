@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 11400000, guid: 40959d18d1872664da524ad75c434a92, type: 2}
+  portraitImage: {fileID: 21300000, guid: c548200312cee284eaf588876cf3c669, type: 3}
   buttonToUnlockIndex: 0

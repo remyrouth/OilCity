@@ -2,11 +2,13 @@ using System;
 using Game.Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueUI : Singleton<DialogueUI>
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Image portrait;
     private DialogueSO _currentDialogue;
 
     public DialogueSO CurrentDialogue => _currentDialogue;
@@ -33,7 +35,12 @@ public class DialogueUI : Singleton<DialogueUI>
             _ => _currentDialogue.DialogueTextEnglish
         };
     }
-    
+
+    public void ChangePortraitImage(Sprite image)
+    {
+        portrait.sprite = image;
+    }
+
 
     public void DisableDialogue()
     {

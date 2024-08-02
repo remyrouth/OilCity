@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 11400000, guid: e9c34b6c118d0cb4aa8cdd8000712f6d, type: 2}
+  portraitImage: {fileID: 21300000, guid: 3f0e60908391b544882f506144d1ff6b, type: 3}

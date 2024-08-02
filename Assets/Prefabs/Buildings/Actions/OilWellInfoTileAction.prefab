@@ -53,6 +53,8 @@ MonoBehaviour:
   _rendererPivot: {fileID: 7412211723027621600}
   _renderer: {fileID: 4361634898538877468}
   _buildingInfoView: {fileID: 2194906766153754678}
+  _normalPivot: {x: 70, y: 80}
+  _upsideDownPivot: {x: 70, y: -80}
 --- !u!1 &2270143420941757402
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 82.00009}
+  m_AnchoredPosition: {x: 40, y: 80}
   m_SizeDelta: {x: 175, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &3817053852151687641

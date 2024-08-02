@@ -7,6 +7,7 @@ public class GameDataRecorder : Singleton<GameDataRecorder>, ITickReceiver
     public readonly List<GameRecord> _records = new();
     private void Start()
     {
+        GameStateManager.Instance.OnGameEnded += TakeSnapshot;
         TimeManager.Instance.RegisterReceiver(this);
     }
 

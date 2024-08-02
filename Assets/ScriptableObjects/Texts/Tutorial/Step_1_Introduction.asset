@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_1_Introduction
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: "Hey, it's good to see you again. I am glad that you decided
-    to follow in my footsteps and join the oil making business. I, Ignacy \u0141ukasiewicz,
-    am telling you it's going to be big in the future, kids think of it as the next
-    gold but like the black version. Well I am sure you are raring to go so I will
-    introduce you to the puppy that made all of this possible."
-  dialogueTextPolish: TBD
+  dialogueTextEnglish: "Hey, it's good to see you again. I'm glad you've decided
+    to follow in my footsteps and join the oil-making business. I'm Ignacy \u0141ukasiewicz,
+    and I'm telling you, this industry is going to be big in the future. People think
+    of oil as the next gold, but in black. Well, I'm sure you're eager to get started,
+    so let me introduce you to the key component that makes all of this possible.\r"
+  dialogueTextPolish: "Witaj, dobrze zn\xF3w ci\u0119 widzie\u0107. Jestem niezmiernie
+    szcz\u0119\u015Bliwy, \u017Ce zdecydowa\u0142e\u015B si\u0119 p\xF3j\u015B\u0107
+    w moje \u015Blady i pod\u0105\u017Ca\u0107 \u015Bcie\u017Ck\u0105 przemys\u0142u
+    naftowego. Uwa\u017Cam, \u017Ce w przysz\u0142o\u015Bci ta bran\u017Ca si\u0119
+    rozro\u015Bnie do niespotykanych wcze\u015Bniej rozmiar\xF3w. M\u0142odzi nawet
+    nazywaj\u0105 naft\u0119 czarnym z\u0142otem. Jak pewnie wiesz nazywam si\u0119
+    Ignacy \u0141ukasiewicz i uzna\u0142em, \u017Ce jeste\u015B idealn\u0105 osob\u0105,
+    aby zamieni\u0107 te ziemie w imperium nafty. Pozw\xF3l zatem, \u017Ce poka\u017C\u0119
+    ci kluczowy element, kt\xF3ry to umo\u017Cliwi."

@@ -30,13 +30,7 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, I
     private void CheckForGameOver(int newValue)
     {
         if (newValue <= 0)
-            GameOver();
-    }
-
-    public void GameOver()
-    {
-        Debug.Log("Workers satifaction reached 0!");
-        UIStateMachine.Instance.ChangeState(GameState.EndingUI);
+            GameStateManager.Instance.EndGame();
     }
 
     public void OnTick()

@@ -130,7 +130,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     private void TriggerNextEvent(TimeLineEvent nextEvent) => _eventUI.TriggerEvent(nextEvent);
 
 
-    private bool CheckForEndGame()
+    public bool CheckForEndGame()
     {
         bool isNewsPaperUp = UIStateMachine.Instance.CurrentStateType == GameState.EventUI;
         if (!isNewsPaperUp && GetTimePercentage() >= 1f)

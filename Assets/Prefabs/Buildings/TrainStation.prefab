@@ -574,6 +574,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6068664385402366900}
   - component: {fileID: 2181772803859923086}
+  - component: {fileID: 1073918640123148353}
   m_Layer: 0
   m_Name: TrainStation
   m_TagString: Untagged
@@ -620,6 +621,18 @@ MonoBehaviour:
   startPos: {x: 2, y: 1.45, z: 0}
   arrivedPos: {x: 6, y: 1.45, z: 0}
   endPos: {x: 10.2, y: 1.45, z: 0}
+--- !u!210 &1073918640123148353
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998399413928227521}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &6559598032567825783
 GameObject:
   m_ObjectHideFlags: 0
