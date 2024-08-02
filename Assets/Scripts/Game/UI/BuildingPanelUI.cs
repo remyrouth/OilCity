@@ -26,6 +26,11 @@ public class BuildingPanelUI : Singleton<BuildingPanelUI>
         buildingButtons[buttonIndex].interactable = !buildingButtons[buttonIndex].interactable;
     }
 
+    public Transform GetButtonTransform(int index)
+    {
+        return buildingButtons[index].transform;
+    }
+
     public void StartFlicker(int buttonIndex)
     {
         Debug.Log($"StartFlciker called for button index {buttonIndex}");

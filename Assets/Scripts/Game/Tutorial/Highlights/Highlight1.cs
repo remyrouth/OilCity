@@ -10,27 +10,16 @@ using DG.Tweening;
 
 public class Highlight1 : MonoBehaviour
 {
+    [SerializeField]
     private Image _highlightImage;
-    private Color _originalColor;
     private Color _highlightColor = new Color(1f, 1f, 0f, 0.5f);
 
-    private void Awake()
+    public void StartFlicker(Transform Button)
     {
-        _highlightImage = GetComponent<Image>();
+        transform.position = Button.position;
         if (_highlightImage != null)
         {
-            _originalColor = _highlightImage.color;
-        }
-        else
-        {
-            Debug.LogError("Highlight Image not found on HIghlight1");
-        }
-    }
-
-    public void StartFlicker()
-    {
-        if (_highlightImage != null)
-        {
+            _highlightImage.enabled = true;
             _highlightImage.DOColor(_highlightColor, 1f)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
@@ -41,8 +30,8 @@ public class Highlight1 : MonoBehaviour
     {
         if (_highlightImage != null)
         {
+            _highlightImage.enabled = false;
             _highlightImage.DOKill();
-            _highlightImage.color = _originalColor;
         }
     }
 
