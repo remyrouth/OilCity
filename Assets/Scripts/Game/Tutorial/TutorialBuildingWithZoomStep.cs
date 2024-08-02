@@ -9,7 +9,7 @@ namespace Game.Tutorial
         [SerializeField] private int buttonToUnlockIndex;
         [SerializeField] private Vector3 targetPosition;
         [SerializeField] private float targetZoom;
-        [SerializeField] private Highlight1 highlight1;
+        [SerializeField] private GameObject highlight1;
 
         private new void OnEnable()
         {

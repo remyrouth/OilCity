@@ -26,14 +26,14 @@ public class Highlight1 : MonoBehaviour
         }
     }
 
-    public void StopFlicker()
-    {
-        if (_highlightImage != null)
-        {
-            _highlightImage.enabled = false;
-            _highlightImage.DOKill();
-        }
-    }
+    // public void StopFlicker()
+    // {
+    //     if (_highlightImage != null)
+    //     {
+    //         _highlightImage.enabled = false;
+    //         _highlightImage.DOKill();
+    //     }
+    // }
 
     public void SetPosition(Vector3 position)
     {
