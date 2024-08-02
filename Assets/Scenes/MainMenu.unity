@@ -234,6 +234,7 @@ MonoBehaviour:
   zoomMax: 10
   zoomMin: 1
   invert: 0
+  _camSmoothness: 0
 --- !u!114 &239402153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1353,6 +1354,14 @@ PrefabInstance:
     - target: {fileID: 3987177793410997203, guid: 3e33b22ec415636479a7b2cd6a2967c5, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268746191236555067, guid: 3e33b22ec415636479a7b2cd6a2967c5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d46ac07829eb8b64dbb6241716d4ea46, type: 2}
+    - target: {fileID: 4268746191236555067, guid: 3e33b22ec415636479a7b2cd6a2967c5, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4387730682062091341, guid: 3e33b22ec415636479a7b2cd6a2967c5, type: 3}
       propertyPath: m_AnchorMax.x
