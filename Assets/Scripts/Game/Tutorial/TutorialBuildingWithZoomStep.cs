@@ -11,7 +11,6 @@ namespace Game.Tutorial
         [SerializeField] private float targetZoom;
         
 
-        /**
         private new void OnEnable()
         {
             BoardManager.Instance.OnBuildingPlaced += FinishStep;
@@ -34,7 +33,5 @@ namespace Game.Tutorial
                 FinishStep();
             }
         }
-    **/
-    
     }
 }
