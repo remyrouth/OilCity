@@ -33,8 +33,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="end_pos"></param>
     /// <param name="start_pipe_dir"></param>
     /// <param name="end_pipe_dir"></param>
-    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes)
+    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes, PipePlacer.FlowPlacementState state)
     {
+        if (state == PipePlacer.FlowPlacementState.None)
+            throw new System.ArgumentException("A pipe cannot have a None flow state!");
+
         // notarize all the values passed in
         m_startPipePos = start_pos;
         m_endPipePos = end_pos;
@@ -52,6 +55,20 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (start_i == -1 || end_i == -1) throw new System.ArgumentException("start or end positions were not found in pipe point list!");
 
         m_pipes = pipes.GetRange(start_i, end_i - start_i + 1);
+
+        // by default, pipes Output. If the state is input, we need to flip basically everything.
+        if (state == PipePlacer.FlowPlacementState.Input)
+        {
+            // exchange positions (thanks VS for neat trick)
+            (m_endPipePos, m_startPipePos) = (m_startPipePos, m_endPipePos);
+
+            // flip flowdirs
+            m_startDirection = Utilities.FlipFlow(m_startDirection);
+            m_endDirection = Utilities.FlipFlow(m_endDirection);
+
+            // reverse points
+            m_pipes.Reverse();
+        }
     }
 
     public void SetTileActions(List<TileAction> actions)

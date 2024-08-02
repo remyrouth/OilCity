@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// An interface for classes that should implement the ability to send flows of oil/kerosene to another object. All classes that do 
@@ -17,4 +18,6 @@ public interface IFlowable : ITreeNode, ITickReceiver
     /// </summary>
     /// <returns></returns>
     (bool can_input, bool can_output) GetFlowConfig();
+
+    //List<Vector2Int> GetConnectionPositions(bool for_input);
 }

@@ -1,3 +1,4 @@
+using Game.Events;
 using UnityEngine;
 
 public sealed class CivilianBuildingController : BuildingController<BuildingScriptableObject>
@@ -7,5 +8,7 @@ public sealed class CivilianBuildingController : BuildingController<BuildingScri
     private void Awake()
     {
         _spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+
+        BuildingEvents.OnCivilianSpawn();
     }
 }
