@@ -40,7 +40,9 @@ public sealed class GeologistController : AOEBuildingController
 
     private HashSet<Vector2Int> _tilesSearched = new();
 
-    public event Action<Vector2Int> OnOilSpotFound;
+   // public event Action<Vector2Int> OnOilSpotFound;
+
+    public event Action<Vector2Int, float> OnOilSpotFound;
 
     private void Awake() => OnOilSpotFound += PingSpot;
 
@@ -131,16 +133,23 @@ public sealed class GeologistController : AOEBuildingController
     private void FinalizeSearching()
     {
         var bestOilSpot = _tilesSearched
-            .Where(e => !BoardManager.Instance.IsTileOccupied(e)) //make sure that tile is still empty
+            .Where(e => !BoardManager.Instance.IsTileOccupied(e)) // Ensure the tile is empty
             .OrderBy(e => BoardManager.Instance.OilEvaluator.GetValueAtPosition(e.x, e.y))
             .LastOrDefault();
 
         if (bestOilSpot == null)
             return;
+
         FireWorkersIfNeeded();
         Debug.Log($"Found great oil spot at {bestOilSpot}!");
-        OnOilSpotFound?.Invoke(bestOilSpot);
 
+        // Retrieve the oil value at the best spot
+        float oilValue = BoardManager.Instance.OilEvaluator.GetValueAtPosition(bestOilSpot.x, bestOilSpot.y);
+
+        oilValue = oilValue * 100;
+
+        // Trigger the event with both the position and the oil value
+        OnOilSpotFound?.Invoke(bestOilSpot, oilValue);
     }
     private void FireWorkersIfNeeded()
     {
@@ -152,11 +161,25 @@ public sealed class GeologistController : AOEBuildingController
             }
         }
     }
-    private void PingSpot(Vector2Int pos)
+    private void PingSpot(Vector2Int pos, float oilValue)
     {
+        // Instantiate the ping prefab
         var obj = Instantiate(_oilPingPrefab, new Vector3(pos.x, pos.y, -0.01f), Quaternion.identity);
+
+        // Set the scale animation
         obj.transform.localScale = Vector3.zero;
         obj.transform.DOScale(Vector3.one, 0.25f);
+
+        // Find the text component in the prefab
+        var textComponent = obj.GetComponentInChildren<TMPro.TextMeshPro>();
+
+        if (textComponent != null)
+        {
+            // Set the text to display the oil value
+            textComponent.text = oilValue.ToString() + "%";
+        }
+
+        // Destroy the ping object after 10 seconds
         Destroy(obj, 10);
     }
     private Vector2Int? GetRandomWithinRange()
