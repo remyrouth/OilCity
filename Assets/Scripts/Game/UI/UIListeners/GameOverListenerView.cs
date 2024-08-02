@@ -5,6 +5,9 @@ using UnityEngine;
 public class GameOverListenerView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _label;
+    [SerializeField] private LanguageItem _moneyLoss;
+    [SerializeField] private LanguageItem _satifactionLoss;
+    [SerializeField] private LanguageItem _timeLoss;
 
     private void Awake()
     {
@@ -26,16 +29,16 @@ public class GameOverListenerView : MonoBehaviour
     {
         if (TimeLineEventManager.Instance.CheckForEndGame())
         {
-            return "The polish oil industry is in shambles... Game over.";
+            return _timeLoss.ToString();
         }
         if(MoneyManager.Instance.Money <= 0)
         {
-            return "You're broke... Game over.";
+            return _moneyLoss.ToString();
         }
         if(WorkerSatisfactionManager.Instance.WorkerSatisfaction <= 0)
         {
-            return "You failed to keep your workers satisfied... Game over.";
+            return _satifactionLoss.ToString();
         }
-        return "nwm nwm";
+        return "Game over...";
     }
 }

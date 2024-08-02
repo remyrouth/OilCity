@@ -1138,6 +1138,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _label: {fileID: 649512831570712976}
+  _moneyLoss: {fileID: 11400000, guid: dce3d02ed60e75f44be91d24021ca80f, type: 2}
+  _satifactionLoss: {fileID: 11400000, guid: 40e75c746d25ef04090cb6ff6d33e13e, type: 2}
+  _timeLoss: {fileID: 11400000, guid: c8a8e6b83ee022c4181bbae34b87697e, type: 2}
 --- !u!1 &8406094858427649539
 GameObject:
   m_ObjectHideFlags: 0
