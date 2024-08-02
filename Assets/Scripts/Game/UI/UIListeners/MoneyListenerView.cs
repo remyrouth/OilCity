@@ -1,4 +1,4 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 
 public class MoneyListenerView : MonoBehaviour
@@ -12,7 +12,7 @@ public class MoneyListenerView : MonoBehaviour
     }
     private void Start()
     {
-        _label.text = _currentValue.ToString("0.00") + " z³";
+        _label.text = _currentValue.ToString("0.00");
     }
     private void OnDestroy()
     {
