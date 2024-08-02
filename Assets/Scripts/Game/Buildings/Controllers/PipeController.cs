@@ -1,9 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using static UnityEditor.Rendering.CameraUI;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
 {
@@ -11,13 +7,14 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     private IFlowable m_child; // where you get the flow from (the start)
     private IFlowable m_parent; // where the flow goes to (the end)
 
-    private PipeFlowDirection m_startDirection; // the orientation of the start pipe
-    private PipeFlowDirection m_endDirection; // the orientation of the end pipe
+    // as if the pipe is laid horizontally, flowing from left to right
+    private PipeFlowDirection m_leftSideDirection; // the orientation of the start ("left") pipe
+    private PipeFlowDirection m_rightSideDirection; // the orientation of the end ("right") pipe
 
-    private Vector2Int m_startPipePos; // position of the start pipe
-    private Vector2Int m_endPipePos; // position of the end pipe
+    private Vector2Int m_leftSidePosition; // position of the "start" pipe
+    private Vector2Int m_rightSidePosition; // position of the "end" pipe
 
-    private List<Vector2Int> m_pipes;
+    private List<Vector2Int> m_pipes; // all the positions of pipes from left to right
 
 #if UNITY_EDITOR
     private Mesh m_debugMesh;
@@ -33,17 +30,17 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="end_pos"></param>
     /// <param name="start_pipe_dir"></param>
     /// <param name="end_pipe_dir"></param>
-    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes, PipePlacer.FlowPlacementState state)
+    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes, HashSet<FlowRelation> states)
     {
-        if (state == PipePlacer.FlowPlacementState.None)
+        if (states.Contains(FlowRelation.None))
             throw new System.ArgumentException("A pipe cannot have a None flow state!");
 
         // notarize all the values passed in
-        m_startPipePos = start_pos;
-        m_endPipePos = end_pos;
+        m_leftSidePosition = start_pos;
+        m_rightSidePosition = end_pos;
 
-        m_startDirection = start_pipe_dir;
-        m_endDirection = end_pipe_dir;
+        m_leftSideDirection = start_pipe_dir;
+        m_rightSideDirection = end_pipe_dir;
 
         int start_i = -1, end_i = -1;
         for (int i = 0; i < pipes.Count; i++)
@@ -55,20 +52,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (start_i == -1 || end_i == -1) throw new System.ArgumentException("start or end positions were not found in pipe point list!");
 
         m_pipes = pipes.GetRange(start_i, end_i - start_i + 1);
-
-        // by default, pipes Output. If the state is input, we need to flip basically everything.
-        if (state == PipePlacer.FlowPlacementState.Input)
-        {
-            // exchange positions (thanks VS for neat trick)
-            (m_endPipePos, m_startPipePos) = (m_startPipePos, m_endPipePos);
-
-            // flip flowdirs
-            m_startDirection = Utilities.FlipFlow(m_startDirection);
-            m_endDirection = Utilities.FlipFlow(m_endDirection);
-
-            // reverse points
-            m_pipes.Reverse();
-        }
     }
 
     public void SetTileActions(List<TileAction> actions)
@@ -88,8 +71,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     protected override void CreateInitialConnections(Vector2Int _)
     {
-        var child_pos = m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
-        var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
+        var child_pos = m_leftSidePosition + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_leftSideDirection));
+        var parent_pos = m_rightSidePosition + Utilities.GetPipeFlowDirOffset(m_rightSideDirection);
 
         var (connect_to_child, connect_to_parent) = ValidatePipesAndConnect(child_pos, parent_pos);
 
@@ -129,7 +112,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
             is_child_valid = end.Equals(child_end) && c_pipe.GetOpenStatus().open_end; // to prevent stealing a pipe from one that already has a connection
 
-            if (is_child_valid) c_pipe.UpdateFlowAndVisual(end, m_startPipePos, true); // we're connecting to their end, so our start is the endpoint and their end is the pipe. Therefore, flip the flow dir.
+            if (is_child_valid) c_pipe.UpdateFlowAndVisual(end, m_leftSidePosition, true); // we're connecting to their end, so our start is the endpoint and their end is the pipe. Therefore, flip the flow dir.
         }
         else if (c_pipe == this) is_child_valid = false;
 
@@ -140,7 +123,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
             is_parent_valid = start.Equals(parent_end) && p_pipe.GetOpenStatus().open_start; // to prevent connecting to a pipe that already has a connection
 
-            if (is_parent_valid) p_pipe.UpdateFlowAndVisual(start, m_endPipePos, false); // don't flip the flowdir bc we are flowing into their start from our endpoint.
+            if (is_parent_valid) p_pipe.UpdateFlowAndVisual(start, m_rightSidePosition, false); // don't flip the flowdir bc we are flowing into their start from our endpoint.
         }
         else if (p_pipe == this) is_parent_valid = false;
 
@@ -167,17 +150,17 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         var my_status = GetOpenStatus();
 
         // change flowdir for endpoint
-        if (endpoint.Equals(m_startPipePos) && my_status.open_start)
+        if (endpoint.Equals(m_leftSidePosition) && my_status.open_start)
         {
             in_pos = pipe;
-            out_pos = m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(m_endDirection);
-            m_startDirection = flow_direction;
+            out_pos = m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(m_rightSideDirection);
+            m_leftSideDirection = flow_direction;
         }
-        else if (endpoint.Equals(m_endPipePos) && my_status.open_end)
+        else if (endpoint.Equals(m_rightSidePosition) && my_status.open_end)
         {
-            in_pos = m_pipes.Count > 1 ? m_pipes[^2] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
+            in_pos = m_pipes.Count > 1 ? m_pipes[^2] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_leftSideDirection));
             out_pos = pipe;
-            m_endDirection = flow_direction;
+            m_rightSideDirection = flow_direction;
         }
 
         // change visual for endpoint
@@ -270,12 +253,12 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         Debug.LogWarning(string.Format("{0} has overflowed {1}", gameObject.name, received));
 
         if (received.type == FlowType.Oil && received.amount > 0)
-            _oilSpillout.Play(m_endPipePos, m_endDirection);
+            _oilSpillout.Play(m_rightSidePosition, m_rightSideDirection);
         else
             _oilSpillout.Stop();
 
         if (received.type == FlowType.Kerosene && received.amount > 0)
-            _keroseneSpillout.Play(m_endPipePos, m_endDirection);
+            _keroseneSpillout.Play(m_rightSidePosition, m_rightSideDirection);
         else
             _keroseneSpillout.Stop();
     }
@@ -309,11 +292,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <returns></returns>
     public bool DoesPipeSystemReceiveInputFromTile(Vector2Int tile_pos)
     {
-        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_startPipePos, out PipeFlowDirection est_flow_dir))
+        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_leftSidePosition, out PipeFlowDirection est_flow_dir))
         {
             // flow is flipped here because the estimate flow direction method operates under the assumption that the pipe is always flowing
             // into the tile, not the other way around.
-            return Utilities.FlipFlow(est_flow_dir) == m_startDirection;
+            return Utilities.FlipFlow(est_flow_dir) == m_leftSideDirection;
         }
         else
         {
@@ -329,7 +312,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <returns></returns>
     public bool DoesPipeSystemOutputToTile(Vector2Int tile_pos)
     {
-        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_endPipePos, out PipeFlowDirection est_flow_dir)) return est_flow_dir == m_endDirection;
+        if (Utilities.GetCardinalEstimatePipeflowDirection(tile_pos, m_rightSidePosition, out PipeFlowDirection est_flow_dir)) return est_flow_dir == m_rightSideDirection;
         else
         {
             // not within any of the cardinal directions, so auto-false.
@@ -337,7 +320,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         }
     }
 
-    public (Vector2Int start, Vector2Int end) GetPositions() => (m_startPipePos, m_endPipePos);
+    public (Vector2Int start, Vector2Int end) GetPositions() => (m_leftSidePosition, m_rightSidePosition);
 
     public (bool open_start, bool open_end) GetOpenStatus() => (m_child == null, m_parent == null);
 
@@ -345,16 +328,16 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     {
         var offset = new Vector3(0.5f, 0.5f);
 
-        var s_dir = Utilities.GetPipeFlowDirOffset(m_startDirection);
-        var e_dir = Utilities.GetPipeFlowDirOffset(m_endDirection);
+        var s_dir = Utilities.GetPipeFlowDirOffset(m_leftSideDirection);
+        var e_dir = Utilities.GetPipeFlowDirOffset(m_rightSideDirection);
 
         var s_rot = Quaternion.Euler(-Vector2.SignedAngle(Vector2.up, s_dir) + 90, 90f, 90f);
         var e_rot = Quaternion.Euler(-Vector2.SignedAngle(Vector2.up, e_dir) + 90, 90f, 90f);
 
-        var s_pos = Utilities.Vector2IntToVector3(m_startPipePos) + offset - Utilities.Vector2IntToVector3(Utilities.GetPipeFlowDirOffset(m_startDirection)) * .35f;
-        var e_pos = Utilities.Vector2IntToVector3(m_endPipePos) + offset + Utilities.Vector2IntToVector3(Utilities.GetPipeFlowDirOffset(m_endDirection)) * .35f;
+        var s_pos = Utilities.Vector2IntToVector3(m_leftSidePosition) + offset - Utilities.Vector2IntToVector3(Utilities.GetPipeFlowDirOffset(m_leftSideDirection)) * .35f;
+        var e_pos = Utilities.Vector2IntToVector3(m_rightSidePosition) + offset + Utilities.Vector2IntToVector3(Utilities.GetPipeFlowDirOffset(m_rightSideDirection)) * .35f;
 
-        if (m_startDirection != PipeFlowDirection.Invalid)
+        if (m_leftSideDirection != PipeFlowDirection.Invalid)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireMesh(m_debugMesh, 0, s_pos, s_rot, new Vector3(0.2f, 0.1f, .2f));
@@ -365,7 +348,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             Gizmos.DrawWireCube(s_pos, Vector3.one * 0.2f);
         }
 
-        if (m_endDirection != PipeFlowDirection.Invalid)
+        if (m_rightSideDirection != PipeFlowDirection.Invalid)
         {
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireMesh(m_debugMesh, 0, e_pos, e_rot, new Vector3(0.2f, 0.1f, .2f));

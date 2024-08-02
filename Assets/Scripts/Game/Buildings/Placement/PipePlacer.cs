@@ -33,14 +33,7 @@ public class PipePlacer : BuildingPlacer
     private bool m_shouldUpdatePathfinding;
     private Vector2Int m_previousPosition;
 
-    public enum FlowPlacementState
-    {
-        Input,
-        Output,
-        None
-    }
-
-    private HashSet<FlowPlacementState> m_availableStates;
+    private HashSet<FlowRelation> m_availableStates;
 
     /// <summary>
     /// A two-element array where the first index is the pipe-start preview prefab instance reference, and the second index
@@ -56,7 +49,7 @@ public class PipePlacer : BuildingPlacer
 
         m_pointList = new List<Vector2Int>();
 
-        m_availableStates = new HashSet<FlowPlacementState>() { FlowPlacementState.Output, FlowPlacementState.Input, FlowPlacementState.None };
+        m_availableStates = new HashSet<FlowRelation>();
     }
 
     #region callbacks
@@ -70,8 +63,6 @@ public class PipePlacer : BuildingPlacer
         BuildingEvents.OnCivilianBuildingSpawn -= ForcePathfindingUpdate;
     }
     #endregion
-
-    private void ForcePathfindingUpdate() => m_shouldUpdatePathfinding = true;
 
     public override void UpdatePreview()
     {
@@ -93,9 +84,8 @@ public class PipePlacer : BuildingPlacer
 
             m_previousPosition = mousePos;
 
+            // now that we've set the value for the shouldUpdate, let's see if we really need to update the path or if we can just terminate early
             if (!m_shouldUpdatePathfinding) return;
-
-            // use linerenderer rather than creating lots of gameobjects
 
             // terser code for the following:
             //    var src_to_ignore = BoardManager.Instance.IsTileOccupied(m_start) ? BoardManager.Instance.tileDictionary[m_start] : null;
@@ -114,11 +104,13 @@ public class PipePlacer : BuildingPlacer
 
             m_pathfindingPreview.positionCount = m_pointList.Count;
             m_pathfindingPreview.SetPositions(array);
-
         }
     }
 
     #region Pathfinding
+
+    private void ForcePathfindingUpdate() => m_shouldUpdatePathfinding = true;
+
     private List<Vector2Int> Pathfind(Vector2Int start, Vector2Int end, TileObjectController src_to_ignore, TileObjectController dest_to_ignore)
     {
         var frontier = new SimplePriorityQueue<Vector2Int, int>();
@@ -226,7 +218,7 @@ public class PipePlacer : BuildingPlacer
         {
             if (BoardManager.Instance.TryGetTypeAt<IFlowable>(mousePos, out var flowable))
             {
-                // flowable.GetConnectionPositions(m_wasStartPlaced);
+                // flowable.GetConnectionPositions(m_wasStartPlaced); TODO connection position previews
 
                 // logic:
                 // if the start pipe has not been placed yet, then we're in the process of placing the starting pipe.
@@ -238,10 +230,10 @@ public class PipePlacer : BuildingPlacer
 
                 var flow_config = flowable.GetFlowConfig();
 
-                bool valid_input = m_availableStates.Contains(FlowPlacementState.Output) && flow_config.can_input;
-                bool valid_output = m_availableStates.Contains(FlowPlacementState.Input) && flow_config.can_output;
+                bool valid_input = m_availableStates.Contains(FlowRelation.Output) && flow_config.can_input;
+                bool valid_output = m_availableStates.Contains(FlowRelation.Input) && flow_config.can_output;
 
-                return valid_input || valid_output;
+                return m_availableStates.Count == 0 || valid_input || valid_output;
             }
 
             // is occupied, but by a non-flow building
@@ -279,16 +271,41 @@ public class PipePlacer : BuildingPlacer
             yield return null;
         }
 
-        //if we have a flowable at the point, use it to determine the state. Otherwise, the state defaults.
-        if ( BoardManager.Instance.TryGetTypeAt<IFlowable>(TileSelector.Instance.MouseToGrid(), out var flowable))
+        // if we have a flowable at a point, add its FlowPlacementStates to the set. If the set has items, prune it instead.
+        if (BoardManager.Instance.TryGetTypeAt<IFlowable>(TileSelector.Instance.MouseToGrid(), out var flowable))
         {
             var config = flowable.GetFlowConfig();
 
-            // if you start your pipe at a building that can output flow (e.g. well), the pipe defaults to outputting flow from that building to the dest
-            if (config.can_output) m_availableStates = FlowPlacementState.Output;
+            // count == 0 means any connection is currently possible.
+            if (m_availableStates.Count == 0)
+            {
+                if (config.can_output) m_availableStates.Add(FlowRelation.Output);
+                if (config.can_input) m_availableStates.Add(FlowRelation.Input);
+            }
+            else
+            {
+                // if the hovered building cannot output anything, then we know that this pipe cannot be flowing from that building
+                // to the first one. Therefore, it isn't an Input pipe.
+                if (!config.can_output) m_availableStates.Remove(FlowRelation.Input);
 
-            // otherwise, if you start your pipe at a building that can input flow (e.g. train station), the pipe defaults to inputting flow from the dest to that building
-            if (config.can_input) m_availableStates = FlowPlacementState.Input;
+                // if the hovered building cannot input anything, then we know that this pipe cannot be flowing from the first
+                // building to the current one. Therefore, it isn't an Output pipe.
+                if (!config.can_input) m_availableStates.Remove(FlowRelation.Output);
+
+                // if we removed all the possible states added, there is nothing this pipe can be. 
+                // Since the count == 0 means "any connection possible," we add a None to the available states
+                // to show that nothing is possible.
+                if (m_availableStates.Count == 0)
+                {
+                    m_availableStates.Add(FlowRelation.None);
+                }
+            }
+        }
+        // otherwise if we're just an open tile (we wont be anything else bc we're a valid position), just say everything's good
+        else if (m_availableStates.Count == 0)
+        {
+            m_availableStates.Add(FlowRelation.Output);
+            m_availableStates.Add(FlowRelation.Input);
         }
     }
 
@@ -327,7 +344,7 @@ public class PipePlacer : BuildingPlacer
         // if we somehow set the start to the end, exit without placing a pipe
         if (m_start.Equals(m_end) || m_pointList.Count < 1) yield break;
 
-        // if we registered a "fake" controller to occupy the start, remove it before placement
+        // if we registered a "fake" controller to occupy the start, remove it before placement of the actual pipe controllers
         if (did_occupy_start)
         {
             // not great to modify the map outside of the class, but there's no neater method present in the manager to do so.
