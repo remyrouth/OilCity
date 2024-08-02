@@ -4,7 +4,7 @@ public abstract class SingleTileActionView<T> : MonoBehaviour
     where T : TileAction
 {
     [SerializeField] private Transform _rendererPivot;
-    public virtual void Initialize(T action, float rotation, TileObjectController toc, TileSelector ts)
+    public virtual void Initialize(T action, float rotation, TileObjectController toc, TileSelector ts, bool upsideDown)
     {
         transform.localScale = Vector3.zero;
         transform.localEulerAngles = Vector3.forward * -90;
