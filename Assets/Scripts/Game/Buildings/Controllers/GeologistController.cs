@@ -20,13 +20,12 @@ public sealed class GeologistController : AOEBuildingController
     }
     List<GeologistWorker> _workers = new List<GeologistWorker>();
     List<GeologistWorker> _firedWorkers = new List<GeologistWorker>();
-    [SerializeField] private Transform _workerVisual;
+    [SerializeField] private GameObject _workerVisual;
     [SerializeField] private GameObject _oilPingPrefab;
     [SerializeField] private int _workerAmount;
     public int activeWorkerAmount { get;private set; }
     public override int TickNumberInterval => 10;
 
-    public override int Range => 4;
 
     private int GetNumberOfSearchingPoints()
     {
@@ -86,6 +85,7 @@ public sealed class GeologistController : AOEBuildingController
             worker._sequenceActions.Enqueue((e) => { e.SearchForOil(worker); });
             worker._sequenceActions.Enqueue(null);
             worker._sequenceActions.Enqueue(null);
+            worker._sequenceActions.Enqueue(null);
         }
 
         //get worker back to building
@@ -104,7 +104,13 @@ public sealed class GeologistController : AOEBuildingController
         worker._isActive = false;
         worker._workerVisual.DOKill();
         Vector3 pos = new Vector3(Anchor.x, Anchor.y, 0);
-        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick);
+
+        var anim = worker._workerVisual.GetComponent<WorkerVisualAnimator>().Anim;
+        worker._workerVisual.GetComponent<SpriteRenderer>().flipX = pos.x < worker._workerVisual.position.x;
+        anim.SetBool("IsWalking", true);
+
+        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick)
+            .OnComplete(() => { anim.SetBool("IsWalking", false); });
     }
     private void SearchForOil(GeologistWorker worker)
     {
@@ -112,8 +118,14 @@ public sealed class GeologistController : AOEBuildingController
         if (tile == null)
             return;
         Vector3 pos = new Vector3(tile!.Value.x, tile!.Value.y) + new Vector3(0.5f, 0.5f, 0);
+
+        var anim = worker._workerVisual.GetComponent<WorkerVisualAnimator>().Anim;
+        worker._workerVisual.GetComponent<SpriteRenderer>().flipX = pos.x < worker._workerVisual.position.x;
+        anim.SetBool("IsWalking", true);
+
         worker._workerVisual.DOKill();
-        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2);
+        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2.25f)
+            .OnComplete(() => { anim.SetBool("IsWalking", false); anim.SetTrigger("DoAction"); });
         _tilesSearched.Add(tile!.Value);
     }
     private void FinalizeSearching()
@@ -157,7 +169,7 @@ public sealed class GeologistController : AOEBuildingController
 
     private void CreateWorker()
     {
-        var tmp = new GeologistWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity));
+        var tmp = new GeologistWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity).transform);
         tmp._workerVisual.SetParent(transform);
         if (_workers.Count() != 0)
         {

@@ -22,7 +22,6 @@ public sealed class WoodCutterController : AOEBuildingController
     private int activeWorkerAmount;
     private List<WoodCutterWorker> _firedWorkers = new List<WoodCutterWorker>();
     public override int TickNumberInterval => 0;
-    public override int Range => 4;
     [SerializeField] private int _workerAmount;
     [SerializeField] private Transform _workerVisualPrefab;
     private List<WoodCutterWorker> _workers = new List<WoodCutterWorker>();
