@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class ControlManager : Singleton<ControlManager>
 {
@@ -12,6 +14,8 @@ public class ControlManager : Singleton<ControlManager>
     private InputType lastUsedInput = InputType.None;
     public delegate void Buttontrigger();
     public event Buttontrigger leftClickActivationButtontrigger;
+    public event Buttontrigger rightClickActivationButtonTrigger;
+    public event Buttontrigger rightClickButtonTriggerEnd;
     private Vector2 lastMousePosition;
     private Vector2 lastStickInput;
     private enum InputType
@@ -32,7 +36,10 @@ public class ControlManager : Singleton<ControlManager>
         playerControls.PlayerControls.MoveCursor.performed += OnMouseMove;
         playerControls.PlayerControls.MoveLeftStick.performed += OnLeftStickMove;
         playerControls.PlayerControls.MoveLeftStick.canceled += LeftStickUsageUpdate;
-        playerControls.PlayerControls.ClickSelect.performed += OnSelectionButtonTrigger;
+        playerControls.PlayerControls.ClickSelect.performed += OnLeftMouseButtonTrigger;
+        
+        playerControls.PlayerControls.ClickSelect.performed += OnRightMouseButtonTrigger;
+        playerControls.PlayerControls.RightClick.canceled += OnRightMouseButtonEnd;
 
 
 
@@ -55,26 +62,20 @@ public class ControlManager : Singleton<ControlManager>
 
     }
 
-    private void LeftStickUsageUpdate(InputAction.CallbackContext context)
-    {
-        lastUsedInput = InputType.None;
-    }
 
-    private void OnMouseMove(InputAction.CallbackContext context)
-    {
-        lastUsedInput = InputType.Mouse;
-        lastMousePosition = context.ReadValue<Vector2>();
-    }
-
-    private void OnLeftStickMove(InputAction.CallbackContext context)
-    {
-        lastUsedInput = InputType.Stick;
-        lastStickInput = context.ReadValue<Vector2>();
-    }
-
-    private void OnSelectionButtonTrigger(InputAction.CallbackContext context)
+    private void OnLeftMouseButtonTrigger(InputAction.CallbackContext context)
     {
         leftClickActivationButtontrigger?.Invoke();
+    }
+
+    private void OnRightMouseButtonTrigger(InputAction.CallbackContext context)
+    {
+        rightClickActivationButtonTrigger?.Invoke();
+    }
+
+    private void OnRightMouseButtonEnd(InputAction.CallbackContext context)
+    {
+        rightClickButtonTriggerEnd?.Invoke();
     }
 
     private void UpdateCursorPosition(Vector2 input)
@@ -111,6 +112,21 @@ public class ControlManager : Singleton<ControlManager>
         return mouseCursorUI.gameObject.transform.position;
     }
 
+
+    public bool IsCursorOverUIElement()
+    {
+        RectTransform cursor = mouseCursorUI.gameObject.GetComponent<RectTransform>();
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = new Vector2(Screen.width - cursor.rect.width / 2, Screen.height - cursor.rect.height / 2)
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        
+        return results.Count > 0;
+    }
+
     private void OnEnable()
     {
         playerControls.Enable();
@@ -119,6 +135,23 @@ public class ControlManager : Singleton<ControlManager>
     private void OnDisable()
     {
         playerControls.Disable();
+    }
+
+    private void LeftStickUsageUpdate(InputAction.CallbackContext context)
+    {
+        lastUsedInput = InputType.None;
+    }
+
+    private void OnMouseMove(InputAction.CallbackContext context)
+    {
+        lastUsedInput = InputType.Mouse;
+        lastMousePosition = context.ReadValue<Vector2>();
+    }
+
+    private void OnLeftStickMove(InputAction.CallbackContext context)
+    {
+        lastUsedInput = InputType.Stick;
+        lastStickInput = context.ReadValue<Vector2>();
     }
 
 }
