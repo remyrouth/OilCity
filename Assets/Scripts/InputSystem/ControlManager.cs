@@ -66,11 +66,13 @@ public class ControlManager : Singleton<ControlManager>
     private void OnLeftMouseButtonTrigger(InputAction.CallbackContext context)
     {
         leftClickActivationButtontrigger?.Invoke();
+        Cursor.visible = false;
     }
 
     private void OnRightMouseButtonTrigger(InputAction.CallbackContext context)
     {
         rightClickActivationButtonTrigger?.Invoke();
+        Cursor.visible = false;
     }
 
     private void OnRightMouseButtonEnd(InputAction.CallbackContext context)
