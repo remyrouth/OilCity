@@ -25,6 +25,8 @@ public class PipePlacer : BuildingPlacer
 
     private const float HARDCODED_OFFSET = 0.5f;
 
+    private Vector2Int m_previousPosition;
+
 
     /// <summary>
     /// A two-element array where the first index is the pipe-start preview prefab instance reference, and the second index
@@ -52,7 +54,7 @@ public class PipePlacer : BuildingPlacer
         {
             var current_end = TileSelector.Instance.MouseToGrid();
 
-            if (m_start.Equals(current_end) || !can_be_built) return; // skip if placing end on start
+            if (m_start.Equals(current_end) || !can_be_built || m_previousPosition.Equals(mousePos)) return; // skip if placing end on start or if mouse didn't move
 
             // use linerenderer rather than creating lots of gameobjects
 
@@ -73,6 +75,8 @@ public class PipePlacer : BuildingPlacer
 
             m_pathfindingPreview.positionCount = m_pointList.Count;
             m_pathfindingPreview.SetPositions(array);
+
+            m_previousPosition = mousePos;
         }
     }
 
@@ -92,11 +96,11 @@ public class PipePlacer : BuildingPlacer
         {
             Vector2Int current = frontier.Dequeue();
 
-            bool is_occupied = BoardManager.Instance.IsTileOccupied(current);
-            bool is_ignored = is_occupied && (BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore) || BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore));
+            bool is_current_occupied = BoardManager.Instance.IsTileOccupied(current);
+            bool is_current_src_occupied = is_current_occupied && BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore);
+            bool is_current_dest_occupied = is_current_occupied && BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore);
 
             if (current == end) break;
-            //if (current != start && is_occupied && !is_ignored) continue;
 
             Vector2Int[] neighbors = new Vector2Int[] { current + Vector2Int.right, current + Vector2Int.up, current + Vector2Int.left, current + Vector2Int.down };
 
@@ -104,11 +108,23 @@ public class PipePlacer : BuildingPlacer
             {
                 if (BoardManager.Instance.IsPositionOutsideBoard(npos)) continue;
 
+                // traversal logic:
+                // - if this tile is occupied (and not ignored), it is uber expensive
+                // - if this tile is a src/dest and the neighbor is the opposite, it is uber expensive
+                // - if this tile is a src, it is fully traversable
+                // - if this tile is a dest, it is fully traversable
+
+                // these manual checks are faster than the TryGetAt method, due to no reliance on TryGetComponent
+                bool is_neighbor_occupied = BoardManager.Instance.IsTileOccupied(npos);
+                bool is_neighbor_src = is_neighbor_occupied && BoardManager.Instance.tileDictionary[npos].Equals(src_to_ignore);
+                bool is_neighbor_dest = is_neighbor_occupied && BoardManager.Instance.tileDictionary[npos].Equals(dest_to_ignore);
+
                 int cost_mod = 1;
 
-                // "ignored" tiles are still traversable, but more expensive.
-                if (is_ignored) cost_mod = 200;
-                else if (is_occupied) cost_mod = 999; 
+                if ((is_current_occupied && !is_current_src_occupied && !is_current_dest_occupied)
+                    || (is_current_src_occupied && is_neighbor_dest)
+                    || (is_current_dest_occupied && is_neighbor_src)) cost_mod = 999;
+
 
                 int new_cost = cost_so_far[current] + cost_mod;
 
