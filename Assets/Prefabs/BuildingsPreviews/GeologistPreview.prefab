@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7866105078467607210}
   - component: {fileID: 2439577691430875232}
   - component: {fileID: -5536128372258601147}
+  - component: {fileID: 1397817779766662035}
   m_Layer: 0
   m_Name: GeologistPreview
   m_TagString: Untagged
@@ -43,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3141429110944717563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4629d82c911b5834e831157ea6384e1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e4776f444fbc194488fea22fd2e2417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 1606976885837455653}
@@ -63,6 +64,20 @@ MonoBehaviour:
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: a235f1dad13395d4c9c0456b357a36cc, type: 3}
   soundType: 0
+--- !u!114 &1397817779766662035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3141429110944717563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e699650f44278e42bbd75c7317ceb1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionsPivot: {x: 0, y: 0}
+  _tilePrefab: {fileID: 1106220239202305956, guid: 8a3ad53d092eef94c9b039a1642c33f2, type: 3}
 --- !u!1 &3698709323282262050
 GameObject:
   m_ObjectHideFlags: 0
