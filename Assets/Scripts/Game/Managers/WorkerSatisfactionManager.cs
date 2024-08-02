@@ -39,7 +39,7 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, I
         if (_tickTimer == PaymentTimer)
         {
             _tickTimer = 0;
-            ChangeSatisfaction(BoardManager.Instance.tileDictionary.Values.OfType<PayrateBuildingController>().Select(e => e.GetIndexOfSatisfaction()).Sum());
+            ChangeSatisfaction(BoardManager.Instance.tileDictionary.Values.OfType<PayrateBuildingController>().Select(e => e.GetIndexOfSatisfaction()).Sum() * .25f);
         }
     }
 }
