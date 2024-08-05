@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 134f7de336a3a1a49b99bef0c9764be6, type: 3}
+  m_Name: NewPipe
+  m_EditorClassIdentifier: 
+  <placementCost>k__BackingField: 100
+  <removalCost>k__BackingField: 50
+  <removalSatisfactionCost>k__BackingField: 0
+  <icon>k__BackingField: {fileID: 21300000, guid: 37839ad66ff58b043a481aa57fd86fc0, type: 3}
+  <prefab>k__BackingField: {fileID: 5643698438408399773, guid: e8b181e337c33bf4c8a7a0b7f999785d, type: 3}
+  <previewPrefab>k__BackingField: {fileID: 7985930009597182815, guid: a3db034b263f0e14d9c19f93fac0c235, type: 3}
+  <size>k__BackingField: {x: 1, y: 1}
+  <buildingName>k__BackingField: {fileID: 11400000, guid: dda8208c5269b2b48ac298ae28128023, type: 2}
+  <description>k__BackingField: {fileID: 11400000, guid: b9137289a378c3e4f88237ded78db3d4, type: 2}
