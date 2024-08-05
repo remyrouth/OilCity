@@ -88,7 +88,6 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
                 Debug.LogWarning("ticksPerYear not set up correctly");
                 return;
             }
-            MoneyManager.Instance.ReduceMoney(MoneyManager.Instance.Quota);
             currentTick = 0f;
             currentYear++;
             CheckNextEvent();
