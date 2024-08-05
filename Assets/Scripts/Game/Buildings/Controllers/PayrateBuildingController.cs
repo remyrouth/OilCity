@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class PayrateBuildingController : BuildingController<PayrateBuildingScriptableObject>
 {
@@ -51,9 +52,17 @@ public abstract class PayrateBuildingController : BuildingController<PayrateBuil
     protected void PayWorkers()
     {
         float amountToPay = config.basePayrate + ((int)CurrentPaymentMode) * config.payrateLevelDelta;
-        MoneyManager.Instance.ReduceMoney(amountToPay);
+        float leftToPay = Mathf.Clamp(amountToPay - MoneyManager.Instance.Money, 0, amountToPay);
+        MoneyManager.Instance.ReduceMoney(amountToPay - leftToPay);
+
+        if (leftToPay > 0)
+        {
+            PopupValuesPool.Instance.GetFromPool<SimpleIconPopup>(PopupValuesPool.PopupValueType.MadPeople)
+            .Initialize(ActionsPivot + Vector2.right / 2);
+            WorkerSatisfactionManager.Instance.DecreaseSatisfaction((int)(leftToPay / amountToPay * 10));
+        }
         PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.PaidMoney)
-            .Initialize(((int)amountToPay).ToString(), ActionsPivot);
+            .Initialize(((int)(leftToPay-amountToPay)).ToString(), ActionsPivot);
     }
     public int GetIndexOfSatisfaction()
     {
