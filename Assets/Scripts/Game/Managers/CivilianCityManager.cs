@@ -12,7 +12,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
 
     public const int DECAY_LENGTH = 30;
     private readonly Queue<(Vector2Int, float)> _destroyedTTL = new();
-
+    public int NumOfBuildings = 0;
     private void Awake()
     {
         BoardManager.Instance.OnBuildingDestroyed += HandleHouseDecay;
@@ -91,6 +91,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
             {
                 Vector2Int pos = freeTiles[Random.Range(0, freeTiles.Count)];
                 BoardManager.Instance.Create(pos, civilianBuildingSO);
+                NumOfBuildings++;
                 break;
             }
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public sealed class EntertainmentBuilding : PayrateBuildingController, ITickReceiver
 {
-    
+
     [SerializeField] private int _workerSatisfactionIncreaseValue;
     [SerializeField] private int _workerSatisfactionDelta;
     public int CurrentSatisfactionIncreaseValue;
@@ -14,7 +14,7 @@ public sealed class EntertainmentBuilding : PayrateBuildingController, ITickRece
 
     public void Start()
     {
-         ChangeCurrentSatisfactionValue();
+        ChangeCurrentSatisfactionValue();
 
     }
 
@@ -26,12 +26,12 @@ public sealed class EntertainmentBuilding : PayrateBuildingController, ITickRece
             ChangeCurrentSatisfactionValue();
             _tickTimer = 0;
             if (CurrentPaymentMode == PaymentMode.MEDIUM)
-                WorkerSatisfactionManager.Instance.IncreaseSatisfaction(CurrentSatisfactionIncreaseValue);
+                WorkerSatisfactionManager.Instance.IncreaseSatisfaction(CurrentSatisfactionIncreaseValue / ((int)Mathf.Sqrt(CivilianCityManager.Instance.NumOfBuildings) + 1));
             else if (CurrentPaymentMode == PaymentMode.HIGH)
-                WorkerSatisfactionManager.Instance.IncreaseSatisfaction(CurrentSatisfactionIncreaseValue);
+                WorkerSatisfactionManager.Instance.IncreaseSatisfaction(CurrentSatisfactionIncreaseValue / ((int)Mathf.Sqrt(CivilianCityManager.Instance.NumOfBuildings) + 1));
             PayWorkers();
         }
-        
+
     }
 
     protected override void IncreaseProductivity()
