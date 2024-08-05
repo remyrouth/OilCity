@@ -92,14 +92,9 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
             currentTick = 0f;
             currentYear++;
             CheckNextEvent();
-            AlterPollutionInstance();
         }
     }
 
-    private void AlterPollutionInstance()
-    {
-        PollutionManager.Instance.SetPollution(GetTimePercentage());
-    }
 
 
     // This is the method that checks for the next newspaper event,

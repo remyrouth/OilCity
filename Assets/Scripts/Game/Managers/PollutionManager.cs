@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class PollutionManager : Singleton<PollutionManager>
@@ -9,15 +10,25 @@ public class PollutionManager : Singleton<PollutionManager>
 
     private void Start()
     {
-        ChangePollution(0);
+        SetPollution(0);
     }
-    public void ChangePollution(float delta)
+    public void CalculateNewPollution()
     {
-        PollutionAmount = Mathf.Clamp01(PollutionAmount + delta);
-        OnPollutionChanged?.Invoke(PollutionAmount);
+        var timePercentage = TimeLineEventManager.Instance.GetTimePercentage();
+
+        var amountOfRafineries = BoardManager.Instance.tileDictionary.Values
+            .OfType<RefineryController>().Distinct().Count();
+        var amountOfOilWells = BoardManager.Instance.tileDictionary.Values
+                    .OfType<OilWellController>().Distinct().Count();
+
+        float pollution = timePercentage * 0.75f
+            + (amountOfOilWells + amountOfRafineries) / 100
+            + (KeroseneManager.Instance.KeroseneSumAmount / 100);
+
+        SetPollution(timePercentage);
     }
 
-    public void SetPollution(float amount)
+    private void SetPollution(float amount)
     {
         PollutionAmount = Mathf.Clamp01(amount);
         OnPollutionChanged?.Invoke(PollutionAmount);
@@ -29,7 +40,7 @@ public class PollutionManager : Singleton<PollutionManager>
     private void OnValidate()
     {
         if (PollutionAmount != _amountSlider)
-            ChangePollution(_amountSlider - PollutionAmount);
+            SetPollution(_amountSlider);
     }
 #endif
 
