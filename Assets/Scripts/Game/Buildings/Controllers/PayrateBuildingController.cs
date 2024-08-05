@@ -48,7 +48,13 @@ public abstract class PayrateBuildingController : BuildingController<PayrateBuil
     protected abstract void DecreaseProductivity();
 
     public PaymentMode CurrentPaymentMode { get; protected set; } = PaymentMode.MEDIUM;
-    protected void PayWorkers() => MoneyManager.Instance.ReduceMoney(config.basePayrate + ((int)CurrentPaymentMode) * config.payrateLevelDelta);
+    protected void PayWorkers()
+    {
+        float amountToPay = config.basePayrate + ((int)CurrentPaymentMode) * config.payrateLevelDelta;
+        MoneyManager.Instance.ReduceMoney(amountToPay);
+        PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.PaidMoney)
+            .Initialize(((int)amountToPay).ToString(), ActionsPivot);
+    }
     public int GetIndexOfSatisfaction()
     {
         return (int)CurrentPaymentMode - 1;

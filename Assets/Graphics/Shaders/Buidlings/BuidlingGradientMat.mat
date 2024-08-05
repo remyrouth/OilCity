@@ -54,6 +54,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _GradientOpacity: 1
+    - _GradientOpacity: 0.2
     m_Colors: []
   m_BuildTextureStacks: []
