@@ -26,9 +26,9 @@ public sealed class EntertainmentBuilding : PayrateBuildingController, ITickRece
             ChangeCurrentSatisfactionValue();
             _tickTimer = 0;
             if (CurrentPaymentMode == PaymentMode.MEDIUM)
-                WorkerSatisfactionManager.Instance.IncreaseSatisfaction(CurrentSatisfactionIncreaseValue / (CivilianCityManager.Instance.NumOfBuildings + 1));
+                WorkerSatisfactionManager.Instance.IncreaseSatisfaction(CurrentSatisfactionIncreaseValue / ((int)Mathf.Sqrt(CivilianCityManager.Instance.NumOfBuildings) + 1));
             else if (CurrentPaymentMode == PaymentMode.HIGH)
-                WorkerSatisfactionManager.Instance.IncreaseSatisfaction(CurrentSatisfactionIncreaseValue / (CivilianCityManager.Instance.NumOfBuildings + 1));
+                WorkerSatisfactionManager.Instance.IncreaseSatisfaction(CurrentSatisfactionIncreaseValue / ((int)Mathf.Sqrt(CivilianCityManager.Instance.NumOfBuildings) + 1));
             PayWorkers();
         }
 
