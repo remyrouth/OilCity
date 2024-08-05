@@ -9,6 +9,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
     private PipeFlowDirection m_lhsFlowDir;
     private PipeFlowDirection m_rhsFlowDir;
 
+    private FlowType m_flowType;
+
     private PipeFlowDirection m_lhsOffsetDir;
     private PipeFlowDirection m_rhsOffsetDir;
 
@@ -102,7 +104,7 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         // if two parents exist, check validity of connection and connect them
         if (lhs_exists && rhs_exists)
         {
-
+            Connect(p_lhs, p_rhs);
         }
     }
 
@@ -137,24 +139,52 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
     {
         // first, get the direction of flow
         var lhs_inout = lhs.GetInOutConfig();
-        var rhs_config = rhs.GetInOutConfig();
+        var rhs_inout = rhs.GetInOutConfig();
 
-        bool ambiguous = lhs_inout.can_output && rhs_config.can_output && lhs_inout.can_input && rhs_config.can_input;
+        bool ambiguous = lhs_inout.can_output && rhs_inout.can_output && lhs_inout.can_input && rhs_inout.can_input;
 
-        bool left_right = lhs_inout.can_output && rhs_config.can_input;
-        bool right_left = lhs_inout.can_input && rhs_config.can_output;
+        if (ambiguous)
+        {
+
+        }
+
+        bool left_right = lhs_inout.can_output && rhs_inout.can_input;
+        bool right_left = lhs_inout.can_input && rhs_inout.can_output;
+
+        if (!left_right && !right_left)
+        {
+            // ERROR! Impossible connection!
+        }
+
+        var lhs_flow = lhs.GetFlowConfig();
+        var rhs_flow = rhs.GetFlowConfig();
 
         if (left_right)
         {
             Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_lhsIndex], m_lhsConnectionPos, out m_lhsFlowDir);
             Utilities.GetCardinalEstimatePipeflowDirection(m_rhsConnectionPos, m_allPipes[m_rhsIndex], out m_rhsFlowDir);
 
-            if (lhs.GetFlowConfig().out_type, lhs.GetFlowConfig().in_type)
+            if (lhs_flow.out_type != rhs_flow.in_type)
+            {
+                // ERROR! Invalid flow!
+            }
+
+            m_flowType = lhs_flow.out_type;
         }
 
-        // second, set the contents of the flow
+        if (right_left)
+        {
+            Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_rhsIndex], m_rhsConnectionPos, out m_rhsFlowDir);
+            Utilities.GetCardinalEstimatePipeflowDirection(m_lhsConnectionPos, m_allPipes[m_lhsIndex], out m_lhsFlowDir);
 
-        // third, parent
+            if (lhs_flow.in_type != rhs_flow.out_type)
+            {
+                // ERROR! Invalid flow!
+            }
+
+            m_flowType = lhs_flow.out_type;
+        }
+
     }
 
 
