@@ -16,7 +16,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
     private AudioClip soundClip;
     [SerializeField]
     private SoundType soundType = SoundType.SoundEffect;
-
+    [SerializeField]
     private bool usesForeignTrigger = false;
 
     private AudioSource audioSource;
@@ -77,6 +77,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         shouldLoop = false;
         maxVolume = 1f;
         soundClip = musicTrack;
+        usesForeignTrigger = true;
         if (audioSource != null) {
             audioSource.clip = soundClip;
         }
@@ -119,4 +120,6 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         AmbientSoundEffect,
         MusicTrack
     }
+
+
 }
