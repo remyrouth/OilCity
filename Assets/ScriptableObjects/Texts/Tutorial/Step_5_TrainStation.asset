@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
+  m_Name: Step_5_TrainStation
+  m_EditorClassIdentifier: 
+  dialogueTextEnglish: The train arrives every couple of days to transport our kerosene
+    for sale, so be sure to manage resources carefully and avoid going bankrupt while
+    waiting.
+  dialogueTextPolish: "\u015Awietnie. Teraz musimy doprowadzi\u0107 rurami oczyszczon\u0105
+    rop\u0119 do stacji kolejowej, aby zapobiec wyciekowi w rafinerii, a tak\u017Ce
+    umo\u017Cliwi\u0107 jej sprzeda\u017C. "

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
+  m_Name: Step_10_TownSpawn_part_2
+  m_EditorClassIdentifier: 
+  dialogueTextEnglish: The higher it is, the more people will want to move in. However,
+    this also means more buildings will occupy this space.
+  dialogueTextPolish: "Wygl\u0105da na to, \u017Ce ludzie zacz\u0119li si\u0119 wprowadza\u0107
+    do miasta. Tak jak wspomnia\u0142em, prawdopodobnie jest to zwi\u0105zane z wysokim
+    zadowoleniem pracownik\xF3w. Je\u017Celi jakie\u015B domostwo stoi ci na drodze
+    mo\u017Cesz im zap\u0142aci\u0107, aby si\u0119 wyprowadzili, a ty b\u0119dziesz
+    m\xF3g\u0142 wyburzy\u0107 budynek. Jednak\u017Ce uwa\u017Caj, bo mieszka\u0144com
+    si\u0119 to nie spodoba, co obni\u017Cy zadowolenie.   "
