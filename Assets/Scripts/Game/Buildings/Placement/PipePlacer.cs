@@ -350,41 +350,34 @@ public class PipePlacer : BuildingPlacer
     {
         if (m_pointList.Count == 2 && Utilities.GetCardinalEstimatePipeflowDirection(m_end, m_start, out var _))
         {
-            bool has_start_pipe = BoardManager.Instance.TryGetTypeAt<PipeController>(m_start, out var s_controller);
-            bool has_end_pipe = BoardManager.Instance.TryGetTypeAt<PipeController>(m_end, out var e_controller);
+            bool has_start_pipe = BoardManager.Instance.TryGetTypeAt<NewPipeController>(m_start, out var s_controller);
+            bool has_end_pipe = BoardManager.Instance.TryGetTypeAt<NewPipeController>(m_end, out var e_controller);
 
             if (has_start_pipe && has_end_pipe)
             {
-                if (s_controller.Equals(e_controller) // prevents self-connections
-                    || (s_controller.GetParent() != null && s_controller.GetParent().Equals(e_controller))) // prevents repeated reparenting connections
-                {
-                    Debug.LogWarning("Invalid pipe connection! See comments for reasoning. Aborting...");
-                    return;
-                }
-
                 s_controller.UpdateFlowAndVisual(m_start, m_end, true);
                 e_controller.UpdateFlowAndVisual(m_end, m_start, false);
 
-                s_controller.SetParent(e_controller);
-                e_controller.AddChild(s_controller);
+                s_controller.GetTreeRelationship().DirectAddParent(e_controller);
+                e_controller.GetTreeRelationship().DirectAddChild(s_controller);
 
                 TimeManager.Instance.LiteDeregister(s_controller);
             }
-            else if (has_start_pipe && BoardManager.Instance.TryGetTypeAt<IFlowable>(m_end, out var e_flowable))
+            else if (has_start_pipe && BoardManager.Instance.TryGetTypeAt<INewFlowable>(m_end, out var e_flowable))
             {
                 s_controller.UpdateFlowAndVisual(m_start, m_end, true);
 
-                s_controller.SetParent(e_flowable);
-                e_flowable.AddChild(s_controller);
+                s_controller.GetTreeRelationship().DirectAddParent(e_flowable);
+                e_flowable.GetTreeRelationship().DirectAddChild(s_controller);
 
                 TimeManager.Instance.LiteDeregister(s_controller);
             }
-            else if (BoardManager.Instance.TryGetTypeAt<IFlowable>(m_start, out var s_flowable) && has_end_pipe)
+            else if (BoardManager.Instance.TryGetTypeAt<INewFlowable>(m_start, out var s_flowable) && has_end_pipe)
             {
                 e_controller.UpdateFlowAndVisual(m_end, m_start, false);
 
-                e_controller.AddChild(s_flowable);
-                s_flowable.SetParent(e_controller);
+                s_flowable.GetTreeRelationship().DirectAddParent(e_controller);
+                e_controller.GetTreeRelationship().DirectAddChild(s_flowable);
 
                 TimeManager.Instance.LiteDeregister(s_flowable);
             }

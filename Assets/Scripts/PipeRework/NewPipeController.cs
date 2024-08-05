@@ -285,6 +285,11 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         else throw new System.ArgumentException("Position was not connected to a pipe endpoint!");
     }
 
+    public void UpdateFlowAndVisual(Vector2Int a, Vector2Int b, bool _)
+    {
+        // TODO
+    }
+
     private bool IsPositionFree(Vector2Int position)
     {
         if (!BoardManager.Instance.IsTileOccupied(position)) return true;
