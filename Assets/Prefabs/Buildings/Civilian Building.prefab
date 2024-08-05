@@ -111,8 +111,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5198241070710060224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -223,6 +223,7 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 205175eeb85f1874c862b75b9eea7cc5, type: 3}
   - {fileID: 21300000, guid: 8abeadcdfb399f84981297dbbc28c463, type: 3}
+  maxRandomOffset: {x: 0.1, y: 0.1}
 --- !u!1001 &4014746066639891484
 PrefabInstance:
   m_ObjectHideFlags: 0
