@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
+  m_Name: Step_10_Geologist
+  m_EditorClassIdentifier: 
+  dialogueTextEnglish: The one surveying the land is looking for places with oil
+    and will inform you whenever they find something of interest be sure to place
+    an oil well where they tell you the oil is just to maximize profits.
+  dialogueTextPolish: Postaw Geologa.

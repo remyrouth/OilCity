@@ -54,5 +54,6 @@ MonoBehaviour:
   - {fileID: 5557860173069217853, guid: 20a2597de329b07408e8978366889a6e, type: 3}
   - {fileID: 3264003462890629626, guid: 8ba387b1da08d544b955becc644db0b1, type: 3}
   - {fileID: 7424512619486693478, guid: 40b748f9b848ddd4caa68b1bbfcf108e, type: 3}
+  - {fileID: 2971090248179847182, guid: 3cff000c2dc18d846b84906297240f17, type: 3}
   - {fileID: 2848037743336606453, guid: 15a6bc13127b5df4090f04995fa3c418, type: 3}
   tutorialEnabled: 1

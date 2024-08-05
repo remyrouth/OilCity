@@ -2978,7 +2978,7 @@ MonoBehaviour:
   GameUICanvas: {fileID: 0}
   panels:
   - {fileID: 5385255058190213573}
-  - {fileID: 0}
+  - {fileID: 8609349679010578872}
 --- !u!1 &3629944215315279168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,9 +3381,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIScripts.UiManager, Assembly-CSharp
-        m_MethodName: ChangeUI
+      - m_Target: {fileID: 8456250830134313564}
+        m_TargetAssemblyTypeName: PauseMenuUI, Assembly-CSharp
+        m_MethodName: ChangePanel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
