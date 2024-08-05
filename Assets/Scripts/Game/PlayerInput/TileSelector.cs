@@ -84,5 +84,21 @@ public class TileSelector : Singleton<TileSelector>
         _currentSelected = null;
     }
 
+    private BuildingsOutline _currentOutline;
+    private void Update()
+    {
+        if (UIStateMachine.Instance.CurrentStateType != GameState.GameUI)
+            return;
+        var currentTile = MouseToGrid();
+        BoardManager.Instance.tileDictionary.TryGetValue(currentTile, out var toc);
+        var outline = toc?.GetComponent<BuildingsOutline>() ?? null;
+        if (_currentOutline != outline)
+        {
+            _currentOutline?.Disable();
+            _currentOutline = outline;
+            _currentOutline?.Enable();
+        }
+    }
+
 
 }

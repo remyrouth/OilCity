@@ -17,6 +17,12 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     {
         float amountMined = 0;
         float flowRate = 0f;
+        _tickTimer++;
+        if (_tickTimer == PaymentTimer)
+        {
+            _tickTimer = 0;
+            PayWorkers();
+        }
         switch (CurrentPaymentMode)
         {
             case PaymentMode.LOW:
@@ -118,13 +124,8 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     public void OnTick()
     {
-        _tickTimer++;
         var flow = SendFlow();
-        if (_tickTimer == PaymentTimer)
-        {
-            _tickTimer = 0;
-            PayWorkers();
-        }
+        
         if (flow.amount > 0)
             _spilloutEffect.Play();
         else

@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8713549890181840385}
   - component: {fileID: 4994061710104654164}
+  - component: {fileID: -1159310553657845730}
   m_Layer: 0
   m_Name: RefineryPreview
   m_TagString: Untagged
@@ -215,3 +216,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 8572026417726255512}
+--- !u!114 &-1159310553657845730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7259278686903281590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: b41c119fc3ff615499ad2b53fe284070, type: 3}
+  soundType: 0
+  usesForeignTrigger: 0

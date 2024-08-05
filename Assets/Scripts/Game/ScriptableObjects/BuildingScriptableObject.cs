@@ -7,6 +7,7 @@ public class BuildingScriptableObject : ScriptableObject
     [field: SerializeField] public int removalCost { get; private set; }
     [field: SerializeField] public int removalSatisfactionCost { get; private set; }
     [field: SerializeField] public Sprite icon { get; private set; }
+    [field: SerializeField] public Sprite old_icon { get; private set; }
     [field: SerializeField] public GameObject prefab { get; private set; }
     [field: SerializeField] public GameObject previewPrefab { get; private set; }
     [field: SerializeField] public Vector2Int size { get; private set; }

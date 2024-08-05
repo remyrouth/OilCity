@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7866105078467607210}
   - component: {fileID: 2439577691430875232}
+  - component: {fileID: -5536128372258601147}
+  - component: {fileID: 1397817779766662035}
   m_Layer: 0
   m_Name: GeologistPreview
   m_TagString: Untagged
@@ -60,8 +62,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shouldLoop: 0
   maxVolume: 1
-  soundClip: {fileID: 8300000, guid: a235f1dad13395d4c9c0456b357a36cc, type: 3}
+  soundClip: {fileID: 8300000, guid: b41c119fc3ff615499ad2b53fe284070, type: 3}
   soundType: 0
+  usesForeignTrigger: 0
 --- !u!114 &1397817779766662035
 MonoBehaviour:
   m_ObjectHideFlags: 0

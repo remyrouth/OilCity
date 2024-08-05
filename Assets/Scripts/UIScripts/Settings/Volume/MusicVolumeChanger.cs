@@ -1,4 +1,5 @@
 using Game.Managers;
+using TMPro;
 using UnityEngine;
 using Slider = UnityEngine.UI.Slider;
 
@@ -6,19 +7,25 @@ namespace UIScripts.Settings
 {
     public class MusicVolumeChanger : MonoBehaviour
     {
-        [SerializeField] private Slider musicSlider;
+        [SerializeField] private Slider slider;
+        [SerializeField] private TextMeshProUGUI valueLabel;
         
         public void OnEnable()
         {
             if (PlayerPrefs.HasKey("MusicVolume"))
             {
-                musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+                var prefValue = PlayerPrefs.GetFloat("MusicVolume");
+                slider.value = prefValue;
+                var intValue = (int)(prefValue * 100);
+                valueLabel.text = intValue.ToString();
             }
         }
 
         public void SetMusicVolume(float value)
         {
             SettingsManager.Instance.MusicVolume = value;
+            var intValue = (int)(value * 100);
+            valueLabel.text = intValue.ToString();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
     [Serializable]
     public class MusicTrack {
@@ -13,9 +13,17 @@ public class SoundManager : MonoBehaviour
 
 
     [Header("Music Track List Variables")]
-    public List<MusicTrack> musicTrackList = new List<MusicTrack>();
+    [SerializeField]
+    private List<MusicTrack> musicTrackList = new List<MusicTrack>();
     private SingleSoundPlayer cameraMusicPlayer = null;
     private int currentTrackIndex = 0;
+
+
+    [Header("UI Sound Effect Variables")]
+    [SerializeField]
+    private SingleSoundPlayer buildingClick;
+    [SerializeField]
+    public SingleSoundPlayer buttonClick;
 
 
 
@@ -41,13 +49,13 @@ public class SoundManager : MonoBehaviour
             cameraMusicPlayer = null;
         }
         cameraMusicPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+        cameraMusicPlayer.ActivateWithForeignTrigger();
 
         cameraMusicPlayer.InitializeFromSoundManager(musicTrackList[currentTrackIndex].musicTrack);
         if (currentTrackIndex < musicTrackList.Count - 1) {
             Invoke("AddCameraMusicTrack", musicTrackList[currentTrackIndex].musicTrack.length);
             currentTrackIndex++;
         }
-
 
     }
 
@@ -57,6 +65,15 @@ public class SoundManager : MonoBehaviour
 
     public void RemoveSoundScript(SingleSoundPlayer subraction) {
         soundClipList.Remove(subraction);
+    }
+
+    public void SelectBuildingSFXTrigger() {
+        Debug.Log("SoundEffect Building occured");
+        buildingClick.ActivateWithForeignTrigger();
+    }
+
+    public void SelectButtonSFXTrigger() {
+        buttonClick.ActivateWithForeignTrigger();
     }
 
 }

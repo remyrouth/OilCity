@@ -88,18 +88,12 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
                 Debug.LogWarning("ticksPerYear not set up correctly");
                 return;
             }
-            MoneyManager.Instance.ReduceMoney(MoneyManager.Instance.Quota);
             currentTick = 0f;
             currentYear++;
             CheckNextEvent();
-            AlterPollutionInstance();
         }
     }
 
-    private void AlterPollutionInstance()
-    {
-        PollutionManager.Instance.SetPollution(GetTimePercentage());
-    }
 
 
     // This is the method that checks for the next newspaper event,

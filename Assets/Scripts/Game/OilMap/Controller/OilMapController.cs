@@ -4,7 +4,13 @@ using UnityEngine;
 public abstract class OilMapController : MonoBehaviour, IAmountGiver<float>
 {
     protected Dictionary<Vector2Int, float> alreadyMined = new();
-
+    protected HashSet<Vector2Int> searched = new();
+    private const float NOT_SEARCHED_PENALTY_MULTIPLIER = 0.5f;
+    public void SetPositionAsSearched(Vector2Int pos)
+    {
+        if (!searched.Contains(pos))
+            searched.Add(pos);
+    }
     public void IncreaseAmountMinedAtPosition(int x, int y, float amount)
     {
         if (!alreadyMined.ContainsKey(new Vector2Int(x, y)))
@@ -20,8 +26,11 @@ public abstract class OilMapController : MonoBehaviour, IAmountGiver<float>
     /// <returns></returns>
     public float GetValueAtPosition(int x, int y)
     {
+        float value = GetBaseValue(x, y);
         if (alreadyMined.ContainsKey(new Vector2Int(x, y)))
-            return GetBaseValue(x, y) - alreadyMined[new Vector2Int(x, y)];
-        return GetBaseValue(x, y);
+            value -= alreadyMined[new Vector2Int(x, y)];
+        if (!searched.Contains(new Vector2Int(x, y)))
+            value += NOT_SEARCHED_PENALTY_MULTIPLIER;
+        return value;
     }
 }

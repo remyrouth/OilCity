@@ -46,8 +46,12 @@ public class KeroseneManager : Singleton<KeroseneManager>
     public void SellKerosene()
     {
         float soldAmount = Mathf.Clamp(KeroseneAmount, 0, MaxSoldAmount);
-        MoneyManager.Instance.AddMoney(KEROSINE_PRICE * soldAmount * m_falloffCurve.Evaluate(m_falloffPercent));
+        MoneyManager.Instance.AddMoney(KEROSINE_PRICE * soldAmount * EvaluateFalloffCurve());
         DecreaseAmount(soldAmount);
         OnKeroseneSold?.Invoke();
+    }
+    public float EvaluateFalloffCurve()
+    {
+        return m_falloffCurve.Evaluate(m_falloffPercent);
     }
 }

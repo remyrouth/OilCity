@@ -71,6 +71,12 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
             IsWorking = true;
             OilSum += received.amount * keroseneMultiplier;
         }
+        _tickTimer++;
+        if (_tickTimer == PaymentTimer)
+        {
+            _tickTimer = 0;
+            PayWorkers();
+        }
         IsWorking = OilSum > 0;
         HandleWorkingEffects();
         baseRefineryFlowrate = GetBaseRefineryFlowrate();
@@ -150,13 +156,9 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     public void OnTick()
     {
-        _tickTimer++;
+
         var flow = SendFlow();
-        if (_tickTimer == PaymentTimer)
-        {
-            _tickTimer = 0;
-            PayWorkers();
-        }
+
         if (flow.amount > 0)
             _spilloutEffect.Play();
         else

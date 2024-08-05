@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3264003462890629626
+--- !u!1 &476458921538903030
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1480205140691801024}
-  - component: {fileID: 7506177205493521120}
+  - component: {fileID: 135039591846464774}
+  - component: {fileID: 8441510798896860129}
   m_Layer: 0
   m_Name: TutorialStep_8
   m_TagString: Untagged
@@ -17,32 +17,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1480205140691801024
+--- !u!4 &135039591846464774
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3264003462890629626}
+  m_GameObject: {fileID: 476458921538903030}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 448.48163, y: 424.0861, z: -4.6952033}
+  m_LocalPosition: {x: 548.0766, y: 450.9791, z: 1.7558296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7506177205493521120
+--- !u!114 &8441510798896860129
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3264003462890629626}
+  m_GameObject: {fileID: 476458921538903030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 584959cd5f3acae44867130a9eea5247, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f4689b165547b44883f71a001999f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueText: {fileID: 11400000, guid: e9c34b6c118d0cb4aa8cdd8000712f6d, type: 2}
-  portraitImage: {fileID: 21300000, guid: 3f0e60908391b544882f506144d1ff6b, type: 3}
+  dialogueText: {fileID: 11400000, guid: a8e9ed078db3f334bae7ceda28ed9262, type: 2}
+  portraitImage: {fileID: 21300000, guid: c548200312cee284eaf588876cf3c669, type: 3}
+  buildingName: Cinema
+  buttonToUnlockIndex: 5
