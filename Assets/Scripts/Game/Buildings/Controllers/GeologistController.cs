@@ -63,11 +63,16 @@ public sealed class GeologistController : AOEBuildingController
             if (_firedWorkers[i]._sequenceActions.Count == 0)
                 _firedWorkers.RemoveAt(i);
         }
-        for (int i = 0; i < _workers.Count; i++)
+
+        
+        for (var i = 0; i < _workers.Count; i++)
         {
             if (_workers[i]._sequenceActions.Count == 0)
             {
-                PayWorkers();
+                if (i == _workers.Count - 1)
+                {
+                    PayWorkers();
+                }
                 GenerateNewSequence(_workers[i]);
                 _workers[i]._isActive = true;
                 activeWorkerAmount = _workers.Where(e => e._isActive).Count(); ;
