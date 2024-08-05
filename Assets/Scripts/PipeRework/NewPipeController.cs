@@ -118,10 +118,9 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         bool rhs_exists = p_rhs != null;
 
         // if two parents exist, check validity of connection and connect them
-        if (lhs_exists && rhs_exists)
-        {
-            Connect(p_lhs, p_rhs);
-        }
+        if (lhs_exists && rhs_exists) Connect(p_lhs, p_rhs);
+        else if (lhs_exists) ConnectSingleSide(p_lhs);
+        else if (rhs_exists) ConnectSingleSide(p_rhs);
     }
 
     private (bool lhs, bool rhs) TryGetPipeConnections(ref NewPipeController lhs_controller, ref NewPipeController rhs_controller)
@@ -151,6 +150,7 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         return (has_lhs, has_rhs);
     }
 
+    #region Connector methods
     private void Connect(INewFlowable lhs, INewFlowable rhs)
     {
         // first, get the direction of flow
@@ -244,6 +244,33 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         }
     }
 
+    private void ConnectSingleSide(INewFlowable side)
+    {
+        var in_out = side.GetInOutConfig();
+
+        if (in_out.can_output && in_out.can_input)
+        {
+            // we can't do anything with this.
+            m_tr.AddTentative(side, Relation.Ambiguous);
+        }
+        else if (in_out.can_output)
+        {
+            // if just output, we must be an output.
+            Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_lhsIndex], m_lhsConnectionPos, out m_lhsFlowDir);
+            Utilities.GetCardinalEstimatePipeflowDirection(m_rhsConnectionPos, m_allPipes[m_rhsIndex], out m_rhsFlowDir);
+
+            m_flowType = side.GetFlowConfig().out_type;
+        }
+        else if (in_out.can_input)
+        {
+            // if just input, we must be an input
+            Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_rhsIndex], m_rhsConnectionPos, out m_rhsFlowDir);
+            Utilities.GetCardinalEstimatePipeflowDirection(m_lhsConnectionPos, m_allPipes[m_lhsIndex], out m_lhsFlowDir);
+
+            m_flowType = side.GetFlowConfig().in_type;
+        }
+    }
+    #endregion
 
     public void OnTick()
     {
