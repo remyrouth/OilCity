@@ -2,12 +2,8 @@ using Priority_Queue;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Game.Events;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEditor.ShaderGraph;
 
 public class PipePlacer : BuildingPlacer
 {
@@ -225,8 +221,7 @@ public class PipePlacer : BuildingPlacer
                 // same thing goes for the end pipe. since the building at the end of the pipe receives the flow from said 
                 // pipe, we need to check to see if the building can actually take that flow.
 
-                var flow_config = flowable.GetInOutConfig();
-                return m_wasStartPlaced ? flow_config.can_input : flow_config.can_output;
+                return true; // TODO not correct? Should perform validation?
             }
 
             // is occupied, but by a non-flow building
@@ -309,7 +304,7 @@ public class PipePlacer : BuildingPlacer
 
         int pipes_laid = PlacePipes();
 
-        // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
+        // if no pipes are placed (i.e. all pathfound tiles are obstructed), check if they're immediate connections
         if (pipes_laid == 0)
         {
             IfPipeConnect();
@@ -321,7 +316,7 @@ public class PipePlacer : BuildingPlacer
         // instead, it should just be the visual, and there should be an empty gameobject that is the "pipe system"
 
         var tile_object = m_so.CreateInstance(m_start); //  this should be a PipeSO, and therefore none of the initialization is done.
-        if (!tile_object.TryGetComponent<PipeController>(out var component))
+        if (!tile_object.TryGetComponent<NewPipeController>(out var component))
         {
             Debug.LogError("Pipe prefab doesn't have a pipe controller!");
         }
@@ -341,7 +336,7 @@ public class PipePlacer : BuildingPlacer
         }
 
         // setup the pipe
-        component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
+        component.InitializePipe(m_pointList, m_start, m_end);
         component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
         component.transform.position = Utilities.Vector2IntToVector3(m_start);
         PipeEvents.PlacePipe();
@@ -361,9 +356,7 @@ public class PipePlacer : BuildingPlacer
             if (has_start_pipe && has_end_pipe)
             {
                 if (s_controller.Equals(e_controller) // prevents self-connections
-                    || (s_controller.GetParent() != null && s_controller.GetParent().Equals(e_controller)) // prevents repeated reparenting connections
-                    || s_controller.GetPositions().start.Equals(m_start) // prevents wrong-way connections (start of pipe cannot connect to the end of another pipe)
-                    || e_controller.GetPositions().end.Equals(m_end)) // prevents wrong-way connections (see above, most likely redundant)
+                    || (s_controller.GetParent() != null && s_controller.GetParent().Equals(e_controller))) // prevents repeated reparenting connections
                 {
                     Debug.LogWarning("Invalid pipe connection! See comments for reasoning. Aborting...");
                     return;

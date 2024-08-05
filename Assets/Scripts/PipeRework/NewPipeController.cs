@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class NewPipeController : BuildingController<BuildingScriptableObject>, INewFlowable
 {
@@ -21,6 +22,13 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
     private Vector2Int m_lhsConnectionPos;
     private Vector2Int m_rhsConnectionPos;
+
+    // VFX
+
+    [SerializeField] private PipeSpillageEffect _oilSpillout, _keroseneSpillout;
+#if UNITY_EDITOR
+    [SerializeField] private Mesh m_debugMesh;
+#endif
 
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
     {
@@ -188,6 +196,15 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
             Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_lhsIndex], m_lhsConnectionPos, out m_lhsFlowDir);
             Utilities.GetCardinalEstimatePipeflowDirection(m_rhsConnectionPos, m_allPipes[m_rhsIndex], out m_rhsFlowDir);
 
+            if (lhs_flow.out_type != rhs_flow.in_type
+                && lhs_flow.out_type != FlowType.Ambiguous
+                && rhs_flow.in_type != FlowType.Ambiguous)
+            {
+                // ERROR! Invalid flow!
+                Debug.LogError("Invalid flow!");
+                return;
+            }
+
             m_tr.AddTentative(lhs, Relation.Child);
             m_tr.AddTentative(rhs, Relation.Parent);
         }
@@ -196,6 +213,15 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         {
             Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_rhsIndex], m_rhsConnectionPos, out m_rhsFlowDir);
             Utilities.GetCardinalEstimatePipeflowDirection(m_lhsConnectionPos, m_allPipes[m_lhsIndex], out m_lhsFlowDir);
+
+            if (lhs_flow.in_type != rhs_flow.out_type
+                && lhs_flow.in_type != FlowType.Ambiguous 
+                && rhs_flow.out_type != FlowType.Ambiguous)
+            {
+                // ERROR! Invalid flow!
+                Debug.LogError("Invalid flow!");
+                return;
+            }
 
             m_tr.AddTentative(rhs, Relation.Child);
             m_tr.AddTentative(lhs, Relation.Parent);
@@ -237,8 +263,9 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
     public float SendFlow()
     {
-        // TODO
-        return 0.0f;
+        var child = m_tr.GetChildren()[0];
+
+        return (child != null) ? child.SendFlow() : 0f;
     }
 
     public TreeRelationship GetTreeRelationship() => m_tr;
@@ -265,5 +292,55 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         if (!BoardManager.Instance.TryGetTypeAt<INewFlowable>(position, out var component)) return true;
 
         return !m_tr.IsInRelationshipWith(component);
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        // clear all relevant pipe tiles from supermap
+        int endex = Mathf.Min(m_allPipes.Count - 1, m_rhsIndex + 1);
+        for (int i = m_lhsIndex; i < endex; i++)
+        {
+            BoardManager.Instance.ClearSupermapTile(m_allPipes[i]);
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+
+        var offset = new Vector3(0.5f, 0.5f);
+
+        var s_dir = Utilities.GetPipeFlowDirOffset(m_lhsFlowDir);
+        var e_dir = Utilities.GetPipeFlowDirOffset(m_rhsFlowDir);
+
+        var s_rot = Quaternion.Euler(-Vector2.SignedAngle(Vector2.up, s_dir) + 90, 90f, 90f);
+        var e_rot = Quaternion.Euler(-Vector2.SignedAngle(Vector2.up, e_dir) + 90, 90f, 90f);
+
+        var s_pos = Utilities.Vector2IntToVector3(m_allPipes[m_lhsIndex]) + offset - Utilities.Vector2IntToVector3(Utilities.GetPipeFlowDirOffset(m_lhsFlowDir)) * .35f;
+        var e_pos = Utilities.Vector2IntToVector3(m_allPipes[m_rhsIndex]) + offset + Utilities.Vector2IntToVector3(Utilities.GetPipeFlowDirOffset(m_rhsFlowDir)) * .35f;
+
+        if (m_lhsFlowDir != PipeFlowDirection.Invalid)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireMesh(m_debugMesh, 0, s_pos, s_rot, new Vector3(0.2f, 0.1f, .2f));
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(s_pos, Vector3.one * 0.2f);
+        }
+
+        if (m_rhsFlowDir != PipeFlowDirection.Invalid)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireMesh(m_debugMesh, 0, e_pos, e_rot, new Vector3(0.2f, 0.1f, .2f));
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(e_pos, Vector3.one * 0.2f);
+        }
     }
 } 
