@@ -34,15 +34,11 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     {
         // if (_sequenceActions.Count == 0)
         //     GenerateNewSequence();
-        if (!activationCheck) {
-            // Debug.Log("OnTick check happened");
-            CompleteTrainSystem();
-            // GenerateNewSequence();
-        }
-
-
 
         // _sequenceActions.Dequeue()?.Invoke(this);
+        if (!activationCheck) {
+            CompleteTrainSystem();
+        }
 
         foreach (var child in _children)
         {
@@ -80,7 +76,7 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     //     _sequenceActions.Enqueue(null);
     // }
 
-    private bool activationCheck = false;
+    private bool activationCheck = false;   // 
 
     private void CompleteTrainSystem()
     {
@@ -91,6 +87,30 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
         }
 
     }
+
+    // private IEnumerator LerpToDestination(Vector3 start, Vector3 end, float time)
+    // {
+    //     float elapsedTime = 0;
+
+    //     while (elapsedTime < time)
+    //     {
+    //         // Calculate the lerp factor
+    //         float lerpFactor = elapsedTime / time;
+
+    //         // Linearly interpolate from start to end
+    //         train.position = Vector3.Lerp(start, end, lerpFactor);
+
+    //         // Increase the elapsed time
+    //         elapsedTime += Time.deltaTime;
+
+    //         // Yield control back to Unity and continue next frame
+    //         yield return null;
+    //     }
+
+    //     // Ensure the final position is exactly the end position
+    //     train.transform.position = end;
+
+    // }
 
 
     private void StartTrain() {
@@ -104,6 +124,8 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     private void EnterTrain() {
         train.DOKill();
         train.DOLocalMove(arrivedPos, 7f);
+        // StartCoroutine(LerpToDestination(startPos, arrivedPos, 3f));
+        // LerpToDestination(startPos, arrivedPos, 3);
         // Debug.Log("EnterTrain");
         Invoke("StayTrain", 7f);
     }
@@ -117,7 +139,10 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
 
     private void ExitTrain() {
         SellKerosene();
-        train.DOLocalMove(endPos, 5);
+        // train.DOLocalMove(endPos, 5);
+        // StartCoroutine(LerpToDestination(arrivedPos, endPos, 5f));
+        train.position = Vector3.Lerp(arrivedPos, endPos, 5f);
+        // LerpToDestination(arrivedPos, endPos, 5);
         // Debug.Log("ExitTrain");
         Invoke("EndTrain", 5f);
     }
