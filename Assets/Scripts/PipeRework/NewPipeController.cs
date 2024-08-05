@@ -9,8 +9,6 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
     private PipeFlowDirection m_lhsFlowDir;
     private PipeFlowDirection m_rhsFlowDir;
 
-    private FlowType m_flowType;
-
     private PipeFlowDirection m_lhsOffsetDir;
     private PipeFlowDirection m_rhsOffsetDir;
 
@@ -37,6 +35,11 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         if (m_tr.HasMaxChildren())
         {
             in_type = m_tr.GetChildren()[0].GetFlowConfig().out_type;
+        }
+
+        if (out_type != in_type && out_type != FlowType.Ambiguous && in_type != FlowType.Ambiguous)
+        {
+            throw new System.InvalidOperationException("Pipe flow config invalid!");
         }
 
         return (in_type, out_type);
@@ -162,7 +165,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         // caught by a different error (flowtype).
         if (ambiguous)
         {
-            m_flowType = FlowType.Ambiguous;
+            m_tr.AddTentative(lhs, Relation.Ambiguous);
+            m_tr.AddTentative(rhs, Relation.Ambiguous);
         }
 
         // left is output side - right is input side
@@ -184,28 +188,6 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
             Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_lhsIndex], m_lhsConnectionPos, out m_lhsFlowDir);
             Utilities.GetCardinalEstimatePipeflowDirection(m_rhsConnectionPos, m_allPipes[m_rhsIndex], out m_rhsFlowDir);
 
-            if (lhs_flow.out_type != rhs_flow.in_type)
-            {
-                if (lhs_flow.out_type == FlowType.Ambiguous)
-                {
-                    m_flowType = rhs_flow.in_type;
-                }
-                else if (rhs_flow.in_type == FlowType.Ambiguous)
-                {
-                    m_flowType = lhs_flow.out_type;
-                }
-                else
-                {
-                    // ERROR! Invalid flow!
-                    Debug.LogError("Invalid flow!");
-                    return;
-                }
-            }
-            else
-            {
-                m_flowType = lhs_flow.out_type;
-            }
-
             m_tr.AddTentative(lhs, Relation.Child);
             m_tr.AddTentative(rhs, Relation.Parent);
         }
@@ -214,28 +196,6 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         {
             Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_rhsIndex], m_rhsConnectionPos, out m_rhsFlowDir);
             Utilities.GetCardinalEstimatePipeflowDirection(m_lhsConnectionPos, m_allPipes[m_lhsIndex], out m_lhsFlowDir);
-
-            if (lhs_flow.in_type != rhs_flow.out_type)
-            {
-                if (lhs_flow.in_type == FlowType.Ambiguous)
-                {
-                    m_flowType = rhs_flow.out_type;
-                }
-                else if (rhs_flow.out_type == FlowType.Ambiguous)
-                {
-                    m_flowType = lhs_flow.in_type;
-                }
-                else
-                {
-                    // ERROR! Invalid flow!
-                    Debug.LogError("Invalid flow!");
-                    return;
-                }
-            }
-            else
-            {
-                m_flowType = rhs_flow.out_type;
-            }
 
             m_tr.AddTentative(rhs, Relation.Child);
             m_tr.AddTentative(lhs, Relation.Parent);
@@ -257,8 +217,6 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
             Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_lhsIndex], m_lhsConnectionPos, out m_lhsFlowDir);
             Utilities.GetCardinalEstimatePipeflowDirection(m_rhsConnectionPos, m_allPipes[m_rhsIndex], out m_rhsFlowDir);
 
-            m_flowType = side.GetFlowConfig().out_type;
-
             m_tr.AddTentative(side, Relation.Parent);
         }
         else if (in_out.can_input)
@@ -266,8 +224,6 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
             // if just input, we must be an input
             Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_rhsIndex], m_rhsConnectionPos, out m_rhsFlowDir);
             Utilities.GetCardinalEstimatePipeflowDirection(m_lhsConnectionPos, m_allPipes[m_lhsIndex], out m_lhsFlowDir);
-
-            m_flowType = side.GetFlowConfig().in_type;
 
             m_tr.AddTentative(side, Relation.Child);
         }
