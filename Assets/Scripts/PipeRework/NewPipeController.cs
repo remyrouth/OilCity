@@ -42,7 +42,23 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         return (in_type, out_type);
     }
 
-    public (bool can_input, bool can_output) GetInOutConfig() => (true, true);
+    public (bool can_input, bool can_output) GetInOutConfig()
+    {
+        bool can_input = true;
+        bool can_output = true;
+
+        if (m_tr.HasMaxParents())
+        {
+            can_input = m_tr.GetParents()[0].GetInOutConfig().can_input;
+        }
+
+        if (m_tr.HasMaxChildren())
+        {
+            can_output = m_tr.GetChildren()[0].GetInOutConfig().can_output;
+        }
+
+        return (can_input, can_output);
+    }
 
     public void InitializePipe(IReadOnlyList<Vector2Int> pipes, Vector2Int start, Vector2Int end)
     {
@@ -143,17 +159,23 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
         bool ambiguous = lhs_inout.can_output && rhs_inout.can_output && lhs_inout.can_input && rhs_inout.can_input;
 
+        // since pipes take on the configurations of their relationships, the only case where a connection can truly
+        // be ambiguous is when two floating pipes are connected by a pipe. Two refineries connected by a pipe would be
+        // caught by a different error (flowtype).
         if (ambiguous)
         {
-
+            m_flowType = FlowType.Ambiguous;
         }
 
-        bool left_right = lhs_inout.can_output && rhs_inout.can_input;
-        bool right_left = lhs_inout.can_input && rhs_inout.can_output;
+        // left is output side - right is input side
+        bool left_right = !ambiguous && lhs_inout.can_output && rhs_inout.can_input;
+        bool right_left = !ambiguous && lhs_inout.can_input && rhs_inout.can_output;
 
         if (!left_right && !right_left)
         {
             // ERROR! Impossible connection!
+            Debug.LogError("Impossible connection!");
+            return;
         }
 
         var lhs_flow = lhs.GetFlowConfig();
@@ -166,10 +188,28 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
             if (lhs_flow.out_type != rhs_flow.in_type)
             {
-                // ERROR! Invalid flow!
+                if (lhs_flow.out_type == FlowType.Ambiguous)
+                {
+                    m_flowType = rhs_flow.in_type;
+                }
+                else if (rhs_flow.in_type == FlowType.Ambiguous)
+                {
+                    m_flowType = lhs_flow.out_type;
+                }
+                else
+                {
+                    // ERROR! Invalid flow!
+                    Debug.LogError("Invalid flow!");
+                    return;
+                }
+            }
+            else
+            {
+                m_flowType = lhs_flow.out_type;
             }
 
-            m_flowType = lhs_flow.out_type;
+            m_tr.AddTentative(lhs, Relation.Child);
+            m_tr.AddTentative(rhs, Relation.Parent);
         }
 
         if (right_left)
@@ -179,12 +219,29 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
             if (lhs_flow.in_type != rhs_flow.out_type)
             {
-                // ERROR! Invalid flow!
+                if (lhs_flow.in_type == FlowType.Ambiguous)
+                {
+                    m_flowType = rhs_flow.out_type;
+                }
+                else if (rhs_flow.out_type == FlowType.Ambiguous)
+                {
+                    m_flowType = lhs_flow.in_type;
+                }
+                else
+                {
+                    // ERROR! Invalid flow!
+                    Debug.LogError("Invalid flow!");
+                    return;
+                }
+            }
+            else
+            {
+                m_flowType = rhs_flow.out_type;
             }
 
-            m_flowType = lhs_flow.out_type;
+            m_tr.AddTentative(lhs, Relation.Parent);
+            m_tr.AddTentative(rhs, Relation.Child);
         }
-
     }
 
 
