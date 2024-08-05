@@ -143,6 +143,8 @@ public sealed class GeologistController : AOEBuildingController
         FireWorkersIfNeeded();
         Debug.Log($"Found great oil spot at {bestOilSpot}!");
 
+        BoardManager.Instance.OilEvaluator.SetPositionAsSearched(bestOilSpot);
+
         // Retrieve the oil value at the best spot
         float oilValue = BoardManager.Instance.OilEvaluator.GetValueAtPosition(bestOilSpot.x, bestOilSpot.y);
 
