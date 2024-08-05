@@ -4,7 +4,6 @@ using System;
 public class MoneyManager : Singleton<MoneyManager>
 {
     public float Money { get; private set; }
-    public float Quota => 0f;
     public event Action<float> OnMoneyChanged;
     [SerializeField] private float _initialMoney;
     private void Start()
@@ -25,6 +24,7 @@ public class MoneyManager : Singleton<MoneyManager>
     public void AddMoney(float amount)
     {
         Money = Mathf.Round(Money * 100f) / 100f + Mathf.Round(amount * 100f) / 100f;
+        QuotaManager.Instance.DecreaseQuota(amount);
         OnMoneyChanged?.Invoke(Money);
     }
     public void ReduceMoney(float amount)
