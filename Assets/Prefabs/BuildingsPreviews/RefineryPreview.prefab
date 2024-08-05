@@ -232,3 +232,4 @@ MonoBehaviour:
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: b41c119fc3ff615499ad2b53fe284070, type: 3}
   soundType: 0
+  usesForeignTrigger: 0
