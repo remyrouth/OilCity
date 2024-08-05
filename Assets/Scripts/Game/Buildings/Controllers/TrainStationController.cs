@@ -35,7 +35,7 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
         // if (_sequenceActions.Count == 0)
         //     GenerateNewSequence();
         if (!activationCheck) {
-            Debug.Log("OnTick check happened");
+            // Debug.Log("OnTick check happened");
             CompleteTrainSystem();
             // GenerateNewSequence();
         }
@@ -90,20 +90,6 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
             _sequenceActions.Enqueue(e => {});
         }
 
-
-
-        // //setup train
-        // _sequenceActions.Enqueue(e => { e.DOKill(); e.train.localPosition = e.startPos; });
-        // _sequenceActions.Enqueue(e => GetComponent<SingleSoundPlayer>().ActivateWithForeignTrigger());
-        // _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.startPos, 8));
-
-        // _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 3));
-        // _sequenceActions.Enqueue((e) => { e.DOKill(); e.SellKerosene(); });
-        // _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 6));
-        // _sequenceActions.Enqueue((e) => { e.DOKill(); e.SellKerosene(); });
-        // _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.endPos, 5));
-        // _sequenceActions.Enqueue(null);
-
     }
 
 
@@ -111,28 +97,28 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
         train.localPosition = startPos;
         train.DOKill();
         GetComponent<SingleSoundPlayer>().ActivateWithForeignTrigger();
-        Debug.Log("Started");
+        // Debug.Log("Started");
         Invoke("EnterTrain", 8f);
     }
 
     private void EnterTrain() {
         train.DOKill();
         train.DOLocalMove(arrivedPos, 7f);
-        Debug.Log("EnterTrain");
+        // Debug.Log("EnterTrain");
         Invoke("StayTrain", 7f);
     }
 
     private void StayTrain() {
         train.DOKill();
         SellKerosene();
-        Debug.Log("StayTrain");
+        // Debug.Log("StayTrain");
         Invoke("ExitTrain", 6f);
     }
 
     private void ExitTrain() {
         SellKerosene();
         train.DOLocalMove(endPos, 5);
-        Debug.Log("ExitTrain");
+        // Debug.Log("ExitTrain");
         Invoke("EndTrain", 5f);
     }
 
