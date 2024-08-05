@@ -6,9 +6,14 @@ public sealed class CivilianBuildingController : BuildingController<BuildingScri
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite[] sprites;
+    [SerializeField] private Vector2 maxRandomOffset;
     private void Awake()
     {
         _spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+        _spriteRenderer.flipX = Random.value < 0.5f;
+
+        _spriteRenderer.transform.localPosition = 
+            new Vector2(maxRandomOffset.x * Random.Range(-1f, 1f), maxRandomOffset.y * Random.Range(-1f, 1f));
 
         BuildingEvents.OnCivilianSpawn();
     }
