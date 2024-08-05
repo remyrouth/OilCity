@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -48668,6 +48668,14 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3547010419930502328, guid: 633a53a529bff7945b511daff03bc261, type: 3}
+      propertyPath: m_text
+      value: 22222/ <sprite name=kerosene>
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547010419930502328, guid: 633a53a529bff7945b511daff03bc261, type: 3}
+      propertyPath: m_spriteAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a22e03af8e121854ca5f9e5acbeecac5, type: 2}
     - target: {fileID: 3977762929142649062, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_Type
       value: 0
@@ -49039,7 +49047,6 @@ SceneRoots:
   - {fileID: 112677847}
   - {fileID: 1236219419}
   - {fileID: 2886531790533164845}
-  - {fileID: 1858206582}
   - {fileID: 1031175403}
   - {fileID: 6217845620107073622}
   - {fileID: 511436491}

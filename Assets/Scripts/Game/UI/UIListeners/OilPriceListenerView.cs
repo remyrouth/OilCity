@@ -9,12 +9,12 @@ public class OilPriceListenerView : MonoBehaviour, ITickReceiver
 
     public void OnTick()
     {
-        _label.text = (KeroseneManager.Instance.EvaluateFalloffCurve() * KeroseneManager.KEROSINE_PRICE).ToString("0.00") + "/L";
+        _label.text = (KeroseneManager.Instance.EvaluateFalloffCurve() * KeroseneManager.KEROSINE_PRICE).ToString("0.00") + "/ <sprite name=kerosene>";
     }
 
     private void Start()
     {
         TimeManager.Instance.RegisterReceiver(this);
-        _label.text = (KeroseneManager.Instance.EvaluateFalloffCurve() * KeroseneManager.KEROSINE_PRICE).ToString("0.00") + "/L";
+        _label.text = (KeroseneManager.Instance.EvaluateFalloffCurve() * KeroseneManager.KEROSINE_PRICE).ToString("0.00") + "/ <sprite name=kerosene>";
     }
 }
