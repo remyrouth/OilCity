@@ -25,7 +25,7 @@ public class UIStateMachine : Singleton<UIStateMachine>
         ChangeState(initialGameState);
     }
     public UIState CurrentState { get; private set; }
-    public GameState CurrentStateType { get; private set; }
+    public GameState CurrentStateType =>CurrentState.type;
 
     /// <summary>
     /// Changes UI state and calls OnExit and OnEntered
@@ -41,7 +41,6 @@ public class UIStateMachine : Singleton<UIStateMachine>
         if (CurrentState != null)
             CurrentState.OnExit();
         CurrentState = States[state];
-        CurrentStateType = CurrentState.type;
         CurrentState.OnEnter();
     }
     
