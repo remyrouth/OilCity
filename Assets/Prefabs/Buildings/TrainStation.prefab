@@ -575,6 +575,7 @@ GameObject:
   - component: {fileID: 6068664385402366900}
   - component: {fileID: 2181772803859923086}
   - component: {fileID: 1073918640123148353}
+  - component: {fileID: 864621169561977672}
   m_Layer: 0
   m_Name: TrainStation
   m_TagString: Untagged
@@ -633,6 +634,22 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &864621169561977672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998399413928227521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: 0596a7702e6bf4de48798a23e360da86, type: 3}
+  soundType: 0
 --- !u!1 &6559598032567825783
 GameObject:
   m_ObjectHideFlags: 0

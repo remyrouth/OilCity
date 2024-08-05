@@ -65,8 +65,11 @@ public class TimeManager : Singleton<TimeManager>
             m_timeElaspedSinceTick -= m_timePerTick;
 
             // activate all tick listeners
-            for (int i = m_tickableForest.Count - 1; i >= 0; i--)
-                m_tickableForest[i].OnTick();
+            if (m_tickableForest.Count != 0) {
+                for (int i = m_tickableForest.Count - 1; i >= 0; i--) {
+                    m_tickableForest[i].OnTick();
+                }
+            }
         }
 
         // increment time
