@@ -311,6 +311,37 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         }
     }
 
+    #region Pipe connection? helper methods
+    public bool DoesPipeSystemReceiveInputFromTile(Vector2Int tile_pos)
+    {
+        if (tile_pos.Equals(m_lhsConnectionPos))
+        {
+            return (m_allPipes[m_lhsIndex] + Utilities.GetPipeFlowDirOffset(m_lhsFlowDir)).Equals(tile_pos);
+        }
+        else if (tile_pos.Equals(m_rhsConnectionPos))
+        {
+            return (m_allPipes[m_rhsIndex] + Utilities.GetPipeFlowDirOffset(m_rhsFlowDir)).Equals(tile_pos);
+        }
+
+        return false;
+    }
+
+    // TODO is this right??
+    public bool DoesPipeSystemOutputToTile(Vector2Int tile_pos)
+    {
+        if (tile_pos.Equals(m_lhsConnectionPos))
+        {
+            return (m_allPipes[m_lhsIndex] - Utilities.GetPipeFlowDirOffset(m_lhsFlowDir)).Equals(tile_pos);
+        }
+        else if (tile_pos.Equals(m_rhsConnectionPos))
+        {
+            return (m_allPipes[m_rhsIndex] - Utilities.GetPipeFlowDirOffset(m_rhsFlowDir)).Equals(tile_pos);
+        }
+
+        return false;
+    }
+    #endregion
+
     void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
