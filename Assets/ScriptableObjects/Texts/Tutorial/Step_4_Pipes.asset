@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_4_Pipes
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: Oh no! It seems the oil well has started pumping oil out of
-    the ground. We need to get the oil from the well to the refinery quickly.
+  dialogueTextEnglish: Soon the oil well will start pumping oil out of the ground.
+    We need to get the oil from the well to the refinery.
   dialogueTextPolish: "Teraz musimy doprowadzi\u0107 rurami rop\u0119 z szybu do
     rafinerii, aby zapobiec wyciekowi, przez kt\xF3ry utracimy nasz\u0105 cenn\u0105
     rop\u0119."

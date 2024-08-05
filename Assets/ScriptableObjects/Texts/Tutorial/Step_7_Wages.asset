@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_7_Wages
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: Hmm I think we can speed up this process by increasing the
-    lumberjacks wages.
+  dialogueTextEnglish: "Increasing workers\u2019 wages will motivate them to work.
+    If you want to find out, increase the lumberjacks wage."
   dialogueTextPolish: "Podniesienie p\u0142acy pracownikom zmotywuje ich do dzia\u0142ania,
     co przyspieszy ich prac\u0119. Je\u017Celi chcesz si\u0119 o tym przekona\u0107
     podnie\u015B p\u0142ac\u0119 drwalom."
