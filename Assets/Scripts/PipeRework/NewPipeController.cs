@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class NewPipeController : BuildingController<BuildingScriptableObject>, IFlowable
+public class NewPipeController : BuildingController<BuildingScriptableObject>, INewFlowable
 {
     private PipeFlowDirection m_lhsFlowDir;
     private PipeFlowDirection m_rhsFlowDir;
@@ -17,6 +18,26 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
     private int m_lhsIndex;
     private int m_rhsIndex;
+
+    public (FlowType in_type, FlowType out_type) GetFlowConfig()
+    {
+        FlowType in_type = FlowType.Ambiguous;
+        FlowType out_type = FlowType.Ambiguous;
+
+        if (m_tr.HasMaxParents())
+        {
+            out_type = m_tr.GetParents()[0].GetFlowConfig().in_type;
+        }
+
+        if (m_tr.HasMaxChildren())
+        {
+            in_type = m_tr.GetChildren()[0].GetFlowConfig().out_type;
+        }
+
+        return (in_type, out_type);
+    }
+
+    public (bool can_input, bool can_output) GetInOutConfig() => (true, true);
 
     public void InitializePipe(IReadOnlyList<Vector2Int> pipes, Vector2Int start, Vector2Int end)
     {
@@ -52,4 +73,16 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
         m_tr = new TreeRelationship(1, 1);
     }
+
+    public void OnTick()
+    {
+        // TODO
+    }
+
+    public float SendFlow()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public TreeRelationship GetTreeRelationship() => m_tr;
 }
