@@ -46,8 +46,6 @@ public class TimeManager : Singleton<TimeManager>
     private float m_timePerTick;
     private float m_timeElaspedSinceTick;
 
-    private readonly Queue<(GameObject obj, bool to_register)> m_objectsToModifyRegistration = new();
-
     private void Awake()
     {
         TicksPerMinute = m_ticksPerMinute;

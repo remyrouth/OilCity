@@ -1,10 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using static UnityEditor.Rendering.CameraUI;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using static UnityEditor.PlayerSettings;
 using DG.Tweening;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
@@ -322,7 +317,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     protected override void OnDestroy()
     {
         base.OnDestroy();
-
+        
         // clear all relevant pipe tiles from supermap
         foreach (var pos in m_pipes)
         {
