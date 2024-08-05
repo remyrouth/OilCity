@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step_11_Geologist
+  m_Name: Step_6_LumberJack 2
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: The one surveying the land is looking for places with oil
-    and will inform you whenever they find something of interest be sure to place
-    an oil well where they tell you the best oil is to maximize profits.
-  dialogueTextPolish: Postaw Geologa.
+  dialogueTextEnglish: Go ahead and place a lumberjack so they can begin clearing
+    the area.
+  dialogueTextPolish: "Jak uporali\u015Bmy si\u0119 z tym problemem, to teraz pora,
+    aby zrobi\u0107 wi\u0119cej miejsca na rozw\xF3j. Wybuduj chat\u0119 drwala,
+    a pracownicy rozpoczn\u0105 wycink\u0119 lasu. "

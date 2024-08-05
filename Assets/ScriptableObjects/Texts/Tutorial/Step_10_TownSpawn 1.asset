@@ -10,13 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step_10_TownSpawn
+  m_Name: Step_10_TownSpawn 1
   m_EditorClassIdentifier: 
   dialogueTextEnglish: Perfect, it seems like people have started moving into town,
-    likely due to the high worker satisfaction. The better it is, the more people
-    will want to move in, which is incredible because it means we're helping the
-    community here. If a house is in your way and you need to remove it, you can
-    pay the family to move out. However, the community won't like that.
+    likely due to the high worker satisfaction.
   dialogueTextPolish: "Wygl\u0105da na to, \u017Ce ludzie zacz\u0119li si\u0119 wprowadza\u0107
     do miasta. Tak jak wspomnia\u0142em, prawdopodobnie jest to zwi\u0105zane z wysokim
     zadowoleniem pracownik\xF3w. Je\u017Celi jakie\u015B domostwo stoi ci na drodze
