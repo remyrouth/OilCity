@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46289e489eab9cc448cf74e663c0b42d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0, y: 0}
+  _actionsPivot: {x: 1, y: 0.5}
   TileActions:
   - {fileID: 11400000, guid: 4fe9c879c18242946a6388d657b2e78a, type: 2}
   - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
