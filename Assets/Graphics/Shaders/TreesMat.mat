@@ -74,7 +74,7 @@ Material:
     - _WindNoise: 0.15
     - _WindSpeed: 1
     - _WindStrength: 0.15
-    - _WitherAmount: 0.14583333
+    - _WitherAmount: 0
     - _WitherNoise: 50
     m_Colors: []
   m_BuildTextureStacks: []
