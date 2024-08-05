@@ -145,21 +145,26 @@ public class NewTimeManager : Singleton<TimeManager>
         // therefore we can update their connections with no consequence
         foreach (var t_child in tentative_children)
         {
-            // 
-            t_child.SetParent(node);
+            // bind the child to its parent and vice versa
+            tr.TentativeToChild(t_child.flowable);
+            t_child.flowable.GetTreeRelationship().DirectAddParent(node);
 
             // if the child was in the forest but now has a parent, remove them from the forest
-            if (m_tickableForest.Contains(t_child))
+            if (m_tickableForest.Contains(t_child.flowable))
             {
-                m_tickableForest.Remove(t_child);
+                m_tickableForest.Remove(t_child.flowable);
             }
         }
 
         // if we have a parent, set us as their child. Otherwise, we are the root of our tree and
         // belong in the tickable forest.
-        if (parent != null)
+        if (tentative_parents.Count > 0)
         {
-            parent.AddChild(node);
+            foreach (var t_parent in tentative_parents)
+            {
+                tr.TentativeToParent(t_parent.flowable);
+                t_parent.flowable.GetTreeRelationship().DirectAddChild(node);
+            }
         }
         else
         {
@@ -177,15 +182,17 @@ public class NewTimeManager : Singleton<TimeManager>
     /// <param name="node"></param>
     private void HandleDeregister(INewFlowable node)
     {
-        var children = node.GetChildren(); // cache the node's children
-        var parent = node.GetParent(); // cache the node's parent
+        var tr = node.GetTreeRelationship();
+        var children = tr.GetChildren();
+        var parents = tr.GetParents();
 
         // the parents and the children, by the invariants, will never NOT be in the node list.
         // therefore we can update their connections with no consequence
         foreach (var child in children)
         {
-            // disown children
-            child.SetParent(null);
+            // disown children and have them disown us
+            tr.RemoveChild(child);
+            child.GetTreeRelationship().RemoveParent(node);
 
             // since we disowned them, they have to make it on their own in the vast world
             // i.e. we have to add them to the tickable forest
@@ -200,9 +207,13 @@ public class NewTimeManager : Singleton<TimeManager>
         //
         // otherwise, remove ourselves from the tickable forest, since if we didn't have a parent
         // we'd've had to have been a root.
-        if (parent != null)
+        if (parents.Count > 0)
         {
-            parent.DisownChild(node);
+            foreach (var parent in parents)
+            {
+                parent.GetTreeRelationship().RemoveChild(node);
+                tr.RemoveParent(parent);
+            }
         }
         else
         {
@@ -229,10 +240,10 @@ public class NewTimeManager : Singleton<TimeManager>
 
             Gizmos.DrawSphere(mono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, 0.4f);
 
-            if (!ConvertToClassType<ITreeNode>(m_tickableForest[i], out var tree_node)) continue;
+            if (!ConvertToClassType<INewFlowable>(m_tickableForest[i], out var node)) continue;
 
-            List<ITreeNode> children = new List<ITreeNode>();
-            children.AddRange(tree_node.GetChildren());
+            var children = new List<INewFlowable>();
+            children.AddRange(node.GetTreeRelationship().GetChildren());
 
             while (children.Count > 0)
             {
@@ -248,7 +259,7 @@ public class NewTimeManager : Singleton<TimeManager>
 
                 Gizmos.DrawCube(imono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, Vector3.one * 0.35f);
 
-                children.AddRange(item.GetChildren());
+                children.AddRange(item.GetTreeRelationship().GetChildren());
             }
         }
     }

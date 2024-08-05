@@ -59,7 +59,7 @@ public class TreeRelationship
         }
     }
 
-    public void MoveToChild(INewFlowable child)
+    public void TentativeToChild(INewFlowable child)
     {
         if (!TentativeContains(child)) throw new ArgumentException("Given tentative wasn't registered!");
         if (m_children.Contains(child)) throw new ArgumentException("Duplicate child relationship added!");
