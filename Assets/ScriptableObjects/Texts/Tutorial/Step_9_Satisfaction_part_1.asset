@@ -14,8 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueTextEnglish: Over time high wages and having a cinema will increase worker
     satisfaction and I am satisfied knowing that.
-  dialogueTextPolish: "Podnoszenie p\u0142acy zwi\u0119ksza og\xF3lne zadowolenie
-    pracownik\xF3w. Im bardziej pracownicy s\u0105 zadowoleni tym bardziej ludzie
-    b\u0119d\u0105 sk\u0142onni, aby wprowadza\u0107 si\u0119 do naszego miasteczka.
-    Uwa\u017Caj jednak, by zadowolenie nie by\u0142o zbyt niskie bo pracownicy mog\u0105
-    zaprzesta\u0107 pracy, co by\u0142oby niepo\u017C\u0105dane."
+  dialogueTextPolish: "Wysoka p\u0142aca oraz kina zwi\u0119kszaj\u0105 og\xF3lne
+    zadowolenie pracownik\xF3w wraz z up\u0142ywem czasu. "

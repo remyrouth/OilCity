@@ -15,6 +15,6 @@ MonoBehaviour:
   dialogueTextEnglish: The train arrives every couple of days to transport our kerosene
     for sale, so be sure to manage resources carefully and avoid going bankrupt while
     waiting.
-  dialogueTextPolish: "\u015Awietnie. Teraz musimy doprowadzi\u0107 rurami oczyszczon\u0105
-    rop\u0119 do stacji kolejowej, aby zapobiec wyciekowi w rafinerii, a tak\u017Ce
-    umo\u017Cliwi\u0107 jej sprzeda\u017C. "
+  dialogueTextPolish: "Co kilka dni przyje\u017Cd\u017Ca poci\u0105g, kt\xF3ry zabiera
+    nasz\u0105 rop\u0119 na sprzeda\u017C. Dlatego upewnij si\u0119 w mi\u0119dzyczasie,\u017Ce
+    posiadasz odpowiedni\u0105 liczb\u0105 tego surowca."
