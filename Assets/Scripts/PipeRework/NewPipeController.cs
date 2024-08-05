@@ -104,10 +104,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         var pipes = TryGetPipeConnections(ref lhs, ref rhs);
 
         // stands for "possible lhs" and "possible rhs"
-        INewFlowable p_lhs = null;
-        INewFlowable p_rhs = null;
-        Relation lhs_relation = Relation.None;
-        Relation rhs_relation = Relation.None;
+        INewFlowable p_lhs;
+        INewFlowable p_rhs;
         if (pipes.lhs) p_lhs = lhs;
         else BoardManager.Instance.TryGetTypeAt(m_lhsConnectionPos, out p_lhs);
 
@@ -239,8 +237,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
                 m_flowType = rhs_flow.out_type;
             }
 
-            m_tr.AddTentative(lhs, Relation.Parent);
             m_tr.AddTentative(rhs, Relation.Child);
+            m_tr.AddTentative(lhs, Relation.Parent);
         }
     }
 
@@ -260,6 +258,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
             Utilities.GetCardinalEstimatePipeflowDirection(m_rhsConnectionPos, m_allPipes[m_rhsIndex], out m_rhsFlowDir);
 
             m_flowType = side.GetFlowConfig().out_type;
+
+            m_tr.AddTentative(side, Relation.Parent);
         }
         else if (in_out.can_input)
         {
@@ -268,6 +268,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
             Utilities.GetCardinalEstimatePipeflowDirection(m_lhsConnectionPos, m_allPipes[m_lhsIndex], out m_lhsFlowDir);
 
             m_flowType = side.GetFlowConfig().in_type;
+
+            m_tr.AddTentative(side, Relation.Child);
         }
     }
     #endregion
