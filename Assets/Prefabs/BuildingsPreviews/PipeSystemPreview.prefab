@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2634154432309862596}
   - component: {fileID: 482268469478855148}
   - component: {fileID: 4287302825588963559}
-  - component: {fileID: -3577008439933563213}
   m_Layer: 0
   m_Name: PipeSystemPreview
   m_TagString: Untagged
@@ -47,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 0}
-  m_singlePipePreviewPrefab: {fileID: 5643698438408399773, guid: e8b181e337c33bf4c8a7a0b7f999785d, type: 3}
+  m_singlePipePreviewPrefab: {fileID: 5643698438408399773, guid: 0a7eb06e7621fb041a90c90654ef2ff2, type: 3}
   m_pipePreviewZOffset: -0.5
   m_lineGradient:
     serializedVersion: 2
@@ -181,22 +180,3 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &-3577008439933563213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7985930009597182815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b896977b4960946a56d12057ee51cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0.5, y: 0.5}
-  TileActions:
-  - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
-  _demolishEffect: {fileID: 0}
-  _oilSpillout: {fileID: 3103222644892236174, guid: 2c9a08c300ccef04aadd10999a3147b2, type: 3}
-  _keroseneSpillout: {fileID: 2870410685169219053, guid: 1f57cb160d652684783782cfce663c12, type: 3}
-  m_debugMesh: {fileID: -2432090755550338912, guid: c7309ae32cff9ef4fa19b167aa5c7ec3, type: 3}
