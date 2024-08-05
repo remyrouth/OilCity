@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 110611113461286646}
   - component: {fileID: 197095927774758522}
   - component: {fileID: 9169223615989955819}
+  - component: {fileID: 3532756476123688553}
   m_Layer: 0
   m_Name: train
   m_TagString: Untagged
@@ -433,6 +434,27 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!95 &3532756476123688553
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739123422808631366}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 61c4d7463f0f048fda49924abec32614, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3077205716650833022
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +672,7 @@ MonoBehaviour:
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: 0596a7702e6bf4de48798a23e360da86, type: 3}
   soundType: 0
+  usesForeignTrigger: 0
 --- !u!1 &6559598032567825783
 GameObject:
   m_ObjectHideFlags: 0
