@@ -5934,6 +5934,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _label: {fileID: 3486226967031850391}
+  GainMoney: {fileID: 1830820149855913794, guid: f2395369f3c0b5b41b30d548772d5e79, type: 3}
+  LoseMoney: {fileID: 3193842302976928090, guid: 59ccac4d097eed6488fa477415947b06, type: 3}
 --- !u!1 &8877261862373078704
 GameObject:
   m_ObjectHideFlags: 0

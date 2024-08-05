@@ -70,6 +70,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ArraySize: 10
     - _TreesNoise: 1
     - _WindNoise: 0.15
     - _WindSpeed: 1
