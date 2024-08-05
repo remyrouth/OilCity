@@ -15,8 +15,5 @@ MonoBehaviour:
   dialogueTextEnglish: Perfect, it seems like people have started moving into town,
     the town's growth is tightly linked to your worker satisfaction.
   dialogueTextPolish: "Wygl\u0105da na to, \u017Ce ludzie zacz\u0119li si\u0119 wprowadza\u0107
-    do miasta. Tak jak wspomnia\u0142em, prawdopodobnie jest to zwi\u0105zane z wysokim
-    zadowoleniem pracownik\xF3w. Je\u017Celi jakie\u015B domostwo stoi ci na drodze
-    mo\u017Cesz im zap\u0142aci\u0107, aby si\u0119 wyprowadzili, a ty b\u0119dziesz
-    m\xF3g\u0142 wyburzy\u0107 budynek. Jednak\u017Ce uwa\u017Caj, bo mieszka\u0144com
-    si\u0119 to nie spodoba, co obni\u017Cy zadowolenie.   "
+    do miasta. Rozw\xF3j miasta jest \u015Bci\u015Ble powi\u0105zanie z zadowoleniem
+    pracownik\xF3w. "

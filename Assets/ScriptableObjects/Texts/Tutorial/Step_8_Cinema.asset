@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueTextEnglish: If you want your workers to be reeling with happiness, consider
     opening a cinema. You'll see their satisfaction soar off the charts.
-  dialogueTextPolish: Kino Tutorial
+  dialogueTextPolish: "Ka\u017Cdy pracownik potrzebuje miejsca, aby si\u0119 rozerwa\u0107.
+    Wybudowanie kina z pewno\u015Bci\u0105 podniesie ich zadowolenie."

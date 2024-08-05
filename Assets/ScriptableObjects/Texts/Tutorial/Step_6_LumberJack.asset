@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_6_LumberJack
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: Now that we really are out of the woods, let's make some space
-    in these woods.
+  dialogueTextEnglish: Now that we are out of the woods, let's make some space in
+    these woods. Go ahead and place a lumberjack so they can begin clearing the area.
   dialogueTextPolish: "Jak uporali\u015Bmy si\u0119 z tym problemem, to teraz pora,
     aby zrobi\u0107 wi\u0119cej miejsca na rozw\xF3j. Wybuduj chat\u0119 drwala,
     a pracownicy rozpoczn\u0105 wycink\u0119 lasu. "

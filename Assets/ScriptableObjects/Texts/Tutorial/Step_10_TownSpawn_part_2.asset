@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueTextEnglish: The higher it is, the more people will want to move in. However,
     this also means more buildings will occupy this space.
-  dialogueTextPolish: "Wygl\u0105da na to, \u017Ce ludzie zacz\u0119li si\u0119 wprowadza\u0107
-    do miasta. Tak jak wspomnia\u0142em, prawdopodobnie jest to zwi\u0105zane z wysokim
-    zadowoleniem pracownik\xF3w. Je\u017Celi jakie\u015B domostwo stoi ci na drodze
-    mo\u017Cesz im zap\u0142aci\u0107, aby si\u0119 wyprowadzili, a ty b\u0119dziesz
-    m\xF3g\u0142 wyburzy\u0107 budynek. Jednak\u017Ce uwa\u017Caj, bo mieszka\u0144com
-    si\u0119 to nie spodoba, co obni\u017Cy zadowolenie.   "
+  dialogueTextPolish: "Szcz\u0119\u015Bliwi ludzie s\u0105 bardziej sk\u0142onni
+    do zamieszkania w twoim mie\u015Bcie. Jednak\u017Ce oznacza to, \u017Ce wi\u0119cej
+    budynk\xF3w b\u0119dzie zabiera\u0142o cenn\u0105 przestrze\u0144."
