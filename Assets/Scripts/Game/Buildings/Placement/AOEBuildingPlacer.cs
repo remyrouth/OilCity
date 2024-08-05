@@ -7,7 +7,8 @@ public class AOEBuildingPlacer : BuildingPlacer
     public override void UpdatePreview()
     {
         base.UpdatePreview();
-        if(_previousPos == transform.position)
+        if (!this) return;
+        if (_previousPos == transform.position)
             return;
         _previousPos = transform.position;
         if (_rangeShower == null)
