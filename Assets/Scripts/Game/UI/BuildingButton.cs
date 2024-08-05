@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 
 [RequireComponent(typeof(Button))]
-public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IGraphicsChangeable
 {
     [SerializeField] private BuildingScriptableObject _buildingSO;
     [SerializeField] private TMP_Text _costLabel;
@@ -21,7 +21,7 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         _highlightImage = GetComponent<Image>();
         GetComponent<Button>().onClick.AddListener(() => { _buildingSO.BeginBuilding(); });
-        _buildingIcon.sprite = _buildingSO.icon;
+        ChangeGraphics(GraphicsSwapperManager.SetNewer);
         _costLabel.text = _buildingSO.placementCost.ToString();
 
         if (_highlightImage != null)
@@ -31,7 +31,12 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             _isFlickering = false;
         }
     }
-    
+
+    public void ChangeGraphics(bool pickNewer)
+    {
+        _buildingIcon.sprite = pickNewer? _buildingSO.icon: _buildingSO.old_icon;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         _descriptorView?.BeginFocus(_buildingSO, GetComponent<RectTransform>().anchoredPosition);

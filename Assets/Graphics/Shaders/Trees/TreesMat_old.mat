@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5130792822233034309
+--- !u!114 &-2881884661640318437
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BuidlingGradientMat
-  m_Shader: {fileID: -6465566751694194690, guid: 9c46ba479f14d3b4cb6245541ce5dbac, type: 3}
+  m_Name: TreesMat_old
+  m_Shader: {fileID: -6465566751694194690, guid: af39667be3f5fb14491a70c495280aca, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -36,7 +36,23 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _LiveTrees:
+        m_Texture: {fileID: 2800000, guid: 3491039128138244da0b2547c018963b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LivingTrees:
+        m_Texture: {fileID: 18700000, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 3491039128138244da0b2547c018963b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WitheredTrees:
+        m_Texture: {fileID: 18700000, guid: 0850a3d18097aee41842933d8abfd1c0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _test:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -54,6 +70,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _GradientOpacity: 0.2
+    - _ArraySize: 10
+    - _TreesNoise: 1
+    - _WindNoise: 0.15
+    - _WindSpeed: 1
+    - _WindStrength: 0.15
+    - _WitherAmount: 0
+    - _WitherNoise: 50
     m_Colors: []
   m_BuildTextureStacks: []

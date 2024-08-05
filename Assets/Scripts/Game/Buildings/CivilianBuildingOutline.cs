@@ -8,4 +8,9 @@ public class CivilianBuildingOutline : BuildingsOutline
         outline.sprite = source.sprite;
         base.Start();
     }
+    public override void Enable()
+    {
+        if (GraphicsSwapperManager.SetNewer)
+            base.Enable();
+    }
 }

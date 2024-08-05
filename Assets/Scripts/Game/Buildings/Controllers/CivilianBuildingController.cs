@@ -2,14 +2,19 @@ using Game.Events;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class CivilianBuildingController : BuildingController<BuildingScriptableObject>
+public sealed class CivilianBuildingController : BuildingController<BuildingScriptableObject>, IGraphicsChangeable
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite[] sprites;
+    [SerializeField] private Sprite[] old_sprites;
     [SerializeField] private Vector2 maxRandomOffset;
+
+    private int _gfxSeed;
+
     private void Awake()
     {
-        _spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+        _gfxSeed = Random.Range(0, sprites.Length * old_sprites.Length);
+        ChangeGraphics(GraphicsSwapperManager.SetNewer);
         _spriteRenderer.flipX = Random.value < 0.5f;
 
         _spriteRenderer.transform.localPosition = Vector2.one / 2 +
@@ -22,5 +27,11 @@ public sealed class CivilianBuildingController : BuildingController<BuildingScri
         if (FindObjectsByType<CivilianBuildingController>(FindObjectsSortMode.None).Length < 2)
             return new List<TileAction>();
         return base.GetActions();
+    }
+
+    public void ChangeGraphics(bool pickNewer)
+    {
+        Sprite[] sprites = pickNewer ? this.sprites : old_sprites;
+        _spriteRenderer.sprite = sprites[_gfxSeed % sprites.Length];
     }
 }
