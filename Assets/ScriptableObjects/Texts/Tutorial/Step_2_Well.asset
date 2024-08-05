@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_2_Well
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: Well, well, well, what do we have here? A WELL! This bad boy
-    makes the whole process possible. It's one of my finest inventions and practically
-    the first of its kind.
+  dialogueTextEnglish: Well, well, well, what do we have here? A WELL! This marvel
+    of engineering makes the whole process possible. It's one of my finest inventions
+    and practically the first of its kind.
   dialogueTextPolish: "O prosz\u0119, a co my tu mamy? Przedstawiam ci m\xF3j najnowszy
     wynalazek, jedyny w swoim rodzaju szyb naftowy, kt\xF3ry umo\u017Cliwi nam pozyskanie
     morza ropy naftowej. "

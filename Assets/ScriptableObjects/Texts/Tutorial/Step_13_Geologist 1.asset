@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
+  m_Name: Step_13_Geologist 1
+  m_EditorClassIdentifier: 
+  dialogueTextEnglish: "To meet our quota, it's crucial that we find the best oil
+    spots. That's why we're hiring a geologist. \r\nThey're experts at digging deep
+    and leaving no stone unturned when it comes to finding oil.\r\n"
+  dialogueTextPolish: Postaw Geologa.

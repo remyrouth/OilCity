@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_10_TownSpawn 2
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: 'The better it is, the more people will want to move in, which
-    is incredible because it means we''re helping the community here. '
+  dialogueTextEnglish: The higher it is, the more people will want to move in. However,
+    this also means more buildings will occupy this space.
   dialogueTextPolish: "Wygl\u0105da na to, \u017Ce ludzie zacz\u0119li si\u0119 wprowadza\u0107
     do miasta. Tak jak wspomnia\u0142em, prawdopodobnie jest to zwi\u0105zane z wysokim
     zadowoleniem pracownik\xF3w. Je\u017Celi jakie\u015B domostwo stoi ci na drodze
