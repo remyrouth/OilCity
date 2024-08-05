@@ -82,10 +82,28 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
     protected override void CreateInitialConnections(Vector2Int _)
     {
-        var positions = GetConnectionPositions();
-
         NewPipeController lhs = null, rhs = null;
-        TryGetPipeConnections(ref lhs, ref rhs);
+        var pipes = TryGetPipeConnections(ref lhs, ref rhs);
+
+        // stands for "possible lhs" and "possible rhs"
+        INewFlowable p_lhs = null;
+        INewFlowable p_rhs = null;
+        Relation lhs_relation = Relation.None;
+        Relation rhs_relation = Relation.None;
+        if (pipes.lhs) p_lhs = lhs;
+        else BoardManager.Instance.TryGetTypeAt(m_lhsConnectionPos, out p_lhs);
+
+        if (pipes.rhs) p_rhs = rhs;
+        else BoardManager.Instance.TryGetTypeAt(m_rhsConnectionPos, out p_rhs);
+
+        bool lhs_exists = p_lhs != null;
+        bool rhs_exists = p_rhs != null;
+
+        // if two parents exist, check validity of connection and connect them
+        if (lhs_exists && rhs_exists)
+        {
+
+        }
     }
 
     private (bool lhs, bool rhs) TryGetPipeConnections(ref NewPipeController lhs_controller, ref NewPipeController rhs_controller)
@@ -105,15 +123,40 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
         if (has_lhs)
         {
-            // lhs_controller.UpdateFlowAndVisual
+            // lhs_controller.UpdateFlowAndVisual TODO
         }
         if (has_rhs)
         {
-            // rhs_controller.UpdateFlowAndVisual
+            // rhs_controller.UpdateFlowAndVisual TODO
         }
 
         return (has_lhs, has_rhs);
     }
+
+    private void Connect(INewFlowable lhs, INewFlowable rhs)
+    {
+        // first, get the direction of flow
+        var lhs_inout = lhs.GetInOutConfig();
+        var rhs_config = rhs.GetInOutConfig();
+
+        bool ambiguous = lhs_inout.can_output && rhs_config.can_output && lhs_inout.can_input && rhs_config.can_input;
+
+        bool left_right = lhs_inout.can_output && rhs_config.can_input;
+        bool right_left = lhs_inout.can_input && rhs_config.can_output;
+
+        if (left_right)
+        {
+            Utilities.GetCardinalEstimatePipeflowDirection(m_allPipes[m_lhsIndex], m_lhsConnectionPos, out m_lhsFlowDir);
+            Utilities.GetCardinalEstimatePipeflowDirection(m_rhsConnectionPos, m_allPipes[m_rhsIndex], out m_rhsFlowDir);
+
+            if (lhs.GetFlowConfig().out_type, lhs.GetFlowConfig().in_type)
+        }
+
+        // second, set the contents of the flow
+
+        // third, parent
+    }
+
 
     public void OnTick()
     {

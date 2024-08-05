@@ -8,7 +8,7 @@ public class TreeRelationship
 {
     private IList<INewFlowable> m_children;
     private IList<INewFlowable> m_parents;
-    private IList<INewFlowable> m_tentative;
+    private IList<(INewFlowable flowable, Relation type)> m_tentative;
 
     private int m_maxChildren;
     private int m_maxParents;
@@ -20,14 +20,14 @@ public class TreeRelationship
 
         m_children = new List<INewFlowable>();
         m_parents = new List<INewFlowable>();
-        m_tentative = new List<INewFlowable>();
+        m_tentative = new List<(INewFlowable flowable, Relation type)>();
     }
 
-    public void AddTentative(INewFlowable tentative)
+    public void AddTentative(INewFlowable tentative, Relation type)
     {
-        if (m_tentative.Contains(tentative)) throw new ArgumentException("Duplicate tenative relationship added!");
+        if (m_tentative.Count(a => a.flowable.Equals(tentative)) > 0) throw new ArgumentException("Duplicate tenative relationship added!");
 
-        m_tentative.Add(tentative);
+        m_tentative.Add((tentative, type));
     }
 
     public void MoveToParent(INewFlowable parent)
@@ -36,7 +36,15 @@ public class TreeRelationship
         if (m_parents.Count > m_maxParents) throw new ArgumentException("Max number of parent relationships exceeded!");
 
         m_parents.Add(parent);
-        m_tentative.Remove(parent);
+
+        for (int i = 0; i < m_tentative.Count; i++)
+        {
+            if (m_tentative[i].flowable.Equals(parent))
+            {
+                m_tentative.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     public void MoveToChild(INewFlowable child)
@@ -45,7 +53,15 @@ public class TreeRelationship
         if (m_children.Count > m_maxChildren) throw new ArgumentException("Max number of child relationships exceeded!");
 
         m_children.Add(child);
-        m_tentative.Remove(child);
+
+        for (int i = 0; i < m_tentative.Count; i++)
+        {
+            if (m_tentative[i].flowable.Equals(child))
+            {
+                m_tentative.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     public IList<INewFlowable> GetChildren() => m_children;
@@ -62,6 +78,6 @@ public class TreeRelationship
     public bool HasMaxChildren() => m_children.Count >= m_maxChildren;
 
     public bool IsInRelationshipWith(INewFlowable item) 
-        => m_children.Contains(item) || m_parents.Contains(item) || m_tentative.Contains(item);
+        => m_children.Contains(item) || m_parents.Contains(item) || m_tentative.Count(a => a.flowable.Equals(item)) > 0;
 
 }
