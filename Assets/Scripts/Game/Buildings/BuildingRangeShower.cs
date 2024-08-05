@@ -14,7 +14,7 @@ public class BuildingRangeShower : MonoBehaviour
             var obj = Instantiate(_tilePrefab, tile.ToVector3() + Vector3.one / 2, Quaternion.identity);
             obj.transform.SetParent(transform, true);
             _visibleTiles.Add(obj);
-            obj.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.25f);
+            obj.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.25f);
             obj.GetComponent<SpriteRenderer>().sortingOrder = -4;
         }
     }
