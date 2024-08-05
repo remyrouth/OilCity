@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step_9_Satisfaction
+  m_Name: Step_9_Satisfaction 1
   m_EditorClassIdentifier: 
   dialogueTextEnglish: Oh, would you look at that? It seems increasing wages has
-    boosted your overall worker satisfaction. Higher satisfaction means workers are
-    more likely to move in, but be careful not to let it get too low. If satisfaction
-    drops, your employees might quit, which would be disastrous.
+    boosted your overall worker satisfaction.
   dialogueTextPolish: "Podnoszenie p\u0142acy zwi\u0119ksza og\xF3lne zadowolenie
     pracownik\xF3w. Im bardziej pracownicy s\u0105 zadowoleni tym bardziej ludzie
     b\u0119d\u0105 sk\u0142onni, aby wprowadza\u0107 si\u0119 do naszego miasteczka.
