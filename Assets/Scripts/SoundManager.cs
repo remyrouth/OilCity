@@ -68,6 +68,7 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     public void SelectBuildingSFXTrigger() {
+        Debug.Log("SoundEffect Building occured");
         buildingClick.ActivateWithForeignTrigger();
     }
 

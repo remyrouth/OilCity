@@ -35,6 +35,8 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         _descriptorView?.BeginFocus(_buildingSO, GetComponent<RectTransform>().anchoredPosition);
+
+        SoundManager.Instance.SelectBuildingSFXTrigger();
     }
 
     public void OnPointerExit(PointerEventData eventData)

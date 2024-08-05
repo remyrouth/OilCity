@@ -139,9 +139,9 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
 
     private void ExitTrain() {
         SellKerosene();
-        // train.DOLocalMove(endPos, 5);
+        train.DOLocalMove(endPos, 5);
         // StartCoroutine(LerpToDestination(arrivedPos, endPos, 5f));
-        train.position = Vector3.Lerp(arrivedPos, endPos, 5f);
+        // train.position = Vector3.Lerp(arrivedPos, endPos, 5f);
         // LerpToDestination(arrivedPos, endPos, 5);
         // Debug.Log("ExitTrain");
         Invoke("EndTrain", 5f);
