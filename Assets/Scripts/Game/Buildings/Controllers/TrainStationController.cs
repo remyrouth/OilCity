@@ -6,7 +6,7 @@ using UnityEngine;
 public class TrainStationController : BuildingController<BuildingScriptableObject>, IFlowable
 {
     private List<IFlowable> _children = new();
-    private const int TRAIN_INTERVAL = 10;
+    private const int TRAIN_INTERVAL = 80;
 
     [SerializeField] private Transform train;
     [SerializeField] private Vector3 startPos, arrivedPos, endPos;
@@ -32,9 +32,17 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     private readonly Queue<Action<TrainStationController>> _sequenceActions = new();
     public void OnTick()
     {
-        if (_sequenceActions.Count == 0)
-            GenerateNewSequence();
-        _sequenceActions.Dequeue()?.Invoke(this);
+        // if (_sequenceActions.Count == 0)
+        //     GenerateNewSequence();
+        if (!activationCheck) {
+            Debug.Log("OnTick check happened");
+            CompleteTrainSystem();
+            // GenerateNewSequence();
+        }
+
+
+
+        // _sequenceActions.Dequeue()?.Invoke(this);
 
         foreach (var child in _children)
         {
@@ -51,25 +59,88 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     public (FlowType type, float amount) SendFlow() => (FlowType.None, 0);
 
     public void SetParent(IFlowable parent) { }
-    private void GenerateNewSequence()
+    // private void GenerateNewSequence()
+    // {
+    //     // wait for interval
+    //     for (int i = 0; i < TRAIN_INTERVAL; i++)
+    //         _sequenceActions.Enqueue(null);
+
+    //     //setup train
+    //     _sequenceActions.Enqueue(e => { e.DOKill(); e.train.localPosition = e.startPos; });
+
+    //     //train arrives to station and waits
+    //     // _sequenceActions.Enqueue(e => GetComponent<SingleSoundPlayer>().ActivateWithForeignTrigger());
+    //     _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 2));
+    //     _sequenceActions.Enqueue(null);
+
+    //     _sequenceActions.Enqueue((e) => { e.DOKill(); e.SellKerosene(); });
+
+    //     //train leaves
+    //     _sequenceActions.Enqueue((e) => { e.train.DOLocalMove(e.endPos, 2); });
+    //     _sequenceActions.Enqueue(null);
+    // }
+
+    private bool activationCheck = false;
+
+    private void CompleteTrainSystem()
     {
-        // wait for interval
-        for (int i = 0; i < TRAIN_INTERVAL; i++)
-            _sequenceActions.Enqueue(null);
+        if (!activationCheck) {
+            Invoke("StartTrain", 0f);
+            activationCheck = true;
+            _sequenceActions.Enqueue(e => {});
+        }
 
-        //setup train
-        _sequenceActions.Enqueue(e => { e.DOKill(); e.train.localPosition = e.startPos; });
 
-        //train arrives to station and waits
-        _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 2));
-        _sequenceActions.Enqueue(null);
 
-        _sequenceActions.Enqueue((e) => { e.DOKill(); e.SellKerosene(); });
+        // //setup train
+        // _sequenceActions.Enqueue(e => { e.DOKill(); e.train.localPosition = e.startPos; });
+        // _sequenceActions.Enqueue(e => GetComponent<SingleSoundPlayer>().ActivateWithForeignTrigger());
+        // _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.startPos, 8));
 
-        //train leaves
-        _sequenceActions.Enqueue((e) => { e.train.DOLocalMove(e.endPos, 2); });
-        _sequenceActions.Enqueue(null);
+        // _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 3));
+        // _sequenceActions.Enqueue((e) => { e.DOKill(); e.SellKerosene(); });
+        // _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 6));
+        // _sequenceActions.Enqueue((e) => { e.DOKill(); e.SellKerosene(); });
+        // _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.endPos, 5));
+        // _sequenceActions.Enqueue(null);
+
     }
+
+
+    private void StartTrain() {
+        train.localPosition = startPos;
+        train.DOKill();
+        GetComponent<SingleSoundPlayer>().ActivateWithForeignTrigger();
+        Debug.Log("Started");
+        Invoke("EnterTrain", 8f);
+    }
+
+    private void EnterTrain() {
+        train.DOKill();
+        train.DOLocalMove(arrivedPos, 7f);
+        Debug.Log("EnterTrain");
+        Invoke("StayTrain", 7f);
+    }
+
+    private void StayTrain() {
+        train.DOKill();
+        SellKerosene();
+        Debug.Log("StayTrain");
+        Invoke("ExitTrain", 6f);
+    }
+
+    private void ExitTrain() {
+        SellKerosene();
+        train.DOLocalMove(endPos, 5);
+        Debug.Log("ExitTrain");
+        Invoke("EndTrain", 5f);
+    }
+
+    private void EndTrain() {
+        _sequenceActions.Enqueue(null);
+        activationCheck = false;
+    }
+
     private void SellKerosene() { KeroseneManager.Instance.SellKerosene(); }
 
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
