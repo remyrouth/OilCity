@@ -48503,6 +48503,14 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3446973347991316762, guid: 633a53a529bff7945b511daff03bc261, type: 3}
+      propertyPath: GainMoney
+      value: 
+      objectReference: {fileID: 7740644197370843503, guid: f2395369f3c0b5b41b30d548772d5e79, type: 3}
+    - target: {fileID: 3446973347991316762, guid: 633a53a529bff7945b511daff03bc261, type: 3}
+      propertyPath: LoseMoney
+      value: 
+      objectReference: {fileID: 199790550994868175, guid: 59ccac4d097eed6488fa477415947b06, type: 3}
     - target: {fileID: 3486226967031850391, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_fontAsset
       value: 

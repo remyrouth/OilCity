@@ -5238,6 +5238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _label: {fileID: 3486226967031850391}
+  GainMoney: {fileID: 0}
+  LoseMoney: {fileID: 0}
 --- !u!1 &9207036583303228687
 GameObject:
   m_ObjectHideFlags: 0
