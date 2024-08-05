@@ -61,4 +61,7 @@ public class TreeRelationship
 
     public bool HasMaxChildren() => m_children.Count >= m_maxChildren;
 
+    public bool IsInRelationshipWith(INewFlowable item) 
+        => m_children.Contains(item) || m_parents.Contains(item) || m_tentative.Contains(item);
+
 }
