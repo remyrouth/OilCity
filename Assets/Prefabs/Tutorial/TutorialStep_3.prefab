@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 409ed984a8fe49dda2727ce73486df95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueText: {fileID: 11400000, guid: 6b7aeffeb46c45f448e4b30441e8ac5e, type: 2}
+  dialogueText: {fileID: 11400000, guid: 1c45ab3ed43da20459906b358dd3446d, type: 2}
+  portraitImage: {fileID: 21300000, guid: 3f0e60908391b544882f506144d1ff6b, type: 3}
   buildingName: Refinery
   buttonToUnlockIndex: 2
   targetPosition: {x: 21, y: 34, z: -10}

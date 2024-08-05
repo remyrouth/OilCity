@@ -54,7 +54,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     /// Refineries can input and output fluid to pipes.
     /// </summary>
     /// <returns></returns>
-    public (bool can_input, bool can_output) GetFlowConfig() => (true, true);
+    public (bool can_input, bool can_output) GetInOutConfig() => (true, m_output == null);
 
     public (FlowType type, float amount) SendFlow()
     {
@@ -184,5 +184,10 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
             else
                 vfx.Stop();
         }
+    }
+
+    public (FlowType in_type, FlowType out_type) GetFlowConfig()
+    {
+        return (FlowType.Oil, FlowType.Kerosene);
     }
 }

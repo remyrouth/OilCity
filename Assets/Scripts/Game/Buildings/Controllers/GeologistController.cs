@@ -20,13 +20,12 @@ public sealed class GeologistController : AOEBuildingController
     }
     List<GeologistWorker> _workers = new List<GeologistWorker>();
     List<GeologistWorker> _firedWorkers = new List<GeologistWorker>();
-    [SerializeField] private Transform _workerVisual;
+    [SerializeField] private GameObject _workerVisual;
     [SerializeField] private GameObject _oilPingPrefab;
     [SerializeField] private int _workerAmount;
     public int activeWorkerAmount { get;private set; }
     public override int TickNumberInterval => 10;
 
-    public override int Range => 4;
 
     private int GetNumberOfSearchingPoints()
     {
@@ -41,7 +40,9 @@ public sealed class GeologistController : AOEBuildingController
 
     private HashSet<Vector2Int> _tilesSearched = new();
 
-    public event Action<Vector2Int> OnOilSpotFound;
+   // public event Action<Vector2Int> OnOilSpotFound;
+
+    public event Action<Vector2Int, float> OnOilSpotFound;
 
     private void Awake() => OnOilSpotFound += PingSpot;
 
@@ -62,11 +63,16 @@ public sealed class GeologistController : AOEBuildingController
             if (_firedWorkers[i]._sequenceActions.Count == 0)
                 _firedWorkers.RemoveAt(i);
         }
-        for (int i = 0; i < _workers.Count; i++)
+
+        
+        for (var i = 0; i < _workers.Count; i++)
         {
             if (_workers[i]._sequenceActions.Count == 0)
             {
-                PayWorkers();
+                if (i == _workers.Count - 1)
+                {
+                    PayWorkers();
+                }
                 GenerateNewSequence(_workers[i]);
                 _workers[i]._isActive = true;
                 activeWorkerAmount = _workers.Where(e => e._isActive).Count(); ;
@@ -84,6 +90,7 @@ public sealed class GeologistController : AOEBuildingController
         for (int i = 0; i < numOfSearchingPoint; i++)
         {
             worker._sequenceActions.Enqueue((e) => { e.SearchForOil(worker); });
+            worker._sequenceActions.Enqueue(null);
             worker._sequenceActions.Enqueue(null);
             worker._sequenceActions.Enqueue(null);
         }
@@ -104,7 +111,13 @@ public sealed class GeologistController : AOEBuildingController
         worker._isActive = false;
         worker._workerVisual.DOKill();
         Vector3 pos = new Vector3(Anchor.x, Anchor.y, 0);
-        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick);
+
+        var anim = worker._workerVisual.GetComponent<WorkerVisualAnimator>().Anim;
+        worker._workerVisual.GetComponent<SpriteRenderer>().flipX = pos.x < worker._workerVisual.position.x;
+        anim.SetBool("IsWalking", true);
+
+        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick)
+            .OnComplete(() => { anim.SetBool("IsWalking", false); });
     }
     private void SearchForOil(GeologistWorker worker)
     {
@@ -112,23 +125,38 @@ public sealed class GeologistController : AOEBuildingController
         if (tile == null)
             return;
         Vector3 pos = new Vector3(tile!.Value.x, tile!.Value.y) + new Vector3(0.5f, 0.5f, 0);
+
+        var anim = worker._workerVisual.GetComponent<WorkerVisualAnimator>().Anim;
+        worker._workerVisual.GetComponent<SpriteRenderer>().flipX = pos.x < worker._workerVisual.position.x;
+        anim.SetBool("IsWalking", true);
+
         worker._workerVisual.DOKill();
-        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2);
+        worker._workerVisual.DOMove(pos, TimeManager.Instance.TimePerTick * 2.25f)
+            .OnComplete(() => { anim.SetBool("IsWalking", false); anim.SetTrigger("DoAction"); });
         _tilesSearched.Add(tile!.Value);
     }
     private void FinalizeSearching()
     {
         var bestOilSpot = _tilesSearched
-            .Where(e => !BoardManager.Instance.IsTileOccupied(e)) //make sure that tile is still empty
+            .Where(e => !BoardManager.Instance.IsTileOccupied(e)) // Ensure the tile is empty
             .OrderBy(e => BoardManager.Instance.OilEvaluator.GetValueAtPosition(e.x, e.y))
             .LastOrDefault();
 
         if (bestOilSpot == null)
             return;
+
         FireWorkersIfNeeded();
         Debug.Log($"Found great oil spot at {bestOilSpot}!");
-        OnOilSpotFound?.Invoke(bestOilSpot);
 
+        BoardManager.Instance.OilEvaluator.SetPositionAsSearched(bestOilSpot);
+
+        // Retrieve the oil value at the best spot
+        float oilValue = BoardManager.Instance.OilEvaluator.GetValueAtPosition(bestOilSpot.x, bestOilSpot.y);
+
+        oilValue = oilValue * 100;
+
+        // Trigger the event with both the position and the oil value
+        OnOilSpotFound?.Invoke(bestOilSpot, oilValue);
     }
     private void FireWorkersIfNeeded()
     {
@@ -140,11 +168,25 @@ public sealed class GeologistController : AOEBuildingController
             }
         }
     }
-    private void PingSpot(Vector2Int pos)
+    private void PingSpot(Vector2Int pos, float oilValue)
     {
+        // Instantiate the ping prefab
         var obj = Instantiate(_oilPingPrefab, new Vector3(pos.x, pos.y, -0.01f), Quaternion.identity);
+
+        // Set the scale animation
         obj.transform.localScale = Vector3.zero;
         obj.transform.DOScale(Vector3.one, 0.25f);
+
+        // Find the text component in the prefab
+        var textComponent = obj.GetComponentInChildren<TMPro.TextMeshPro>();
+
+        if (textComponent != null)
+        {
+            // Set the text to display the oil value
+            textComponent.text = oilValue.ToString() + "%";
+        }
+
+        // Destroy the ping object after 10 seconds
         Destroy(obj, 10);
     }
     private Vector2Int? GetRandomWithinRange()
@@ -157,7 +199,7 @@ public sealed class GeologistController : AOEBuildingController
 
     private void CreateWorker()
     {
-        var tmp = new GeologistWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity));
+        var tmp = new GeologistWorker(Instantiate(_workerVisual, Anchor.ToVector3(), Quaternion.identity).transform);
         tmp._workerVisual.SetParent(transform);
         if (_workers.Count() != 0)
         {

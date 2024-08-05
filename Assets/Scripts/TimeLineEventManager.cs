@@ -88,18 +88,12 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
                 Debug.LogWarning("ticksPerYear not set up correctly");
                 return;
             }
-            MoneyManager.Instance.ReduceMoney(MoneyManager.Instance.Quota);
             currentTick = 0f;
             currentYear++;
             CheckNextEvent();
-            AlterPollutionInstance();
         }
     }
 
-    private void AlterPollutionInstance()
-    {
-        PollutionManager.Instance.SetPollution(GetTimePercentage());
-    }
 
 
     // This is the method that checks for the next newspaper event,
@@ -130,7 +124,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     private void TriggerNextEvent(TimeLineEvent nextEvent) => _eventUI.TriggerEvent(nextEvent);
 
 
-    private bool CheckForEndGame()
+    public bool CheckForEndGame()
     {
         bool isNewsPaperUp = UIStateMachine.Instance.CurrentStateType == GameState.EventUI;
         if (!isNewsPaperUp && GetTimePercentage() >= 1f)

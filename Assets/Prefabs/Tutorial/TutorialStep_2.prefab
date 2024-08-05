@@ -45,5 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 11400000, guid: 076dc1262284607448cbbfdaade8e930, type: 2}
+  portraitImage: {fileID: 21300000, guid: 8a926a8ffacc8544898d1222cee17b37, type: 3}
   targetPosition: {x: 24.5, y: 33, z: -10}
   targetZoom: 3

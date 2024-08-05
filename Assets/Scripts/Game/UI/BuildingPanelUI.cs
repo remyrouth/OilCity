@@ -26,4 +26,28 @@ public class BuildingPanelUI : Singleton<BuildingPanelUI>
         buildingButtons[buttonIndex].interactable = !buildingButtons[buttonIndex].interactable;
     }
     
+    public void ToggleButtonInteractableWithHighlight(int buttonIndex)
+    {
+        buildingButtons[buttonIndex].interactable = !buildingButtons[buttonIndex].interactable;
+        ToggleHighlight(buttonIndex);
+    }
+
+    public Transform GetButtonTransform(int index)
+    {
+        return buildingButtons[index].transform;
+    }
+
+    public void ToggleHighlight(int buttonIndex)
+    {
+        Debug.Log($"StartFlciker called for button index {buttonIndex}");
+        var buildingButton = buildingButtons[buttonIndex].GetComponent<BuildingButton>();
+        if (buildingButton != null)
+        {
+            buildingButton.ToggleHighlight();
+        }
+        else
+        {
+            Debug.LogError("BuildingButton component not found on the button.");
+        }
+    }
 }

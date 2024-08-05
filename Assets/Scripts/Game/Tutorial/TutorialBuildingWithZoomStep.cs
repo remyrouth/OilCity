@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Search;
+using UnityEngine;
 
 namespace Game.Tutorial
 {
@@ -9,14 +10,14 @@ namespace Game.Tutorial
         [SerializeField] private Vector3 targetPosition;
         [SerializeField] private float targetZoom;
         
+
         private new void OnEnable()
         {
             BoardManager.Instance.OnBuildingPlaced += FinishStep;
             base.OnEnable();
             CameraController.Instance.TargetPosition = targetPosition;
             CameraController.Instance.TargetZoom = targetZoom;
-            BuildingPanelUI.Instance.ToggleButtonInteractable(buttonToUnlockIndex);
-            
+            BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
         }
 
         private void OnDisable()
@@ -28,6 +29,7 @@ namespace Game.Tutorial
         {
             if (buildingSO.name.Equals(buildingName))
             {
+                BuildingPanelUI.Instance.ToggleHighlight(buttonToUnlockIndex);
                 FinishStep();
             }
         }

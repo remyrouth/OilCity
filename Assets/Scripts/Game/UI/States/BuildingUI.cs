@@ -8,7 +8,15 @@ public class BuildingUI : UIState
 
     private Vector3 _mousePos = Vector2.zero;
     public override void OnUpdate()
-    {
+    {   
+
+        // while in building mode this allows you to
+        // use the mouse to move the camera WITHOUT placing a building
+        // or while in building mode use right click to cancel building placement
+
+        // in xbox controller mode we dont have a click drag function, 
+        // we're just going to use the stick to move
+        // and press B to cancel which is the same as right click up
         if (Input.GetMouseButtonDown(1))
             _mousePos = Input.mousePosition;
         if (Input.GetMouseButtonUp(1))
@@ -17,23 +25,52 @@ public class BuildingUI : UIState
     }
     private void Start()
     {
-        ControlManager.Instance.leftClickActivationButtontrigger += MouseClick;
+        ControlManager.Instance.leftClickActivationButtontrigger += LeftMouseClick;
+        ControlManager.Instance.rightClickActivationButtonTrigger += RightMouseClick;
     }
     private void OnDestroy()
     {
-        ControlManager.Instance.leftClickActivationButtontrigger -= MouseClick;
+        ControlManager.Instance.leftClickActivationButtontrigger -= LeftMouseClick;
+        ControlManager.Instance.rightClickActivationButtonTrigger -= RightMouseClick;
+        ControlManager.Instance.rightClickButtonTriggerEnd -= RightMouseClickEnd;
     }
-    private void MouseClick()
-    {
-        if (UIStateMachine.Instance.CurrentStateType != type)
+
+    private void RightMouseClick() {
+        if (UIStateMachine.Instance.CurrentStateType != type) {
             return;
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-                BuildingManager.Instance.CancelBuilding();
-            else
-                BuildingManager.Instance.OnMouseClick();
         }
+
+        _mousePos = Input.mousePosition;
+
+    }
+
+    private void RightMouseClickEnd() {
+        if (UIStateMachine.Instance.CurrentStateType != type) {
+            return;
+        }
+    }
+
+    private void LeftMouseClick()
+    {
+        if (UIStateMachine.Instance.CurrentStateType != type) {
+            return;
+        }
+        
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     if (EventSystem.current.IsPointerOverGameObject())
+        //         BuildingManager.Instance.CancelBuilding();
+        //     else
+        //         BuildingManager.Instance.OnMouseClick();
+        // }
+
+
+        if (ControlManager.Instance.IsCursorOverUIElement()) {
+            BuildingManager.Instance.CancelBuilding();
+        } else {
+            BuildingManager.Instance.OnMouseClick();
+        }
+
     }
 
 

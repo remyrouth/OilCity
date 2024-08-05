@@ -16,6 +16,8 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
     private AudioClip soundClip;
     [SerializeField]
     private SoundType soundType = SoundType.SoundEffect;
+    [SerializeField]
+    private bool usesForeignTrigger = false;
 
     private AudioSource audioSource;
     private SettingsManager settingsManager;
@@ -55,7 +57,19 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
 
         audioSource.enabled = false;
         audioSource.enabled = true;
+
+        if (!usesForeignTrigger) {
+            audioSource.Play();
+        }
+    }
+
+    public void ActivateWithForeignTrigger() {
+        Debug.Log("ActivateWithForeignTrigger method happened");
         audioSource.Play();
+    }
+
+    public float GetSoundEffectLength() {
+        return audioSource.clip.length;
     }
 
     public void InitializeFromSoundManager(AudioClip musicTrack) {
@@ -63,6 +77,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         shouldLoop = false;
         maxVolume = 1f;
         soundClip = musicTrack;
+        usesForeignTrigger = true;
         if (audioSource != null) {
             audioSource.clip = soundClip;
         }
@@ -105,4 +120,6 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         AmbientSoundEffect,
         MusicTrack
     }
+
+
 }

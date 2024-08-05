@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6369686394ffb5d42ab1ca38e0a43dc9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f3508ceb988d44767889f334adf36f4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_FlipX: 0
   m_FlipY: 0
@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5198241070710060224}
   - component: {fileID: -8103112423068984555}
+  - component: {fileID: 3626759058681946558}
   m_Layer: 0
   m_Name: OilWellPreview
   m_TagString: Untagged
@@ -130,3 +131,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spriteRenderer: {fileID: 4791686998052556758}
+--- !u!114 &3626759058681946558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5643698438408399773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: b41c119fc3ff615499ad2b53fe284070, type: 3}
+  soundType: 0
+  usesForeignTrigger: 0
