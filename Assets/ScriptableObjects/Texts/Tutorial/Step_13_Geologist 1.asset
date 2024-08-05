@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step_11_Geologist
+  m_Name: Step_13_Geologist 1
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: The one surveying the land is looking for places with oil
-    and will inform you whenever they find something of interest be sure to place
-    an oil well where they tell you the best oil is to maximize profits.
+  dialogueTextEnglish: "To meet our quota, it's crucial that we find the best oil
+    spots. That's why we're hiring a geologist. \r\nThey're experts at digging deep
+    and leaving no stone unturned when it comes to finding oil.\r\n"
   dialogueTextPolish: Postaw Geologa.

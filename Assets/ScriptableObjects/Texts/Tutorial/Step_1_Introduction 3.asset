@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_1_Introduction 3
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: "Well, I'm sure you're eager to get started, so let me introduce
-    you to the key component that makes all of this possible.\r"
+  dialogueTextEnglish: 'Well, I''m sure you''re eager to get started, so let me introduce
+    you to the key component that makes all of this possible.
+
+'
   dialogueTextPolish: "Witaj, dobrze zn\xF3w ci\u0119 widzie\u0107. Jestem niezmiernie
     szcz\u0119\u015Bliwy, \u017Ce zdecydowa\u0142e\u015B si\u0119 p\xF3j\u015B\u0107
     w moje \u015Blady i pod\u0105\u017Ca\u0107 \u015Bcie\u017Ck\u0105 przemys\u0142u

@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step_8_Cinema
+  m_Name: Step_13_Geologist 2
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: If you want your workers to be reeling with happiness, consider
-    opening a cinema. You'll see their satisfaction soar off the charts.
-  dialogueTextPolish: Kino Tutorial
+  dialogueTextEnglish: "Once they strike gold\u2014or should I say, strike oil\u2014make
+    sure to place an oil well where they tell you. After all, their advice is rock
+    solid and key to maximizing our profits!"
+  dialogueTextPolish: Postaw Geologa.

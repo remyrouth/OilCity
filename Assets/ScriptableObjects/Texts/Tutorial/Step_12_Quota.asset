@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step_12_Finish 2
+  m_Name: Step_12_Quota
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: ' But no pressure, and good luck!'
+  dialogueTextEnglish: To ensure the business prospers, I'll leave you with some
+    yearly goals to achieve. If these quotas aren't met, I will return and take a
+    closer look at what's going on. But no pressure!
   dialogueTextPolish: "A wi\u0119c to ju\u017C chyba wszystko co bym chcia\u0142
     ci przekaza\u0107. Oh, jeszcze jedna rzecz. Aby zapewni\u0107 prosperowanie biznesu
     musisz spe\u0142ni\u0107 roczne cele dochodowe. Je\u017Celi zawiedziesz b\u0119d\u0119
