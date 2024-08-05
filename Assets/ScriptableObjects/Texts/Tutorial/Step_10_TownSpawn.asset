@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step_9_TownSpawn
+  m_Name: Step_10_TownSpawn
   m_EditorClassIdentifier: 
   dialogueTextEnglish: Perfect, it seems like people have started moving into town,
     likely due to the high worker satisfaction. The better it is, the more people
