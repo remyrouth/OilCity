@@ -11,5 +11,6 @@ public class EndingUI : UIState
         foreach (var graph in _graphs)
             graph.PopulateGraph();
         TimeManager.Instance.TicksPerMinute = 0;
+        //StartCoroutine(GameRecorder.Instance.DoRollback());
     }
 }

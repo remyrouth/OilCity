@@ -30697,6 +30697,7 @@ GameObject:
   - component: {fileID: 1321047928}
   - component: {fileID: 1321047929}
   - component: {fileID: 1321047930}
+  - component: {fileID: 1321047931}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -30914,6 +30915,18 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 2192937533117639613, guid: db14879ceef205149be2bc995af4f22c, type: 3}
   - {fileID: 7797276442945530682, guid: 917abe78d3fa38348a87c81ddd870741, type: 3}
+--- !u!114 &1321047931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321047921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b82dde1df6133447b75155837a9d184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1755972032 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5514326931419509997, guid: 633a53a529bff7945b511daff03bc261, type: 3}
@@ -47978,6 +47991,10 @@ PrefabInstance:
     - target: {fileID: 2185000325235747043, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangeScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912363584510444686, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7190780707448354312, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
       propertyPath: m_AnchorMax.y
