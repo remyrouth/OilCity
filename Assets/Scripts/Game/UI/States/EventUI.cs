@@ -1,19 +1,14 @@
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class EventUI : UIState
 {
     public override GameState type => GameState.EventUI;
-    private TimeLineEvent _currentEvent;
-    [SerializeField] private Image _image;
 
-
-    private void Start()
+    private void OnEnable()
     {
         ControlManager.Instance.leftClickActivationButtontrigger += MouseClick;
     }
-    private void OnDestroy()
+    
+    private void OnDisable()
     {
         ControlManager.Instance.leftClickActivationButtontrigger -= MouseClick;
     }
@@ -27,7 +22,6 @@ public class EventUI : UIState
     public override void OnEnter()
     {
         base.OnEnter();
-        _image.sprite = _currentEvent.newspaperSprite;
         TimeManager.Instance.TicksPerMinute = 0;
     }
 
@@ -35,10 +29,5 @@ public class EventUI : UIState
     {
         base.OnExit();
         TimeManager.Instance.TicksPerMinute = 60;
-    }
-    public void TriggerEvent(TimeLineEvent nextEvent)
-    {
-        _currentEvent = nextEvent;
-        UIStateMachine.Instance.ChangeState(type);
     }
 }
