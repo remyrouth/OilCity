@@ -10,6 +10,7 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
 
     [SerializeField] private Transform train;
     [SerializeField] private Vector3 startPos, arrivedPos, endPos;
+    [SerializeField] private SingleSoundPlayer trainSequenceSFX, OilSellSFX;
 
     public void AddChild(IFlowable child)
     {
@@ -88,35 +89,10 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
 
     }
 
-    // private IEnumerator LerpToDestination(Vector3 start, Vector3 end, float time)
-    // {
-    //     float elapsedTime = 0;
-
-    //     while (elapsedTime < time)
-    //     {
-    //         // Calculate the lerp factor
-    //         float lerpFactor = elapsedTime / time;
-
-    //         // Linearly interpolate from start to end
-    //         train.position = Vector3.Lerp(start, end, lerpFactor);
-
-    //         // Increase the elapsed time
-    //         elapsedTime += Time.deltaTime;
-
-    //         // Yield control back to Unity and continue next frame
-    //         yield return null;
-    //     }
-
-    //     // Ensure the final position is exactly the end position
-    //     train.transform.position = end;
-
-    // }
-
-
     private void StartTrain() {
         train.localPosition = startPos;
         train.DOKill();
-        GetComponent<SingleSoundPlayer>().ActivateWithForeignTrigger();
+        trainSequenceSFX.ActivateWithForeignTrigger();
         // Debug.Log("Started");
         Invoke("EnterTrain", 8f);
     }
@@ -125,20 +101,18 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
         train.DOKill();
         train.DOLocalMove(arrivedPos, 7f);
         // StartCoroutine(LerpToDestination(startPos, arrivedPos, 3f));
-        // LerpToDestination(startPos, arrivedPos, 3);
-        // Debug.Log("EnterTrain");
         Invoke("StayTrain", 7f);
     }
 
     private void StayTrain() {
         train.DOKill();
-        SellKerosene();
         // Debug.Log("StayTrain");
         Invoke("ExitTrain", 6f);
     }
 
     private void ExitTrain() {
         SellKerosene();
+        OilSellSFX.ActivateWithForeignTrigger();
         train.DOLocalMove(endPos, 5);
         // StartCoroutine(LerpToDestination(arrivedPos, endPos, 5f));
         // train.position = Vector3.Lerp(arrivedPos, endPos, 5f);
@@ -158,4 +132,6 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     {
         return (FlowType.Kerosene, FlowType.None);
     }
+
+
 }
