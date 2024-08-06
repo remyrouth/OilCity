@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
-  m_Name: Step_14_Finish 1
+  m_Name: Step_13_Finish
   m_EditorClassIdentifier: 
   dialogueTextEnglish: "That\u2019s about it! I\u2019m confident you\u2019ll make
     both the oil industry and me proud. Best of luck!"
-  dialogueTextPolish: "A wi\u0119c to ju\u017C chyba wszystko co bym chcia\u0142
-    ci przekaza\u0107. Oh, jeszcze jedna rzecz. Aby zapewni\u0107 prosperowanie biznesu
-    musisz spe\u0142ni\u0107 roczne cele dochodowe. Je\u017Celi zawiedziesz b\u0119d\u0119
-    zmuszony przej\u0105\u0107 biznes. Powodzenia."
+  dialogueTextPolish: "To ju\u017C wszystko co chcia\u0142em ci przekaza\u0107. Jestem
+    pewien, \u017Ce podo\u0142asz zadaniu. Powodzenia!"
