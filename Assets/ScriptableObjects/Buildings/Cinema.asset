@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <placementCost>k__BackingField: 150
   <removalCost>k__BackingField: 300
-  <removalSatisfactionCost>k__BackingField: 70
+  <removalSatisfactionCost>k__BackingField: 60
   <icon>k__BackingField: {fileID: 21300000, guid: e7c117b2bc8a13e49a68c3aba17069b9, type: 3}
+  <old_icon>k__BackingField: {fileID: 0}
   <prefab>k__BackingField: {fileID: 2162149197760898577, guid: f22b0ba2155a12d499523846d678cc7c, type: 3}
   <previewPrefab>k__BackingField: {fileID: 2162149197760898577, guid: 8528fb6b1eec63e4190cb96a4f606346, type: 3}
   <size>k__BackingField: {x: 2, y: 1}
   <buildingName>k__BackingField: {fileID: 11400000, guid: e3fffec891fac6b4da5e10c2e664a6ce, type: 2}
   <description>k__BackingField: {fileID: 11400000, guid: 350ae611a60e6f449b12f84b4f445710, type: 2}
-  <basePayrate>k__BackingField: 100
+  <basePayrate>k__BackingField: 50
   <payrateLevelDelta>k__BackingField: 50
