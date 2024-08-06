@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -30491,6 +30491,8 @@ GameObject:
   - component: {fileID: 1148798915}
   - component: {fileID: 1148798919}
   - component: {fileID: 1148798920}
+  - component: {fileID: 1148798922}
+  - component: {fileID: 1148798921}
   m_Layer: 0
   m_Name: ResourcesManager
   m_TagString: Untagged
@@ -30511,6 +30513,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitialSatisfaction: 40
+  workerIncreaseSfX: {fileID: 1148798922}
+  workerDecreaseSfX: {fileID: 1148798921}
 --- !u!114 &1148798916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30623,6 +30627,40 @@ MonoBehaviour:
   NewQuota: 1455
   currentQuota: 0
   timeTillQuotaDeadline: 60
+--- !u!114 &1148798921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148798914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: 641eb47864b6e404184a32268d53e5bd, type: 3}
+  soundType: 0
+  usesForeignTrigger: 1
+--- !u!114 &1148798922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148798914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: 641eb47864b6e404184a32268d53e5bd, type: 3}
+  soundType: 0
+  usesForeignTrigger: 1
 --- !u!1 &1236219417
 GameObject:
   m_ObjectHideFlags: 0
@@ -48652,15 +48690,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2153134046971118565, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2153134046971118565, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2153134046971118565, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2201768259907786689, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_AnchorMax.y
@@ -48678,6 +48716,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2493149780941241147, guid: 633a53a529bff7945b511daff03bc261, type: 3}
+      propertyPath: soundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 641eb47864b6e404184a32268d53e5bd, type: 3}
     - target: {fileID: 2672760441805120443, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

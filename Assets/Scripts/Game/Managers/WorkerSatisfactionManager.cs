@@ -9,6 +9,9 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, I
     private int _tickTimer;
     private int PaymentTimer => 5;
     public event Action<int> OnWorkersSatisfactionChanged;
+
+    [SerializeField] private SingleSoundPlayer workerIncreaseSfX;
+    [SerializeField] private SingleSoundPlayer workerDecreaseSfX;
     private void Start()
     {
         TimeManager.Instance.RegisterReceiver(this);
@@ -26,6 +29,18 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, I
     {
         WorkerSatisfaction = (int)Mathf.Clamp(WorkerSatisfaction + delta, 0, 100);
         OnWorkersSatisfactionChanged?.Invoke(WorkerSatisfaction);
+
+
+        if (delta > 0) {
+            // we trigger positive increase sfx
+            Debug.Log("Increase sfx sound here");
+            workerIncreaseSfX.ActivateWithForeignTrigger();
+        } else if (delta == 0f) {
+            // we skip
+        } else {
+            // we trigger negative decrease sfx
+            workerDecreaseSfX.ActivateWithForeignTrigger();
+        }
     }
     private void CheckForGameOver(int newValue)
     {
