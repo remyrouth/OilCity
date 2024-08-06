@@ -5,6 +5,7 @@ public class DestroyAction : ClickableTileAction
         if (toc.CheckIfDestroyable())
         {
             BoardManager.Instance.Destroy(toc);
+            SoundManager.Instance.SelectBuildingDestroySFXTrigger();
         }
     }
 }
