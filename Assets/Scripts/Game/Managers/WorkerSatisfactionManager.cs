@@ -5,7 +5,7 @@ using UnityEngine;
 public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, ITickReceiver
 {
     public int WorkerSatisfaction { get; private set; }
-    [SerializeField] private int InitialSatisfaction = 100;
+    [SerializeField] private int InitialSatisfaction = 200;
     private int _tickTimer;
     private int PaymentTimer => 5;
     public event Action<int> OnWorkersSatisfactionChanged;
@@ -27,7 +27,7 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, I
     }
     private void ChangeSatisfaction(float delta)
     {
-        WorkerSatisfaction = (int)Mathf.Clamp(WorkerSatisfaction + delta, 0, 100);
+        WorkerSatisfaction = (int)Mathf.Clamp(WorkerSatisfaction + delta, 0, 200);
         OnWorkersSatisfactionChanged?.Invoke(WorkerSatisfaction);
 
 

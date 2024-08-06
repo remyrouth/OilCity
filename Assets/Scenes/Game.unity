@@ -30510,7 +30510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3af484c7a0f664c92990db3a763307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialSatisfaction: 50
+  InitialSatisfaction: 100
   workerIncreaseSfX: {fileID: 0}
   workerDecreaseSfX: {fileID: 0}
 --- !u!114 &1148798916

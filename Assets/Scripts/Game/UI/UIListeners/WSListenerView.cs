@@ -21,7 +21,7 @@ public class WSListenerView : MonoBehaviour
     }
     private void UpdateLabel(int newWSvalue)
     {
-        float newValue = (float)newWSvalue / 100;
+        float newValue = (float)newWSvalue / 200;
         _desiredValue = newValue;
     }
 }
