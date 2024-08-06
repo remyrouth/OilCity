@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public sealed class NewRefineryController : PayrateBuildingController, INewFlowable
@@ -21,12 +19,13 @@ public sealed class NewRefineryController : PayrateBuildingController, INewFlowa
     {
         var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
 
-        foreach (var p in peripherals)
+        foreach (var (peripheral_to, tile) in peripherals)
         {
-            if (p.tile.TryGetComponent<NewPipeController>(out var pipe))
+            if (tile.TryGetComponent<NewPipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(p.peripheral_to)) // TODO not with_position, but rather the tile of the building that would be connected to
+                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to))
                 {
+                    /*
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
@@ -35,14 +34,19 @@ public sealed class NewRefineryController : PayrateBuildingController, INewFlowa
 
                         return;
                     }
+                    */
 
-                    pipe.AddChild(this);
-                    SetParent(pipe);
+                    m_tr.AddTentative(pipe, Relation.Parent);
+
+                    // pipe.AddChild(this);
+                    // SetParent(pipe);
                 }
-                else if (pipe.DoesPipeSystemOutputToTile(p.peripheral_to))
+                else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
-                    pipe.SetParent(this);
-                    AddChild(pipe);
+                    m_tr.AddTentative(pipe, Relation.Child);
+
+                    // pipe.SetParent(this);
+                    // AddChild(pipe);
                 }
             }
         }
@@ -122,11 +126,11 @@ public sealed class NewRefineryController : PayrateBuildingController, INewFlowa
             _tickTimer = 0;
             PayWorkers();
         }
-        if (flow.amount > 0)
+        if (flow > 0)
             _spilloutEffect.Play();
         else
             _spilloutEffect.Stop();
-        if (flow.amount == 0)
+        if (flow == 0)
             return;
         Debug.LogWarning("Refinery has overflowed " + flow);
     }

@@ -274,7 +274,7 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
     // a "hard" connection only exists in semantics.
     public IReadOnlyList<Vector2Int> GetConnectionPositions() => new List<Vector2Int> { m_lhsConnectionPos, m_rhsConnectionPos };
 
-    public bool TryConnectionAt(Vector2Int position)
+    private bool TryConnectionAt(Vector2Int position)
     {
         bool is_lhs = position.Equals(m_allPipes[m_lhsIndex]);
         bool is_rhs = position.Equals(m_allPipes[m_rhsIndex]);
@@ -311,31 +311,32 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         }
     }
 
+    // TODO make flow direction and flowconfig/inoutconfig reset when relationships are changed (not just when created)
+
     #region Pipe connection? helper methods
     public bool DoesPipeSystemReceiveInputFromTile(Vector2Int tile_pos)
     {
-        if (tile_pos.Equals(m_lhsConnectionPos))
+        if (tile_pos.Equals(m_lhsConnectionPos) && m_lhsFlowDir != PipeFlowDirection.Invalid)
         {
-            return (m_allPipes[m_lhsIndex] + Utilities.GetPipeFlowDirOffset(m_lhsFlowDir)).Equals(tile_pos);
+            return (m_allPipes[m_lhsIndex] - Utilities.GetPipeFlowDirOffset(m_lhsFlowDir)).Equals(tile_pos);
         }
-        else if (tile_pos.Equals(m_rhsConnectionPos))
+        else if (tile_pos.Equals(m_rhsConnectionPos) && m_rhsFlowDir != PipeFlowDirection.Invalid)
         {
-            return (m_allPipes[m_rhsIndex] + Utilities.GetPipeFlowDirOffset(m_rhsFlowDir)).Equals(tile_pos);
+            return (m_allPipes[m_rhsIndex] - Utilities.GetPipeFlowDirOffset(m_rhsFlowDir)).Equals(tile_pos);
         }
 
         return false;
     }
 
-    // TODO is this right??
     public bool DoesPipeSystemOutputToTile(Vector2Int tile_pos)
     {
-        if (tile_pos.Equals(m_lhsConnectionPos))
+        if (tile_pos.Equals(m_lhsConnectionPos) && m_lhsFlowDir != PipeFlowDirection.Invalid)
         {
-            return (m_allPipes[m_lhsIndex] - Utilities.GetPipeFlowDirOffset(m_lhsFlowDir)).Equals(tile_pos);
+            return (m_allPipes[m_lhsIndex] + Utilities.GetPipeFlowDirOffset(m_lhsFlowDir)).Equals(tile_pos);
         }
-        else if (tile_pos.Equals(m_rhsConnectionPos))
+        else if (tile_pos.Equals(m_rhsConnectionPos) && m_rhsFlowDir != PipeFlowDirection.Invalid)
         {
-            return (m_allPipes[m_rhsIndex] - Utilities.GetPipeFlowDirOffset(m_rhsFlowDir)).Equals(tile_pos);
+            return (m_allPipes[m_rhsIndex] + Utilities.GetPipeFlowDirOffset(m_rhsFlowDir)).Equals(tile_pos);
         }
 
         return false;
