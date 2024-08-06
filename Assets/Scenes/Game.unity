@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -40757,7 +40757,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.25882354, g: 0.48627454, b: 0.3019608, a: 1}
+  m_BackGroundColor: {r: 0.16862746, g: 0.3803922, b: 0.25490198, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -41685,7 +41685,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -876546973899608171, guid: 323de76af4e00504099c06a0fe3c85ac, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -57870,6 +57870,38 @@ PrefabInstance:
     - target: {fileID: 1924963495424523058, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
       propertyPath: m_Name
       value: EventUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5553185486649659545, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5553185486649659545, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5553185486649659545, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5553185486649659545, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949468718911390842, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949468718911390842, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949468718911390842, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949468718911390842, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7741619162790988592, guid: 53a95176a8093c9439a867aeb48dd608, type: 3}
       propertyPath: m_fontAsset
