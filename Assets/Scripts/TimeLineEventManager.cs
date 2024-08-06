@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     [SerializeField] private float ticksPerYear = 1f;
     [SerializeField] private float currentTick = 4f;
 
+
+    [SerializeField] private List<GameObject> events;
     [SerializeField] private List<TimeLineEvent> eventsOnTimeLine;
     [SerializeField] private int currentEventListIndex;
 
@@ -44,23 +47,24 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
     private void DisplayEvents()
     {
-        foreach (var newsEvent in eventsOnTimeLine)
+        foreach (var gameEvent in events)
         {
-            DisplayIndividualEvent(newsEvent);
+            DisplayIndividualEvent(gameEvent.GetComponent<SingleEventController>());
         }
     }
     
-    private void DisplayIndividualEvent(TimeLineEvent newsEvent) {
+    private void DisplayIndividualEvent(SingleEventController newsEvent) {
         Vector3[] worldCorners = new Vector3[4];
         timelineSlider.GetWorldCorners(worldCorners);
         Vector3 start = worldCorners[0]; // Bottom-left corner
         Vector3 end = worldCorners[2]; // Top-right corner (assuming horizontal slider)
 
-        float targetPercent = newsEvent.GamePercentage;
-        float sliderWidth = end.x - start.x;
-        float newX = start.x + (sliderWidth * targetPercent);
-        float newY = timelineSlider.transform.position.y;
-        float newZ = timelineSlider.transform.position.z;
+
+        var targetPercent = newsEvent.TriggerYear / _totalYears;
+        var sliderWidth = end.x - start.x;
+        var newX = start.x + (sliderWidth * targetPercent);
+        var newY = timelineSlider.transform.position.y;
+        var newZ = timelineSlider.transform.position.z;
 
         var matchedPercentagePosition = new Vector3(newX, newY, newZ);
 
