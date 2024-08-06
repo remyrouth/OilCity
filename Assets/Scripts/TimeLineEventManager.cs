@@ -6,24 +6,22 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 {
     [SerializeField]
     private Vector2 yearRange;
-    [SerializeField]
-    private float currentYear;
+    [SerializeField] private float currentYear;
     private float totalYears;
-    [SerializeField]
-    private float ticksPerYear = 1f;
-    [SerializeField]
-    private float currentTick = 4f;
+    [SerializeField] private float ticksPerYear = 1f;
+    [SerializeField] private float currentTick = 4f;
 
     [SerializeField] private EventUI _eventUI;
 
-    [SerializeField]
-    private List<TimeLineEvent> eventsOnTimeLine = new List<TimeLineEvent>();
-    [SerializeField]
-    private int currentEventListIndex = 0;
+    [SerializeField] private List<TimeLineEvent> eventsOnTimeLine = new List<TimeLineEvent>();
+    [SerializeField] private int currentEventListIndex = 0;
 
+    [SerializeField] private RectTransform timelineSlider;
+    [SerializeField] private GameObject newsPaperPrefabImage;
+    
     private int m_ticksElapsed;
     private int m_totalTicks;
-
+    
     private void Start()
     {
         totalYears = yearRange.y - yearRange.x;
@@ -41,7 +39,6 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
         {
             Debug.LogError("You must have a passage of time greater than 0f");
         }
-
     }
 
     private void DisplayEvents()
@@ -50,34 +47,30 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
         {
             DisplayIndividualEvent(newsEvent);
         }
-
     }
-    [SerializeField] private RectTransform _timelineSlider;
-    [SerializeField] private GameObject _newsPaperPrefabImage;
+    
     private void DisplayIndividualEvent(TimeLineEvent newsEvent) {
         Vector3[] worldCorners = new Vector3[4];
-        _timelineSlider.GetWorldCorners(worldCorners);
+        timelineSlider.GetWorldCorners(worldCorners);
         Vector3 start = worldCorners[0]; // Bottom-left corner
         Vector3 end = worldCorners[2]; // Top-right corner (assuming horizontal slider)
 
         float targetPercent = newsEvent.GamePercentage;
         float sliderWidth = end.x - start.x;
         float newX = start.x + (sliderWidth * targetPercent);
-        float newY = _timelineSlider.transform.position.y;
-        float newZ = _timelineSlider.transform.position.z;
+        float newY = timelineSlider.transform.position.y;
+        float newZ = timelineSlider.transform.position.z;
 
         Vector3 matchedPercentagePosition = new Vector3(newX, newY, newZ);
 
-        GameObject newspaperObject = Instantiate(_newsPaperPrefabImage,
+        GameObject newspaperObject = Instantiate(newsPaperPrefabImage,
         matchedPercentagePosition,
-        _timelineSlider.gameObject.transform.rotation);
-        newspaperObject.transform.SetParent(_timelineSlider.transform, true);
+        timelineSlider.gameObject.transform.rotation);
+        newspaperObject.transform.SetParent(timelineSlider.transform, true);
         newspaperObject.GetComponent<RectTransform>().sizeDelta = Vector2.one*64;
         newspaperObject.GetComponent<RectTransform>().localScale = Vector2.one;
     }
-
-
-
+    
     private void ContinueTimeLine()
     {
         currentTick++;
@@ -93,9 +86,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
             CheckNextEvent();
         }
     }
-
-
-
+    
     // This is the method that checks for the next newspaper event,
     // and has the UI pop up
     private void CheckNextEvent()
@@ -123,7 +114,6 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
     private void TriggerNextEvent(TimeLineEvent nextEvent) => _eventUI.TriggerEvent(nextEvent);
 
-
     public bool CheckForEndGame()
     {
         bool isNewsPaperUp = UIStateMachine.Instance.CurrentStateType == GameState.EventUI;
@@ -135,8 +125,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
         return false;
     }
-
-
+    
     public void OnTick()
     {
         ContinueTimeLine();
