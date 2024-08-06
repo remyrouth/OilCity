@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,24 +6,26 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     [SerializeField]
     private Vector2 yearRange;
     [SerializeField] private float currentYear;
-    private float totalYears;
+    
     [SerializeField] private float ticksPerYear = 1f;
     [SerializeField] private float currentTick = 4f;
 
-    [SerializeField] private EventUI _eventUI;
-
-    [SerializeField] private List<TimeLineEvent> eventsOnTimeLine = new List<TimeLineEvent>();
-    [SerializeField] private int currentEventListIndex = 0;
+    [SerializeField] private List<TimeLineEvent> eventsOnTimeLine;
+    [SerializeField] private int currentEventListIndex;
 
     [SerializeField] private RectTransform timelineSlider;
     [SerializeField] private GameObject newsPaperPrefabImage;
     
-    private int m_ticksElapsed;
-    private int m_totalTicks;
+    private int _ticksElapsed;
+    private int _totalTicks;
+    private float _totalYears;
     
+    public delegate void EventTriggered(TimeLineEvent nextEvent);
+    public event EventTriggered OnEventTrigger;
+
     private void Start()
     {
-        totalYears = yearRange.y - yearRange.x;
+        _totalYears = yearRange.y - yearRange.x;
 
         // Register this manager to receive ticks
         TimeManager.Instance.RegisterReceiver(this);
@@ -32,8 +33,8 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
         SortEventsByPercentage();
         DisplayEvents();
 
-        m_ticksElapsed = 0;
-        m_totalTicks = (int)((yearRange.y - currentYear) * ticksPerYear);
+        _ticksElapsed = 0;
+        _totalTicks = (int)((yearRange.y - currentYear) * ticksPerYear);
 
         if (ticksPerYear <= 0f)
         {
@@ -43,7 +44,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
     private void DisplayEvents()
     {
-        foreach (TimeLineEvent newsEvent in eventsOnTimeLine)
+        foreach (var newsEvent in eventsOnTimeLine)
         {
             DisplayIndividualEvent(newsEvent);
         }
@@ -61,11 +62,9 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
         float newY = timelineSlider.transform.position.y;
         float newZ = timelineSlider.transform.position.z;
 
-        Vector3 matchedPercentagePosition = new Vector3(newX, newY, newZ);
+        var matchedPercentagePosition = new Vector3(newX, newY, newZ);
 
-        GameObject newspaperObject = Instantiate(newsPaperPrefabImage,
-        matchedPercentagePosition,
-        timelineSlider.gameObject.transform.rotation);
+        var newspaperObject = Instantiate(newsPaperPrefabImage, matchedPercentagePosition, timelineSlider.gameObject.transform.rotation);
         newspaperObject.transform.SetParent(timelineSlider.transform, true);
         newspaperObject.GetComponent<RectTransform>().sizeDelta = Vector2.one*64;
         newspaperObject.GetComponent<RectTransform>().localScale = Vector2.one;
@@ -96,12 +95,11 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
             GameStateManager.Instance.EndGame();
             return;
         }
-
-
+        
         if (currentEventListIndex <= eventsOnTimeLine.Count - 1)
         {
-            TimeLineEvent nextEvent = eventsOnTimeLine[currentEventListIndex];
-            float nextEventPercent = nextEvent.GamePercentage;
+            var nextEvent = eventsOnTimeLine[currentEventListIndex];
+            var nextEventPercent = nextEvent.GamePercentage;
 
             if (GetTimePercentage() >= nextEventPercent)
             {
@@ -109,29 +107,29 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
                 TriggerNextEvent(nextEvent);
             }
         }
-
     }
 
-    private void TriggerNextEvent(TimeLineEvent nextEvent) => _eventUI.TriggerEvent(nextEvent);
+    private void TriggerNextEvent(TimeLineEvent nextEvent)
+    {
+        OnEventTrigger?.Invoke(nextEvent);
+        UIStateMachine.Instance.ChangeState(GameState.EventUI);
+    }
 
     public bool CheckForEndGame()
     {
-        bool isNewsPaperUp = UIStateMachine.Instance.CurrentStateType == GameState.EventUI;
+        var isNewsPaperUp = UIStateMachine.Instance.CurrentStateType == GameState.EventUI;
         if (!isNewsPaperUp && GetTimePercentage() >= 1f)
         {
             return true;
         }
-
-
         return false;
     }
     
     public void OnTick()
     {
         ContinueTimeLine();
-        KeroseneManager.Instance.SetFalloffPercentage(m_ticksElapsed / (float)m_totalTicks);
-
-        m_ticksElapsed++;
+        KeroseneManager.Instance.SetFalloffPercentage(_ticksElapsed / (float)_totalTicks);
+        _ticksElapsed++;
     }
 
     private void SortEventsByPercentage()
@@ -148,9 +146,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
     public float GetTimePercentage()
     {
-        // Debug.Log("totalYears: " +  totalYears);
-        float percent = (totalYears - (yearRange.y - currentYear)) / totalYears;
-        // Debug.Log("Percent: " +  percent);
+        var percent = (_totalYears - (yearRange.y - currentYear)) / _totalYears;
         return percent;
     }
 }

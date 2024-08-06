@@ -37,7 +37,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RightClick"",
+                    ""name"": ""ClickDeselect"",
                     ""type"": ""Button"",
                     ""id"": ""d775f156-ffe2-4bf5-857a-2677442235d3"",
                     ""expectedControlType"": ""Button"",
@@ -167,7 +167,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RightClick"",
+                    ""action"": ""ClickDeselect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -178,7 +178,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RightClick"",
+                    ""action"": ""ClickDeselect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -190,7 +190,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // PlayerControls
         m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
         m_PlayerControls_ClickSelect = m_PlayerControls.FindAction("ClickSelect", throwIfNotFound: true);
-        m_PlayerControls_RightClick = m_PlayerControls.FindAction("RightClick", throwIfNotFound: true);
+        m_PlayerControls_ClickDeselect = m_PlayerControls.FindAction("ClickDeselect", throwIfNotFound: true);
         m_PlayerControls_MoveCursor = m_PlayerControls.FindAction("MoveCursor", throwIfNotFound: true);
         m_PlayerControls_MoveLeftStick = m_PlayerControls.FindAction("MoveLeftStick", throwIfNotFound: true);
         m_PlayerControls_MoveLeftStickHorizontal = m_PlayerControls.FindAction("MoveLeftStickHorizontal", throwIfNotFound: true);
@@ -257,7 +257,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerControls;
     private List<IPlayerControlsActions> m_PlayerControlsActionsCallbackInterfaces = new List<IPlayerControlsActions>();
     private readonly InputAction m_PlayerControls_ClickSelect;
-    private readonly InputAction m_PlayerControls_RightClick;
+    private readonly InputAction m_PlayerControls_ClickDeselect;
     private readonly InputAction m_PlayerControls_MoveCursor;
     private readonly InputAction m_PlayerControls_MoveLeftStick;
     private readonly InputAction m_PlayerControls_MoveLeftStickHorizontal;
@@ -267,7 +267,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         private @PlayerInput m_Wrapper;
         public PlayerControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @ClickSelect => m_Wrapper.m_PlayerControls_ClickSelect;
-        public InputAction @RightClick => m_Wrapper.m_PlayerControls_RightClick;
+        public InputAction @ClickDeselect => m_Wrapper.m_PlayerControls_ClickDeselect;
         public InputAction @MoveCursor => m_Wrapper.m_PlayerControls_MoveCursor;
         public InputAction @MoveLeftStick => m_Wrapper.m_PlayerControls_MoveLeftStick;
         public InputAction @MoveLeftStickHorizontal => m_Wrapper.m_PlayerControls_MoveLeftStickHorizontal;
@@ -284,9 +284,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ClickSelect.started += instance.OnClickSelect;
             @ClickSelect.performed += instance.OnClickSelect;
             @ClickSelect.canceled += instance.OnClickSelect;
-            @RightClick.started += instance.OnRightClick;
-            @RightClick.performed += instance.OnRightClick;
-            @RightClick.canceled += instance.OnRightClick;
+            @ClickDeselect.started += instance.OnClickDeselect;
+            @ClickDeselect.performed += instance.OnClickDeselect;
+            @ClickDeselect.canceled += instance.OnClickDeselect;
             @MoveCursor.started += instance.OnMoveCursor;
             @MoveCursor.performed += instance.OnMoveCursor;
             @MoveCursor.canceled += instance.OnMoveCursor;
@@ -306,9 +306,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ClickSelect.started -= instance.OnClickSelect;
             @ClickSelect.performed -= instance.OnClickSelect;
             @ClickSelect.canceled -= instance.OnClickSelect;
-            @RightClick.started -= instance.OnRightClick;
-            @RightClick.performed -= instance.OnRightClick;
-            @RightClick.canceled -= instance.OnRightClick;
+            @ClickDeselect.started -= instance.OnClickDeselect;
+            @ClickDeselect.performed -= instance.OnClickDeselect;
+            @ClickDeselect.canceled -= instance.OnClickDeselect;
             @MoveCursor.started -= instance.OnMoveCursor;
             @MoveCursor.performed -= instance.OnMoveCursor;
             @MoveCursor.canceled -= instance.OnMoveCursor;
@@ -341,7 +341,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IPlayerControlsActions
     {
         void OnClickSelect(InputAction.CallbackContext context);
-        void OnRightClick(InputAction.CallbackContext context);
+        void OnClickDeselect(InputAction.CallbackContext context);
         void OnMoveCursor(InputAction.CallbackContext context);
         void OnMoveLeftStick(InputAction.CallbackContext context);
         void OnMoveLeftStickHorizontal(InputAction.CallbackContext context);
