@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public abstract class BuildingController<T> : TileObjectController
     where T : BuildingScriptableObject
@@ -8,6 +10,7 @@ public abstract class BuildingController<T> : TileObjectController
     [SerializeField] private Transform _demolishEffect;
     public T config { get; protected set; }
     public override Vector2Int size => config.size;
+    public override Action GetCreateAction(Vector2Int pos) => ()=>config.CreateInstance(pos);
     /// <summary>
     /// Initialize controller with given configuration
     /// </summary>
