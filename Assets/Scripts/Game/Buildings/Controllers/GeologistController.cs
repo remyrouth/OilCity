@@ -23,7 +23,7 @@ public sealed class GeologistController : AOEBuildingController
     [SerializeField] private GameObject _workerVisual;
     [SerializeField] private GameObject _oilPingPrefab;
     [SerializeField] private int _workerAmount;
-    public int activeWorkerAmount { get;private set; }
+    public int activeWorkerAmount { get; private set; }
     public override int TickNumberInterval => 10;
 
 
@@ -40,7 +40,7 @@ public sealed class GeologistController : AOEBuildingController
 
     private HashSet<Vector2Int> _tilesSearched = new();
 
-   // public event Action<Vector2Int> OnOilSpotFound;
+    // public event Action<Vector2Int> OnOilSpotFound;
 
     public event Action<Vector2Int, float> OnOilSpotFound;
 
@@ -64,7 +64,7 @@ public sealed class GeologistController : AOEBuildingController
                 _firedWorkers.RemoveAt(i);
         }
 
-        
+
         for (var i = 0; i < _workers.Count; i++)
         {
             if (_workers[i]._sequenceActions.Count == 0)
@@ -103,8 +103,8 @@ public sealed class GeologistController : AOEBuildingController
             FinalizeSearching();
         //wait for the cooldown
         /*for (int i = 0; i < TickNumberInterval-7; i++)*/
-            worker._sequenceActions.Enqueue(null);
-            worker._sequenceActions.Enqueue(null);
+        worker._sequenceActions.Enqueue(null);
+        worker._sequenceActions.Enqueue(null);
     }
     private void ResetWorker(GeologistWorker worker)
     {
@@ -160,7 +160,7 @@ public sealed class GeologistController : AOEBuildingController
     }
     private void FireWorkersIfNeeded()
     {
-        if(_workers.Count() > 3)
+        if (_workers.Count() > 3)
         {
             for (int i = _workers.Count() - 1; i >= 3; i--)
             {
@@ -191,7 +191,12 @@ public sealed class GeologistController : AOEBuildingController
     }
     private Vector2Int? GetRandomWithinRange()
     {
-        var tiles = GetTilesInRange().Where(e => !BoardManager.Instance.IsTileOccupied(e));
+        var tiles = GetTilesInRange().Where((e) =>
+        {
+            if (BoardManager.Instance.IsTileOccupied(e))
+                return BoardManager.Instance.tileDictionary[e] is TreeController;
+            return false;
+        });
         if (!tiles.Any())
             return null;
         return tiles.ToList()[UnityEngine.Random.Range(0, tiles.Count())];
