@@ -30741,6 +30741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   civilianBuildingSO: {fileID: 11400000, guid: 4dc4927790111bd48b85327d9c770f91, type: 2}
+  NumOfBuildings: 0
 --- !u!114 &1321047927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48237,6 +48238,10 @@ PrefabInstance:
     - target: {fileID: 366852297269589641, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
       propertyPath: m_LocalScale.z
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 889003642075080707, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 889003642075080707, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
       propertyPath: m_AnchorMin.y

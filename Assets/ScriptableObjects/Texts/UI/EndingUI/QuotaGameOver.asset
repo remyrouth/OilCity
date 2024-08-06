@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e3c7a0522b2e69439d447dffcf38fcb, type: 3}
-  m_Name: MoneyGameOver
+  m_Name: QuotaGameOver
   m_EditorClassIdentifier: 
   text:
-  - You're broke... Game over.
-  - "Zbankrutowa\u0142e\u015B... Game over."
+  - You failed to meet the quota... Game over.
+  - "Nie uda\u0142o ci si\u0119 wyrobi\u0107 normy... Game over."
