@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66356aac7422f3747847ef22f9ec5348, type: 3}
   m_Name: IncreaseWageAction
   m_EditorClassIdentifier: Assembly-CSharp::DestroyAction
-  icon: {fileID: -872019454, guid: 815fc9f931c2b174cb7ad832a667d533, type: 3}
+  icon: {fileID: 21300000, guid: 7d8c96c3b00a34d37b2ca2dd84dbf5cc, type: 3}
   <prefab>k__BackingField: {fileID: 1767801182589633848, guid: bff0b0d17b1ee2d4f84b720f47a14731, type: 3}
