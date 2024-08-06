@@ -12,6 +12,7 @@ public class MoneyListenerView : MonoBehaviour
     private float _currentValue = 0;
     private float _targetValue = 0;
     private float _accumulatedChange = 0;
+    private Vector2 _basePos;
 
     private Color _baseColor;
     private void Awake()
@@ -20,6 +21,7 @@ public class MoneyListenerView : MonoBehaviour
         MoneyManager.Instance.OnMoneyChanged += AccumulateChange;
         _currentValue = MoneyManager.Instance.Money;
         _baseColor = _label.color;
+        _basePos = _label.rectTransform.anchoredPosition;
     }
 
     private void Start()
@@ -61,13 +63,15 @@ public class MoneyListenerView : MonoBehaviour
         if (newValue == 0)
         {
             _label.DOComplete();
+            _label.rectTransform.anchoredPosition = _basePos;
             _label.color = Color.red;
-            _label.transform.DOShakePosition(2, 10,100);
+            _label.transform.DOShakePosition(2, 10, 100);
             _label.transform.DOScale(1.5f, 0.2f);
         }
         else
         {
             _label.DOComplete();
+            _label.rectTransform.anchoredPosition = _basePos;
             _label.color = _baseColor;
             _label.transform.localScale = Vector3.one;
         }

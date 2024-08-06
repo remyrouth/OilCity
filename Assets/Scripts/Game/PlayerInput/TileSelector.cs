@@ -78,7 +78,10 @@ public class TileSelector : Singleton<TileSelector>
         if (views.Count > 0)
         {
             for (int i = 0; i < views.Count; i++)
+            {
+                views[i].GetComponent<ITileActionView>().Deinitialize();
                 Destroy(views[i].gameObject);
+            }
             views.Clear();
         }
         _currentSelected = null;
