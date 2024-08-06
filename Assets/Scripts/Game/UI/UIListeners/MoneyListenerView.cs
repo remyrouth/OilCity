@@ -17,7 +17,7 @@ public class MoneyListenerView : MonoBehaviour
 
     private void Awake()
     {
-        MoneyManager.Instance.OnMoneyChanged += AccumulateChange;
+        MoneyManager.Instance.OnMoneyChanged += AccumulateChange; // Subscribe to the money changed event
         _currentValue = MoneyManager.Instance.Money;
     }
 
@@ -28,7 +28,7 @@ public class MoneyListenerView : MonoBehaviour
 
     private void OnDestroy()
     {
-        MoneyManager.Instance.OnMoneyChanged -= UpdateLabel;
+        MoneyManager.Instance.OnMoneyChanged -= AccumulateChange; // Unsubscribe from the event to avoid memory leaks
     }
 
     private const int DELTA = 10;
@@ -46,13 +46,19 @@ public class MoneyListenerView : MonoBehaviour
         _label.text = _currentValue.ToString("0.00");
     }
 
-    private void UpdateLabel(float newWSvalue)
+    private void LateUpdate()
     {
-        if (_currentValue != newWSvalue)
+        if (_accumulatedChange != 0)
         {
-            CreateIndicator(newWSvalue - _currentValue);
+            CreateIndicator(_accumulatedChange); // Create an indicator for the accumulated change
+            _accumulatedChange = 0; // Reset the accumulated change after creating the indicator
         }
-        _targetValue = newWSvalue;
+    }
+
+    private void AccumulateChange(float newWSvalue)
+    {
+        _accumulatedChange += (newWSvalue - _targetValue); // Accumulate the change
+        _targetValue = newWSvalue; // Update the target value
     }
 
     private void CreateIndicator(float amount)
@@ -62,7 +68,7 @@ public class MoneyListenerView : MonoBehaviour
         RectTransform rectTransform = indicator.GetComponent<RectTransform>();
 
         float newYPosition = -activeIndicators.Count * verticalSpacing;
-        rectTransform.anchoredPosition = Vector2.zero;
+        rectTransform.anchoredPosition = new Vector2(0, newYPosition); // Set anchored position to zero and apply newYPosition
         TMP_Text indicatorText = indicator.GetComponent<TMP_Text>();
 
         if (indicatorText == null)
@@ -72,8 +78,8 @@ public class MoneyListenerView : MonoBehaviour
         }
 
         indicatorText.text = (amount > 0 ? "+" : "") + amount.ToString("0.00");
-        activeIndicators.add(indicator);
-        StartCoroutine(FadeAndMoveIndicator(indicator));
+        activeIndicators.Add(indicator); // Add to the list of active indicators
+        StartCoroutine(FadeAndMoveIndicator(indicator)); // Start the fade and move animation
     }
 
     private IEnumerator FadeAndMoveIndicator(GameObject indicator)
@@ -87,14 +93,14 @@ public class MoneyListenerView : MonoBehaviour
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            text.color = new Color(initialColor.r, initialColor.g, initialColor.b, 1 - t);
-            indicator.transform.position = initialPosition + new Vector3(0, t, 0);
+            text.color = new Color(initialColor.r, initialColor.g, initialColor.b, 1 - t); // Fade out the text color
+            indicator.transform.position = initialPosition + new Vector3(0, t, 0); // Move the indicator upwards
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        activeIndicators.Remove(indicator);
-        Destroy(indicator);
+        activeIndicators.Remove(indicator); // Remove from the list of active indicators
+        Destroy(indicator); // Destroy the indicator after the animation
     }
 
     public void CreatePlayerIndicator(float amount)
@@ -104,19 +110,18 @@ public class MoneyListenerView : MonoBehaviour
         RectTransform rectTransform = indicator.GetComponent<RectTransform>();
 
         float newYPosition = -activeIndicators.Count * verticalSpacing - verticalSpacing;
-        rectTransform.anchoredPosition = new Vector2(_, newYPosition);
-        // potential issue above for later
+        rectTransform.anchoredPosition = new Vector2(0, newYPosition); // Correct anchored position
 
-        TMP_text indicatorText = indicator.GetComponent<TMP_Text>();
+        TMP_Text indicatorText = indicator.GetComponent<TMP_Text>();
 
         if (indicatorText == null)
         {
             Debug.LogError("TMP_Text component missing from the indicator prefab.");
-            retrun;
+            return;
         }
 
-        indicator.text = (amount > 0 ? "+" : "") + amount.ToString("0.00");
-        activeIndicators.Add(indicator);
-        StartCoroutine(FadeAndMoveIndicator(indicator));
+        indicatorText.text = (amount > 0 ? "+" : "") + amount.ToString("0.00");
+        activeIndicators.Add(indicator); // Add to the list of active indicators
+        StartCoroutine(FadeAndMoveIndicator(indicator)); // Start the fade and move animation
     }
 }
