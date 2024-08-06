@@ -24,13 +24,7 @@ namespace Game.Managers
             // " AmbientSound:" + _ambientSoundVolume + 
             // " Music:" +_musicVolume);
         }
-
-        private void Start() {
-            OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
-            OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
-            OnMusicVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
-        }
-
+        
         private void Awake()
         {
             SetLanguage();
@@ -38,11 +32,17 @@ namespace Game.Managers
             SetCameraMovementInversion();
             
             _masterVolume = PlayerPrefs.GetFloat("MasterVolume");
-            _musicVolume = PlayerPrefs.GetFloat("MusicVolume");;
-            _soundEffectVolume = PlayerPrefs.GetFloat("SoundEffectVolume");;
-            _ambientSoundVolume = PlayerPrefs.GetFloat("AmbientSoundVolume");;
+            _musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+            _soundEffectVolume = PlayerPrefs.GetFloat("SoundEffectVolume");
+            _ambientSoundVolume = PlayerPrefs.GetFloat("AmbientSoundVolume");
         }
 
+        private void Start() {
+            OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+            OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+            OnMusicVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+        }
+        
         public void SetLanguage(Language newLanguage)
         {
             CurrentLanguage = newLanguage;
