@@ -10,10 +10,12 @@ public class MoneyListenerView : MonoBehaviour
 
     private float _currentValue = 0;
     private float _targetValue = 0;
+    private float _accumulatedChange = 0;
 
     private void Awake()
     {
-        MoneyManager.Instance.OnMoneyChanged += UpdateLabel;
+        //was UpdateLabel
+        MoneyManager.Instance.OnMoneyChanged += AccumulateChange;
         _currentValue = MoneyManager.Instance.Money;
     }
 
@@ -24,7 +26,7 @@ public class MoneyListenerView : MonoBehaviour
 
     private void OnDestroy()
     {
-        MoneyManager.Instance.OnMoneyChanged -= UpdateLabel;
+        MoneyManager.Instance.OnMoneyChanged -= AccumulateChange;
     }
 
     private const int DELTA = 10;
@@ -42,12 +44,18 @@ public class MoneyListenerView : MonoBehaviour
         _label.text = _currentValue.ToString("0.00");
     }
 
-    private void UpdateLabel(float newWSvalue)
+    private void LateUpdate()
     {
-        if (_currentValue != newWSvalue)
+        if (_accumulatedChange != 0)
         {
-            CreateIndicator(newWSvalue - _currentValue);
+            CreateIndicator(_accumulatedChange);
+            _accumulatedChange = 0;
         }
+    }
+
+    private void AccumulateChange(float newWSvalue)
+    {
+        _accumulatedChange += (newWSvalue - _targetValue);
         _targetValue = newWSvalue;
     }
 
