@@ -6,12 +6,17 @@ using UnityEngine;
 public class TrainStationController : BuildingController<BuildingScriptableObject>, IFlowable
 {
     private List<IFlowable> _children = new();
-    private const int TRAIN_INTERVAL = 80;
+    private const int TRAIN_INTERVAL = 10;
 
     [SerializeField] private Transform train;
+    private Animator _trainAnimator;
     [SerializeField] private Vector3 startPos, arrivedPos, endPos;
     [SerializeField] private SingleSoundPlayer trainSequenceSFX, OilSellSFX;
 
+    private void Awake()
+    {
+        _trainAnimator = train.GetComponent<Animator>();
+    }
     public void AddChild(IFlowable child)
     {
         if (!_children.Contains(child))
@@ -33,13 +38,10 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     private readonly Queue<Action<TrainStationController>> _sequenceActions = new();
     public void OnTick()
     {
-        // if (_sequenceActions.Count == 0)
-        //     GenerateNewSequence();
+         if (_sequenceActions.Count == 0)
+             GenerateNewSequence();
 
-        // _sequenceActions.Dequeue()?.Invoke(this);
-        if (!activationCheck) {
-            CompleteTrainSystem();
-        }
+         _sequenceActions.Dequeue()?.Invoke(this);
 
         foreach (var child in _children)
         {
@@ -56,26 +58,25 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     public (FlowType type, float amount) SendFlow() => (FlowType.None, 0);
 
     public void SetParent(IFlowable parent) { }
-    // private void GenerateNewSequence()
-    // {
-    //     // wait for interval
-    //     for (int i = 0; i < TRAIN_INTERVAL; i++)
-    //         _sequenceActions.Enqueue(null);
+    private void GenerateNewSequence()
+    {
+        // wait for interval
+        for (int i = 0; i < TRAIN_INTERVAL; i++)
+            _sequenceActions.Enqueue(null);
 
-    //     //setup train
-    //     _sequenceActions.Enqueue(e => { e.DOKill(); e.train.localPosition = e.startPos; });
+        //train arrives to station and waits
+        // _sequenceActions.Enqueue(e => GetComponent<SingleSoundPlayer>().ActivateWithForeignTrigger());
+        _sequenceActions.Enqueue(e => e._trainAnimator.SetTrigger("Arrive"));
+        _sequenceActions.Enqueue(null);
+        _sequenceActions.Enqueue(null);
+        _sequenceActions.Enqueue(null);
 
-    //     //train arrives to station and waits
-    //     // _sequenceActions.Enqueue(e => GetComponent<SingleSoundPlayer>().ActivateWithForeignTrigger());
-    //     _sequenceActions.Enqueue(e => e.train.DOLocalMove(e.arrivedPos, 2));
-    //     _sequenceActions.Enqueue(null);
+        _sequenceActions.Enqueue((e) => { e._trainAnimator.SetTrigger("Load"); e.SellKerosene(); });
 
-    //     _sequenceActions.Enqueue((e) => { e.DOKill(); e.SellKerosene(); });
-
-    //     //train leaves
-    //     _sequenceActions.Enqueue((e) => { e.train.DOLocalMove(e.endPos, 2); });
-    //     _sequenceActions.Enqueue(null);
-    // }
+        //train leaves
+        _sequenceActions.Enqueue((e) => e._trainAnimator.SetTrigger("Depart"));
+        _sequenceActions.Enqueue(null);
+    }
 
     private bool activationCheck = false;   // 
 

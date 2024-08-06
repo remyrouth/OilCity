@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Squirrel
+  m_Controller: {fileID: 9100000, guid: 7d14c8c4f3fdfbe43999cb426b09c332, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 792d118cb2147cc4786909b82e55e21b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2317bc7ac07d2d541aff5d47b19661c5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ff64abb1ac11b9447b74cbee0860b6af, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c207d18aa5c53954585be672b506a06b, type: 2}
