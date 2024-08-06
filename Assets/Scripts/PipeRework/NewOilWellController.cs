@@ -51,29 +51,23 @@ public sealed class NewOilWellController : PayrateBuildingController, INewFlowab
 
         foreach (var (peripheral_to, tile) in peripherals)
         {
-            if (tile.TryGetComponent<NewPipeController>(out var pipe))
+            if (tile.TryGetComponent<NewPipeController>(out var pipe) 
+                && pipe.IsConnectionPoint(peripheral_to))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to))
+                // if pipe is flowing out of building, parent
+                if (false)
                 {
-                    /*
-                    if (m_output != null)
-                    {
-                        // more than one output pipe discovered
-                        // ping the pipe? display a notif that this pipe isnt going to be used?
-                        // TODO
-
-                        return;
-                    }
-                    */
-
                     m_tr.AddTentative(pipe, Relation.Parent);
-
-                    // pipe.AddChild(this);
-                    // SetParent(pipe);
                 }
-                else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
+                // if pipe is flowing into building, child
+                else if (false)
                 {
-                    // ping the pipe? display a notif that wells cant have inputs?
+                    m_tr.AddTentative(pipe, Relation.Child);
+                }
+                // if pipe is ambiguous, erm
+                else if (false)
+                {
+                    m_tr.AddTentative(pipe, Relation.Ambiguous);
                 }
             }
         }
@@ -135,5 +129,6 @@ public sealed class NewOilWellController : PayrateBuildingController, INewFlowab
 
         foreach (var child in m_tr.GetChildren()) child.UpdateConnections(seen);
         foreach (var parent in m_tr.GetParents()) parent.UpdateConnections(seen);
+        foreach (var tentative in m_tr.GetTentative(Relation.Ambiguous)) tentative.flowable.UpdateConnections(seen);
     }
 }
