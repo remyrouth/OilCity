@@ -1,19 +1,23 @@
 ﻿using TMPro;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MoneyListenerView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _label;
     [SerializeField] private GameObject GainMoney;
     [SerializeField] private GameObject LoseMoney;
+    [SerializeField] private float verticalSpacing = 30f;
 
     private float _currentValue = 0;
     private float _targetValue = 0;
+    private float _accumulatedChange = 0;
+    private List<GameObject> activeIndicators = new List<GameObject>();
 
     private void Awake()
     {
-        MoneyManager.Instance.OnMoneyChanged += UpdateLabel;
+        MoneyManager.Instance.OnMoneyChanged += AccumulateChange;
         _currentValue = MoneyManager.Instance.Money;
     }
 
@@ -56,6 +60,8 @@ public class MoneyListenerView : MonoBehaviour
         GameObject indicatorPrefab = amount > 0 ? GainMoney : LoseMoney;
         GameObject indicator = Instantiate(indicatorPrefab, _label.transform.position, Quaternion.identity, _label.transform.parent);
         RectTransform rectTransform = indicator.GetComponent<RectTransform>();
+
+        float newYPosition = -activeIndicators.Count * verticalSpacing;
         rectTransform.anchoredPosition = Vector2.zero;
         TMP_Text indicatorText = indicator.GetComponent<TMP_Text>();
 
@@ -66,6 +72,7 @@ public class MoneyListenerView : MonoBehaviour
         }
 
         indicatorText.text = (amount > 0 ? "+" : "") + amount.ToString("0.00");
+        activeIndicators.add(indicator);
         StartCoroutine(FadeAndMoveIndicator(indicator));
     }
 
@@ -86,6 +93,30 @@ public class MoneyListenerView : MonoBehaviour
             yield return null;
         }
 
+        activeIndicators.Remove(indicator);
         Destroy(indicator);
+    }
+
+    public void CreatePlayerIndicator(float amount)
+    {
+        GameObject indicatorPrefab = amount > 0 ? GainMoney : LoseMoney;
+        GameObject indicator = Instantiate(indicatorPrefab, _label.transform.position, Quaternion.identity, _label.transform.parent);
+        RectTransform rectTransform = indicator.GetComponent<RectTransform>();
+
+        float newYPosition = -activeIndicators.Count * verticalSpacing - verticalSpacing;
+        rectTransform.anchoredPosition = new Vector2(_, newYPosition);
+        // potential issue above for later
+
+        TMP_text indicatorText = indicator.GetComponent<TMP_Text>();
+
+        if (indicatorText == null)
+        {
+            Debug.LogError("TMP_Text component missing from the indicator prefab.");
+            retrun;
+        }
+
+        indicator.text = (amount > 0 ? "+" : "") + amount.ToString("0.00");
+        activeIndicators.Add(indicator);
+        StartCoroutine(FadeAndMoveIndicator(indicator));
     }
 }
