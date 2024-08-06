@@ -431,7 +431,7 @@ PrefabInstance:
     - target: {fileID: 1845587319315880883, guid: f5ff12fbdad7fe448b4509ab56f9f89d, type: 3}
       propertyPath: availableUserInterfaces.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1974556062}
     - target: {fileID: 1845587319315880883, guid: f5ff12fbdad7fe448b4509ab56f9f89d, type: 3}
       propertyPath: availableUserInterfaces.Array.data[2]
       value: 
@@ -1116,6 +1116,11 @@ CanvasRenderer:
 --- !u!224 &1679729930 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1812673344579392207, guid: 3e33b22ec415636479a7b2cd6a2967c5, type: 3}
+  m_PrefabInstance: {fileID: 291888810807315397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1974556062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6582829353664673471, guid: 3e33b22ec415636479a7b2cd6a2967c5, type: 3}
   m_PrefabInstance: {fileID: 291888810807315397}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2038821902 stripped
