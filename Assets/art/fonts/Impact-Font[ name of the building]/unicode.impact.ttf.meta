@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8d79c7fdc20d9d041acca7fab4c11ffe
+guid: b86ba1dcb74247146a7b83a526859c62
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Bodoni Moda SC
+  - Impact
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
