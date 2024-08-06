@@ -14,8 +14,7 @@ public class ControlManager : Singleton<ControlManager>
     private InputType lastUsedInput = InputType.None;
     public delegate void Buttontrigger();
     public event Buttontrigger leftClickActivationButtontrigger;
-    public event Buttontrigger rightClickActivationButtonTrigger;
-    public event Buttontrigger rightClickButtonTriggerEnd;
+    public event Buttontrigger ClickButtonTriggerEnd;
     private Vector2 lastMousePosition;
     private Vector2 lastStickInput;
     private enum InputType
@@ -38,8 +37,7 @@ public class ControlManager : Singleton<ControlManager>
         playerControls.PlayerControls.MoveLeftStick.canceled += LeftStickUsageUpdate;
         playerControls.PlayerControls.ClickSelect.performed += OnLeftMouseButtonTrigger;
         
-        playerControls.PlayerControls.ClickSelect.performed += OnRightMouseButtonTrigger;
-        playerControls.PlayerControls.RightClick.canceled += OnRightMouseButtonEnd;
+        playerControls.PlayerControls.ClickDeselect.performed += OnRightMouseButtonEnd;
 
 
 
@@ -69,15 +67,9 @@ public class ControlManager : Singleton<ControlManager>
         Cursor.visible = false;
     }
 
-    private void OnRightMouseButtonTrigger(InputAction.CallbackContext context)
-    {
-        rightClickActivationButtonTrigger?.Invoke();
-        Cursor.visible = false;
-    }
-
     private void OnRightMouseButtonEnd(InputAction.CallbackContext context)
     {
-        rightClickButtonTriggerEnd?.Invoke();
+        ClickButtonTriggerEnd?.Invoke();
     }
 
     private void UpdateCursorPosition(Vector2 input)

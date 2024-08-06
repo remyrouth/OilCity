@@ -1,8 +1,6 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class InfoTileActionView<T,T1> : SingleTileActionView<T>, IPointerEnterHandler, IPointerExitHandler
+public class InfoTileActionView<T,T1> : SingleTileActionView<T>
     where T : InfoTileAction
     where T1 : TileObjectController
 {
@@ -19,8 +17,9 @@ public class InfoTileActionView<T,T1> : SingleTileActionView<T>, IPointerEnterHa
         else
             _buildingInfoView.GetComponent<RectTransform>().anchoredPosition = _normalPivot;
     }
-
-    public void OnPointerEnter(PointerEventData eventData) => _buildingInfoView.BeginFocus();
-
-    public void OnPointerExit(PointerEventData eventData) => _buildingInfoView.EndFocus();
+    public override void Deinitialize()
+    {
+        base.Deinitialize();
+        _buildingInfoView.EndFocus();
+    }
 }

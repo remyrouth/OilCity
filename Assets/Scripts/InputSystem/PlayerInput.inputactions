@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RightClick",
+                    "name": "ClickDeselect",
                     "type": "Button",
                     "id": "d775f156-ffe2-4bf5-857a-2677442235d3",
                     "expectedControlType": "Button",
@@ -145,7 +145,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RightClick",
+                    "action": "ClickDeselect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -156,7 +156,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RightClick",
+                    "action": "ClickDeselect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
