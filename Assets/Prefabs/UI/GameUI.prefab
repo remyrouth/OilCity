@@ -2419,7 +2419,7 @@ MonoBehaviour:
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: 80423a73e1a0aa440abcdf1f4864e45e, type: 3}
   soundType: 0
-  usesForeignTrigger: 0
+  usesForeignTrigger: 1
 --- !u!1 &3549032248316158697
 GameObject:
   m_ObjectHideFlags: 0
