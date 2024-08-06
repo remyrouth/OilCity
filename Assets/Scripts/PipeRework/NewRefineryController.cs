@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class NewRefineryController : PayrateBuildingController, INewFlowable
@@ -159,5 +160,15 @@ public sealed class NewRefineryController : PayrateBuildingController, INewFlowa
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
     {
         return (FlowType.Oil, FlowType.Kerosene);
+    }
+
+    public void UpdateConnections(ISet<INewFlowable> seen)
+    {
+        if (seen.Contains(this)) return;
+
+        seen.Add(this);
+
+        foreach (var child in m_tr.GetChildren()) child.UpdateConnections(seen);
+        foreach (var parent in m_tr.GetParents()) parent.UpdateConnections(seen);
     }
 }

@@ -7,8 +7,8 @@ using static UnityEditor.PlayerSettings;
 
 public class NewPipeController : BuildingController<BuildingScriptableObject>, INewFlowable
 {
-    private PipeFlowDirection m_lhsFlowDir;
-    private PipeFlowDirection m_rhsFlowDir;
+    private PipeFlowDirection m_lhsFlowDir = PipeFlowDirection.Invalid;
+    private PipeFlowDirection m_rhsFlowDir = PipeFlowDirection.Invalid;
 
     private PipeFlowDirection m_lhsOffsetDir;
     private PipeFlowDirection m_rhsOffsetDir;
@@ -313,6 +313,7 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
 
     // TODO make flow direction and flowconfig/inoutconfig reset when relationships are changed (not just when created)
 
+    /*
     #region Pipe connection? helper methods
     public bool DoesPipeSystemReceiveInputFromTile(Vector2Int tile_pos)
     {
@@ -342,6 +343,12 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, I
         return false;
     }
     #endregion
+    */
+
+    public bool IsConnectionPoint(Vector2Int tile_pos)
+    {
+        return tile_pos.Equals(m_lhsConnectionPos) || tile_pos.Equals(m_rhsConnectionPos);
+    }
 
     void OnDrawGizmos()
     {

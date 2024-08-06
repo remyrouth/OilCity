@@ -11,4 +11,6 @@ public interface INewFlowable : ITickReceiver
     (FlowType in_type, FlowType out_type) GetFlowConfig();
 
     TreeRelationship GetTreeRelationship();
+
+    void UpdateConnections(ISet<INewFlowable> seen);
 }

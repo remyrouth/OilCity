@@ -184,7 +184,6 @@ public class NewTimeManager : Singleton<TimeManager>
     {
         var tr = node.GetTreeRelationship();
         var children = tr.GetChildren();
-        var parents = tr.GetParents();
 
         // the parents and the children, by the invariants, will never NOT be in the node list.
         // therefore we can update their connections with no consequence
@@ -200,7 +199,12 @@ public class NewTimeManager : Singleton<TimeManager>
             // we dont need to check if the current node is in the forest because every node has one
             // parent. Since we removed that parent, the child node HAS to be a root now.
             m_tickableForest.Add(child);
+
+            // start the tree update to adjust connections
+            child.UpdateConnections(new HashSet<INewFlowable>());
         }
+
+        var parents = tr.GetParents();
 
         // if we have a parent, have them disown us because we've been a terrible kid to them
         // and have failed at every possible opportunity in life.
@@ -213,6 +217,8 @@ public class NewTimeManager : Singleton<TimeManager>
             {
                 parent.GetTreeRelationship().RemoveChild(node);
                 tr.RemoveParent(parent);
+
+                parent.UpdateConnections(new HashSet<INewFlowable>());
             }
         }
         else

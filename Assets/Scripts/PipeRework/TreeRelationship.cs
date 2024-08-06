@@ -80,7 +80,7 @@ public class TreeRelationship
     public IList<INewFlowable> GetParents() => m_parents;
     public IList<(INewFlowable flowable, Relation type)> GetTentative(Relation type)
         => m_tentative.Where(a => a.type == type).ToList();
-
+    public IList<(INewFlowable flowable, Relation type)> GetTentative() => m_tentative;
 
     public void RemoveParent(INewFlowable parent) => m_parents.Remove(parent);
 
