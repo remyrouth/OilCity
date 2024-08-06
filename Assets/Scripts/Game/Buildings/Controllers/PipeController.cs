@@ -1,10 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using static UnityEditor.Rendering.CameraUI;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using static UnityEditor.PlayerSettings;
 using DG.Tweening;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
@@ -375,7 +370,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         return (through_flow, through_flow);
     }
-
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         var offset = new Vector3(0.5f, 0.5f);
@@ -411,4 +406,5 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             Gizmos.DrawWireCube(e_pos, Vector3.one * 0.2f);
         }
     }
+#endif
 }

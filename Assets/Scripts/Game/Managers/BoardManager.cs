@@ -28,6 +28,8 @@ public class BoardManager : Singleton<BoardManager>
     /// </summary>
     private void Start()
     {
+        OnBuildingPlaced += CreateBuildSnapshot;
+        OnBuildingDestroyed += CreateDestroySnapshot;
         if (_pipeTileMap == null)
         {
             Debug.LogError("You did not attach the pipe tilemap to the board manager in the inspector. This must be done before the game starts");
@@ -39,16 +41,20 @@ public class BoardManager : Singleton<BoardManager>
             {
                 if (!TreeEvaluator.GetValueAtPosition(i, j))
                     continue;
-                var obj = Instantiate(_treePrefab, _treeHolder);
-                obj.transform.position = new Vector3(i, j, 0);
-                if (!IsPositionOutsideBoard(new Vector2Int(i, j)))
-                    tileDictionary.Add(new Vector2Int(i, j), obj.GetComponent<TreeController>());
+                CreateTree(new Vector2Int(i, j));
             }
         }
 
 
         foreach (var building in InitialBuildings)
             Create(building.pos, building.config);
+    }
+    public void CreateTree(Vector2Int pos)
+    {
+        var obj = Instantiate(_treePrefab, _treeHolder);
+        obj.transform.position = pos.ToVector3();
+        if (!IsPositionOutsideBoard(pos))
+            tileDictionary.Add(pos, obj.GetComponent<TreeController>());
     }
     /// <summary>
     /// Creates a building and saves it to the tile dictionary
@@ -257,6 +263,25 @@ public class BoardManager : Singleton<BoardManager>
         if (!IsTileOccupied(position)) return;
         tileDictionary.Remove(position);
     }
+    private void CreateBuildSnapshot(Vector2Int pos, BuildingScriptableObject config)
+    {
+        GameRecorder.Instance.CreateSnapshot(() =>
+        {
+            for (int i = 0; i < config.size.x; i++)
+            {
+                for (int j = 0; j < config.size.y; j++)
+                {
+                    Destroy(pos + new Vector2Int(i, j));
+                }
+            }
+        });
+    }
+    private void CreateDestroySnapshot(Vector2Int pos, TileObjectController toc)
+    {
+        GameRecorder.Instance.CreateSnapshot(toc.GetCreateAction(pos));
+    }
+
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

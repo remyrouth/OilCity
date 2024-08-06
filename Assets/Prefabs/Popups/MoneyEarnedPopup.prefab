@@ -152,6 +152,7 @@ MonoBehaviour:
   _type: 3
   popupTime: 4
   _label: {fileID: 6438012056699408412}
+  _icon: {fileID: 0}
 --- !u!225 &4283106507656924109
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -232,8 +233,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: +100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d46ac07829eb8b64dbb6241716d4ea46, type: 2}
+  m_sharedMaterial: {fileID: -1633465409437183613, guid: d46ac07829eb8b64dbb6241716d4ea46, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -257,8 +258,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4
-  m_fontSizeBase: 4
+  m_fontSize: 6
+  m_fontSizeBase: 6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

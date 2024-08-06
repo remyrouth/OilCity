@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
 
 public class MoneyListenerView : MonoBehaviour
@@ -13,12 +14,16 @@ public class MoneyListenerView : MonoBehaviour
     private float _currentValue = 0;
     private float _targetValue = 0;
     private float _accumulatedChange = 0;
+    private Vector2 _basePos;
     private List<GameObject> activeIndicators = new List<GameObject>();
 
+    private Color _baseColor;
     private void Awake()
     {
         MoneyManager.Instance.OnMoneyChanged += AccumulateChange; // Subscribe to the money changed event
         _currentValue = MoneyManager.Instance.Money;
+        _baseColor = _label.color;
+        _basePos = _label.rectTransform.anchoredPosition;
     }
 
     private void Start()
@@ -50,8 +55,27 @@ public class MoneyListenerView : MonoBehaviour
     {
         if (_accumulatedChange != 0)
         {
-            CreateIndicator(_accumulatedChange); // Create an indicator for the accumulated change
-            _accumulatedChange = 0; // Reset the accumulated change after creating the indicator
+            CreateIndicator(_accumulatedChange);
+            _accumulatedChange = 0;
+        }
+    }
+
+    private void AccumulateChange(float newValue)
+    {
+        if (newValue == 0)
+        {
+            _label.DOComplete();
+            _label.rectTransform.anchoredPosition = _basePos;
+            _label.color = Color.red;
+            _label.transform.DOShakePosition(2, 10, 100);
+            _label.transform.DOScale(1.5f, 0.2f);
+        }
+        else
+        {
+            _label.DOComplete();
+            _label.rectTransform.anchoredPosition = _basePos;
+            _label.color = _baseColor;
+            _label.transform.localScale = Vector3.one;
         }
     }
 

@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TimedEvent", menuName ="TimeLine/NewTimeLineEvent")]
 public class TimeLineEvent : ScriptableObject
 {
-    [Range(0,1)]
-    public float GamePercentage;
-    public Sprite newspaperSprite = null;
+    [Range(0,1)] public float GamePercentage;
+    public Sprite newspaperSprite;
+    public LanguageItem title;
+    public LanguageItem paragraph;
 }

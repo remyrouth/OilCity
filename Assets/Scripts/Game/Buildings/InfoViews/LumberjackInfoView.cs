@@ -12,16 +12,11 @@ public class LumberjackInfoView : BuildingInfoView<LumberjackInfoTileAction, Woo
         _nameLabel.text = tileController.config.buildingName.ToString();
         _descriptionLabel.text = tileController.config.description.ToString();
         _wageLabel.text = tileController.CurrentPaymentMode.ToString();
-    }
-    public override void BeginFocus()
-    {
-        base.BeginFocus();
         if (_focusedWoodcutter != null)
             _focusedWoodcutter.GetComponent<BuildingRangeShower>().ShowRadius();
     }
     public override void EndFocus()
     {
-        base.EndFocus();
         if (_focusedWoodcutter != null)
             _focusedWoodcutter.GetComponent<BuildingRangeShower>().HideRadius();
     }

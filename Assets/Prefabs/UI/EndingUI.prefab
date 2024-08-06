@@ -1192,7 +1192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _label: {fileID: 2863870123387964244}
-  _moneyLoss: {fileID: 11400000, guid: dce3d02ed60e75f44be91d24021ca80f, type: 2}
+  _quotaLoss: {fileID: 11400000, guid: dce3d02ed60e75f44be91d24021ca80f, type: 2}
   _satifactionLoss: {fileID: 11400000, guid: 40e75c746d25ef04090cb6ff6d33e13e, type: 2}
   _timeLoss: {fileID: 11400000, guid: c8a8e6b83ee022c4181bbae34b87697e, type: 2}
 --- !u!1 &7413979084369966701

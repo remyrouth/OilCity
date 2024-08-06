@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf7a053447e34f85a70b771720aca6f, type: 3}
+  m_Name: Event_1
+  m_EditorClassIdentifier: 
+  GamePercentage: 0.1
+  newspaperSprite: {fileID: 21300000, guid: ef6ea00152655764db6d74aa6533e108, type: 3}
+  title: {fileID: 11400000, guid: cdc00c5ce0cfae64b8860c7dc2f12348, type: 2}
+  paragraph: {fileID: 11400000, guid: a0bad2f0e6b82ae45adec0adc7b9c2d2, type: 2}

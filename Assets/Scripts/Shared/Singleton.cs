@@ -1,5 +1,6 @@
 using UnityEngine;
-
+// This script was made before "Poland In Pixels" project
+// Original author: Piotr Trzeœniowski
 public class Singleton<T> : MonoBehaviour
     where T : Singleton<T>
 {

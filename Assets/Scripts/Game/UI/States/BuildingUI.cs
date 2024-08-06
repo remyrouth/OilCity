@@ -26,13 +26,12 @@ public class BuildingUI : UIState
     private void Start()
     {
         ControlManager.Instance.leftClickActivationButtontrigger += LeftMouseClick;
-        ControlManager.Instance.rightClickActivationButtonTrigger += RightMouseClick;
+        ControlManager.Instance.ClickButtonTriggerEnd += SelectEnd;
     }
     private void OnDestroy()
     {
         ControlManager.Instance.leftClickActivationButtontrigger -= LeftMouseClick;
-        ControlManager.Instance.rightClickActivationButtonTrigger -= RightMouseClick;
-        ControlManager.Instance.rightClickButtonTriggerEnd -= RightMouseClickEnd;
+        ControlManager.Instance.ClickButtonTriggerEnd -= SelectEnd;
     }
 
     private void RightMouseClick() {
@@ -44,10 +43,11 @@ public class BuildingUI : UIState
 
     }
 
-    private void RightMouseClickEnd() {
+    private void SelectEnd() {
         if (UIStateMachine.Instance.CurrentStateType != type) {
             return;
         }
+        BuildingManager.Instance.CancelBuilding();
     }
 
     private void LeftMouseClick()

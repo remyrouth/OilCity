@@ -23,7 +23,9 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField]
     private SingleSoundPlayer buildingClick;
     [SerializeField]
-    public SingleSoundPlayer buttonClick;
+    private SingleSoundPlayer buttonClick;
+    [SerializeField]
+    private SingleSoundPlayer destroyBuilding;
 
 
 
@@ -74,6 +76,10 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SelectButtonSFXTrigger() {
         buttonClick.ActivateWithForeignTrigger();
+    }
+
+    public void SelectBuildingDestroySFXTrigger() {
+        destroyBuilding.ActivateWithForeignTrigger();
     }
 
 }

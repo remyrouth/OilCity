@@ -1,5 +1,4 @@
-﻿using UnityEditor.Search;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Tutorial
 {

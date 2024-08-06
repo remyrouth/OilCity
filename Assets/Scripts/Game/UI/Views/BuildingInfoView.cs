@@ -17,16 +17,17 @@ public abstract class BuildingInfoView<T,T1> : MonoBehaviour
     {
         _canvas = GetComponent<CanvasGroup>();
         _canvas.alpha = 0;
+        _isFocused = true;
     }
     private float _timer = 0;
     private bool _isFocused = false;
     public virtual void BeginFocus()
     {
-        _isFocused = true;
+        //_isFocused = true;
     }
     public virtual void EndFocus()
     {
-        _isFocused = false;
+        //_isFocused = false;
     }
     private void Update()
     {

@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class BuildingManager : Singleton<BuildingManager>
 {

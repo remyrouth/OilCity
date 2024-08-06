@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameOverListenerView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _label;
-    [SerializeField] private LanguageItem _moneyLoss;
+    [SerializeField] private LanguageItem _quotaLoss;
     [SerializeField] private LanguageItem _satifactionLoss;
     [SerializeField] private LanguageItem _timeLoss;
 
@@ -31,13 +31,13 @@ public class GameOverListenerView : MonoBehaviour
         {
             return _timeLoss.ToString();
         }
-        if(MoneyManager.Instance.Money <= 0)
-        {
-            return _moneyLoss.ToString();
-        }
-        if(WorkerSatisfactionManager.Instance.WorkerSatisfaction <= 0)
+        if (WorkerSatisfactionManager.Instance.WorkerSatisfaction <= 0)
         {
             return _satifactionLoss.ToString();
+        }
+        if (QuotaManager.Instance.currentQuota > 0)
+        {
+            return _quotaLoss.ToString();
         }
         return "Game over...";
     }

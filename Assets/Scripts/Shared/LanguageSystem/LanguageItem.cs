@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEditor;
 using Game.Managers;
+// This script was made before "Poland In Pixels" project
+// Original author: Piotr Trzeœniowski
 [CreateAssetMenu]
 public class LanguageItem : ScriptableObject
 {
-    [SerializeField]
-    private string[] text;
+    [SerializeField] [TextArea] private string[] text;
 
     public override string ToString()
     {

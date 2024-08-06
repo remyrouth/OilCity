@@ -16,6 +16,9 @@ MonoBehaviour:
   <removalCost>k__BackingField: 0
   <removalSatisfactionCost>k__BackingField: 0
   <icon>k__BackingField: {fileID: 0}
+  <old_icon>k__BackingField: {fileID: 0}
   <prefab>k__BackingField: {fileID: 3998399413928227521, guid: 640245562324d3a4fa090afa26d3a2ac, type: 3}
   <previewPrefab>k__BackingField: {fileID: 0}
-  <size>k__BackingField: {x: 12, y: 3}
+  <size>k__BackingField: {x: 14, y: 3}
+  <buildingName>k__BackingField: {fileID: 0}
+  <description>k__BackingField: {fileID: 0}

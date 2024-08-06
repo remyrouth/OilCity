@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class TileObjectController : MonoBehaviour
     [SerializeField] protected Vector2 _actionsPivot;
     public Vector2 ActionsPivot => Anchor + _actionsPivot;
     public virtual bool CheckIfDestroyable() => false;
+    public virtual Action GetCreateAction(Vector2Int pos) => null;
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

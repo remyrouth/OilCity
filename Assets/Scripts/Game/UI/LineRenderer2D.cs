@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+// This script was made outside "Poland In Pixels" project
+// Original author: Piotr Trzeœniowski
 [RequireComponent(typeof(CanvasRenderer))]
 public class LineRenderer2D : Graphic
 {

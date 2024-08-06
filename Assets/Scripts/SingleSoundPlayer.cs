@@ -80,6 +80,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         usesForeignTrigger = true;
         if (audioSource != null) {
             audioSource.clip = soundClip;
+            audioSource.volume = 1f;
         }
     }
 

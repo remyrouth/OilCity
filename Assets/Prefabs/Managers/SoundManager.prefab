@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5000693691405214277}
   - component: {fileID: 4307375788796852804}
   - component: {fileID: 2921372561070751491}
+  - component: {fileID: 6678971136501968466}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -55,6 +56,7 @@ MonoBehaviour:
     musicTrackoreder: 3
   buildingClick: {fileID: 4307375788796852804}
   buttonClick: {fileID: 2921372561070751491}
+  destroyBuilding: {fileID: 6678971136501968466}
 --- !u!114 &4307375788796852804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,5 +89,22 @@ MonoBehaviour:
   shouldLoop: 0
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: 05c465f6646ecbf4ba35549576e84a2d, type: 3}
+  soundType: 0
+  usesForeignTrigger: 1
+--- !u!114 &6678971136501968466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4652351617814838734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: 118188b25d6bf4272b04b70171044de6, type: 3}
   soundType: 0
   usesForeignTrigger: 1
