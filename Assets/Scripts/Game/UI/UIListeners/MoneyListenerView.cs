@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class MoneyListenerView : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class MoneyListenerView : MonoBehaviour
     private float _targetValue = 0;
     private float _accumulatedChange = 0;
 
+    private Color _baseColor;
     private void Awake()
     {
         //was UpdateLabel
         MoneyManager.Instance.OnMoneyChanged += AccumulateChange;
         _currentValue = MoneyManager.Instance.Money;
+        _baseColor = _label.color;
     }
 
     private void Start()
@@ -53,10 +56,23 @@ public class MoneyListenerView : MonoBehaviour
         }
     }
 
-    private void AccumulateChange(float newWSvalue)
+    private void AccumulateChange(float newValue)
     {
-        _accumulatedChange += (newWSvalue - _targetValue);
-        _targetValue = newWSvalue;
+        if (newValue == 0)
+        {
+            _label.DOComplete();
+            _label.color = Color.red;
+            _label.transform.DOShakePosition(2, 10,100);
+            _label.transform.DOScale(1.5f, 0.2f);
+        }
+        else
+        {
+            _label.DOComplete();
+            _label.color = _baseColor;
+            _label.transform.localScale = Vector3.one;
+        }
+        _accumulatedChange += (newValue - _targetValue);
+        _targetValue = newValue;
     }
 
     private void CreateIndicator(float amount)
