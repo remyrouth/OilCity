@@ -27,7 +27,7 @@ public class BuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (_highlightImage != null)
         {
             _originalColor = _highlightImage.color;
-            _highlightColor = new Color(1f, 1f, 0f, 0.5f);
+            _highlightColor = new Color(1f, 1f, 0f, 0.75f);
             _isFlickering = false;
         }
     }
