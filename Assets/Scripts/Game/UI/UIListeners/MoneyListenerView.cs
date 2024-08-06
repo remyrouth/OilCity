@@ -62,6 +62,9 @@ public class MoneyListenerView : MonoBehaviour
 
     private void AccumulateChange(float newValue)
     {
+        _accumulatedChange += (newValue - _targetValue); // Accumulate the change
+        _targetValue = newValue; // Update the target value
+
         if (newValue == 0)
         {
             _label.DOComplete();
@@ -77,12 +80,6 @@ public class MoneyListenerView : MonoBehaviour
             _label.color = _baseColor;
             _label.transform.localScale = Vector3.one;
         }
-    }
-
-    private void AccumulateChange(float newWSvalue)
-    {
-        _accumulatedChange += (newWSvalue - _targetValue); // Accumulate the change
-        _targetValue = newWSvalue; // Update the target value
     }
 
     private void CreateIndicator(float amount)
