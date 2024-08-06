@@ -22,10 +22,10 @@ public class PollutionManager : Singleton<PollutionManager>
                     .OfType<OilWellController>().Distinct().Count();
 
         float pollution = timePercentage * 0.75f
-            + (amountOfOilWells + amountOfRafineries) / 100
-            + (KeroseneManager.Instance.KeroseneSumAmount / 100);
+            + (amountOfOilWells + amountOfRafineries) / 20
+            + Mathf.Clamp(KeroseneManager.Instance.KeroseneSumAmount / 50, 0, 0.1f);
 
-        SetPollution(timePercentage);
+        SetPollution(pollution);
     }
 
     private void SetPollution(float amount)
