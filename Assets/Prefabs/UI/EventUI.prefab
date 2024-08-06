@@ -251,7 +251,7 @@ MonoBehaviour:
   m_text: Paragraph
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
-  m_sharedMaterial: {fileID: -86795195652051805, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
+  m_sharedMaterial: {fileID: 7781647505266917343, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_text: Invention of the Kerosene lamp
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
-  m_sharedMaterial: {fileID: -4429240779876451294, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
+  m_sharedMaterial: {fileID: -7551883835502994205, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
