@@ -64,9 +64,9 @@ public class TileSelector : Singleton<TileSelector>
         {
             float angle;
             if (upsideDown)
-                angle = -105 - i * 50;
+                angle = -105 - (i - 1) * 50;
             else
-                angle = -75 + i * 50;
+                angle = -75 + (i-1) * 50;
 
             var visual = actions[i].Create(_actionsCanvas.transform
                 , angle, _currentSelected, this, upsideDown);
