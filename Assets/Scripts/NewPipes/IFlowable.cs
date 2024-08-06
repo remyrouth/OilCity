@@ -4,7 +4,7 @@ namespace Game.New
     {
         (bool can_input, bool can_output) GetIOConfig();
 
-
+        (FlowType input, FlowType output) GetFlowConfig();
     }
 
 }

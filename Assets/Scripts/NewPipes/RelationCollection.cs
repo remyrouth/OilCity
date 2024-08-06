@@ -29,6 +29,10 @@ public class RelationCollection : IEqualityComparer<(Game.New.IFlowable flowable
             .relation;
     }
 
+    public List<(Game.New.IFlowable flowable, Relation relation)> GetRelationFlowables(Relation r)
+    {
+        return m_relations.Where(p => p.relation.Equals(r)).ToList();
+    }
 
     #region interface methods
     public bool Equals((Game.New.IFlowable flowable, Relation relation) x, (Game.New.IFlowable flowable, Relation relation) y)
