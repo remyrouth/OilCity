@@ -31,6 +31,6 @@ public abstract class OilMapController : MonoBehaviour, IAmountGiver<float>
             value -= alreadyMined[new Vector2Int(x, y)];
         if (!searched.Contains(new Vector2Int(x, y)))
             value *= NOT_SEARCHED_PENALTY_MULTIPLIER;
-        return value;
+        return Mathf.Clamp01(value);
     }
 }
