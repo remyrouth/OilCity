@@ -16,20 +16,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     private List<Vector2Int> m_pipes;
 
-    private GameObject m_connection;
-    private GameObject m_noConnection;
-
 #if UNITY_EDITOR
     private Mesh m_debugMesh;
 
     public void SetDebugMesh(Mesh debugMesh) => m_debugMesh = debugMesh;
 #endif
-
-    public void SetConnectionIndicators(GameObject connection, GameObject noConnection)
-    {
-        m_connection = connection;
-        m_noConnection = noConnection;
-    }
 
     /// <summary>
     /// Init method for just pipes. Provides necessary values for functionality.
@@ -38,7 +29,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="end_pos"></param>
     /// <param name="start_pipe_dir"></param>
     /// <param name="end_pipe_dir"></param>
-    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes)
+    public void InitializePipe(Vector2Int start_pos, Vector2Int end_pos, PipeFlowDirection start_pipe_dir, PipeFlowDirection end_pipe_dir, List<Vector2Int> pipes, bool flip)
     {
         // notarize all the values passed in
         m_startPipePos = start_pos;
@@ -57,6 +48,13 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (start_i == -1 || end_i == -1) throw new System.ArgumentException("start or end positions were not found in pipe point list!");
 
         m_pipes = pipes.GetRange(start_i, end_i - start_i + 1);
+
+        if (flip)
+        {
+            (m_endPipePos, m_startPipePos) = (m_startPipePos, m_endPipePos);
+            (m_endDirection, m_startDirection) = (Utilities.FlipFlow(m_startDirection), Utilities.FlipFlow(m_endDirection));
+            m_pipes.Reverse();
+        }
     }
 
     public void SetTileActions(List<TileAction> actions)
@@ -87,26 +85,28 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             {
                 obj.SetParent(this);
                 AddChild(obj);
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
             else
             {
                 Debug.LogWarning("Pipe already has a connection! Ignoring...");
-                PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
         }
         else
         {
-            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
+            QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
 
         if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj) && pobj.GetInOutConfig().can_input)
         {
             pobj.AddChild(this);
             SetParent(pobj);
+            QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
         else
         {
-            PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
+            QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
     }
 
@@ -184,19 +184,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             BuildingManager.Instance.GetPipeRotation(in_pos, endpoint, out_pos));
     }
 
-    private void PingSpot(GameObject ping, Vector3 pos)
-    {
-        var obj = Instantiate(ping, pos + Vector3.forward * 2f + Vector3.right * 0.5f + Vector3.up, Quaternion.identity);
-        obj.transform.localScale = Vector3.zero;
-       // obj.transform.DOScale(Vector3.one, 0.25f);
-        Destroy(obj, 2f);
-
-        var sequence = DOTween.Sequence();
-        sequence.Append(obj.transform.DOScale(Vector3.one, 0.25f));
-        sequence.AppendInterval(1.5f);
-        sequence.Append(obj.transform.DOScale(Vector3.zero, 0.25f));
-    }
-
     /// <summary>
     /// Pipes can connect to other pipes.
     /// </summary>
@@ -214,7 +201,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (m_child == null || !m_child.Equals(child))
         {
             m_child = child;
-            PingSpot(m_connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
+            //PingSpot(m_connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
 
     }
@@ -269,7 +256,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         
         if (parent != null)
         {
-            PingSpot(m_connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
+            //PingSpot(m_connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
         }
         else
         {
