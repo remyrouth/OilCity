@@ -6,22 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/EndingUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/EndingUI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/EventUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/EventUI.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/EventSetup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/EventSetup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameEvents/SingleEventController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameEvents/SingleEventController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/UI/States/DialogueUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/UI/States/DialogueUI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TimeLineEventManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TimeLineEventManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/2.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/3.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/4.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/5.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/newspaper first event.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/events/newspaper first event.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/ui art/graph background.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/ui art/graph background.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +117,7 @@
       <workItem from="1722845515901" duration="7000" />
       <workItem from="1722845532063" duration="1543000" />
       <workItem from="1722930298800" duration="725000" />
-      <workItem from="1723016188186" duration="4572000" />
+      <workItem from="1723016188186" duration="5770000" />
     </task>
     <servers />
   </component>

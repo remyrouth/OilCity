@@ -28,11 +28,8 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     private void Start()
     {
         _totalYears = yearRange.y - yearRange.x;
-
-        // Register this manager to receive ticks
         TimeManager.Instance.RegisterReceiver(this);
         currentYear = yearRange.x;
-        //SortEventsByPercentage();
         DisplayEvents();
 
         _ticksElapsed = 0;
@@ -69,8 +66,6 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
         var newspaperObject = Instantiate(newsPaperPrefabImage, matchedPercentagePosition, timelineSlider.gameObject.transform.rotation);
         newspaperObject.transform.SetParent(timelineSlider.transform, true);
-        //newspaperObject.GetComponent<RectTransform>().sizeDelta = Vector2.one*64;
-       //newspaperObject.GetComponent<RectTransform>().localScale = Vector2.one;
     }
     
     private void ContinueTimeLine()

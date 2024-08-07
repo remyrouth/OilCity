@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TimeGameOver
   m_EditorClassIdentifier: 
   text:
-  - The polish oil industry is in shambles... Game over.
-  - "Polski przemys\u0142 naftowy upad\u0142... Game over."
+  - The polish oil industry is in shambles.
+  - "Polski przemys\u0142 naftowy upad\u0142."

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SatisfactionGameOver
   m_EditorClassIdentifier: 
   text:
-  - You failed to keep your workers satisfied... Game over.
-  - "Nie uda\u0142o ci si\u0119 utrzyma\u0107 satysfakcji swoich pracownik\xF3w "
+  - You failed to keep your workers satisfied.
+  - "Nie uda\u0142o ci si\u0119 utrzyma\u0107 satysfakcji swoich pracownik\xF3w. "
