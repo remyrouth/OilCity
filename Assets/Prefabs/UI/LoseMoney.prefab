@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Less Moneys
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 10fcdff3fd31f7f4b9e38d9bc9760376, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a6c73eed0ddfcb94eb9e82ff43076885, type: 2}
   m_sharedMaterial: {fileID: 6646389061075229836, guid: 10fcdff3fd31f7f4b9e38d9bc9760376, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -131,6 +131,6 @@ MonoBehaviour:
   m_margin: {x: 0, y: 171.31978, z: -20.184174, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
