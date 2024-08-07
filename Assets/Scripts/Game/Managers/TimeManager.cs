@@ -87,16 +87,12 @@ public class TimeManager : Singleton<TimeManager>
             return;
         }
 
-        // this isnt very great bc we aren't using just TreeNodes, but the issue is that we need a flowable at
-        // some level before adding it as a child, which is something we can't do with just a tree node. Oops!
-        //
-        // otherwise, if no flowable component is found, we know that it's something that doesn't deal with flow
-        // but needs ticks. Like a logger cabin or a geologist's hut. Hence, we'll just add it to the tickable forest
-        // as its own singleton tree.
-        if (receiver is Game.New.IFlowable flow_node)
-            HandleRegister(flow_node);
-        else
+
+        // flowables handle their own relations in the timemanager
+        if (receiver is not Game.New.IFlowable)
             m_tickableForest.Add(receiver as ITickReceiver);
+        else
+            Debug.Log("Flowables handle their own registration. Skipping...");
     }
 
     /// <summary>
@@ -113,16 +109,10 @@ public class TimeManager : Singleton<TimeManager>
             return;
         }
 
-        // this isnt very great bc we aren't using just TreeNodes, but the issue is that we need a flowable at
-        // some level before adding it as a child, which is something we can't do with just a tree node. Oops!
-        //
-        // otherwise, if no flowable component is found, we know that it's something that doesn't deal with flow
-        // but needs ticks. Like a logger cabin or a geologist's hut. Hence, we'll just add it to the tickable forest
-        // as its own singleton tree.
-        if (receiver is Game.New.IFlowable flow_node)
-            HandleDeregister(flow_node);
-        else
+        if (receiver is not Game.New.IFlowable)
             m_tickableForest.Remove(receiver as ITickReceiver);
+        else
+            Debug.Log("Flowables handle their own deregistration. Skipping...");
 
     }
 
@@ -135,6 +125,7 @@ public class TimeManager : Singleton<TimeManager>
         m_tickableForest.Remove(obj);
     }
 
+    #region old code
     /// <summary>
     /// Helper method that, given a flowable, binds it bidirectionally to its reported children and parent,
     /// potentially reducing the number of trees in the forest.
@@ -185,6 +176,7 @@ public class TimeManager : Singleton<TimeManager>
         // remove us from the building list of all active nodes
         m_nodes.Remove(node);
     }
+    #endregion
 
     #endregion
 

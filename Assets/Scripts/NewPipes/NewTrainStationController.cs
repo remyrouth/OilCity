@@ -4,7 +4,23 @@ using UnityEngine;
 
 public class NewTrainStationController : BuildingController<BuildingScriptableObject>, Game.New.IFlowable
 {
-    private RelationCollection m_relations = new();
+    private RelationCollection m_relations;
+
+    void Awake() => m_relations = new(this);
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        this.Remove();
+    }
+
+    protected override void CreateInitialConnections(Vector2Int with_position)
+    {
+        base.CreateInitialConnections(with_position);
+
+        m_relations.UpdateForestStatus();
+    }
 
     public void EstablishConnection(Game.New.IFlowable f, Relation r)
     {
@@ -34,6 +50,8 @@ public class NewTrainStationController : BuildingController<BuildingScriptableOb
             r.flowable.ClearRelation(this);
             r.flowable.EvaluateConnections();
         }
+
+        TimeManager.Instance.m_tickableForest.Remove(this);
     }
 
 

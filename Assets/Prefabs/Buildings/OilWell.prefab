@@ -352,6 +352,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OilSpillout
       objectReference: {fileID: 0}
+    - target: {fileID: 283755117230131700, guid: 303367a7c41e0a9488715d83d788a859, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1247976516910046127, guid: 303367a7c41e0a9488715d83d788a859, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

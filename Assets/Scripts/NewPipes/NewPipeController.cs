@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class NewPipeController : BuildingController<BuildingScriptableObject>, Game.New.IFlowable
 {
-    private RelationCollection m_relations = new();
+    private RelationCollection m_relations;
 
     private List<Vector2Int> m_pipes;
 
     private Vector2Int m_lhsConnectionPos;
     private Vector2Int m_rhsConnectionPos;
+
+    void Awake() => m_relations = new(this);
 
     public void InitializePipe(Vector2Int lhs, Vector2Int rhs, PipeFlowDirection lhs_pipe_dir, PipeFlowDirection rhs_pipe_dir, List<Vector2Int> pipes)
     {
@@ -33,6 +35,20 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
     {
         this.TileActions = actions;
     }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        // clear all relevant pipe tiles from supermap
+        foreach (var pos in m_pipes)
+        {
+            BoardManager.Instance.ClearSupermapTile(pos);
+        }
+
+        this.Remove();
+    }
+
     protected override void CreateInitialConnections(Vector2Int _)
     {
         var (lhs, rhs) = GetFlowablesAtEndpoints();
@@ -95,6 +111,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
             lhs.EstablishConnection(this, Relation.Input);
             rhs.EstablishConnection(this, Relation.Output);
         }
+
+        m_relations.UpdateForestStatus();
     }
 
     public void EvaluateConnections()
@@ -120,6 +138,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
             r.flowable.ClearRelation(this);
             r.flowable.EvaluateConnections();
         }
+
+        TimeManager.Instance.m_tickableForest.Remove(this);
     }
 
     public void EstablishConnection(Game.New.IFlowable f, Relation r)
@@ -167,9 +187,6 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         if (lhs_taken && lhs_c.Equals(c)) return rhs_c;
         if (rhs_taken && rhs_c.Equals(c)) return lhs_c;
         return null; // must be an invalid connection
-        
-        // TODO BAD: this is needed bc buildings in the process of being placed dont occupy the map. Note that this might also break pipe-on-pipe connections at non-endpoints!
-
     }
 
     private (Game.New.IFlowable lhs, Game.New.IFlowable rhs) GetFlowablesAtEndpoints()
@@ -190,16 +207,5 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
     public void OnTick()
     {
         Debug.Log(gameObject + " is in the forest!");
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-
-        // clear all relevant pipe tiles from supermap
-        foreach (var pos in m_pipes)
-        {
-            BoardManager.Instance.ClearSupermapTile(pos);
-        }
     }
 }

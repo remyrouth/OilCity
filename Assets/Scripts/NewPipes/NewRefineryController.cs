@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class NewRefineryController : PayrateBuildingController, Game.New.IFlowable
 {
-    private RelationCollection m_relations = new();
+    private RelationCollection m_relations;
+
+    void Awake() => m_relations = new(this);
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        this.Remove();
+    }
 
     protected override void CreateInitialConnections(Vector2Int pos)
     {
@@ -22,6 +31,8 @@ public class NewRefineryController : PayrateBuildingController, Game.New.IFlowab
             else if (valid_i) connection.EstablishConnection(this, Relation.Input);
             else connection.EstablishConnection(this, Relation.Invalid);
         }
+
+        m_relations.UpdateForestStatus();
     }
 
     public void EstablishConnection(Game.New.IFlowable f, Relation r)
@@ -55,6 +66,8 @@ public class NewRefineryController : PayrateBuildingController, Game.New.IFlowab
             r.flowable.ClearRelation(this);
             r.flowable.EvaluateConnections();
         }
+
+        TimeManager.Instance.m_tickableForest.Remove(this);
     }
 
     public void ClearRelation(Game.New.IFlowable f) => m_relations.ClearRelation(f);

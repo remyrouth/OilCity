@@ -31,7 +31,7 @@ public class RelationCollection : IEqualityComparer<(Game.New.IFlowable flowable
         if (do_check) UpdateForestStatus();
     }
 
-    private void UpdateForestStatus()
+    public void UpdateForestStatus()
     {
         bool has_parent = GetRelationFlowables(Relation.Output).Count > 0;
 
