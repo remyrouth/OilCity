@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class RefineryInfoView : BuildingInfoView<RefineryInfoTileAction, RefineryController>, ILanguageChangeable
@@ -17,7 +17,7 @@ public class RefineryInfoView : BuildingInfoView<RefineryInfoTileAction, Refiner
         UpdateKeroseneLabel(0);
         _focusedRefinery.OnKeroseneProduced += UpdateKeroseneLabel;
         _nameLabel.text = _focusedRefinery.config.buildingName.ToString();
-        _flowrateDesc.text = $"{max}: {(_focusedRefinery.GetBaseRefineryFlowrate() * 10000).ToString("0.00")} {perText}";
+        _flowrateDesc.text = $"{max}:\n<color=#594331>{(_focusedRefinery.GetBaseRefineryFlowrate() * 10000).ToString("0.00")} {perText}";
         WriteWagesInfo(_focusedRefinery);
     }
 
@@ -28,7 +28,7 @@ public class RefineryInfoView : BuildingInfoView<RefineryInfoTileAction, Refiner
     }
     private void UpdateKeroseneLabel(float newValue)
     {
-        _productivityLabel.text = $"{currently}: {(newValue * 10000).ToString("0.00")} {perText}";
+        _productivityLabel.text = $"{currently}:\n<color=#594331>{(newValue * 10000).ToString("0.00")} {perText}";
     }
     private void WriteWagesInfo(RefineryController tileController)
     {
@@ -36,8 +36,10 @@ public class RefineryInfoView : BuildingInfoView<RefineryInfoTileAction, Refiner
         for (int i = 0; i < 3; i++)
         {
             if (i == (int)tileController.CurrentPaymentMode)
-                text += '>';
-            text += (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " z�\n";
+                text += "<color=#594331><u>" + '>';
+            text += "<color=#594331>" + (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " zł\n";
+            if (i == (int)tileController.CurrentPaymentMode)
+                text += "</u>";
         }
         _wagesInfo.text = text;
     }

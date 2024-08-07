@@ -49,6 +49,9 @@ public class PipePlacer : BuildingPlacer
         m_pathfindingPreview.colorGradient = m_lineGradient;
 
         m_pointList = new List<Vector2Int>();
+
+        m_ioConfig = (true, true);
+        m_ftConfig = (FlowType.Any, FlowType.Any);
     }
 
     #region callbacks
@@ -376,7 +379,7 @@ public class PipePlacer : BuildingPlacer
         if (io.can_input)
         {
             bool has_dir = m_ioConfig.c_o;
-            bool has_flow = m_ftConfig.output == ft.in_type;
+            bool has_flow = m_ftConfig.output == ft.in_type || m_ftConfig.output == FlowType.Any;
 
             if (has_dir && has_flow)
             {
@@ -389,7 +392,7 @@ public class PipePlacer : BuildingPlacer
         if (io.can_output)
         {
             bool has_dir = m_ioConfig.c_i;
-            bool has_flow = m_ftConfig.input == ft.out_type;
+            bool has_flow = m_ftConfig.input == ft.out_type || m_ftConfig.output == FlowType.Any;
 
             if (has_dir && has_flow)
             {
