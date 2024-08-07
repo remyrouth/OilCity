@@ -25,7 +25,7 @@ public class UIStateMachine : Singleton<UIStateMachine>
         ChangeState(initialGameState);
     }
     public UIState CurrentState { get; private set; }
-    public GameState CurrentStateType =>CurrentState.type;
+    public GameState CurrentStateType => CurrentState.type;
 
     /// <summary>
     /// Changes UI state and calls OnExit and OnEntered
@@ -43,7 +43,7 @@ public class UIStateMachine : Singleton<UIStateMachine>
         CurrentState = States[state];
         CurrentState.OnEnter();
     }
-    
+
     /// <summary>
     /// Changes game Scene
     /// </summary>
@@ -52,7 +52,11 @@ public class UIStateMachine : Singleton<UIStateMachine>
     {
         SceneManager.LoadScene(sceneIndex);
     }
-    
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
 
     private void Update()
     {
@@ -62,4 +66,4 @@ public class UIStateMachine : Singleton<UIStateMachine>
 
 
 }
-public enum GameState { PauseUI, GameUI, BuildingUI, EventUI, EndingUI }
+public enum GameState { PauseUI, GameUI, BuildingUI, EventUI, EndingUI, ChoosingTutorialUI }

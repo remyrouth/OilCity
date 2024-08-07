@@ -23,13 +23,14 @@ public class TutorialManager : Singleton<TutorialManager>
         set => _inTutorial = value;
     }
 
-    private void Start()
+    public void StartTutorial()
     {
         _nextStepIndex = 0;
         if(TutorialEnabled && !SceneManager.GetActiveScene().name.Equals("MainMenu"))
         {
             _inTutorial = true;
             GoToNextStep();
+            DialogueUI.Instance.EnableDialogue();
         }
     }
     private TutorialStep _currentStep = null;
