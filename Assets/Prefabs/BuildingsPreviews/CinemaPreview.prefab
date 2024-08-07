@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -8965834938133336863}
   - component: {fileID: 4850778337799650265}
   m_Layer: 0
-  m_Name: SiloPreview
+  m_Name: CinemaPreview
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
