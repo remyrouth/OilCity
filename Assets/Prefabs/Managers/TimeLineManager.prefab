@@ -48,8 +48,8 @@ MonoBehaviour:
   currentYear: 0
   ticksPerYear: 25
   currentTick: 0
-  eventsOnTimeLine:
-  - {fileID: 11400000, guid: 2918c24cab296452580b348612d6122b, type: 2}
-  currentEventListIndex: 0
+  events:
+  - {fileID: 2421549254056547533, guid: 076c08d28ed00054d8329acad0ba64f9, type: 3}
+  currentEventIndex: 0
   timelineSlider: {fileID: 0}
   newsPaperPrefabImage: {fileID: 6747949654655670300, guid: 9e464b3aa97a648afbded8f833e7c1de, type: 3}
