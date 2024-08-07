@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Workers
   m_EditorClassIdentifier: 
   text:
-  - Wrokers
-  - "Pracownik\xF3w"
+  - 'Number of workers: '
+  - "Liczba pracownik\xF3w: "
