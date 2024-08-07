@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -31695,12 +31695,12 @@ GameObject:
   - component: {fileID: 1321047924}
   - component: {fileID: 1321047923}
   - component: {fileID: 1321047922}
-  - component: {fileID: 1321047926}
   - component: {fileID: 1321047927}
   - component: {fileID: 1321047928}
   - component: {fileID: 1321047929}
   - component: {fileID: 1321047930}
   - component: {fileID: 1321047931}
+  - component: {fileID: 1321047932}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -31802,20 +31802,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1321047926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1321047921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f25162bb1fb709459f63210d511a6a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  civilianBuildingSO: {fileID: 11400000, guid: 4dc4927790111bd48b85327d9c770f91, type: 2}
-  NumOfBuildings: 0
 --- !u!114 &1321047927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31930,6 +31916,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b82dde1df6133447b75155837a9d184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1321047932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321047921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80e62b5b49c0f04d9d51bd52a525e2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_objMap:
+  - key: 0
+    value: {fileID: 4624880366324698991, guid: 27f93976abce7ac41a06bac47d172572, type: 3}
+  - key: 1
+    value: {fileID: 4624880366324698991, guid: 34db478054f6f364e99edd89a5f61e02, type: 3}
 --- !u!224 &1398492062 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7253775328105462180, guid: 532e5a5fc00b1f540b0c91978f94a1a6, type: 3}
