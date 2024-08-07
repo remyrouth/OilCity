@@ -17,7 +17,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     
     [SerializeField] private RectTransform timelineSlider;
     [SerializeField] private GameObject newsPaperPrefabImage;
-    private SingleSoundPlayer newsSFXPlayer;
+    [SerializeField] private SingleSoundPlayer newsSFXPlayer;
     
     private int _ticksElapsed;
     private int _totalTicks;
@@ -40,8 +40,6 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
         {
             Debug.LogError("You must have a passage of time greater than 0f");
         }
-
-        newsSFXPlayer = GetComponent<SingleSoundPlayer>();
     }
 
     private void DisplayEvents()

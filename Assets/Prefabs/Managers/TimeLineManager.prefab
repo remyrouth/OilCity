@@ -58,6 +58,7 @@ MonoBehaviour:
   currentEventIndex: 0
   timelineSlider: {fileID: 0}
   newsPaperPrefabImage: {fileID: 6747949654655670300, guid: 9e464b3aa97a648afbded8f833e7c1de, type: 3}
+  newsSFXPlayer: {fileID: 3574210999850624551}
 --- !u!114 &3574210999850624551
 MonoBehaviour:
   m_ObjectHideFlags: 0
