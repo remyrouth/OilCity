@@ -11,8 +11,9 @@ public sealed class CivilianBuildingController : BuildingController<BuildingScri
 
     private int _gfxSeed;
 
-    private void Awake()
+    public override void Initialize(BuildingScriptableObject config, Vector2Int spawn_position)
     {
+        base.Initialize(config, spawn_position);
         _gfxSeed = Random.Range(0, sprites.Length * old_sprites.Length);
         ChangeGraphics(GraphicsSwapperManager.SetNewer);
         _spriteRenderer.flipX = Random.value < 0.5f;
