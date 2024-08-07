@@ -5,5 +5,6 @@ public enum FlowType
 {
     None,
     Oil,
-    Kerosene
+    Kerosene,
+    Any
 }
