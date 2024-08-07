@@ -1,10 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SingleEventController : MonoBehaviour
 {
-    [SerializeField] private int triggerYear;
+    [SerializeField] private float triggerYear;
     
-    public int TriggerYear => triggerYear;
+    public float TriggerYear => triggerYear;
+    
+    private void OnEnable()
+    {
+        ControlManager.Instance.leftClickActivationButtontrigger += MouseClick;
+    }
+    
+    private void OnDisable()
+    {
+        ControlManager.Instance.leftClickActivationButtontrigger -= MouseClick;
+    }
+    
+    private void MouseClick()
+    {
+        Destroy(gameObject);
+    }
 }

@@ -1,42 +1,22 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class EventSetup : MonoBehaviour, ILanguageChangeable
+public class EventSetup : MonoBehaviour
 {
-    [SerializeField] private Image eventImage;
-    [SerializeField] private TextMeshProUGUI eventTitle;
-    [SerializeField] private TextMeshProUGUI eventParagraph;
-
-    private LanguageItem _titleLanguageItem;
-    private LanguageItem _paragraphLanguageItem;
-
+    private int _currentEventIndex;
+    
     private void OnEnable()
     {
         TimeLineEventManager.Instance.OnEventTrigger += UpdateLanguageItemAndSprite;
+        _currentEventIndex = 0;
     }
     private void OnDisable()
     {
         TimeLineEventManager.Instance.OnEventTrigger -= UpdateLanguageItemAndSprite;
     }
-
-    public void UpdateText()
-    {
-        if (_titleLanguageItem is not null)
-        {
-            eventTitle.text = _titleLanguageItem.ToString();
-        }
-        if (_paragraphLanguageItem is not null)
-        {
-            eventParagraph.text = _paragraphLanguageItem.ToString();
-        }
-    }
     
-    public void UpdateLanguageItemAndSprite(TimeLineEvent timeLineEvent)
+    public void UpdateLanguageItemAndSprite()
     {
-        eventImage.sprite = timeLineEvent.newspaperSprite;
-        _titleLanguageItem = timeLineEvent.title;
-        _paragraphLanguageItem = timeLineEvent.paragraph;
-        UpdateText();
+        Instantiate(TimeLineEventManager.Instance.Events[_currentEventIndex], transform).GetComponent<SingleEventController>();
+        _currentEventIndex++;
     }
 }
