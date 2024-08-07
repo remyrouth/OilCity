@@ -37,7 +37,7 @@ public class TimeManager : Singleton<TimeManager>
     // a collection of all the nodes that require an individual OnTick invokation
     // loggers and train stations, for example. individual trees (like a pipe to a refinery) 
     // also exist in this list.
-    private Collection<ITickReceiver> m_tickableForest = new();
+    public Collection<ITickReceiver> m_tickableForest = new();
 
     // invariant: contains every tree node component in the game
     private readonly Collection<Game.New.IFlowable> m_nodes = new();
@@ -143,7 +143,7 @@ public class TimeManager : Singleton<TimeManager>
     private void HandleRegister(Game.New.IFlowable node)
     {
         var relations = node.GetRelations();
-        var children = relations.GetRelationFlowables(Relation.Output);
+        var children = relations.GetRelationFlowables(Relation.Input);
 
         foreach (var (flowable, _) in children)
         {
@@ -154,7 +154,7 @@ public class TimeManager : Singleton<TimeManager>
         }
 
         // if we dont have a parent
-        if (relations.GetRelationFlowables(Relation.Input).Count == 0)
+        if (relations.GetRelationFlowables(Relation.Output).Count == 0)
         {
             m_tickableForest.Add(node);
         }
@@ -171,7 +171,7 @@ public class TimeManager : Singleton<TimeManager>
     private void HandleDeregister(Game.New.IFlowable node)
     {
         var relations = node.GetRelations();
-        var children = relations.GetRelationFlowables(Relation.Output);
+        var children = relations.GetRelationFlowables(Relation.Input);
 
         foreach (var (flowable, _) in children)
         {
@@ -205,7 +205,7 @@ public class TimeManager : Singleton<TimeManager>
             if (!ConvertToClassType<IConnection>(m_tickableForest[i], out var tree_node)) continue;
 
             var children = new List<IConnection>();
-            children.AddRange(tree_node.GetRelations().GetRelationFlowables(Relation.Output).ConvertAll(a => a.flowable));
+            children.AddRange(tree_node.GetRelations().GetRelationFlowables(Relation.Input).ConvertAll(a => a.flowable));
 
             while (children.Count > 0)
             {
@@ -221,7 +221,7 @@ public class TimeManager : Singleton<TimeManager>
 
                 Gizmos.DrawCube(imono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, Vector3.one * 0.35f);
 
-                children.AddRange(item.GetRelations().GetRelationFlowables(Relation.Output).ConvertAll(a => a.flowable));
+                children.AddRange(item.GetRelations().GetRelationFlowables(Relation.Input).ConvertAll(a => a.flowable));
             }
         }
     }

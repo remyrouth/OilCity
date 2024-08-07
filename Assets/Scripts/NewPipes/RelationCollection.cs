@@ -1,32 +1,50 @@
+using Game.New;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 public class RelationCollection : IEqualityComparer<(Game.New.IFlowable flowable, Relation relation)>, IEnumerable<(Game.New.IFlowable flowable, Relation relation)>
 {
+    private Game.New.IFlowable m_self;
     private HashSet<(Game.New.IFlowable flowable, Relation relation)> m_relations;
 
-    public RelationCollection()
+    public RelationCollection(Game.New.IFlowable self)
     {
+        m_self = self;
         m_relations = new HashSet<(Game.New.IFlowable flowable, Relation relation)>();
     }
 
     public void SetRelation(Game.New.IFlowable flowable, Relation relation)
     {
+        bool exists = m_relations.Where(i => i.flowable.Equals(flowable)).Count() > 0;
+        ClearRelation(flowable, false);
+
         m_relations.Add((flowable, relation));
+
+        UpdateForestStatus();
     }
 
-    public void ClearRelation(Game.New.IFlowable flowable)
+    public void ClearRelation(Game.New.IFlowable flowable, bool do_check = true)
     {
         m_relations.RemoveWhere(i => i.flowable.Equals(flowable));
+
+        if (do_check) UpdateForestStatus();
     }
 
-    public Relation GetFlowableRelation(Game.New.IFlowable flowable)
+    private void UpdateForestStatus()
     {
-        return m_relations
-            .Where(i => i.flowable.Equals(flowable))
-            .First()
-            .relation;
+        bool has_parent = GetRelationFlowables(Relation.Output).Count > 0;
+
+        bool in_forest = TimeManager.Instance.m_tickableForest.Contains(m_self);
+
+        if (in_forest && has_parent)
+        {
+            TimeManager.Instance.m_tickableForest.Remove(m_self);
+        }
+        else if (!in_forest && !has_parent)
+        {
+            TimeManager.Instance.m_tickableForest.Add(m_self);
+        }
     }
 
     public List<(Game.New.IFlowable flowable, Relation relation)> GetRelationFlowables(Relation r)

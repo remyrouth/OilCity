@@ -17,6 +17,8 @@ public class BoardManager : Singleton<BoardManager>
     public event Action<Vector2Int, BuildingScriptableObject> OnBuildingPlaced;
     public event Action<Vector2Int, TileObjectController> OnBuildingDestroyed;
 
+    private List<Vector2Int> m_inProgressBuildingTiles = new();
+
     [Serializable]
     private struct InitialBuilding
     { public BuildingScriptableObject config; public Vector2Int pos; }
@@ -54,17 +56,37 @@ public class BoardManager : Singleton<BoardManager>
     /// <returns></returns>
     public bool Create(Vector2Int position, BuildingScriptableObject buildingSO)
     {
+        m_inProgressBuildingTiles = new();
+        for (int i = 0; i < buildingSO.size.y; i++)
+        {
+            for (int j = 0; j < buildingSO.size.x; j++)
+            {
+                m_inProgressBuildingTiles.Add(new Vector2Int(j, i) + position);
+            }
+        }
+
         if (AreTilesOccupiedForBuilding(position, buildingSO))
             return false;
         var obj = buildingSO.CreateInstance(position);
         obj.transform.position = new Vector3(position.x, position.y, 0);
-        for (int i = 0; i < buildingSO.size.y; i++)
-            for (int j = 0; j < buildingSO.size.x; j++)
-                tileDictionary[position + new Vector2Int(j, i)] = obj;
+        foreach (var vec in m_inProgressBuildingTiles)
+        {
+            tileDictionary[vec] = obj;
+        }
 
         OnBuildingPlaced?.Invoke(position, buildingSO);
+
+        m_inProgressBuildingTiles.Clear();
+
         return true;
     }
+
+
+    public bool IsTileOccupiedByInProgressBuild(Vector2Int pos) 
+    {
+        return m_inProgressBuildingTiles.Contains(pos);
+    }
+
     /// <summary>
     /// Checks if the specific tile is occupied
     /// </summary>

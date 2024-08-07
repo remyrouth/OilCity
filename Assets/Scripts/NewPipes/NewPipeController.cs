@@ -87,13 +87,13 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         }
         else if (valid_l_r)
         {
-            lhs.EstablishConnection(this, Relation.Input);
-            rhs.EstablishConnection(this, Relation.Output);
+            lhs.EstablishConnection(this, Relation.Output);
+            rhs.EstablishConnection(this, Relation.Input);
         }
         else
         {
-            lhs.EstablishConnection(this, Relation.Output);
-            rhs.EstablishConnection(this, Relation.Input);
+            lhs.EstablishConnection(this, Relation.Input);
+            rhs.EstablishConnection(this, Relation.Output);
         }
     }
 
@@ -128,7 +128,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         f.SetRelation(this, NewPipeHelper.Flip(r));
 
         var other = GetOtherConnection(f);
-        other.EstablishConnection(this, r);
+        if (other == null) Debug.LogWarning("other connection with " + gameObject + " is null.");
+        other?.EstablishConnection(this, r);
     }
 
     public (bool can_input, bool can_output) GetIOConfig()
@@ -147,8 +148,8 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         var i_flow = m_relations.GetRelationFlowables(Relation.Input);
         var o_flow = m_relations.GetRelationFlowables(Relation.Output);
 
-        var input = i_flow.Count > 0 ? i_flow.First().flowable.GetFlowConfig().input : FlowType.None; // TODO should this be None?
-        var output = o_flow.Count > 0 ? o_flow.First().flowable.GetFlowConfig().output : FlowType.None;
+        var input = i_flow.Count > 0 ? i_flow.First().flowable.GetFlowConfig().input : FlowType.Ambiguous; // TODO should this be None?
+        var output = o_flow.Count > 0 ? o_flow.First().flowable.GetFlowConfig().output : FlowType.Ambiguous;
 
         return (input, output);
     }
@@ -160,9 +161,15 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         bool lhs_taken = lhs_c != null;
         bool rhs_taken = rhs_c != null;
 
+        if (!lhs_taken && BoardManager.Instance.IsTileOccupiedByInProgressBuild(m_lhsConnectionPos)) return rhs_c;
+        if (!rhs_taken && BoardManager.Instance.IsTileOccupiedByInProgressBuild(m_rhsConnectionPos)) return lhs_c;
+
         if (lhs_taken && lhs_c.Equals(c)) return rhs_c;
         if (rhs_taken && rhs_c.Equals(c)) return lhs_c;
         return null; // must be an invalid connection
+        
+        // TODO BAD: this is needed bc buildings in the process of being placed dont occupy the map. Note that this might also break pipe-on-pipe connections at non-endpoints!
+
     }
 
     private (Game.New.IFlowable lhs, Game.New.IFlowable rhs) GetFlowablesAtEndpoints()
@@ -183,5 +190,16 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
     public void OnTick()
     {
         Debug.Log(gameObject + " is in the forest!");
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        // clear all relevant pipe tiles from supermap
+        foreach (var pos in m_pipes)
+        {
+            BoardManager.Instance.ClearSupermapTile(pos);
+        }
     }
 }

@@ -41,8 +41,6 @@ public class ControlManager : Singleton<ControlManager>
         playerControls.PlayerControls.ClickSelect.performed += OnRightMouseButtonTrigger;
         playerControls.PlayerControls.RightClick.canceled += OnRightMouseButtonEnd;
 
-
-
         playerControls.PlayerControls.MoveLeftStickHorizontal.performed += ctx => {
             horizontalInput = ctx.ReadValue<float>();
             // You can use horizontalInput for left/right turning here
@@ -53,7 +51,7 @@ public class ControlManager : Singleton<ControlManager>
             // You can use verticalInput for up/down turning here
         };
 
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     private void Update()

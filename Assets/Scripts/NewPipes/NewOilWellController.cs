@@ -58,8 +58,8 @@ public class NewOilWellController : PayrateBuildingController, Game.New.IFlowabl
 
     public void ClearRelation(Game.New.IFlowable f) => m_relations.ClearRelation(f);
     public void SetRelation(Game.New.IFlowable f, Relation r) => m_relations.SetRelation(f, r);
-    public (FlowType input, FlowType output) GetFlowConfig() => (FlowType.Oil, FlowType.Kerosene);
-    public (bool can_input, bool can_output) GetIOConfig() => (true, true);
+    public (FlowType input, FlowType output) GetFlowConfig() => (FlowType.None, FlowType.Oil);
+    public (bool can_input, bool can_output) GetIOConfig() => (false, true);
     public RelationCollection GetRelations() => m_relations;
     public void OnTick()
     {

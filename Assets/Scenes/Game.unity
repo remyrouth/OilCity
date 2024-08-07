@@ -30417,6 +30417,7 @@ GameObject:
   - component: {fileID: 1321047927}
   - component: {fileID: 1321047928}
   - component: {fileID: 1321047929}
+  - component: {fileID: 1321047930}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -30618,6 +30619,18 @@ MonoBehaviour:
     Rotation: 90
     In: 2
     Out: 4
+--- !u!114 &1321047930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321047921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c237799a310ff3f4fbbd3d29a2344292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1755972032 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5514326931419509997, guid: 633a53a529bff7945b511daff03bc261, type: 3}
@@ -30627,23 +30640,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7cd7fb14f93b8c47957c18342349ecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1829136123 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8035883750969133567, guid: 633a53a529bff7945b511daff03bc261, type: 3}
-  m_PrefabInstance: {fileID: 8138862772309404937}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1829136125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829136123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86d3cededfaf3ce4fa456179cde5d182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1850073788
@@ -48858,10 +48854,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8035883750969133567, guid: 633a53a529bff7945b511daff03bc261, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1829136125}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 633a53a529bff7945b511daff03bc261, type: 3}
 --- !u!225 &8138862772309404938 stripped
 CanvasGroup:
