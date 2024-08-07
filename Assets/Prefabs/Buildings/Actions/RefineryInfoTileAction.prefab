@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2553778226996121836}
   - component: {fileID: 2331184965612518276}
   m_Layer: 0
-  m_Name: desc
+  m_Name: wages
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,9 +254,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameLabel: {fileID: 6872584070483121744}
-  _descriptionLabel: {fileID: 2331184965612518276}
+  _wagesInfo: {fileID: 2331184965612518276}
   _productivityLabel: {fileID: 1985968745000111986}
-  _wageLabel: {fileID: 2984298939209658551}
+  _flowrateDesc: {fileID: 2984298939209658551}
+  currently: {fileID: 11400000, guid: 3559acadb1cd6c14c912a24c17bcca38, type: 2}
+  max: {fileID: 11400000, guid: 2826de94510e0dd458efe0c99852c6d3, type: 2}
+  wages: {fileID: 11400000, guid: 4cfd2b4d16a758148b90c09baed9253e, type: 2}
+  perText: {fileID: 11400000, guid: dc04094d73defe34c972fd2b4a36f340, type: 2}
 --- !u!1 &2340607458848299654
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +295,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41.500305, y: 13.0008545}
+  m_AnchoredPosition: {x: 41.500305, y: 7.4}
   m_SizeDelta: {x: 73.45, y: 16.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2556435104357132973
@@ -648,7 +652,7 @@ GameObject:
   - component: {fileID: 599642734843977797}
   - component: {fileID: 2984298939209658551}
   m_Layer: 0
-  m_Name: wage
+  m_Name: max productivity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

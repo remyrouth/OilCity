@@ -25,7 +25,7 @@ public sealed class GeologistController : AOEBuildingController
     [SerializeField] private int _workerAmount;
     public int activeWorkerAmount { get; private set; }
     public override int TickNumberInterval => 10;
-
+    public int WorkersAmount => _workers.Count;
 
     private int GetNumberOfSearchingPoints()
     {
@@ -137,13 +137,20 @@ public sealed class GeologistController : AOEBuildingController
     }
     private void FinalizeSearching()
     {
-        var bestOilSpot = _tilesSearched
-            .Where(e => !BoardManager.Instance.IsTileOccupied(e)) // Ensure the tile is empty
-            .OrderBy(e => BoardManager.Instance.OilEvaluator.GetValueAtPosition(e.x, e.y))
-            .LastOrDefault();
+        var tiles = _tilesSearched.Where(e =>
+        {
+            if (BoardManager.Instance.IsTileOccupied(e))
+                return BoardManager.Instance.tileDictionary[e] is TreeController;
+            return true;
+        });// Ensure the tile is empty or is tree
 
-        if (bestOilSpot == null)
+        if (!tiles.Any())
             return;
+
+        var bestOilSpot = tiles
+            .OrderBy(e => BoardManager.Instance.OilEvaluator.GetValueAtPosition(e.x, e.y))
+            .Last();
+
 
         FireWorkersIfNeeded();
         Debug.Log($"Found great oil spot at {bestOilSpot}!");
@@ -195,7 +202,7 @@ public sealed class GeologistController : AOEBuildingController
         {
             if (BoardManager.Instance.IsTileOccupied(e))
                 return BoardManager.Instance.tileDictionary[e] is TreeController;
-            return false;
+            return true;
         });
         if (!tiles.Any())
             return null;

@@ -31,10 +31,10 @@ namespace Game.Managers
             SetTutorialEnabled();
             SetCameraMovementInversion();
             
-            _masterVolume = PlayerPrefs.GetFloat("MasterVolume");
-            _musicVolume = PlayerPrefs.GetFloat("MusicVolume");
-            _soundEffectVolume = PlayerPrefs.GetFloat("SoundEffectVolume");
-            _ambientSoundVolume = PlayerPrefs.GetFloat("AmbientSoundVolume");
+            // _masterVolume = PlayerPrefs.GetFloat("MasterVolume");
+            // _musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+            // _soundEffectVolume = PlayerPrefs.GetFloat("SoundEffectVolume");
+            // _ambientSoundVolume = PlayerPrefs.GetFloat("AmbientSoundVolume");
         }
 
         private void Start() {

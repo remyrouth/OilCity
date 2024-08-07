@@ -40,8 +40,7 @@ public class DialogueUI : Singleton<DialogueUI>
     {
         portrait.sprite = image;
     }
-
-
+    
     public void DisableDialogue()
     {
         panel.SetActive(false);

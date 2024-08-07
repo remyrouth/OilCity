@@ -12,6 +12,7 @@ public class TileObjectController : MonoBehaviour
     public Vector2 ActionsPivot => Anchor + _actionsPivot;
     public virtual bool CheckIfDestroyable() => false;
     public virtual Action GetCreateAction(Vector2Int pos) => null;
+    public virtual BuildingScriptableObject Config => null;
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

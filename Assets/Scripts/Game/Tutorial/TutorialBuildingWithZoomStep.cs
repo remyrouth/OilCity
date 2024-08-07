@@ -10,16 +10,16 @@ namespace Game.Tutorial
         [SerializeField] private float targetZoom;
         
 
-        private new void OnEnable()
+        public override void Initialize()
         {
             BoardManager.Instance.OnBuildingPlaced += FinishStep;
-            base.OnEnable();
+            base.Initialize();
             CameraController.Instance.TargetPosition = targetPosition;
             CameraController.Instance.TargetZoom = targetZoom;
             BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
         }
 
-        private void OnDisable()
+        public override void Deinitialize()
         {
             BoardManager.Instance.OnBuildingPlaced -= FinishStep;
         }

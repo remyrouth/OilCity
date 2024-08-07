@@ -50,6 +50,7 @@ MonoBehaviour:
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: fb7defd3ecc6c4db081106443574d47b, type: 3}
   soundType: 0
+  usesForeignTrigger: 0
 --- !u!114 &-397531416323512723
 MonoBehaviour:
   m_ObjectHideFlags: 0

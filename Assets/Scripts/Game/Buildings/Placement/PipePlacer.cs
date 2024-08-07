@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.Events;
 using UnityEngine;
-
+using System;
 
 public class PipePlacer : BuildingPlacer
 {
@@ -28,6 +28,8 @@ public class PipePlacer : BuildingPlacer
 
     private bool m_shouldUpdatePathfinding;
     private Vector2Int m_previousPosition;
+
+    public static Predicate<(Vector2Int, bool)> IsValidPlaceOverride = null;
 
     /// <summary>
     /// A two-element array where the first index is the pipe-start preview prefab instance reference, and the second index
@@ -206,7 +208,8 @@ public class PipePlacer : BuildingPlacer
     public override bool IsValidPlacement(BuildingScriptableObject so)
     {
         var mousePos = TileSelector.Instance.MouseToGrid();
-
+        if (IsValidPlaceOverride != null)
+            return IsValidPlaceOverride.Invoke((mousePos, m_wasStartPlaced));
         if (BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so))
         {
             if (BoardManager.Instance.TryGetTypeAt<IFlowable>(mousePos, out var flowable))

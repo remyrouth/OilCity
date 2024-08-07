@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 154871134687697986}
   - component: {fileID: 3545558945914533754}
   m_Layer: 0
-  m_Name: wage
+  m_Name: radius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,9 +254,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameLabel: {fileID: 7787103127018817064}
-  _descriptionLabel: {fileID: 7813122496519095885}
+  _wagesInfo: {fileID: 7813122496519095885}
   _productivityLabel: {fileID: 844479518735069872}
-  _wageLabel: {fileID: 3545558945914533754}
+  _radiusLabel: {fileID: 3545558945914533754}
+  workers: {fileID: 11400000, guid: 4f310a61790ee2748bfa7860062da06e, type: 2}
+  radius: {fileID: 11400000, guid: ebf804d95d49257489c2f7a29e8bc46e, type: 2}
+  wages: {fileID: 11400000, guid: 4cfd2b4d16a758148b90c09baed9253e, type: 2}
 --- !u!1 &3442367444496245323
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +272,7 @@ GameObject:
   - component: {fileID: 1643596660347797980}
   - component: {fileID: 844479518735069872}
   m_Layer: 0
-  m_Name: productivity
+  m_Name: noWorkers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -648,7 +651,7 @@ GameObject:
   - component: {fileID: 8372902732905656761}
   - component: {fileID: 7813122496519095885}
   m_Layer: 0
-  m_Name: desc
+  m_Name: wages
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

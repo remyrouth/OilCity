@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: QuotaGameOver
   m_EditorClassIdentifier: 
   text:
-  - You failed to meet the quota... Game over.
-  - "Nie uda\u0142o ci si\u0119 wyrobi\u0107 normy... Game over."
+  - You failed to meet the quota.
+  - "Nie uda\u0142o ci si\u0119 wyrobi\u0107 normy."

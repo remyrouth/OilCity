@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,14 +7,14 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     private Vector2 yearRange;
     [SerializeField] private float currentYear;
     
-    [SerializeField] private float ticksPerYear = 1f;
-    [SerializeField] private float currentTick = 4f;
-
-
+    [SerializeField] private float ticksPerYear;
+    [SerializeField] private float currentTick;
+    
     [SerializeField] private List<GameObject> events;
-    [SerializeField] private List<TimeLineEvent> eventsOnTimeLine;
-    [SerializeField] private int currentEventListIndex;
-
+    public List<GameObject> Events => events;
+    
+    [SerializeField] private int currentEventIndex;
+    
     [SerializeField] private RectTransform timelineSlider;
     [SerializeField] private GameObject newsPaperPrefabImage;
     
@@ -23,17 +22,14 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     private int _totalTicks;
     private float _totalYears;
     
-    public delegate void EventTriggered(TimeLineEvent nextEvent);
+    public delegate void EventTriggered();
     public event EventTriggered OnEventTrigger;
 
     private void Start()
     {
         _totalYears = yearRange.y - yearRange.x;
-
-        // Register this manager to receive ticks
         TimeManager.Instance.RegisterReceiver(this);
         currentYear = yearRange.x;
-        SortEventsByPercentage();
         DisplayEvents();
 
         _ticksElapsed = 0;
@@ -59,19 +55,17 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
         Vector3 start = worldCorners[0]; // Bottom-left corner
         Vector3 end = worldCorners[2]; // Top-right corner (assuming horizontal slider)
 
-
-        var targetPercent = newsEvent.TriggerYear / _totalYears;
+        var targetPercent = (newsEvent.TriggerYear - yearRange.x) / _totalYears;
+        Debug.Log(targetPercent);
         var sliderWidth = end.x - start.x;
         var newX = start.x + (sliderWidth * targetPercent);
         var newY = timelineSlider.transform.position.y;
         var newZ = timelineSlider.transform.position.z;
-
+        
         var matchedPercentagePosition = new Vector3(newX, newY, newZ);
 
         var newspaperObject = Instantiate(newsPaperPrefabImage, matchedPercentagePosition, timelineSlider.gameObject.transform.rotation);
         newspaperObject.transform.SetParent(timelineSlider.transform, true);
-        newspaperObject.GetComponent<RectTransform>().sizeDelta = Vector2.one*64;
-        newspaperObject.GetComponent<RectTransform>().localScale = Vector2.one;
     }
     
     private void ContinueTimeLine()
@@ -100,22 +94,19 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
             return;
         }
         
-        if (currentEventListIndex <= eventsOnTimeLine.Count - 1)
+        if (currentEventIndex <= events.Count - 1)
         {
-            var nextEvent = eventsOnTimeLine[currentEventListIndex];
-            var nextEventPercent = nextEvent.GamePercentage;
-
-            if (GetTimePercentage() >= nextEventPercent)
+            if (currentYear == events[currentEventIndex].GetComponent<SingleEventController>().TriggerYear)
             {
-                currentEventListIndex++;
-                TriggerNextEvent(nextEvent);
+                currentEventIndex++;
+                TriggerNextEvent();
             }
         }
     }
 
-    private void TriggerNextEvent(TimeLineEvent nextEvent)
+    private void TriggerNextEvent()
     {
-        OnEventTrigger?.Invoke(nextEvent);
+        OnEventTrigger?.Invoke();
         UIStateMachine.Instance.ChangeState(GameState.EventUI);
     }
 
@@ -136,16 +127,10 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
         _ticksElapsed++;
     }
 
-    private void SortEventsByPercentage()
-    {
-        eventsOnTimeLine.Sort((a, b) => a.GamePercentage.CompareTo(b.GamePercentage));
-    }
-
     private void OnDisable()
     {
         // Deregister this manager to stop receiving ticks
         TimeManager.Instance.DeregisterReceiver(this);
-        eventsOnTimeLine.Clear();
     }
 
     public float GetTimePercentage()

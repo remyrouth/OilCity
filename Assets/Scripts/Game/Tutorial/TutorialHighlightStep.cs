@@ -5,15 +5,15 @@ namespace Game.Tutorial
     public class TutorialHighlightStep : TutorialStep
     {
         [SerializeField] private int highlightIndexToToggle;
-        
-        private new void OnEnable()
+
+        public override void Initialize()
         {
             DialogueUI.Instance.OnDialogueClicked += FinishStep;
-            base.OnEnable();
+            base.Initialize();
             HighlightUI.Instance.ToggleHighlight(highlightIndexToToggle);
         }
 
-        private void OnDisable()
+        public override void Deinitialize()
         {
             DialogueUI.Instance.OnDialogueClicked -= FinishStep;
             HighlightUI.Instance.ToggleHighlight(highlightIndexToToggle);

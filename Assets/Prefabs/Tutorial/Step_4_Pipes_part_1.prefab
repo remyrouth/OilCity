@@ -47,3 +47,5 @@ MonoBehaviour:
   dialogueText: {fileID: 11400000, guid: 40959d18d1872664da524ad75c434a92, type: 2}
   portraitImage: {fileID: 21300000, guid: c548200312cee284eaf588876cf3c669, type: 3}
   buttonToUnlockIndex: 0
+  startBuilding: {fileID: 11400000, guid: e0ace09b1fff326499b0bb8751cc6789, type: 2}
+  endBuilding: {fileID: 11400000, guid: f46f4d51f0d9ce244862089bc10a2125, type: 2}
