@@ -6,22 +6,31 @@ namespace Game.Tutorial
     public class TutorialPipeStep : TutorialStep
     {
         [SerializeField] private int buttonToUnlockIndex;
-        private new void OnEnable()
+        [SerializeField] private BuildingScriptableObject startBuilding, endBuilding;
+        public override void Initialize()
         {
             PipeEvents.OnPipePlaced += FinishStep;
-            base.OnEnable();
+            base.Initialize();
             BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
+            PipePlacer.IsValidPlaceOverride = OverriddenPipePredicate;
         }
-    
-        private void OnDisable()
+
+        public override void Deinitialize()
         {
+            PipePlacer.IsValidPlaceOverride = null;
             PipeEvents.OnPipePlaced -= FinishStep;
         }
-    
+
         private new void FinishStep()
         {
             BuildingPanelUI.Instance.ToggleHighlight(buttonToUnlockIndex);
             base.FinishStep();
+        }
+        private bool OverriddenPipePredicate((Vector2Int, bool) values)
+        {
+            if (!BoardManager.Instance.tileDictionary.TryGetValue(values.Item1, out var toc))
+                return false;
+            return toc.Config?.Equals(values.Item2 ? endBuilding : startBuilding) ?? false;
         }
     }
 
