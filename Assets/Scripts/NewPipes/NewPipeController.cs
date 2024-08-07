@@ -12,17 +12,29 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
     private Vector2Int m_lhsConnectionPos;
     private Vector2Int m_rhsConnectionPos;
 
-    public void InitializePipes(Vector2Int lhs, Vector2Int rhs, List<Vector2Int> pipes)
+    public void InitializePipes(Vector2Int lhs, Vector2Int rhs, PipeFlowDirection lhs_pipe_dir, PipeFlowDirection rhs_pipe_dir, List<Vector2Int> pipes)
     {
-        // todo
+        int start_i = -1, end_i = -1;
+        for (int i = 0; i < pipes.Count; i++)
+        {
+            if (pipes[i].Equals(lhs)) start_i = i;
+            if (pipes[i].Equals(rhs)) end_i = i;
+        }
+
+        if (start_i == -1 || end_i == -1) throw new System.ArgumentException("start or end positions were not found in pipe point list!");
+
+        m_pipes = pipes.GetRange(start_i, end_i - start_i + 1);
+
+        m_lhsConnectionPos = m_pipes[0] - Utilities.GetPipeFlowDirOffset(lhs_pipe_dir);
+        m_rhsConnectionPos = m_pipes[^1] + Utilities.GetPipeFlowDirOffset(rhs_pipe_dir);
     }
 
     protected override void CreateInitialConnections(Vector2Int _)
     {
         var (lhs, rhs) = GetFlowablesAtEndpoints();
 
-        bool valid_l_r = lhs.IsValidConnection(rhs.GetIOConfig(), rhs.GetFlowConfig(), Relation.Output);
-        bool valid_r_l = rhs.IsValidConnection(lhs.GetIOConfig(), lhs.GetFlowConfig(), Relation.Output);
+        bool valid_l_r = lhs.IsValidConnection(rhs, Relation.Output);
+        bool valid_r_l = rhs.IsValidConnection(lhs, Relation.Output);
 
         if (!valid_l_r && !valid_r_l )
         {
@@ -54,9 +66,12 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         }
     }
 
-    public bool IsValidConnection((bool can_input, bool can_output) io, (FlowType in_type, FlowType out_type) fc, Relation r)
+    public bool IsValidConnection(Game.New.IFlowable c, Relation r)
     {
-        throw new System.NotImplementedException();
+        var endpoint = GetOtherConnection(c);
+
+        if (endpoint != null && endpoint.IsValidConnection(c, r)) return true;
+        return false;
     }
 
     public void Remove()
@@ -64,6 +79,7 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         foreach (var r in m_relations)
         {
             r.flowable.ClearRelation(this);
+            r.flowable.EvaluateConnections();
         }
     }
 
@@ -72,13 +88,9 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         SetRelation(f, r);
         f.SetRelation(this, NewPipeHelper.Flip(r));
 
-        var other = GetControllerAtOtherEnd(f);
+        var other = GetOtherConnection(f);
         other.EstablishConnection(this, r);
     }
-
-    public void ClearRelation(Game.New.IFlowable f) =>  m_relations.ClearRelation(f);
-
-    public void SetRelation(Game.New.IFlowable f, Relation r) => m_relations.SetRelation(f, r);
 
     public (bool can_input, bool can_output) GetIOConfig()
     {
@@ -102,13 +114,35 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         return (input, output);
     }
 
-    private Game.New.IFlowable GetControllerAtOtherEnd(Game.New.IFlowable controller)
+    private IConnection GetOtherConnection(IConnection c)
     {
-        return null; // TODO
+        var (lhs_c, rhs_c) = GetFlowablesAtEndpoints();
+
+        bool lhs_taken = lhs_c != null;
+        bool rhs_taken = rhs_c != null;
+
+        if (lhs_taken && lhs_c.Equals(c)) return rhs_c;
+        if (rhs_taken && rhs_c.Equals(c)) return lhs_c;
+        return null; // must be an invalid connection
     }
 
     private (Game.New.IFlowable lhs, Game.New.IFlowable rhs) GetFlowablesAtEndpoints()
     {
-        return (null, null); // TODO
+        BoardManager.Instance.TryGetTypeAt<Game.New.IFlowable>(m_lhsConnectionPos, out var lhs_c);
+        BoardManager.Instance.TryGetTypeAt<Game.New.IFlowable>(m_rhsConnectionPos, out var rhs_c);
+
+        return (lhs_c, rhs_c);
+    }
+
+
+    public void ClearRelation(Game.New.IFlowable f) => m_relations.ClearRelation(f);
+
+    public void SetRelation(Game.New.IFlowable f, Relation r) => m_relations.SetRelation(f, r);
+
+    public RelationCollection GetRelations() => m_relations;
+
+    public void OnTick()
+    {
+        Debug.Log(gameObject + " is in the forest!");
     }
 }

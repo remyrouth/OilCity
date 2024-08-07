@@ -2,7 +2,7 @@ public interface IConnection
 {
     void EstablishConnection(Game.New.IFlowable f, Relation r);
 
-    bool IsValidConnection((bool can_input, bool can_output) io, (FlowType in_type, FlowType out_type) fc, Relation r);
+    bool IsValidConnection(Game.New.IFlowable f, Relation r);
 
     void Remove();
 
@@ -11,4 +11,6 @@ public interface IConnection
     void ClearRelation(Game.New.IFlowable f);
 
     void SetRelation(Game.New.IFlowable f, Relation r);
+
+    RelationCollection GetRelations();
 }

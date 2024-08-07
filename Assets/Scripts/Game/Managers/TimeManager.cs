@@ -40,7 +40,7 @@ public class TimeManager : Singleton<TimeManager>
     private Collection<ITickReceiver> m_tickableForest = new();
 
     // invariant: contains every tree node component in the game
-    private readonly Collection<ITreeNode> m_nodes = new();
+    private readonly Collection<Game.New.IFlowable> m_nodes = new();
 
     public float TimePerTick => m_timePerTick;
     private float m_timePerTick;
@@ -93,7 +93,7 @@ public class TimeManager : Singleton<TimeManager>
         // otherwise, if no flowable component is found, we know that it's something that doesn't deal with flow
         // but needs ticks. Like a logger cabin or a geologist's hut. Hence, we'll just add it to the tickable forest
         // as its own singleton tree.
-        if (receiver is IFlowable flow_node)
+        if (receiver is Game.New.IFlowable flow_node)
             HandleRegister(flow_node);
         else
             m_tickableForest.Add(receiver as ITickReceiver);
@@ -119,7 +119,7 @@ public class TimeManager : Singleton<TimeManager>
         // otherwise, if no flowable component is found, we know that it's something that doesn't deal with flow
         // but needs ticks. Like a logger cabin or a geologist's hut. Hence, we'll just add it to the tickable forest
         // as its own singleton tree.
-        if (receiver is IFlowable flow_node)
+        if (receiver is Game.New.IFlowable flow_node)
             HandleDeregister(flow_node);
         else
             m_tickableForest.Remove(receiver as ITickReceiver);
@@ -140,32 +140,21 @@ public class TimeManager : Singleton<TimeManager>
     /// potentially reducing the number of trees in the forest.
     /// </summary>
     /// <param name="node"></param>
-    private void HandleRegister(IFlowable node)
+    private void HandleRegister(Game.New.IFlowable node)
     {
-        var children = node.GetChildren(); // cache the node's reported children (its input)
-        var parent = node.GetParent(); // cache the node's reported parent (its output)
+        var relations = node.GetRelations();
+        var children = relations.GetRelationFlowables(Relation.Output);
 
-        // the parents and the children, by the invariants, will never NOT be in the node list.
-        // therefore we can update their connections with no consequence
-        foreach (var child in children)
+        foreach (var (flowable, _) in children)
         {
-            // 
-            child.SetParent(node);
-
-            // if the child was in the forest but now has a parent, remove them from the forest
-            if (m_tickableForest.Contains(child))
+            if (m_tickableForest.Contains(flowable))
             {
-                m_tickableForest.Remove(child);
+                m_tickableForest.Remove(flowable);
             }
         }
 
-        // if we have a parent, set us as their child. Otherwise, we are the root of our tree and
-        // belong in the tickable forest.
-        if (parent != null)
-        {
-            parent.AddChild(node);
-        }
-        else
+        // if we dont have a parent
+        if (relations.GetRelationFlowables(Relation.Input).Count == 0)
         {
             m_tickableForest.Add(node);
         }
@@ -179,39 +168,19 @@ public class TimeManager : Singleton<TimeManager>
     /// forest. Unregisters children and parents and splits trees into the forest if there are children.
     /// </summary>
     /// <param name="node"></param>
-    private void HandleDeregister(IFlowable node)
+    private void HandleDeregister(Game.New.IFlowable node)
     {
-        var children = node.GetChildren(); // cache the node's children
-        var parent = node.GetParent(); // cache the node's parent
+        var relations = node.GetRelations();
+        var children = relations.GetRelationFlowables(Relation.Output);
 
-        // the parents and the children, by the invariants, will never NOT be in the node list.
-        // therefore we can update their connections with no consequence
-        foreach (var child in children)
+        foreach (var (flowable, _) in children)
         {
-            // disown children
-            child.SetParent(null);
-
-            // since we disowned them, they have to make it on their own in the vast world
-            // i.e. we have to add them to the tickable forest
-            //
-            // we dont need to check if the current node is in the forest because every node has one
-            // parent. Since we removed that parent, the child node HAS to be a root now.
-            m_tickableForest.Add(child);
+            m_tickableForest.Add(flowable);
         }
 
-        // if we have a parent, have them disown us because we've been a terrible kid to them
-        // and have failed at every possible opportunity in life.
-        //
-        // otherwise, remove ourselves from the tickable forest, since if we didn't have a parent
-        // we'd've had to have been a root.
-        if (parent != null)
-        {
-            parent.DisownChild(node);
-        }
-        else
-        {
-            m_tickableForest.Remove(node);
-        }
+        if (m_tickableForest.Contains(node)) m_tickableForest.Remove(node);
+
+        node.Remove();
 
         // remove us from the building list of all active nodes
         m_nodes.Remove(node);
@@ -233,10 +202,10 @@ public class TimeManager : Singleton<TimeManager>
 
             Gizmos.DrawSphere(mono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, 0.4f);
 
-            if (!ConvertToClassType<ITreeNode>(m_tickableForest[i], out var tree_node)) continue;
+            if (!ConvertToClassType<IConnection>(m_tickableForest[i], out var tree_node)) continue;
 
-            List<ITreeNode> children = new List<ITreeNode>();
-            children.AddRange(tree_node.GetChildren());
+            var children = new List<IConnection>();
+            children.AddRange(tree_node.GetRelations().GetRelationFlowables(Relation.Output).ConvertAll(a => a.flowable));
 
             while (children.Count > 0)
             {
@@ -252,7 +221,7 @@ public class TimeManager : Singleton<TimeManager>
 
                 Gizmos.DrawCube(imono.transform.position + Vector3.up * 0.5f + Vector3.right * 0.5f, Vector3.one * 0.35f);
 
-                children.AddRange(item.GetChildren());
+                children.AddRange(item.GetRelations().GetRelationFlowables(Relation.Output).ConvertAll(a => a.flowable));
             }
         }
     }
