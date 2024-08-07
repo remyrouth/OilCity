@@ -80,22 +80,24 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         {
             if (tile.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to))
+                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to) && pipe.GetFlowConfig().in_type == FlowType.Oil)
                 {
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
                         // ping the pipe? display a notif that this pipe isnt going to be used?
-                        // TODO
+                        QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
 
                         return;
                     }
 
                     pipe.AddChild(this);
                     SetParent(pipe);
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
                     // ping the pipe? display a notif that wells cant have inputs?
                 }
             }
