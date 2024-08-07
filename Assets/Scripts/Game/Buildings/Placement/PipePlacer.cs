@@ -213,7 +213,7 @@ public class PipePlacer : BuildingPlacer
 
         if (BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so))
         {
-            if (BoardManager.Instance.TryGetTypeAt<IFlowable>(mousePos, out var flowable))
+            if (BoardManager.Instance.TryGetTypeAt<Game.New.IFlowable>(mousePos, out var flowable))
             {
                 // flowable.GetConnectionPositions(m_wasStartPlaced);
 
@@ -313,7 +313,7 @@ public class PipePlacer : BuildingPlacer
         // if no pipes are placed (i.e. all pathfound tiles are obstructed), break
         if (pipes_laid == 0)
         {
-            IfPipeConnect();
+           //IfPipeConnect();
 
             yield break;
         }
@@ -322,7 +322,7 @@ public class PipePlacer : BuildingPlacer
         // instead, it should just be the visual, and there should be an empty gameobject that is the "pipe system"
 
         var tile_object = m_so.CreateInstance(m_start); //  this should be a PipeSO, and therefore none of the initialization is done.
-        if (!tile_object.TryGetComponent<PipeController>(out var component))
+        if (!tile_object.TryGetComponent<NewPipeController>(out var component))
         {
             Debug.LogError("Pipe prefab doesn't have a pipe controller!");
         }

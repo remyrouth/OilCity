@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewOilWellController : BuildingController<BuildingScriptableObject>, Game.New.IFlowable
+public class NewOilWellController : PayrateBuildingController, Game.New.IFlowable
 {
     private RelationCollection m_relations = new();
 
@@ -64,5 +64,15 @@ public class NewOilWellController : BuildingController<BuildingScriptableObject>
     public void OnTick()
     {
         Debug.Log(gameObject + " is in the forest!");
+    }
+
+    protected override void IncreaseProductivity()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void DecreaseProductivity()
+    {
+        throw new System.NotImplementedException();
     }
 }

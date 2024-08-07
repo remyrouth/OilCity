@@ -12,7 +12,7 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
     private Vector2Int m_lhsConnectionPos;
     private Vector2Int m_rhsConnectionPos;
 
-    public void InitializePipes(Vector2Int lhs, Vector2Int rhs, PipeFlowDirection lhs_pipe_dir, PipeFlowDirection rhs_pipe_dir, List<Vector2Int> pipes)
+    public void InitializePipe(Vector2Int lhs, Vector2Int rhs, PipeFlowDirection lhs_pipe_dir, PipeFlowDirection rhs_pipe_dir, List<Vector2Int> pipes)
     {
         int start_i = -1, end_i = -1;
         for (int i = 0; i < pipes.Count; i++)
@@ -29,10 +29,49 @@ public class NewPipeController : BuildingController<BuildingScriptableObject>, G
         m_rhsConnectionPos = m_pipes[^1] + Utilities.GetPipeFlowDirOffset(rhs_pipe_dir);
     }
 
+    public void SetTileActions(List<TileAction> actions)
+    {
+        this.TileActions = actions;
+    }
     protected override void CreateInitialConnections(Vector2Int _)
     {
         var (lhs, rhs) = GetFlowablesAtEndpoints();
 
+        bool no_lhs = lhs == null;
+        bool no_rhs = rhs == null;
+
+        // if a side doesn't have a connection, check/establish one with the side that does.
+        if (no_lhs && no_rhs) return;
+        else if (no_lhs)
+        {
+            bool valid_o = rhs.IsValidConnection(this, Relation.Output);
+            bool valid_i = rhs.IsValidConnection(this, Relation.Input);
+
+            Relation to_assign = Relation.Invalid;
+            if (valid_o && valid_i) to_assign = Relation.Ambiguous;
+            else if (valid_o) to_assign = Relation.Output;
+            else if (valid_i) to_assign = Relation.Input;
+
+            rhs.EstablishConnection(this, to_assign);
+
+            return;
+        }
+        else if (no_rhs)
+        {
+            bool valid_o = lhs.IsValidConnection(this, Relation.Output);
+            bool valid_i = lhs.IsValidConnection(this, Relation.Input);
+
+            Relation to_assign = Relation.Invalid;
+            if (valid_o && valid_i) to_assign = Relation.Ambiguous;
+            else if (valid_o) to_assign = Relation.Output;
+            else if (valid_i) to_assign = Relation.Input;
+
+            lhs.EstablishConnection(this, to_assign);
+
+            return;
+        }
+
+        // otherwise, establish them with each other.
         bool valid_l_r = lhs.IsValidConnection(rhs, Relation.Output);
         bool valid_r_l = rhs.IsValidConnection(lhs, Relation.Output);
 

@@ -22,15 +22,15 @@ public class PipeScriptableObject : BuildingScriptableObject
         // see PipePlacer for why this is an empty gameobject instead of the prefab.
         var go = new GameObject();
         go.name = "PipeSystem #" + go.GetInstanceID();
-        var component = go.AddComponent<PipeController>();
+        var component = go.AddComponent<NewPipeController>();
         component.SetTileActions(actionList);
 
 #if UNITY_EDITOR
-        component.SetDebugMesh(m_flowDebugMesh);
+       // component.SetDebugMesh(m_flowDebugMesh);
 #endif
-        component.SetConnectionIndicators(m_connection, m_noConnection);
-        component.SetActionPivot();
-        component.SetParticleSystems(_oilSpillout, _keroseneSpillout);
+       // component.SetConnectionIndicators(m_connection, m_noConnection);
+     //   component.SetActionPivot();
+       /// component.SetParticleSystems(_oilSpillout, _keroseneSpillout);
         return component;
     }
 }

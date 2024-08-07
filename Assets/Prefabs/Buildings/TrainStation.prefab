@@ -573,8 +573,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6068664385402366900}
-  - component: {fileID: 2181772803859923086}
   - component: {fileID: 1073918640123148353}
+  - component: {fileID: 5933157727812998707}
   m_Layer: 0
   m_Name: TrainStation
   m_TagString: Untagged
@@ -602,25 +602,6 @@ Transform:
   - {fileID: 7500652780508461387}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2181772803859923086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3998399413928227521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6f5a183c9888b84a88703a9166bab22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0, y: 0}
-  TileActions: []
-  _demolishEffect: {fileID: 0}
-  train: {fileID: 110611113461286646}
-  startPos: {x: 2, y: 1.45, z: 0}
-  arrivedPos: {x: 6, y: 1.45, z: 0}
-  endPos: {x: 10.2, y: 1.45, z: 0}
 --- !u!210 &1073918640123148353
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -633,6 +614,21 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &5933157727812998707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998399413928227521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb495c38f71588246b50bc31340019f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionsPivot: {x: 0, y: 0}
+  TileActions: []
+  _demolishEffect: {fileID: 0}
 --- !u!1 &6559598032567825783
 GameObject:
   m_ObjectHideFlags: 0

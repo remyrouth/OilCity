@@ -177,9 +177,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5198241070710060224}
-  - component: {fileID: 109760215276650363}
   - component: {fileID: -7377717032735671978}
   - component: {fileID: 8237504420190010124}
+  - component: {fileID: 8872860448686573811}
   m_Layer: 0
   m_Name: OilWell
   m_TagString: Untagged
@@ -206,26 +206,6 @@ Transform:
   - {fileID: 6997851930790812939}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &109760215276650363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5643698438408399773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2968e48d86fa8e54cb23066be75a1036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _actionsPivot: {x: 1, y: 1.5}
-  TileActions:
-  - {fileID: 11400000, guid: f35e15463257ef94893999209f633bdc, type: 2}
-  - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
-  - {fileID: 11400000, guid: 54cfa0dc728251640b9fdbf5e7b19560, type: 2}
-  - {fileID: 11400000, guid: 1bed6fc2bbe796a41b46fa53cc620c56, type: 2}
-  _demolishEffect: {fileID: 335666598439193946}
-  _spilloutEffect: {fileID: 4594135719596490040}
 --- !u!114 &-7377717032735671978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +238,22 @@ MonoBehaviour:
   maxVolume: 1
   soundClip: {fileID: 8300000, guid: 0b68e08ea119843639e857f602c2638f, type: 3}
   soundType: 1
+--- !u!114 &8872860448686573811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5643698438408399773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec22dab1aca413f4c9540eb3e17eb0af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionsPivot: {x: 0, y: 0}
+  TileActions:
+  - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
+  _demolishEffect: {fileID: 0}
 --- !u!1001 &5370581342571571885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -409,11 +405,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 303367a7c41e0a9488715d83d788a859, type: 3}
---- !u!198 &4594135719596490040 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5732325166656650140, guid: 303367a7c41e0a9488715d83d788a859, type: 3}
-  m_PrefabInstance: {fileID: 8092099119748908708}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6997851930790812939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1247976516910046127, guid: 303367a7c41e0a9488715d83d788a859, type: 3}
