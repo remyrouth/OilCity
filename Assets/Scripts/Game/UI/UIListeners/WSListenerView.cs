@@ -19,9 +19,9 @@ public class WSListenerView : MonoBehaviour
         _image.fillAmount = Mathf.Lerp(_image.fillAmount, _desiredValue, Time.deltaTime * 20);
         _image.color = _gradient.Evaluate(_image.fillAmount);
     }
-    private void UpdateLabel(int newWSvalue)
+    private void UpdateLabel(float newWSvalue)
     {
-        float newValue = (float)newWSvalue / 200;
+        float newValue = newWSvalue / 200;
         _desiredValue = newValue;
     }
 }

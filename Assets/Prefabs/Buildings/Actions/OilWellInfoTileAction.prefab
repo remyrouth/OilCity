@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7952892811959855842}
   - component: {fileID: 3823631547687363388}
   m_Layer: 0
-  m_Name: wage
+  m_Name: oil left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,9 +254,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameLabel: {fileID: 3447599638122612927}
-  _descriptionLabel: {fileID: 7833849379160219370}
+  _wagesInfo: {fileID: 7833849379160219370}
   _productivityLabel: {fileID: 1860264610213606251}
-  _wageLabel: {fileID: 3823631547687363388}
+  _oilLeftLabel: {fileID: 3823631547687363388}
+  currently: {fileID: 11400000, guid: 3559acadb1cd6c14c912a24c17bcca38, type: 2}
+  oilLeft: {fileID: 11400000, guid: 48c010c68e5460c41bc16b801cdc3c5c, type: 2}
+  wages: {fileID: 11400000, guid: 4cfd2b4d16a758148b90c09baed9253e, type: 2}
+  perText: {fileID: 11400000, guid: 01a34757b56959f44be1b01ac3075ff9, type: 2}
 --- !u!1 &2519316113457169159
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +407,7 @@ GameObject:
   - component: {fileID: 5675822623726893197}
   - component: {fileID: 7833849379160219370}
   m_Layer: 0
-  m_Name: desc
+  m_Name: wages
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

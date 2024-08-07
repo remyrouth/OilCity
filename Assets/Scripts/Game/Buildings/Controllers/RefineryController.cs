@@ -103,7 +103,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
         m_inputs = new List<IFlowable>();
     }
 
-    private float GetBaseRefineryFlowrate()
+    public float GetBaseRefineryFlowrate()
     {
         return OilWellController.BASE_OIL_RATE * ((int)CurrentPaymentMode + 1);
     }
@@ -170,12 +170,10 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     protected override void IncreaseProductivity()
     {
-        throw new System.NotImplementedException();
     }
 
     protected override void DecreaseProductivity()
     {
-        throw new System.NotImplementedException();
     }
     private void HandleWorkingEffects()
     {

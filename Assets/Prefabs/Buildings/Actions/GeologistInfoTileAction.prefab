@@ -254,9 +254,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameLabel: {fileID: 3975425395363291157}
-  _descriptionLabel: {fileID: 2315942565638875916}
+  _wagesInfo: {fileID: 2315942565638875916}
   _productivityLabel: {fileID: 5843169875509038821}
-  _wageLabel: {fileID: 91250404064734043}
+  _radiusLabel: {fileID: 91250404064734043}
+  workers: {fileID: 11400000, guid: 4f310a61790ee2748bfa7860062da06e, type: 2}
+  radius: {fileID: 11400000, guid: ebf804d95d49257489c2f7a29e8bc46e, type: 2}
+  wages: {fileID: 11400000, guid: 4cfd2b4d16a758148b90c09baed9253e, type: 2}
 --- !u!1 &2530353344964286499
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +272,7 @@ GameObject:
   - component: {fileID: 2100467293531543576}
   - component: {fileID: 91250404064734043}
   m_Layer: 0
-  m_Name: wage
+  m_Name: range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -648,7 +651,7 @@ GameObject:
   - component: {fileID: 6412212565521126049}
   - component: {fileID: 2315942565638875916}
   m_Layer: 0
-  m_Name: desc
+  m_Name: wages
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
