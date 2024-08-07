@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Camera_Tutorial
   m_EditorClassIdentifier: 
   text:
-  - You can move camera using the right click
-  - "Mo\u017Cesz porusza\u0107 kamer\u0105 przytrzymuj\u0105c PPM"
+  - You can move the camera by holding and dragging the right mouse button.
+  - "Mo\u017Cesz porusza\u0107 kamer\u0105 przytrzymuj\u0105c i przeci\u0105gaj\u0105c
+    prawy przycisk myszki."
