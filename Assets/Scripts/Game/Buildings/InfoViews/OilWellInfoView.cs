@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class OilWellInfoView : BuildingInfoView<OilWellInfoTileAction, OilWellController>, ILanguageChangeable
@@ -29,7 +29,7 @@ public class OilWellInfoView : BuildingInfoView<OilWellInfoTileAction, OilWellCo
         {
             if (i == (int)tileController.CurrentPaymentMode)
                 text += '>';
-            text += (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " z�\n";
+            text += (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " zł\n";
         }
         _wagesInfo.text = text;
     }

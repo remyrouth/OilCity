@@ -17,7 +17,7 @@ public class GeologistInfoView : BuildingInfoView<GeologistInfoTileAction, Geolo
     public void UpdateText()
     {
         _nameLabel.text = _focusedGeologist.config.buildingName.ToString();
-        _productivityLabel.text = $"{_focusedGeologist.WorkersAmount} {workers}";
+        _productivityLabel.text = $"{workers}{_focusedGeologist.WorkersAmount}";
         _radiusLabel.text = $"{radius}: {_focusedGeologist.Range}";
         WriteWagesInfo(_focusedGeologist);
     }
