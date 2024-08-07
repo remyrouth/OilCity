@@ -7,14 +7,14 @@ namespace Game.Tutorial
         [SerializeField] private string buildingName;
         [SerializeField] private int buttonToUnlockIndex;
         
-        private new void OnEnable()
+        public override void Initialize()
         {
+            base.Initialize();
             BoardManager.Instance.OnBuildingPlaced += FinishStep;
-            base.OnEnable();
             BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
         }
 
-        private void OnDisable()
+        public override void Deinitialize()
         {
             BoardManager.Instance.OnBuildingPlaced -= FinishStep;
         }

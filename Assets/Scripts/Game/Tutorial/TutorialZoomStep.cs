@@ -6,16 +6,16 @@ namespace Game.Tutorial
     {
         [SerializeField] private Vector3 targetPosition;
         [SerializeField] private float targetZoom;
-        
-        private new void OnEnable()
+
+        public override void Initialize()
         {
             DialogueUI.Instance.OnDialogueClicked += FinishStep;
-            base.OnEnable();
+            base.Initialize();
             CameraController.Instance.TargetPosition = targetPosition;
             CameraController.Instance.TargetZoom = targetZoom;
         }
 
-        private void OnDisable()
+        public override void Deinitialize()
         {
             DialogueUI.Instance.OnDialogueClicked -= FinishStep;
         }

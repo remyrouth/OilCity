@@ -32,10 +32,13 @@ public class TutorialManager : Singleton<TutorialManager>
             GoToNextStep();
         }
     }
-
+    private TutorialStep _currentStep = null;
     public void GoToNextStep()
     {
-        Instantiate(tutorialSteps[_nextStepIndex], transform).GetComponent<TutorialStep>();
+        if (_currentStep!= null)
+            _currentStep.Deinitialize();
+        _currentStep = Instantiate(tutorialSteps[_nextStepIndex], transform).GetComponent<TutorialStep>();
+        _currentStep.Initialize();
         _nextStepIndex++;
     }
 }

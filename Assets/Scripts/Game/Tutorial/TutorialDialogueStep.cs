@@ -4,13 +4,13 @@ namespace Game.Tutorial
 {
     public class TutorialDialogueStep : TutorialStep
     {
-        private new void OnEnable()
+        public override void Initialize()
         {
             DialogueUI.Instance.OnDialogueClicked += FinishStep;
-            base.OnEnable();
+            base.Initialize();
         }
 
-        private void OnDisable()
+        public override void Deinitialize()
         {
             DialogueUI.Instance.OnDialogueClicked -= FinishStep;
         }

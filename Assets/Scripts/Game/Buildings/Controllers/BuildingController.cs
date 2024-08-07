@@ -9,6 +9,7 @@ public abstract class BuildingController<T> : TileObjectController
     [SerializeField] protected List<TileAction> TileActions;
     [SerializeField] private Transform _demolishEffect;
     public T config { get; protected set; }
+    public override BuildingScriptableObject Config => config;
     public override Vector2Int size => config.size;
     public override Action GetCreateAction(Vector2Int pos) => ()=>config.CreateInstance(pos);
     /// <summary>
