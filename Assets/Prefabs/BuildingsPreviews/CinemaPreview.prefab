@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -8965834938133336863}
   - component: {fileID: 4850778337799650265}
   m_Layer: 0
-  m_Name: SiloPreview
+  m_Name: CinemaPreview
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4629d82c911b5834e831157ea6384e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteRenderer: {fileID: 0}
+  m_spriteRenderer: {fileID: 5800709095082127229}
 --- !u!114 &4850778337799650265
 MonoBehaviour:
   m_ObjectHideFlags: 0
