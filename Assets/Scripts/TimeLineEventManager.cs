@@ -128,7 +128,6 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     public void OnTick()
     {
         ContinueTimeLine();
-        KeroseneManager.Instance.SetFalloffPercentage(_ticksElapsed / (float)_totalTicks);
         _ticksElapsed++;
     }
 

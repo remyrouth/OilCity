@@ -6,7 +6,7 @@ public class SingleEventController : MonoBehaviour
     
     public float TriggerYear => triggerYear;
     
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         ControlManager.Instance.leftClickActivationButtontrigger += MouseClick;
     }

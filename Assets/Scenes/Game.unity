@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -48913,6 +48913,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1665236634493891976, guid: ad1289f9d7b1d944894e18227ab526e7, type: 3}
+      propertyPath: ticksPerYear
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 1665236634493891976, guid: ad1289f9d7b1d944894e18227ab526e7, type: 3}
       propertyPath: timelineSlider
       value: 

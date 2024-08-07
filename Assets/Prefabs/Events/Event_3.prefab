@@ -48,10 +48,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 2421549254056547533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea43fbd25a305664ca100682aaefd64a, type: 3}
+  m_Script: {fileID: 11500000, guid: 79492c6fbd907b3459b2453bb29640e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   triggerYear: 1861
+  tickTime: 30
+  multiplier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.7708714
+      inSlope: 0.5311411
+      outSlope: 0.5311411
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.3933858
+      value: 0.97981477
+      inSlope: -0.07126063
+      outSlope: -0.07126063
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.12794098
+    - serializedVersion: 3
+      time: 1.0014648
+      value: 0.9773712
+      inSlope: -0.004018477
+      outSlope: -0.004018477
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!222 &6796007799020300821
 CanvasRenderer:
   m_ObjectHideFlags: 0
