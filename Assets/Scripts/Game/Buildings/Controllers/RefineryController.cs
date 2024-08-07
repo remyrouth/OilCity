@@ -18,7 +18,15 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     public event Action<float> OnKeroseneProduced;
 
     public int StopWorkingTimer { private get; set; } = 0;
-
+    private void Start()
+    {
+        //OnKeroseneProduced += IndicateKeroseneAmountMade;
+    }
+    private void IndicateKeroseneAmountMade(float keroseneMade)
+    {
+        PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.KeroseneMade)
+            .Initialize(((int)(keroseneMade * 10000)).ToString(), ActionsPivot + Vector2.right);
+    }
     protected override void CreateInitialConnections(Vector2Int with_position)
     {
         m_output = null;

@@ -45,16 +45,17 @@ public class KeroseneManager : Singleton<KeroseneManager>, ITickReceiver
     /// </summary>
     public void SellKerosene()
     {
-        float soldAmount = Mathf.Clamp(KeroseneAmount, 0, MaxSoldAmount);
+        float soldAmount = AmountToSell();
         MoneyManager.Instance.AddMoney(GetKerosenePrice() * soldAmount);
         DecreaseAmount(soldAmount);
         OnKeroseneSold?.Invoke();
     }
+    public float AmountToSell() => Mathf.Clamp(KeroseneAmount, 0, MaxSoldAmount);
     public float GetKerosenePrice()
     {
         float multiplier = m_falloffCurve.Evaluate(TimeLineEventManager.Instance.GetTimePercentage());
         foreach (var effect in effects)
-            multiplier *= effect.multiplier.Evaluate((float)effect.timeElapsed/effect.length);
+            multiplier *= effect.multiplier.Evaluate((float)effect.timeElapsed / effect.length);
         return KEROSINE_PRICE * multiplier;
     }
     public void EnqueuePriceMultiplier(int time, AnimationCurve multiplier)

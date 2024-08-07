@@ -38,10 +38,10 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     private readonly Queue<Action<TrainStationController>> _sequenceActions = new();
     public void OnTick()
     {
-         if (_sequenceActions.Count == 0)
-             GenerateNewSequence();
+        if (_sequenceActions.Count == 0)
+            GenerateNewSequence();
 
-         _sequenceActions.Dequeue()?.Invoke(this);
+        _sequenceActions.Dequeue()?.Invoke(this);
 
         foreach (var child in _children)
         {
@@ -82,15 +82,17 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
 
     private void CompleteTrainSystem()
     {
-        if (!activationCheck) {
+        if (!activationCheck)
+        {
             Invoke("StartTrain", 0f);
             activationCheck = true;
-            _sequenceActions.Enqueue(e => {});
+            _sequenceActions.Enqueue(e => { });
         }
 
     }
 
-    private void StartTrain() {
+    private void StartTrain()
+    {
         train.localPosition = startPos;
         train.DOKill();
         trainSequenceSFX.ActivateWithForeignTrigger();
@@ -98,20 +100,23 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
         Invoke("EnterTrain", 8f);
     }
 
-    private void EnterTrain() {
+    private void EnterTrain()
+    {
         train.DOKill();
         train.DOLocalMove(arrivedPos, 7f);
         // StartCoroutine(LerpToDestination(startPos, arrivedPos, 3f));
         Invoke("StayTrain", 7f);
     }
 
-    private void StayTrain() {
+    private void StayTrain()
+    {
         train.DOKill();
         // Debug.Log("StayTrain");
         Invoke("ExitTrain", 6f);
     }
 
-    private void ExitTrain() {
+    private void ExitTrain()
+    {
         SellKerosene();
         OilSellSFX.ActivateWithForeignTrigger();
         train.DOLocalMove(endPos, 5);
@@ -122,12 +127,18 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
         Invoke("EndTrain", 5f);
     }
 
-    private void EndTrain() {
+    private void EndTrain()
+    {
         _sequenceActions.Enqueue(null);
         activationCheck = false;
     }
 
-    private void SellKerosene() { KeroseneManager.Instance.SellKerosene(); }
+    private void SellKerosene()
+    {
+        PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.EarnedMoney)
+            .Initialize(((int)KeroseneManager.Instance.AmountToSell() * KeroseneManager.Instance.GetKerosenePrice()).ToString(), ActionsPivot);
+        KeroseneManager.Instance.SellKerosene();
+    }
 
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
     {
