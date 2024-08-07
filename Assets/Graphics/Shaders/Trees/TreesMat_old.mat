@@ -77,5 +77,6 @@ Material:
     - _WindStrength: 0.15
     - _WitherAmount: 0
     - _WitherNoise: 50
+    - _gradientAmount: 0
     m_Colors: []
   m_BuildTextureStacks: []
