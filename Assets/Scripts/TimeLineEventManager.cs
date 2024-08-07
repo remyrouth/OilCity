@@ -17,6 +17,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     
     [SerializeField] private RectTransform timelineSlider;
     [SerializeField] private GameObject newsPaperPrefabImage;
+    private SingleSoundPlayer newsSFXPlayer;
     
     private int _ticksElapsed;
     private int _totalTicks;
@@ -39,6 +40,8 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
         {
             Debug.LogError("You must have a passage of time greater than 0f");
         }
+
+        newsSFXPlayer = GetComponent<SingleSoundPlayer>();
     }
 
     private void DisplayEvents()
@@ -66,6 +69,8 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
         var newspaperObject = Instantiate(newsPaperPrefabImage, matchedPercentagePosition, timelineSlider.gameObject.transform.rotation);
         newspaperObject.transform.SetParent(timelineSlider.transform, true);
+
+        newsSFXPlayer.ActivateWithForeignTrigger();
     }
     
     private void ContinueTimeLine()

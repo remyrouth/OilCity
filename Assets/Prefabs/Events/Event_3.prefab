@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6796007799020300821}
   - component: {fileID: 4215713042652702068}
   m_Layer: 0
-  m_Name: Event_1
+  m_Name: Event_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea43fbd25a305664ca100682aaefd64a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerYear: 1853
+  triggerYear: 1861
 --- !u!222 &6796007799020300821
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 09b66f87dc7bd2148b40797ec9fad35a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3bfac6a6d3e3a2540a3efb8897bf2e2b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -126,7 +126,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 680, y: 300}
+  m_SizeDelta: {x: 570, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8405603070740337119
 CanvasRenderer:
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac8d110a76a8ce46a586f191e6ef36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LanguageText: {fileID: 11400000, guid: a0bad2f0e6b82ae45adec0adc7b9c2d2, type: 2}
+  LanguageText: {fileID: 11400000, guid: 019e0da60f98ca045bc59bf066c9e69a, type: 2}
 --- !u!1 &3503696775148599047
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +277,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 680, y: 200}
+  m_SizeDelta: {x: 580, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7914249844969440063
 CanvasRenderer:
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The Dawn of a New Era: Kerosene Lamps Light Up Europe'
+  m_text: 'War and Wealth: American Conflict Boosts Polish Oil Exports'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
   m_sharedMaterial: {fileID: -7551883835502994205, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac8d110a76a8ce46a586f191e6ef36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LanguageText: {fileID: 11400000, guid: cdc00c5ce0cfae64b8860c7dc2f12348, type: 2}
+  LanguageText: {fileID: 11400000, guid: 523338bdadd51e04db633e3c6853a91b, type: 2}
 --- !u!1 &8281888125548888596
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 243.4, y: 118}
+  m_AnchoredPosition: {x: 291, y: 48}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4266100042273276082
