@@ -7,16 +7,16 @@ public class MasterVolumeChanger : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI valueLabel;
-    public void OnEnable()
-    {
-        if (PlayerPrefs.HasKey("MasterVolume"))
-        {
-            var prefValue = PlayerPrefs.GetFloat("MasterVolume");
-            slider.value = prefValue;
-            var intValue = (int)(prefValue * 100);
-            valueLabel.text = intValue.ToString();
-        }
-    }
+    // public void OnEnable()
+    // {
+    //     if (PlayerPrefs.HasKey("MasterVolume"))
+    //     {
+    //         var prefValue = PlayerPrefs.GetFloat("MasterVolume");
+    //         slider.value = prefValue;
+    //         var intValue = (int)(prefValue * 100);
+    //         valueLabel.text = intValue.ToString();
+    //     }
+    // }
 
     public void SetMasterVolume(float value)
     {
