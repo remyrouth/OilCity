@@ -25,7 +25,7 @@ public sealed class GeologistController : AOEBuildingController
     [SerializeField] private int _workerAmount;
     public int activeWorkerAmount { get; private set; }
     public override int TickNumberInterval => 10;
-
+    public int WorkersAmount => _workers.Count;
 
     private int GetNumberOfSearchingPoints()
     {

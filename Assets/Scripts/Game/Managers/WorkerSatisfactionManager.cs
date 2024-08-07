@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, ITickReceiver
 {
-    public int WorkerSatisfaction { get; private set; }
+    public float WorkerSatisfaction { get; private set; }
     [SerializeField] private int InitialSatisfaction = 200;
     private int _tickTimer;
     private int PaymentTimer => 5;
-    public event Action<int> OnWorkersSatisfactionChanged;
+    public event Action<float> OnWorkersSatisfactionChanged;
 
     [SerializeField] private SingleSoundPlayer workerIncreaseSfX;
     [SerializeField] private SingleSoundPlayer workerDecreaseSfX;
@@ -19,15 +19,15 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, I
         OnWorkersSatisfactionChanged += CheckForGameOver;
         OnWorkersSatisfactionChanged?.Invoke(WorkerSatisfaction);
     }
-    public void IncreaseSatisfaction(int amount) => ChangeSatisfaction(amount);
-    public void DecreaseSatisfaction(int amount)
+    public void IncreaseSatisfaction(float amount) => ChangeSatisfaction(amount);
+    public void DecreaseSatisfaction(float amount)
     {
         ChangeSatisfaction(-amount);
 
     }
     private void ChangeSatisfaction(float delta)
     {
-        WorkerSatisfaction = (int)Mathf.Clamp(WorkerSatisfaction + delta, 0, 200);
+        WorkerSatisfaction = Mathf.Clamp(WorkerSatisfaction + delta, 0, 200);
         OnWorkersSatisfactionChanged?.Invoke(WorkerSatisfaction);
 
 
@@ -42,7 +42,7 @@ public class WorkerSatisfactionManager : Singleton<WorkerSatisfactionManager>, I
             workerDecreaseSfX.ActivateWithForeignTrigger();
         }
     }
-    private void CheckForGameOver(int newValue)
+    private void CheckForGameOver(float newValue)
     {
         if (newValue <= 0)
             GameStateManager.Instance.EndGame();

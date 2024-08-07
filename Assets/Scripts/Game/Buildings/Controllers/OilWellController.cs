@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public sealed class OilWellController : PayrateBuildingController, IFlowable
@@ -23,19 +24,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
             _tickTimer = 0;
             PayWorkers();
         }
-        switch (CurrentPaymentMode)
-        {
-            case PaymentMode.LOW:
-                flowRate = (BASE_OIL_RATE - OIL_RATE_DELTA) / (config.size.x * config.size.y);
-                break;
-            case PaymentMode.MEDIUM:
-                flowRate = BASE_OIL_RATE / (config.size.x * config.size.y);
-                break;
-            case PaymentMode.HIGH:
-                flowRate = (BASE_OIL_RATE + OIL_RATE_DELTA) / (config.size.x * config.size.y);
-                break;
-        }
-        
+
+        flowRate = CurrentMineRate() / (config.size.x * config.size.y);
+
+
         for (int x = 0; x < config.size.x; x++)
         {
             for (int y = 0; y < config.size.y; y++)
@@ -48,6 +40,20 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         }
         OnOilMined?.Invoke(amountMined);
         return (FlowType.Oil, amountMined);
+    }
+    public float CurrentMineRate()
+    {
+        switch (CurrentPaymentMode)
+        {
+            case PaymentMode.LOW:
+                return (BASE_OIL_RATE - OIL_RATE_DELTA) / (config.size.x * config.size.y);
+            case PaymentMode.MEDIUM:
+                return BASE_OIL_RATE / (config.size.x * config.size.y);
+            case PaymentMode.HIGH:
+                return (BASE_OIL_RATE + OIL_RATE_DELTA) / (config.size.x * config.size.y);
+            default:
+                return BASE_OIL_RATE;
+        }
     }
 
     void Awake()
@@ -125,7 +131,7 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     public void OnTick()
     {
         var flow = SendFlow();
-        
+
         if (flow.amount > 0)
             _spilloutEffect.Play();
         else
@@ -137,12 +143,10 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
 
     protected override void IncreaseProductivity()
     {
-        throw new System.NotImplementedException();
     }
 
     protected override void DecreaseProductivity()
     {
-        throw new System.NotImplementedException();
     }
 
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
