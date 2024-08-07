@@ -6,14 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Buildings/test.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Buildings/test.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Buildings/test2.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Buildings/test2.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Buildings/Controllers/CivilianBuildingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Buildings/Controllers/CivilianBuildingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/buildings/townhall.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/buildings/townhall.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperParagraph/NewspaperParagraph SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/fonts/NewspaperParagraph/NewspaperParagraph SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle/NewspaperTitle SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle/NewspaperTitle SDF.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
