@@ -28,8 +28,10 @@ public class OilWellInfoView : BuildingInfoView<OilWellInfoTileAction, OilWellCo
         for (int i = 0; i < 3; i++)
         {
             if (i == (int)tileController.CurrentPaymentMode)
-                text += '>';
-            text += (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " zł\n";
+                text += "<color=#594331>" + "<u>" + '>';
+            text += "<color=#594331>" + (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " zł\n";
+            if (i == (int)tileController.CurrentPaymentMode)
+                text += "</u>";
         }
         _wagesInfo.text = text;
     }
@@ -44,7 +46,7 @@ public class OilWellInfoView : BuildingInfoView<OilWellInfoTileAction, OilWellCo
                 oilSum += BoardManager.Instance.OilEvaluator.GetValueAtPosition(pos.x,pos.y);
             }
         }
-        _oilLeftLabel.text = $"{oilLeft}: {(oilSum * 10000).ToString("0.00")}L";
+        _oilLeftLabel.text = $"{oilLeft}: <color=#594331> {(oilSum * 10000).ToString("0.00")}L";
     }
     private void OnDestroy()
     {
@@ -53,6 +55,6 @@ public class OilWellInfoView : BuildingInfoView<OilWellInfoTileAction, OilWellCo
     }
     private void UpdateOilLabel(float newValue)
     {
-        _productivityLabel.text = $"Currently: {(newValue*10000).ToString("0.00")} {perText}";
+        _productivityLabel.text = $"Currently: <color=#594331>{(newValue*10000).ToString("0.00")} {perText}";
     }
 }
