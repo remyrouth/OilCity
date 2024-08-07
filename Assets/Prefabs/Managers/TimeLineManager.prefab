@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9180931665567179248}
   - component: {fileID: 1665236634493891976}
+  - component: {fileID: 3574210999850624551}
   m_Layer: 0
   m_Name: TimeLineManager
   m_TagString: Untagged
@@ -53,3 +54,20 @@ MonoBehaviour:
   currentEventIndex: 0
   timelineSlider: {fileID: 0}
   newsPaperPrefabImage: {fileID: 6747949654655670300, guid: 9e464b3aa97a648afbded8f833e7c1de, type: 3}
+--- !u!114 &3574210999850624551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047436656912770977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: 2073bf7f606f65547b59df06628b6699, type: 3}
+  soundType: 0
+  usesForeignTrigger: 1
