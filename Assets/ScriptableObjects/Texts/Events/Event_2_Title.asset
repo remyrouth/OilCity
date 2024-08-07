@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e3c7a0522b2e69439d447dffcf38fcb, type: 3}
-  m_Name: Event_1_Title
+  m_Name: Event_2_Title
   m_EditorClassIdentifier: 
   text:
-  - 'The Dawn of a New Era: Kerosene Lamps Light Up Europe'
-  - Wydarzenie 1
+  - Will the Polish Oil Industry Go Up in Flames? Refinery Fire Tests Polish Oil
+    Resilience.
+  - Wydarzenie 2
