@@ -108,14 +108,14 @@ public class MoneyListenerView : MonoBehaviour
         TMP_Text text = indicator.GetComponent<TMP_Text>();
         Color initialColor = text.color;
         Vector3 initialPosition = indicator.transform.position;
-        float duration = 1.0f;
+        float duration = 0.75f;
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            text.color = new Color(initialColor.r, initialColor.g, initialColor.b, 1 - t); // Fade out the text color
-            indicator.transform.position = initialPosition + new Vector3(0, t, 0); // Move the indicator upwards
+            text.color = new Color(initialColor.r, initialColor.g, initialColor.b, 0.85f - t); // Fade out the text color
+            indicator.transform.position = initialPosition + new Vector3(0, t *50, 0); // Move the indicator upwards
             elapsed += Time.deltaTime;
             yield return null;
         }
