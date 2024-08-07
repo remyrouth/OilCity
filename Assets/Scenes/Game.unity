@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -31155,7 +31155,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: 7a45e0c49f2cfce44b73ab41cc49ce56, type: 2}
 --- !u!4 &1099259840
 Transform:
@@ -50375,6 +50375,10 @@ PrefabInstance:
       propertyPath: destroyBuilding
       value: 
       objectReference: {fileID: 2886531790533164847}
+    - target: {fileID: 6678971136501968466, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
+      propertyPath: maxVolume
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 9107677744849490129, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -50613,6 +50617,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 112677846}
+    - target: {fileID: 3978832254105441090, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7190780707448354312, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

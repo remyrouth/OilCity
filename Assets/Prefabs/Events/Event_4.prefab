@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6796007799020300821}
   - component: {fileID: 4215713042652702068}
   m_Layer: 0
-  m_Name: Event_1
+  m_Name: Event_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea43fbd25a305664ca100682aaefd64a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerYear: 1853
+  triggerYear: 1873
 --- !u!222 &6796007799020300821
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 09b66f87dc7bd2148b40797ec9fad35a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aca8e89567e0f4c4d97bbb9da207a5a4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -126,7 +126,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 680, y: 300}
+  m_SizeDelta: {x: 600, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8405603070740337119
 CanvasRenderer:
@@ -156,10 +156,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "The kerosene lamp, invented by Ignacy \u0141ukasiewicz, marks a turning
-    point for the Polish oil industry, placing us on the map. This revolutionary
-    invention illuminates millions of homes across Europe, increasing demand for
-    kerosene and establishing Poland as a pivotal player in this burgeoning oil market."
+  m_text: Russian oil barons have begun to consolidate power, leading many experts
+    to fear that the formation of this Russian oil monopoly will dominate the market,
+    given their sheer amount of oil and notoriously aggressive pricing strategy.
+    Will the Polish market be able to compete?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
   m_sharedMaterial: {fileID: 7781647505266917343, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac8d110a76a8ce46a586f191e6ef36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LanguageText: {fileID: 11400000, guid: a0bad2f0e6b82ae45adec0adc7b9c2d2, type: 2}
+  LanguageText: {fileID: 11400000, guid: fc6d1e7be1ff7984fa745415b405eddf, type: 2}
 --- !u!1 &3503696775148599047
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +277,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 680, y: 200}
+  m_SizeDelta: {x: 600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7914249844969440063
 CanvasRenderer:
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The Dawn of a New Era: Kerosene Lamps Light Up Europe'
+  m_text: 'Monopoly on the Horizon: Russian Oil Giants Reshape the Market'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
   m_sharedMaterial: {fileID: -7551883835502994205, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac8d110a76a8ce46a586f191e6ef36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LanguageText: {fileID: 11400000, guid: cdc00c5ce0cfae64b8860c7dc2f12348, type: 2}
+  LanguageText: {fileID: 11400000, guid: a4485eeb041549d4ea6ded3ee5011fb0, type: 2}
 --- !u!1 &8281888125548888596
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 243.4, y: 118}
+  m_AnchoredPosition: {x: 272, y: 195}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4266100042273276082

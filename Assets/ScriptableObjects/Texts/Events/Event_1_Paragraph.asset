@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Event_1_Paragraph
   m_EditorClassIdentifier: 
   text:
-  - XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-  - XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDfsdfsdfsdfsdfsdfsdfdsfsdfsdfsdfsdfsdfsdfsdfsd
+  - "The kerosene lamp, invented by Ignacy \u0141ukasiewicz, marks a turning point
+    for the Polish oil industry, placing us on the map. This revolutionary invention
+    illuminates millions of homes across Europe, increasing demand for kerosene and
+    establishing Poland as a pivotal player in this burgeoning oil market."
+  - Wydarzenie 1

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e3c7a0522b2e69439d447dffcf38fcb, type: 3}
-  m_Name: Event_1_Title
+  m_Name: Event_3_Title
   m_EditorClassIdentifier: 
   text:
-  - 'The Dawn of a New Era: Kerosene Lamps Light Up Europe'
-  - Wydarzenie 1
+  - 'War and Wealth: American Conflict Boosts Polish Oil Exports'
+  - Wydarzenie 3
