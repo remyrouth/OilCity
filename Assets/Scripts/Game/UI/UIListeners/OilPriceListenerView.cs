@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,12 +7,12 @@ public class OilPriceListenerView : MonoBehaviour, ITickReceiver
 
     public void OnTick()
     {
-        _label.text = (KeroseneManager.Instance.EvaluateFalloffCurve() * KeroseneManager.KEROSINE_PRICE).ToString("0.00") + "/ <sprite name=kerosene>";
+        _label.text = KeroseneManager.Instance.GetKerosenePrice().ToString("0.00") + "/ <sprite name=kerosene>";
     }
 
     private void Start()
     {
         TimeManager.Instance.RegisterReceiver(this);
-        _label.text = (KeroseneManager.Instance.EvaluateFalloffCurve() * KeroseneManager.KEROSINE_PRICE).ToString("0.00") + "/ <sprite name=kerosene>";
+        _label.text = KeroseneManager.Instance.GetKerosenePrice().ToString("0.00") + "/ <sprite name=kerosene>";
     }
 }

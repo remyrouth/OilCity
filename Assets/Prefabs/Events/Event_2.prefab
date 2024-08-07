@@ -48,10 +48,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2421549254056547533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea43fbd25a305664ca100682aaefd64a, type: 3}
+  m_Script: {fileID: 11500000, guid: 8edb456db339bda4d923b0d64e4e3f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   triggerYear: 1859
+  firePrefab: {fileID: 2644813623991431929, guid: e842d42c7b1e13548b06b7f3eb5bc547, type: 3}
+  ticksToStop: 20
 --- !u!222 &6796007799020300821
 CanvasRenderer:
   m_ObjectHideFlags: 0
