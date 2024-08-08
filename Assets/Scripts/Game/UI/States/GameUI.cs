@@ -43,7 +43,10 @@ public class GameUI : UIState
     {
         base.OnEnter();
         _buildingPanel.Open();
-        TimeManager.Instance.TicksPerMinute = 60;
+        if (!TutorialManager.Instance.InTutorial)
+        {
+            TimeManager.Instance.TicksPerMinute = 60;
+        }
     }
     public override void OnExit() //similar to base.OnExit but don't hide it
     {
