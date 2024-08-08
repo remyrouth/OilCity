@@ -88,6 +88,7 @@ public class OilWellController : PayrateBuildingController, IFlowable
                         // more than one output pipe discovered
                         // ping the pipe? display a notif that this pipe isnt going to be used?
                         pipe.ToggleSystem(peripheral_to, true);
+                        pipe.MarkSystemInvalid(peripheral_to);
                         QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
 
                         return;
@@ -101,6 +102,7 @@ public class OilWellController : PayrateBuildingController, IFlowable
                 else if (pipe.DoesPipeSystemOutputToTile(peripheral_to) && valid)
                 {
                     pipe.ToggleSystem(peripheral_to, false);
+                    pipe.MarkSystemInvalid(peripheral_to);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
                     // ping the pipe? display a notif that wells cant have inputs?
                 }
