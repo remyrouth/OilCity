@@ -27,24 +27,34 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
         {
             if (tile.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to)) // TODO not with_position, but rather the tile of the building that would be connected to
+                bool valid = pipe.WouldFlowContentsBeValid(this, peripheral_to);
+
+                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to) && valid)
                 {
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
+                        pipe.ToggleSystem(peripheral_to, false);
                         QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
                         return;
                     }
 
                     pipe.AddChild(this);
                     SetParent(pipe);
+                    pipe.ToggleSystem(peripheral_to, true);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
-                else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
+                else if (pipe.DoesPipeSystemOutputToTile(peripheral_to) && valid)
                 {
                     pipe.SetParent(this);
                     AddChild(pipe);
+                    pipe.ToggleSystem(peripheral_to, true);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
+                }
+                else
+                {
+                    pipe.ToggleSystem(peripheral_to, false);
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
             }
         }
