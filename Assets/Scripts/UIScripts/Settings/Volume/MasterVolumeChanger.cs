@@ -24,4 +24,8 @@ public class MasterVolumeChanger : MonoBehaviour
         var intValue = (int)(value * 100);
         valueLabel.text = intValue.ToString();
     }
+
+    private void Start() {
+        SettingsManager.Instance.MasterVolume = slider.value;
+    }
 }

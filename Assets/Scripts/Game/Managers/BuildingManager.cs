@@ -35,8 +35,11 @@ public class BuildingManager : Singleton<BuildingManager>
 
         _currentBuildingSO = null;
         _coroutine = null;
-        
-        UIStateMachine.Instance.ChangeState(GameState.GameUI);
+
+        if (UIStateMachine.Instance.CurrentStateType != GameState.EventUI)
+        {
+            UIStateMachine.Instance.ChangeState(GameState.GameUI);
+        }
     }
 
     private IEnumerator IEDoBuildingProcess()
