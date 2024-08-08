@@ -418,8 +418,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'War and Wealth: American Conflict Boosts Polish Oil Exports'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
-  m_sharedMaterial: {fileID: -7551883835502994205, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
+  m_sharedMaterial: {fileID: 7781647505266917343, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 17
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
