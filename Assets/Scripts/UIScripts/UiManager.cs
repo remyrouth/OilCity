@@ -20,9 +20,10 @@ namespace UIScripts
         
         public void ChangeUI(int uiIndex)
         {
-            _currentUI.SetActive(false);
-            _currentUI = availableUserInterfaces[uiIndex];
-            _currentUI.SetActive(true);
+            //_currentUI.SetActive(false);
+            //_currentUI = availableUserInterfaces[uiIndex];
+            //_currentUI.SetActive(true);
+            MenuUIStateMachine.Instance.ChangeState((MenuUIStateMachine.MenuUIType)uiIndex);
         }
 
         public void ChangeVisibility(int uiIndex)
