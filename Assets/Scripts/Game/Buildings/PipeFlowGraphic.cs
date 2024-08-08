@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PipeFlowGraphic : MonoBehaviour
@@ -46,7 +47,7 @@ public class PipeFlowGraphic : MonoBehaviour
 
     public void ToggleSystem(bool is_lhs, bool state)
     {
-        if (m_lockoutDisable)
+        if (m_lockoutDisable && state == false)
         {
             if (is_lhs) m_doLhsDisableAfterLockout = true;
             else m_doRhsDisableAfterLockout = true;
@@ -99,13 +100,28 @@ public class PipeFlowGraphic : MonoBehaviour
         m_flowType = flow;
     }
 
-    private void SetColor(Color color)
+    public void SetColor(Color color)
     {
         var cache = m_systems.rhs.main;
         cache.startColor = color;
 
         cache = m_systems.lhs.main;
         cache.startColor = color;
+    }
+
+    public void SetColor(bool is_start, Color color)
+    {
+        if (!is_start)
+        {
+            var cache = m_systems.rhs.main;
+            cache.startColor = color;
+
+        }
+        else
+        {
+            var cache = m_systems.lhs.main;
+            cache.startColor = color;
+        }
     }
 
     private IEnumerator Pulse()
