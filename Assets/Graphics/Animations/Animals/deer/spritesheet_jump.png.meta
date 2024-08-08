@@ -128,7 +128,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 101
+        width: 126
         height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -147,9 +147,9 @@ TextureImporter:
       name: spritesheet_jump_1
       rect:
         serializedVersion: 2
-        x: 101
+        x: 126
         y: 0
-        width: 101
+        width: 126
         height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -168,9 +168,9 @@ TextureImporter:
       name: spritesheet_jump_2
       rect:
         serializedVersion: 2
-        x: 202
+        x: 252
         y: 0
-        width: 101
+        width: 126
         height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -189,9 +189,9 @@ TextureImporter:
       name: spritesheet_jump_3
       rect:
         serializedVersion: 2
-        x: 303
+        x: 378
         y: 0
-        width: 101
+        width: 126
         height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -210,9 +210,9 @@ TextureImporter:
       name: spritesheet_jump_4
       rect:
         serializedVersion: 2
-        x: 404
+        x: 504
         y: 0
-        width: 101
+        width: 126
         height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
