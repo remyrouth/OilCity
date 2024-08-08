@@ -64,8 +64,13 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
     }
 
     public void ActivateWithForeignTrigger() {
-        Debug.Log("ActivateWithForeignTrigger method happened");
+        // Debug.Log("ActivateWithForeignTrigger method happened");
         audioSource.Play();
+    }
+
+    public void PauseWithForeignTrigger() {
+        // Debug.Log("PauseWithForeignTrigger method happened");
+        audioSource.Pause();
     }
 
     public float GetSoundEffectLength() {
