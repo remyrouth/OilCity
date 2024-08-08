@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="" />
+    <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_4.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/UI/States/GameUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/UI/States/GameUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/1.1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/1.1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/2.1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/2.1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/3.1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/3.1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/4.1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/4.1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/5.1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/5.1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line3.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line4.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/events/without lines/line5.png.meta" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,6 +138,7 @@
       <workItem from="1722845532063" duration="1543000" />
       <workItem from="1722930298800" duration="725000" />
       <workItem from="1723016188186" duration="6720000" />
+      <workItem from="1723103112292" duration="376000" />
     </task>
     <servers />
   </component>
