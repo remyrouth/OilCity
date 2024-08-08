@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="" />
+    <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Buildings/test.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Buildings/test.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Buildings/test2.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Buildings/test2.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Buildings/Controllers/CivilianBuildingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Buildings/Controllers/CivilianBuildingController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/buildings/townhall.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/buildings/townhall.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperParagraph/NewspaperParagraph SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/fonts/NewspaperParagraph/NewspaperParagraph SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle/NewspaperTitle SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle/NewspaperTitle SDF.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +37,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/TutorialToggle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/MasterVolumeChanger.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectId" id="2jaxCRIke0RiNF6khJXbZ6g8rqX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -110,13 +121,14 @@
       <workItem from="1722845515901" duration="7000" />
       <workItem from="1722845532063" duration="1543000" />
       <workItem from="1722930298800" duration="725000" />
-      <workItem from="1723016188186" duration="5919000" />
+      <workItem from="1723016188186" duration="6720000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">

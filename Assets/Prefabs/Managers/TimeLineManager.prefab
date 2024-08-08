@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9180931665567179248}
   - component: {fileID: 1665236634493891976}
+  - component: {fileID: 3574210999850624551}
   m_Layer: 0
   m_Name: TimeLineManager
   m_TagString: Untagged
@@ -44,12 +45,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cb4d61600fc492d9753b0b1e3adcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yearRange: {x: 1750, y: 1846}
+  yearRange: {x: 1850, y: 1890}
   currentYear: 0
-  ticksPerYear: 25
+  ticksPerYear: 24
   currentTick: 0
   events:
   - {fileID: 2421549254056547533, guid: 076c08d28ed00054d8329acad0ba64f9, type: 3}
+  - {fileID: 2421549254056547533, guid: fd1e90e4a351da1458d448b0c1d60c15, type: 3}
+  - {fileID: 2421549254056547533, guid: e9c40e769a1e4894b98ad2b5b4c0571e, type: 3}
+  - {fileID: 2421549254056547533, guid: 5f5865075e6334b4abebca1bffc0cc0b, type: 3}
+  - {fileID: 2421549254056547533, guid: 935c7a1a5d13dba42bcffc6eb1b69a97, type: 3}
   currentEventIndex: 0
   timelineSlider: {fileID: 0}
   newsPaperPrefabImage: {fileID: 6747949654655670300, guid: 9e464b3aa97a648afbded8f833e7c1de, type: 3}
+  newsSFXPlayer: {fileID: 3574210999850624551}
+--- !u!114 &3574210999850624551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047436656912770977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddfaf4a913f94292b2a4bb916f67993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldLoop: 0
+  maxVolume: 1
+  soundClip: {fileID: 8300000, guid: 2073bf7f606f65547b59df06628b6699, type: 3}
+  soundType: 0
+  usesForeignTrigger: 1

@@ -27,6 +27,9 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField]
     private SingleSoundPlayer destroyBuilding;
 
+    [SerializeField]
+    private SingleSoundPlayer placePipe;
+
 
 
     private  List<SingleSoundPlayer> soundClipList = new List<SingleSoundPlayer>();
@@ -80,6 +83,10 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SelectBuildingDestroySFXTrigger() {
         destroyBuilding.ActivateWithForeignTrigger();
+    }
+
+    public void SelectPipeSFXTrigger() {
+        placePipe.ActivateWithForeignTrigger();
     }
 
 }

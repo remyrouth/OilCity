@@ -466,6 +466,8 @@ public class PipePlacer : BuildingPlacer
             prior_pipe_pos = m_pointList[index];
         }
 
+        SoundManager.Instance.SelectPipeSFXTrigger();
+
         return pipes_laid;
     }
 
