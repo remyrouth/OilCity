@@ -114,12 +114,14 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             {
                 Debug.LogWarning("Pipe already has a connection! Ignoring...");
                 ToggleSystem(child_pos, false);
+                MarkSystemInvalid(child_pos);
                 QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
         }
         else
         {
             ToggleSystem(child_pos, false);
+            MarkSystemInvalid(child_pos);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
 
@@ -134,6 +136,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         else
         {
             ToggleSystem(parent_pos, false);
+            MarkSystemInvalid(parent_pos);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
     }
@@ -340,6 +343,17 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     public void ToggleSystem(bool is_start, bool state)
     {
         m_graphic.ToggleSystem(is_start, state);
+    }
+
+    public void MarkSystemInvalid(Vector2Int of_side)
+    {
+        bool is_start = (m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection)).Equals(of_side);
+        this.MarkSystemInvalid(is_start);
+    }
+
+    public void MarkSystemInvalid(bool is_start)
+    {
+        m_graphic.SetColor(is_start, Color.red);
     }
 
     protected override void OnDestroy()

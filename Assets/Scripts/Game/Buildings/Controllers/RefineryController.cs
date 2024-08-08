@@ -46,6 +46,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                     {
                         // more than one output pipe discovered
                         pipe.ToggleSystem(peripheral_to, false);
+                        pipe.MarkSystemInvalid(peripheral_to);
                         QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
                         return;
                     }
@@ -65,6 +66,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                 else
                 {
                     pipe.ToggleSystem(peripheral_to, false);
+                    pipe.MarkSystemInvalid(peripheral_to);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
             }
