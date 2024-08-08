@@ -343,8 +343,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'The Dawn of a New Era: Kerosene Lamps Light Up Europe'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c71e4942dfc75e349ad626dddcf00baa, type: 2}
-  m_sharedMaterial: {fileID: -3237241002483033555, guid: c71e4942dfc75e349ad626dddcf00baa, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7da30aa2d625bd44b2adac2b8969d5e, type: 2}
+  m_sharedMaterial: {fileID: 8788596217708278491, guid: f7da30aa2d625bd44b2adac2b8969d5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

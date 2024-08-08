@@ -427,8 +427,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Monopoly on the Horizon: Russian Oil Giants Reshape the Market'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
-  m_sharedMaterial: {fileID: 7781647505266917343, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7da30aa2d625bd44b2adac2b8969d5e, type: 2}
+  m_sharedMaterial: {fileID: 8788596217708278491, guid: f7da30aa2d625bd44b2adac2b8969d5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
