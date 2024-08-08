@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class OilWellController : PayrateBuildingController, IFlowable
+public class OilWellController : PayrateBuildingController, IFlowable
 {
     public const float BASE_OIL_RATE = 0.01f;
     private const float OIL_RATE_DELTA = 0.002f;

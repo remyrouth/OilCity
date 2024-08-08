@@ -23,6 +23,7 @@ public class EventUI : UIState
     {
         base.OnEnter();
         TimeManager.Instance.TicksPerMinute = 0;
+        BuildingManager.Instance.CancelBuilding();
     }
 
     public override void OnExit()
