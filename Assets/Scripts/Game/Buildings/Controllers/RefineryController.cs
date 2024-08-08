@@ -18,7 +18,15 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     public event Action<float> OnKeroseneProduced;
 
     public int StopWorkingTimer { private get; set; } = 0;
-
+    private void Start()
+    {
+        //OnKeroseneProduced += IndicateKeroseneAmountMade;
+    }
+    private void IndicateKeroseneAmountMade(float keroseneMade)
+    {
+        PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.KeroseneMade)
+            .Initialize(((int)(keroseneMade * 10000)).ToString(), ActionsPivot + Vector2.right);
+    }
     protected override void CreateInitialConnections(Vector2Int with_position)
     {
         m_output = null;
@@ -26,28 +34,28 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
         var peripherals = BoardManager.Instance.GetPeripheralTileObjectsForBuilding(with_position, config.size);
 
-        foreach (var p in peripherals)
+        foreach (var (peripheral_to, tile) in peripherals)
         {
-            if (p.tile.TryGetComponent<PipeController>(out var pipe))
+            if (tile.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(p.peripheral_to)) // TODO not with_position, but rather the tile of the building that would be connected to
+                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to)) // TODO not with_position, but rather the tile of the building that would be connected to
                 {
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
-                        // ping the pipe? display a notif that this pipe isnt going to be used?
-                        // TODO
-
+                        QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
                         return;
                     }
 
                     pipe.AddChild(this);
                     SetParent(pipe);
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
-                else if (pipe.DoesPipeSystemOutputToTile(p.peripheral_to))
+                else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
                     pipe.SetParent(this);
                     AddChild(pipe);
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
             }
         }

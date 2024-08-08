@@ -57,8 +57,9 @@ public abstract class PayrateBuildingController : BuildingController<PayrateBuil
 
         if (leftToPay > 0)
         {
-            PopupValuesPool.Instance.GetFromPool<SimpleIconPopup>(PopupValuesPool.PopupValueType.MadPeople)
-            .Initialize(ActionsPivot + Vector2.right / 2);
+            
+            //PopupValuesPool.Instance.GetFromPool<SimpleIconPopup>(PopupValuesPool.PopupValueType.MadPeople)
+            //.Initialize(ActionsPivot + Vector2.right / 2);
             WorkerSatisfactionManager.Instance.DecreaseSatisfaction((int)(leftToPay / amountToPay * 10));
         }
         PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.PaidMoney)

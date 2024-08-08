@@ -7,6 +7,7 @@ using System;
 
 public class PipePlacer : BuildingPlacer
 {
+
     [SerializeField] private GameObject m_singlePipePreviewPrefab;
     [SerializeField] private float m_pipePreviewZOffset = -0.5f;
 
@@ -19,6 +20,10 @@ public class PipePlacer : BuildingPlacer
     private PipeFlowDirection m_startDir = PipeFlowDirection.Invalid;
     private PipeFlowDirection m_endDir = PipeFlowDirection.Invalid;
     private bool m_wasStartPlaced = false;
+    private (bool c_i, bool c_o) m_ioConfig;
+    private (FlowType input, FlowType output) m_ftConfig;
+    private bool m_needsFlip;
+    private IFlowable m_first;
 
     private SpriteRenderer m_singlePipePreview;
     private LineRenderer m_pathfindingPreview;
@@ -44,6 +49,9 @@ public class PipePlacer : BuildingPlacer
         m_pathfindingPreview.colorGradient = m_lineGradient;
 
         m_pointList = new List<Vector2Int>();
+
+        m_ioConfig = (true, true);
+        m_ftConfig = (FlowType.Any, FlowType.Any);
     }
 
     #region callbacks
@@ -146,10 +154,11 @@ public class PipePlacer : BuildingPlacer
 
                 int cost_mod = 1;
 
-                if ((is_current_occupied && !is_current_src_occupied && !is_current_dest_occupied)
+
+                if (is_neighbor_dest || is_neighbor_src) cost_mod = 3;
+                else if ((is_current_occupied && !is_current_src_occupied && !is_current_dest_occupied)
                     || (is_current_src_occupied && is_neighbor_dest)
                     || (is_current_dest_occupied && is_neighbor_src)) cost_mod = 999;
-                else if (is_neighbor_dest || is_neighbor_src) cost_mod = 15;
 
 
                 int new_cost = cost_so_far[current] + cost_mod;
@@ -214,7 +223,8 @@ public class PipePlacer : BuildingPlacer
         {
             if (BoardManager.Instance.TryGetTypeAt<IFlowable>(mousePos, out var flowable))
             {
-                // flowable.GetConnectionPositions(m_wasStartPlaced);
+                if (!m_wasStartPlaced) return true;
+                if (flowable.Equals(m_first)) return false;
 
                 // logic:
                 // if the start pipe has not been placed yet, then we're in the process of placing the starting pipe.
@@ -224,8 +234,7 @@ public class PipePlacer : BuildingPlacer
                 // same thing goes for the end pipe. since the building at the end of the pipe receives the flow from said 
                 // pipe, we need to check to see if the building can actually take that flow.
 
-                var flow_config = flowable.GetInOutConfig();
-                return m_wasStartPlaced ? flow_config.can_input : flow_config.can_output;
+                return CheckOptionsForValidConnection(mousePos);
             }
 
             // is occupied, but by a non-flow building
@@ -276,6 +285,8 @@ public class PipePlacer : BuildingPlacer
 
         // to be reassigned
         m_start = TileSelector.Instance.MouseToGrid(); // record the start position of the pipe
+
+        AddConfigs(m_start);
 
         bool did_occupy_start = false;
         // if space is open, occupy it with the preview tilecontroller so that no building can slide into the "open" spot
@@ -340,10 +351,58 @@ public class PipePlacer : BuildingPlacer
         }
 
         // setup the pipe
-        component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList);
+        component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList, m_needsFlip);
+
         component.Initialize(m_so, Vector2Int.zero); // 2nd arg unused
         component.transform.position = Utilities.Vector2IntToVector3(m_start);
         PipeEvents.PlacePipe();
+    }
+
+    private void AddConfigs(Vector2Int at_pos)
+    {
+        if (!BoardManager.Instance.TryGetTypeAt<IFlowable>(at_pos, out var flowable)) return;
+
+        m_first = flowable;
+
+        m_ioConfig = flowable.GetInOutConfig();
+        m_ftConfig = flowable.GetFlowConfig();
+    }
+
+    private bool CheckOptionsForValidConnection(Vector2Int at_pos)
+    {
+        if (!BoardManager.Instance.TryGetTypeAt<IFlowable>(at_pos, out var flowable)) return false;
+
+        var io = flowable.GetInOutConfig();
+        var ft = flowable.GetFlowConfig();
+        Debug.Log(m_ioConfig + " " + m_ftConfig); // true false | kerosene none
+        Debug.Log(io + " " + ft);  // false true | none oil
+        if (io.can_input)
+        {
+            bool has_dir = m_ioConfig.c_o;
+            bool has_flow = m_ftConfig.output == ft.in_type || m_ftConfig.output == FlowType.Any;
+
+            if (has_dir && has_flow)
+            {
+                m_needsFlip = false;
+
+                return true;
+            }
+        }
+
+        if (io.can_output)
+        {
+            bool has_dir = m_ioConfig.c_i;
+            bool has_flow = m_ftConfig.input == ft.out_type || m_ftConfig.output == FlowType.Any;
+
+            if (has_dir && has_flow)
+            {
+                m_needsFlip = true;
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

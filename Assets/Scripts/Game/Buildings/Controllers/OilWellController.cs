@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public sealed class OilWellController : PayrateBuildingController, IFlowable
+public class OilWellController : PayrateBuildingController, IFlowable
 {
     public const float BASE_OIL_RATE = 0.01f;
     private const float OIL_RATE_DELTA = 0.002f;
@@ -14,6 +13,15 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     private int _tickTimer;
     private int PaymentTimer => 5;
     public event Action<float> OnOilMined;
+    private void Start()
+    {
+        //OnOilMined += IndicateOilAmountMined;
+    }
+    private void IndicateOilAmountMined(float oilMined)
+    {
+        PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.OilMade)
+            .Initialize(((int)(oilMined * 10000)).ToString(), ActionsPivot + Vector2.right);
+    }
     public (FlowType type, float amount) SendFlow()
     {
         float amountMined = 0;
@@ -72,22 +80,24 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
         {
             if (tile.TryGetComponent<PipeController>(out var pipe))
             {
-                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to))
+                if (pipe.DoesPipeSystemReceiveInputFromTile(peripheral_to) && pipe.GetFlowConfig().in_type == FlowType.Oil)
                 {
                     if (m_output != null)
                     {
                         // more than one output pipe discovered
                         // ping the pipe? display a notif that this pipe isnt going to be used?
-                        // TODO
+                        QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
 
                         return;
                     }
 
                     pipe.AddChild(this);
                     SetParent(pipe);
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(peripheral_to))
                 {
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(peripheral_to));
                     // ping the pipe? display a notif that wells cant have inputs?
                 }
             }

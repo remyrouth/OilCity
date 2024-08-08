@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Refinery description
   m_EditorClassIdentifier: 
   text:
-  - Refines oil for market
-  - Rafinuje olej na rynek
+  - Turns oil into kerosene
+  - "Zamienia rop\u0119 w naft\u0119"

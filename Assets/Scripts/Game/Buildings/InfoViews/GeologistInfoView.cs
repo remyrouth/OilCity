@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class GeologistInfoView : BuildingInfoView<GeologistInfoTileAction, GeologistController>,ILanguageChangeable
@@ -17,19 +17,21 @@ public class GeologistInfoView : BuildingInfoView<GeologistInfoTileAction, Geolo
     public void UpdateText()
     {
         _nameLabel.text = _focusedGeologist.config.buildingName.ToString();
-        _productivityLabel.text = $"{workers}{_focusedGeologist.WorkersAmount}";
-        _radiusLabel.text = $"{radius}: {_focusedGeologist.Range}";
+        _productivityLabel.text = $"{workers}<color=#594331>{_focusedGeologist.WorkersAmount}";
+        _radiusLabel.text = $"{radius}: <color=#594331>{_focusedGeologist.Range}";
         WriteWagesInfo(_focusedGeologist);
     }
 
     private void WriteWagesInfo(GeologistController tileController)
     {
-        string text = $"{wages}:\n";
+        string text = $"{wages}:\n<color=#594331>";
         for (int i = 0; i < 3; i++)
         {
             if (i == (int)tileController.CurrentPaymentMode)
-                text += '>';
-            text += (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " z�\n";
+                text += "<u>"+'>';
+            text += (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " zł\n";
+            if (i == (int)tileController.CurrentPaymentMode)
+                text += "</u>";
         }
         _wagesInfo.text = text;
     }

@@ -152,6 +152,7 @@ MonoBehaviour:
   _type: 0
   popupTime: 4
   _label: {fileID: 4954989590840007056}
+  _icon: {fileID: 4003958864160483884}
 --- !u!225 &-9177235751633458639
 CanvasGroup:
   m_ObjectHideFlags: 0
