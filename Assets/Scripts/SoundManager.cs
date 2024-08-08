@@ -112,4 +112,14 @@ public class SoundManager : Singleton<SoundManager>
         placePipe.ActivateWithForeignTrigger();
     }
 
+    public void PauseContinuousSounds() {
+        cameraMusicPlayer.PauseWithForeignTrigger();
+        cameraAmbiencePlayer.PauseWithForeignTrigger();
+    }
+
+    public void PlayContinuousSounds() {
+        cameraMusicPlayer.ActivateWithForeignTrigger();
+        cameraAmbiencePlayer.ActivateWithForeignTrigger();
+    }
+
 }

@@ -16,7 +16,7 @@ public class CreditsUI : MenuUIState
         creditsPivot.anchoredPosition = Vector2.zero;
         creditsCanvas.alpha = 0;
         blackCanvas.alpha = 0;
-        creditsCanvas.DOFade(1, 1).SetDelay(1);
+        creditsCanvas.DOFade(1, 1).SetDelay(1); 
         blackCanvas.DOFade(1,1.5f);
         blackCanvas.DOFade(0,1).SetDelay(1.5f);
         creditsPivot.DOLocalMoveY(endingY, 40).SetDelay(6);
