@@ -13,12 +13,17 @@ public class ParallaxEffect : MonoBehaviour
 
     private void LateUpdate()
     {
-        float mouseX = Mathf.Clamp01(ControlManager.Instance.RetrieveMousePosition().x / Screen.width) * 2 - 1;
-        
+        float mouseX;
+        if (overrideMouseX != null)
+            mouseX = overrideMouseX!.Value;
+        else
+            mouseX = Mathf.Clamp01(ControlManager.Instance.RetrieveMousePosition().x / Screen.width) * 2 - 1;
+
         foreach (var layer in layers)
         {
             Vector2 targetPos = new Vector2(mouseX * layer.strength, layer.rect.anchoredPosition.y);
             layer.rect.anchoredPosition = Vector2.Lerp(layer.rect.anchoredPosition, targetPos, Time.deltaTime * 5);
         }
     }
+    public float? overrideMouseX;
 }
