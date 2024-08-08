@@ -128,7 +128,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 101
+        width: 126
         height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -147,9 +147,9 @@ TextureImporter:
       name: idle_spritesheet_1
       rect:
         serializedVersion: 2
-        x: 101
+        x: 126
         y: 0
-        width: 101
+        width: 126
         height: 134
       alignment: 0
       pivot: {x: 0, y: 0}
