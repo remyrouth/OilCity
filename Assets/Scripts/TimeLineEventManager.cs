@@ -110,6 +110,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     private void TriggerNextEvent()
     {
         OnEventTrigger?.Invoke();
+        Debug.Log("HERE");
         UIStateMachine.Instance.ChangeState(GameState.EventUI);
     }
 

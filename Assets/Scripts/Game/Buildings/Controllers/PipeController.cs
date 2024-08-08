@@ -14,10 +14,13 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     private Vector2Int m_startPipePos; // position of the start pipe
     private Vector2Int m_endPipePos; // position of the end pipe
 
-    private List<Vector2Int> m_pipes;
+    private List<Vector2Int> m_pipes; 
+
+    [SerializeField] private PipeSpillageEffect _oilSpillout, _keroseneSpillout;
+    [SerializeField] private PipeFlowGraphic m_graphic;
 
 #if UNITY_EDITOR
-    private Mesh m_debugMesh;
+    [SerializeField] private Mesh m_debugMesh;
 
     public void SetDebugMesh(Mesh debugMesh) => m_debugMesh = debugMesh;
 #endif
@@ -55,21 +58,40 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             (m_endDirection, m_startDirection) = (Utilities.FlipFlow(m_startDirection), Utilities.FlipFlow(m_endDirection));
             m_pipes.Reverse();
         }
+
+        m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
     }
 
-    public void SetTileActions(List<TileAction> actions)
+    public bool WouldFlowContentsBeValid(IFlowable with, Vector2Int at_pos)
     {
-        this.TileActions = actions;
-    }
-    public void SetActionPivot()
-    {
-        _actionsPivot = Vector2.one / 2;
-    }
-    private PipeSpillageEffect _oilSpillout, _keroseneSpillout;
-    public void SetParticleSystems(GameObject _oil, GameObject _kerosene)
-    {
-        _oilSpillout = Instantiate(_oil, transform).GetComponent<PipeSpillageEffect>();
-        _keroseneSpillout = Instantiate(_kerosene, transform).GetComponent<PipeSpillageEffect>();
+        var with_flow = with.GetFlowConfig();
+        bool is_with_inputting_to_us = (m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection)).Equals(at_pos);
+
+        if (is_with_inputting_to_us)
+        {
+            // if we have no parent taking flow from us, then we dont have any criteria
+            if (m_parent == null)
+            {
+                return true;
+            }
+
+            // otherwise, does the flow match up?
+            var flow_required_by_parent = m_parent.GetFlowConfig().in_type;
+            return flow_required_by_parent == with_flow.out_type;
+        }
+        else
+        {
+            // if we have no parent giving flow to us, then we dont have any criteria
+            if (m_child == null)
+            {
+                return true;
+            }
+
+            // otherwise, does the flow match up?
+            var flow_required_by_child = m_child.GetFlowConfig().out_type;
+            return flow_required_by_child == with_flow.in_type;
+        }
+
     }
 
     protected override void CreateInitialConnections(Vector2Int _)
@@ -85,16 +107,21 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             {
                 obj.SetParent(this);
                 AddChild(obj);
+                ToggleSystem(child_pos, true);
                 QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
             else
             {
                 Debug.LogWarning("Pipe already has a connection! Ignoring...");
+                ToggleSystem(child_pos, false);
+                MarkSystemInvalid(child_pos);
                 QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
         }
         else
         {
+            ToggleSystem(child_pos, false);
+            MarkSystemInvalid(child_pos);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
 
@@ -103,10 +130,13 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             pobj.AddChild(this);
             SetParent(pobj);
+            ToggleSystem(parent_pos, true);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
         else
         {
+            ToggleSystem(parent_pos, false);
+            MarkSystemInvalid(parent_pos);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
     }
@@ -216,6 +246,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (m_child != null && m_child.Equals(child))
         {
             m_child = null;
+            ToggleSystem(true, false); // disable the left pipe system
             // PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
     }
@@ -254,17 +285,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="parent"></param>
     public void SetParent(IFlowable parent)
     {
-        
-        if (parent != null)
+        if (parent == null)
         {
-            //PingSpot(m_connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
-        }
-        else
-        {
-            //PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
+            ToggleSystem(false, false); // disable the right pipe system
         }
         
-
         m_parent = parent;
         _oilSpillout.Stop();
         _keroseneSpillout.Stop();
@@ -297,14 +322,45 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <returns></returns>
     public (FlowType type, float amount) SendFlow()
     {
-        if (m_child == null) return (FlowType.None, 0f);
+        if (m_child == null)
+        {
+            return (FlowType.None, 0f);
+        }
 
-        return m_child.SendFlow();
+        var output = m_child.SendFlow();
+
+        m_graphic.SetFlow(output.type);
+
+        return output;
+    }
+
+    public void ToggleSystem(Vector2Int of_side, bool state)
+    {
+        bool is_start = (m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection)).Equals(of_side);
+        this.ToggleSystem(is_start, state);
+    }
+
+    public void ToggleSystem(bool is_start, bool state)
+    {
+        m_graphic.ToggleSystem(is_start, state);
+    }
+
+    public void MarkSystemInvalid(Vector2Int of_side)
+    {
+        bool is_start = (m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection)).Equals(of_side);
+        this.MarkSystemInvalid(is_start);
+    }
+
+    public void MarkSystemInvalid(bool is_start)
+    {
+        m_graphic.SetColor(is_start, Color.red);
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
+
+        Destroy(m_graphic);
 
         // clear all relevant pipe tiles from supermap
         foreach (var pos in m_pipes)

@@ -13,7 +13,14 @@ MonoBehaviour:
   m_Name: Event_2_Paragraph
   m_EditorClassIdentifier: 
   text:
-  - "Tragedy struck today as a fire engulfed some of key oil refineries. Could this
-    signal the end of this growing industry? Experts say that, depending on the workers'
-    motivation, it could pose a significant threat to its growth.\r"
-  - Wydarzenie 2
+  - Tragedy struck today as a fire engulfed some of Poland's key oil refineries.
+    Given the volatile nature of the oil industry and the highly flammable properties
+    of kerosene, such incidents are an ever-present risk. Could this signal the end
+    of this growing industry? Experts say that, depending on the workers' motivation
+    and the industry's ability to adapt, it could pose a significant threat to its
+    growth.
+  - "Wielka tragedia zawita\u0142a dzisiaj w B\xF3brce. Wybuch\u0142 po\u017Car w
+    jednej z kluczowych polskich rafinerii. Zwa\u017Cywszy na \u0142atwopalno\u015B\u0107
+    ropy mo\u017Ce to by\u0107 powa\u017Cne zagro\u017Cenie dla rozwoju przemys\u0142u
+    naftowego. Eksperci twierdz\u0105, \u017Ce wszystko zale\u017Cy od motywacji
+    pracownik\xF3w i umiej\u0119tno\u015Bci tej bran\u017Cy do adaptacji. "

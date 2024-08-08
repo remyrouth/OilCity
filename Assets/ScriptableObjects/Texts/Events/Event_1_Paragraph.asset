@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text:
   - "The kerosene lamp, invented by Ignacy \u0141ukasiewicz, marks a turning point
-    for the Polish oil industry, placing us on the map. This revolutionary invention
-    illuminates millions of homes across Europe, increasing demand for kerosene and
-    establishing Poland as a pivotal player in this burgeoning oil market."
-  - Wydarzenie 1
+    for the oil industry. This revolutionary invention illuminates thousands of homes
+    across Europe, increasing demand for kerosene and establishing Poland as a pivotal
+    player in this burgeoning oil market."
+  - "Najnowszy wynalazek Ignacego \u0141ukasiewicza, czyli lampa naftowa wyznaczy\u0142a
+    prze\u0142omowy moment w bran\u017Cy naftowej. Ten prze\u0142omowy wynalazek
+    o\u015Bwietli\u0142 tysi\u0105ce dom\xF3w w ca\u0142ej Europie, zwi\u0119kszaj\u0105c
+    popyt na rop\u0119 i ustawiaj\u0105c Polsk\u0119 jako kluczowego gracza na tym
+    rosn\u0105cym rynku."
