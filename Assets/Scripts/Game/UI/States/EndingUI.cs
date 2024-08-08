@@ -29,6 +29,7 @@ public class EndingUI : UIState
 
         _graphPivot.DOMove(startPosition, 2);
         _background.DOColor(new Color(0, 0, 0, 0.75f), 1);
+        SoundManager.Instance.PauseContinuousSounds();
     }
 
 
