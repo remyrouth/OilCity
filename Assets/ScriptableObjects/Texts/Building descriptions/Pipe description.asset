@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Pipe description
   m_EditorClassIdentifier: 
   text:
-  - Transports oil
-  - Transportuje olej
+  - Transports oil and kerosene
+  - "Transportuje rop\u0119 i naft\u0119"
