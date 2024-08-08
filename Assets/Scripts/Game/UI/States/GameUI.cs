@@ -32,9 +32,7 @@ public class GameUI : UIState
             TileSelector.Instance.OnMouseClick();
         }
     }
-
-
-
+    
     public void ChangeDialoguePanelVisibility()
     {
         dialoguePanel.SetActive(!dialoguePanel.activeSelf);

@@ -39,6 +39,7 @@ namespace Game.Managers
 
         private void Start() {
             VolumeInitializationForSoundPlayers();
+            Invoke("VolumeInitializationForSoundPlayers", 0.25f);
         }
 
         public void VolumeInitializationForSoundPlayers() {
