@@ -155,8 +155,8 @@ public class PipePlacer : BuildingPlacer
                 int cost_mod = 1;
 
 
-                if (is_neighbor_dest || is_neighbor_src) cost_mod = 3;
-                else if ((is_current_occupied && !is_current_src_occupied && !is_current_dest_occupied)
+                if (is_neighbor_dest || is_neighbor_src) cost_mod = 5;
+                if ((is_current_occupied && !is_current_src_occupied && !is_current_dest_occupied)
                     || (is_current_src_occupied && is_neighbor_dest)
                     || (is_current_dest_occupied && is_neighbor_src)) cost_mod = 999;
 

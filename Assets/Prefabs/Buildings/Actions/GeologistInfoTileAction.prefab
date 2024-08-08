@@ -185,8 +185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rendererPivot: {fileID: 7412211723027621600}
   _buildingInfoView: {fileID: 2194906766153754678}
-  _normalPivot: {x: 0, y: -80}
-  _upsideDownPivot: {x: 0, y: 80}
+  _normalPivot: {x: 0, y: -140}
+  _upsideDownPivot: {x: 0, y: 20}
 --- !u!1 &2296898163550744829
 GameObject:
   m_ObjectHideFlags: 0
