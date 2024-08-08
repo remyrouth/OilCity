@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Step_12_Geologist_part_1
   m_EditorClassIdentifier: 
   dialogueTextEnglish: "To meet our quota, it's crucial that we find the best oil
-    spots. That's why we're hiring a geologist. \r                             .
-    They're experts at digging deep and leaving no stone unturned when it comes to
-    finding oil.\r"
+    spots. That's why we're hiring a geologist. They're experts at digging deep and
+    leaving no stone unturned when it comes to finding oil. \r\r"
   dialogueTextPolish: "Je\u017Celi chcesz spe\u0142ni\u0107 wymagane cele, musisz
     znale\u017A\u0107 wi\u0119cej ropy. Pomog\u0105 tobie w tym geologowie. S\u0105
     oni ekspertami na tym polu."
