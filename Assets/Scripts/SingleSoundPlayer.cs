@@ -72,8 +72,8 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         return audioSource.clip.length;
     }
 
-    public void InitializeFromSoundManager(AudioClip musicTrack, SoundType soundType) {
-        soundType = soundType;
+    public void InitializeFromSoundManager(AudioClip musicTrack, SoundType enumSoundType) {
+        soundType = enumSoundType;
         shouldLoop = false;
         maxVolume = 1f;
         soundClip = musicTrack;
