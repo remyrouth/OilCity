@@ -72,8 +72,8 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         return audioSource.clip.length;
     }
 
-    public void InitializeFromSoundManager(AudioClip musicTrack) {
-        soundType = SoundType.MusicTrack;
+    public void InitializeFromSoundManager(AudioClip musicTrack, SoundType soundType) {
+        soundType = soundType;
         shouldLoop = false;
         maxVolume = 1f;
         soundClip = musicTrack;
