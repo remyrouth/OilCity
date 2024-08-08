@@ -410,7 +410,27 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
     {
-        var through_flow = m_child == null ? FlowType.None : m_child.GetFlowConfig().out_type;
+        FlowType through_flow = FlowType.Any;
+        
+        if (m_child != null) through_flow = m_child.GetFlowConfig().out_type;
+        if (m_parent != null)
+        {
+            if (m_parent is not PipeController)
+            {
+                var parent_flow = m_parent.GetFlowConfig().in_type;
+
+                if (through_flow == FlowType.Any)
+                {
+                    through_flow = parent_flow;
+                }
+                else if (through_flow != parent_flow)
+                {
+                    // ERROR? How did this happen?!
+                    BoardManager.Instance.Destroy(this);
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.WhatTheHell, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
+                }
+            }
+        }
 
         return (through_flow, through_flow);
     }

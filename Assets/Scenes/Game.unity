@@ -50743,6 +50743,8 @@ MonoBehaviour:
     value: {fileID: 4624880366324698991, guid: 27f93976abce7ac41a06bac47d172572, type: 3}
   - key: 1
     value: {fileID: 4624880366324698991, guid: 34db478054f6f364e99edd89a5f61e02, type: 3}
+  - key: 2
+    value: {fileID: 4624880366324698991, guid: 696c6241e281adf4ca25bfff69cacacb, type: 3}
 --- !u!114 &1321047933
 MonoBehaviour:
   m_ObjectHideFlags: 0
