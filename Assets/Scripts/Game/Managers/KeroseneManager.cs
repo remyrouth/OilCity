@@ -6,6 +6,7 @@ using UnityEngine;
 public class KeroseneManager : Singleton<KeroseneManager>, ITickReceiver
 {
     [SerializeField] private AnimationCurve m_falloffCurve;
+    [SerializeField] private SingleSoundPlayer sellSFX;
 
     public float KeroseneAmount { get; private set; }
     public float KeroseneSumAmount { get; private set; } = 0;
