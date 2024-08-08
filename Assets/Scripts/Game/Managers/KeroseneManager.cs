@@ -50,6 +50,7 @@ public class KeroseneManager : Singleton<KeroseneManager>, ITickReceiver
         MoneyManager.Instance.AddMoney(GetKerosenePrice() * soldAmount);
         DecreaseAmount(soldAmount);
         OnKeroseneSold?.Invoke();
+        sellSFX.ActivateWithForeignTrigger();
     }
     public float AmountToSell() => Mathf.Clamp(KeroseneAmount, 0, MaxSoldAmount);
     public float GetKerosenePrice()
