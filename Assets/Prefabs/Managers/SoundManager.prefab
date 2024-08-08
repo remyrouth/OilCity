@@ -49,6 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicTrackList:
+  - musicTrack: {fileID: 8300000, guid: 5443e0a2309edba4199c8ab5074bc8f1, type: 3}
+    musicTrackoreder: 1
+  - musicTrack: {fileID: 8300000, guid: b6f9b85134c9c9b47953497316c2589f, type: 3}
+    musicTrackoreder: 2
+  - musicTrack: {fileID: 8300000, guid: 924dfb09031909746b6ba18674a456d9, type: 3}
+    musicTrackoreder: 3
+  ambientTrackList:
   - musicTrack: {fileID: 8300000, guid: 309249dcba869dc498df2c3ec0d79ebc, type: 3}
     musicTrackoreder: 1
   - musicTrack: {fileID: 8300000, guid: 07bf6c2980f8b3741ad6ea9020c98a66, type: 3}
