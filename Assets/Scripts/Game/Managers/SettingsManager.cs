@@ -38,6 +38,10 @@ namespace Game.Managers
         }
 
         private void Start() {
+            VolumeInitializationForSoundPlayers();
+        }
+
+        public void VolumeInitializationForSoundPlayers() {
             OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
             OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
             OnMusicVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
