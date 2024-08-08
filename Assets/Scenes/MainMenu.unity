@@ -2704,6 +2704,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 464099741}
     m_Modifications:
+    - target: {fileID: 642836354097234283, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_text
+      value: "Biana Rybchynska - Art Direction, 2D Artist, Animator, Game Design\r\nCarlos
+        Garza - Programmer, QA, Game Design, Lead Narrative\r\nMateo Jacolow - Lead
+        Sound Design, Music Lead, Game Design\r\nNathan Gooneratne - Programmer,
+        Game Design,  Pipe specialist\r\nOskar Rojek - UI Programmer, Tutorial Programmer,
+        Programmer, Game Design\r\nPiotr Nowicki - Programmer, Game Design\r\nPiotr
+        Trze\u015Bniowski - Lead Programmer, Game Design, Technical Artist\r\nRemy
+        Routh - Programmer, Game Design, Sound Engineer\r\nTaisa Kazakevich - Co-Art
+        Direction, 2D Artist, Animator, Game Design\r\nRoman Badiere - Programmer,
+        Game Design"
+      objectReference: {fileID: 0}
     - target: {fileID: 3612017762154042549, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
