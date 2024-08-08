@@ -9,12 +9,12 @@ public class OilWellInfoView : BuildingInfoView<OilWellInfoTileAction, OilWellCo
     public override void Initialize(OilWellInfoTileAction action, OilWellController tileController)
     {
         _focusedOilWell = tileController;
+        _focusedOilWell.OnOilMined += UpdateOilLabel;
         UpdateText();
     }
     public void UpdateText()
     {
         UpdateOilLabel(0);
-        _focusedOilWell.OnOilMined += UpdateOilLabel;
         _nameLabel.text = _focusedOilWell.config.buildingName.ToString();
 
         WriteOilLeft();
@@ -53,7 +53,7 @@ public class OilWellInfoView : BuildingInfoView<OilWellInfoTileAction, OilWellCo
     }
     private void UpdateOilLabel(float newValue)
     {
-        _productivityLabel.text = $"Currently: <color=#594331>{(newValue*10000).ToString("0.00")} {perText}";
         WriteOilLeft();
+        _productivityLabel.text = $"{currently}: <color=#594331>{(newValue*10000).ToString("0.00")} {perText}";
     }
 }
