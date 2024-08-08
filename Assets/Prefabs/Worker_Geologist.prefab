@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2450150424957681139}
   - component: {fileID: 883866055064839064}
   - component: {fileID: 7903910020555444394}
+  - component: {fileID: 3123050953401631598}
   m_Layer: 0
   m_Name: Worker_Geologist
   m_TagString: Untagged
@@ -119,3 +120,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2a84fb36a4a7f44a636d55a0c6d4b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3123050953401631598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3270306656179796501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513946113378ef74f9a90dc53765a108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newer: {fileID: 22100000, guid: 5d8b78194f41bc14a8f24c405473c838, type: 2}
+  older: {fileID: 22100000, guid: 2a066f647693cde4f86e0baddedff4f5, type: 2}

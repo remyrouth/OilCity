@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: cinemaProductivity
   m_EditorClassIdentifier: 
   text:
-  - Worker Satisfaction increase per second
-  - Zadowolenie podniesione / s
+  - Worker Satisfaction per second
+  - "Zadowolenie pracownik\xF3w na sekund\u0119"

@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class LumberjackInfoView : BuildingInfoView<LumberjackInfoTileAction, WoodCutterController>,ILanguageChangeable
@@ -22,18 +22,20 @@ public class LumberjackInfoView : BuildingInfoView<LumberjackInfoTileAction, Woo
     public void UpdateText()
     {
         _nameLabel.text = _focusedWoodcutter.config.buildingName.ToString();
-        _productivityLabel.text = $"{_focusedWoodcutter.WorkersCount} {workers}";
-        _radiusLabel.text = $"{radius}: {_focusedWoodcutter.Range}";
+        _productivityLabel.text = $"{workers}<color=#594331> {_focusedWoodcutter.WorkersCount}";
+        _radiusLabel.text = $"{radius}: <color=#594331>{_focusedWoodcutter.Range}";
         WriteWagesInfo(_focusedWoodcutter);
     }
     private void WriteWagesInfo(WoodCutterController tileController)
     {
-        string text = $"{wages}:\n";
+        string text = $"{wages}:\n<color=#594331>";
         for (int i = 0; i < 3; i++)
         {
             if (i == (int)tileController.CurrentPaymentMode)
-                text += '>';
-            text += (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " z�\n";
+                text += "<u>"+'>';
+            text += (tileController.config.basePayrate + tileController.config.payrateLevelDelta * i).ToString() + " zł\n";
+            if (i == (int)tileController.CurrentPaymentMode)
+                text += "</u>";
         }
         _wagesInfo.text = text;
     }

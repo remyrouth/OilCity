@@ -100,8 +100,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
 
         var (connect_to_child, connect_to_parent) = ValidatePipesAndConnect(child_pos, parent_pos);
-
-        if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var obj) && obj.GetInOutConfig().can_output)
+        IFlowable obj = null;
+        if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out obj) && obj.GetInOutConfig().can_output)
         {
             if (obj.GetParent() == null)
             {
@@ -123,7 +123,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
 
-        if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj) && pobj.GetInOutConfig().can_input)
+        if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj) && pobj.GetInOutConfig().can_input && 
+            (obj == null || (obj.GetFlowConfig().out_type == pobj.GetFlowConfig().in_type))) // to prevent soft connections from well to train station
         {
             pobj.AddChild(this);
             SetParent(pobj);

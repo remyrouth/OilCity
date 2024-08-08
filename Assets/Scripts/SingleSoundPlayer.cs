@@ -64,16 +64,35 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
     }
 
     public void ActivateWithForeignTrigger() {
-        Debug.Log("ActivateWithForeignTrigger method happened");
+        // Debug.Log("ActivateWithForeignTrigger method happened");
         audioSource.Play();
+    }
+
+    public void PauseWithForeignTrigger() {
+        // Debug.Log("PauseWithForeignTrigger method happened");
+        audioSource.Pause();
     }
 
     public float GetSoundEffectLength() {
         return audioSource.clip.length;
     }
 
-    public void InitializeFromSoundManager(AudioClip musicTrack) {
-        soundType = SoundType.MusicTrack;
+    public void InitializeFromSoundManager(AudioClip musicTrack, SoundType enumSoundType) {
+        // print prior sound type?
+        soundType = enumSoundType;
+        settingsManager.OnSoundEffectVolumeChanged -= ChangePercentOutput;
+        switch (soundType)
+        {
+            case SoundType.AmbientSoundEffect:
+                settingsManager.OnAmbientSoundVolumeChanged += ChangePercentOutput;
+                break;
+            case SoundType.MusicTrack:
+                settingsManager.OnMusicVolumeChanged += ChangePercentOutput;
+                break;
+            default:
+                break;
+        }
+        SettingsManager.Instance.VolumeInitializationForSoundPlayers();
         shouldLoop = false;
         maxVolume = 1f;
         soundClip = musicTrack;

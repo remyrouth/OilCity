@@ -17,6 +17,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     
     [SerializeField] private RectTransform timelineSlider;
     [SerializeField] private GameObject newsPaperPrefabImage;
+    [SerializeField] private SingleSoundPlayer newsSFXPlayer;
     
     private int _ticksElapsed;
     private int _totalTicks;
@@ -66,6 +67,8 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
         var newspaperObject = Instantiate(newsPaperPrefabImage, matchedPercentagePosition, timelineSlider.gameObject.transform.rotation);
         newspaperObject.transform.SetParent(timelineSlider.transform, true);
+
+        newsSFXPlayer.ActivateWithForeignTrigger();
     }
     
     private void ContinueTimeLine()
@@ -123,7 +126,6 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
     public void OnTick()
     {
         ContinueTimeLine();
-        KeroseneManager.Instance.SetFalloffPercentage(_ticksElapsed / (float)_totalTicks);
         _ticksElapsed++;
     }
 

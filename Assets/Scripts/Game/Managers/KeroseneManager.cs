@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
-public class KeroseneManager : Singleton<KeroseneManager>
+public class KeroseneManager : Singleton<KeroseneManager>, ITickReceiver
 {
     [SerializeField] private AnimationCurve m_falloffCurve;
 
@@ -13,10 +15,8 @@ public class KeroseneManager : Singleton<KeroseneManager>
     public event Action<float> OnKeroseneChanged;
     public event Action OnKeroseneSold;
 
+    private List<PriceEffect> effects = new();
 
-    private float m_falloffPercent;
-
-    public void SetFalloffPercentage(float centage) => m_falloffPercent = centage;
 
     /// <summary>
     /// Increases the current amount of kerosene owned by the player.
@@ -45,13 +45,33 @@ public class KeroseneManager : Singleton<KeroseneManager>
     /// </summary>
     public void SellKerosene()
     {
-        float soldAmount = Mathf.Clamp(KeroseneAmount, 0, MaxSoldAmount);
-        MoneyManager.Instance.AddMoney(KEROSINE_PRICE * soldAmount * EvaluateFalloffCurve());
+        float soldAmount = AmountToSell();
+        MoneyManager.Instance.AddMoney(GetKerosenePrice() * soldAmount);
         DecreaseAmount(soldAmount);
         OnKeroseneSold?.Invoke();
     }
-    public float EvaluateFalloffCurve()
+    public float AmountToSell() => Mathf.Clamp(KeroseneAmount, 0, MaxSoldAmount);
+    public float GetKerosenePrice()
     {
-        return m_falloffCurve.Evaluate(m_falloffPercent);
+        float multiplier = m_falloffCurve.Evaluate(TimeLineEventManager.Instance.GetTimePercentage());
+        foreach (var effect in effects)
+            multiplier *= effect.multiplier.Evaluate((float)effect.timeElapsed / effect.length);
+        return KEROSINE_PRICE * multiplier;
     }
+    public void EnqueuePriceMultiplier(int time, AnimationCurve multiplier)
+    {
+        effects.Add(new PriceEffect() { length = time, multiplier = multiplier });
+    }
+
+    public void OnTick()
+    {
+        for (int i = effects.Count - 1; i >= 0; i--)
+        {
+            effects[i].timeElapsed++;
+            if (effects[i].timeElapsed < effects[i].length)
+                effects.RemoveAt(i);
+        }
+    }
+
+    private class PriceEffect { public int length; public AnimationCurve multiplier; public int timeElapsed = 0; }
 }

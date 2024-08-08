@@ -7274,7 +7274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f5a183c9888b84a88703a9166bab22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0, y: 0}
+  _actionsPivot: {x: 7, y: 1}
   TileActions: []
   _demolishEffect: {fileID: 0}
   train: {fileID: 3496263879821223959}
@@ -8040,7 +8040,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: f4d321b1f44420b42963e589ac6cafb5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b1ba018b15bcc4c42bb0511c942bea03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -8738,7 +8738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5170029147417011966
 Transform:
   m_ObjectHideFlags: 0
@@ -8998,7 +8998,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d96101540bb014d4996c6cd5577feee3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 45dea6eeea93cc6469dc6a7c4271a2af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

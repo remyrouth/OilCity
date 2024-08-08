@@ -16,6 +16,17 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
     private int PaymentTimer => 5;
     public bool IsWorking { get; private set; } = false;
     public event Action<float> OnKeroseneProduced;
+
+    public int StopWorkingTimer { private get; set; } = 0;
+    private void Start()
+    {
+        //OnKeroseneProduced += IndicateKeroseneAmountMade;
+    }
+    private void IndicateKeroseneAmountMade(float keroseneMade)
+    {
+        PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.KeroseneMade)
+            .Initialize(((int)(keroseneMade * 10000)).ToString(), ActionsPivot + Vector2.right);
+    }
     protected override void CreateInitialConnections(Vector2Int with_position)
     {
         m_output = null;
@@ -68,6 +79,11 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     public (FlowType type, float amount) SendFlow()
     {
+        if (StopWorkingTimer > 0)
+        {
+            StopWorkingTimer--;
+            return (FlowType.Kerosene, 0);
+        }
         float OilSum = 0;
         keroseneMultiplier = GetKeroseneMultiplier();
         foreach (var child in m_inputs)

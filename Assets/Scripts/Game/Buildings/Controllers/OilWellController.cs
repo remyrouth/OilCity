@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public sealed class OilWellController : PayrateBuildingController, IFlowable
+public class OilWellController : PayrateBuildingController, IFlowable
 {
     public const float BASE_OIL_RATE = 0.01f;
     private const float OIL_RATE_DELTA = 0.002f;
@@ -14,6 +13,15 @@ public sealed class OilWellController : PayrateBuildingController, IFlowable
     private int _tickTimer;
     private int PaymentTimer => 5;
     public event Action<float> OnOilMined;
+    private void Start()
+    {
+        //OnOilMined += IndicateOilAmountMined;
+    }
+    private void IndicateOilAmountMined(float oilMined)
+    {
+        PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.OilMade)
+            .Initialize(((int)(oilMined * 10000)).ToString(), ActionsPivot + Vector2.right);
+    }
     public (FlowType type, float amount) SendFlow()
     {
         float amountMined = 0;
