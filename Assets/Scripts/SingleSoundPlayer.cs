@@ -101,6 +101,10 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
             audioSource.clip = soundClip;
             audioSource.volume = 1f;
         }
+
+        audioSource.Play();
+
+
     }
 
     // This method changes the percentage of the total volume
