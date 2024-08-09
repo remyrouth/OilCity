@@ -400,7 +400,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 7
@@ -617,7 +617,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -815, y: -2429}
+  m_AnchoredPosition: {x: -633, y: -2433}
   m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8401703729144052387
@@ -693,7 +693,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1170, y: 1390}
+  m_SizeDelta: {x: 1170, y: 1510}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4007425149865099042
 CanvasRenderer:
@@ -723,17 +723,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<B><allcaps>Biana Rybchynska</allcaps></B> - Art Direction, 2D Artist,
-    Animator, Game Design\r\n\n<B><allcaps>Carlos Garza</allcaps></B> - Programmer,
-    QA, Game Design, Lead Narrative\r\n\n<B><allcaps>Mateo Jacolow</allcaps></B>
-    - Lead Sound Design, Music Lead, Game Design\r\n\n<B><allcaps>Nathan Gooneratne</allcaps></B>
-    - Programmer, Game Design,  Pipe specialist\n\r\n<B><allcaps>Oskar Rojek</allcaps></B>
-    - UI Programmer, Programmer, Game Design\r,\nPolish Localization\n\n<B><allcaps>Piotr
-    Nowicki</allcaps></B> - Programmer, Game Design\r\n\n<B><allcaps>Piotr Trze\u015Bniowski</allcaps></B>
-    - Lead Programmer, Game Design, Technical Artist\r\n\n<B><allcaps>Remy Routh</allcaps></B>
-    - Programmer, Game Design, Sound Engineer\r\n\n<B><allcaps>Taisa Kazakevich</allcaps></B>
-    - Co-Art Direction, 2D Artist, Animator, Game Design\r\n\n<B><allcaps>Roman Badiere</allcaps></B>
-    - Programmer, Game Design"
+  m_text: "<B><allcaps>Biana Rybchynska</allcaps></B>\nArt Direction, 2D Artist,
+    Animator, Game Design\r\n\n<B><allcaps>Carlos Garza</allcaps></B>\nProgrammer,
+    QA, Game Design, Lead Narrative\r\n\n<B><allcaps>Mateo Jacolow</allcaps></B>\nLead
+    Sound Design, Music Lead, Game Design\r\n\n<B><allcaps>Nathan Gooneratne</allcaps></B>\nProgrammer,
+    Game Design,  Pipe specialist\n\r\n<B><allcaps>Oskar Rojek</allcaps></B>\nProgrammer,
+    Game Design, Polish Localization\n\n<B><allcaps>Piotr Nowicki</allcaps></B>\nProgrammer,
+    Game Design\r\n\n<B><allcaps>Piotr Trze\u015Bniowski</allcaps></B> \nLead Programmer,
+    Game Design, Technical Artist\r\n\n<B><allcaps>Remy Routh</allcaps></B> \nProgrammer,
+    Game Design, Sound Engineer\r\n\n<B><allcaps>Taisa Kazakevich</allcaps></B> \nCo-Art
+    Direction, 2D Artist, Animator, Game Design\r\n\n<B><allcaps>Roman Badiere</allcaps></B>\nProgrammer,
+    Game Design"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53668daf71c59054c93ee30651b5f3df, type: 2}
   m_sharedMaterial: {fileID: 2049269147911872467, guid: 53668daf71c59054c93ee30651b5f3df, type: 2}
@@ -767,7 +767,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 7
@@ -1330,7 +1330,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 423.24, y: -2348.032}
+  m_AnchoredPosition: {x: 564, y: -2364}
   m_SizeDelta: {x: 192.47, y: 281.935}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7297977607699275918
@@ -1426,7 +1426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 815, y: -1454}
+  m_AnchoredPosition: {x: 762, y: -1454}
   m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1012286563261821214
@@ -1789,7 +1789,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 7
@@ -1858,8 +1858,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.4269285, y: -3039.8608}
-  m_SizeDelta: {x: 2049.041, y: 5003.11}
+  m_AnchoredPosition: {x: 0.011963, y: -3264.3516}
+  m_SizeDelta: {x: 1920, y: 5452.0913}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3566638313563413088
 CanvasRenderer:
@@ -2158,7 +2158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 365, y: -4145}
+  m_AnchoredPosition: {x: 365, y: -4266}
   m_SizeDelta: {x: 1671.8, y: 443.0892}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1299371785212396706
@@ -2233,7 +2233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -821, y: -1287}
+  m_AnchoredPosition: {x: -702, y: -1294}
   m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7018113831418193819
@@ -2308,7 +2308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 791, y: -926}
+  m_AnchoredPosition: {x: 728, y: -848}
   m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7270997613867094987
@@ -2383,7 +2383,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -795, y: -819}
+  m_AnchoredPosition: {x: -724.67, y: -811}
   m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &850688422228395008
@@ -2732,7 +2732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -815, y: -2832}
+  m_AnchoredPosition: {x: -724.67, y: -2832}
   m_SizeDelta: {x: 192.47, y: 281.935}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3103371033963131476
@@ -3004,7 +3004,7 @@ MonoBehaviour:
   parallax: {fileID: 0}
   background: {fileID: 0}
   creditsPivot: {fileID: 4837188129897061526}
-  endingY: 4640
+  endingY: 4980
   creditsCanvas: {fileID: 4126471570925779971}
   blackCanvas: {fileID: 1139152441527852843}
 --- !u!1 &7337050780650303198
@@ -3116,7 +3116,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 815, y: -3339}
+  m_AnchoredPosition: {x: 739, y: -3339}
   m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4724214182730695719
@@ -3191,7 +3191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -795, y: -1773}
+  m_AnchoredPosition: {x: -648, y: -1766}
   m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &122109307574240402
@@ -3300,8 +3300,8 @@ MonoBehaviour:
   m_text: "Aaron Cai,Anastasiya Mashkina, Evgeniia Glushkova, Janset Ece Ko\xE7,
     Laurel Parsons, Lily Kravchenko,Oleksandr Smirnov, Oskar Kalbarczyk, Berkay G\xFCney,
     Irina Ryabova, \r\nKevin McGrath, Kevin Rodriguez, Lily Jawadiwar, Luca Sandoval,
-    Marek Kisieli\u0144ski, \t\r\nMykola Ihnatenko, Yan Rybchynskyi, Ben Jaccaci,
-    Igor Sienkiewicz, Isaac Polite, Ivan Havrylenko, Jeremi Surzyn, Karol Kozio\u0142,
+    Marek Kisieli\u0144ski, \nMykola Ihnatenko, Yan Rybchynskyi, Ben Jaccaci, Igor
+    Sienkiewicz, Isaac Polite, Ivan Havrylenko, Jeremi Surzyn, Karol Kozio\u0142,
     Logan Chandler, Maria Niczyporuk, Rafael Moroz, Zuzia Schabowska\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53668daf71c59054c93ee30651b5f3df, type: 2}
@@ -3336,7 +3336,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 7
@@ -3623,7 +3623,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 7
@@ -3915,7 +3915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -799, y: -3339}
+  m_AnchoredPosition: {x: -764, y: -3319}
   m_SizeDelta: {x: 420, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5730254703914414106
