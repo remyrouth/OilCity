@@ -21,6 +21,7 @@ public class BuildingPanelUI : Singleton<BuildingPanelUI>
         }
     }
 
+
     public void ToggleButtonInteractable(int buttonIndex)
     {
         buildingButtons[buttonIndex].interactable = !buildingButtons[buttonIndex].interactable;
