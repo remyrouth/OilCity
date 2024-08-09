@@ -22,5 +22,5 @@ MonoBehaviour:
   <size>k__BackingField: {x: 2, y: 1}
   <buildingName>k__BackingField: {fileID: 11400000, guid: e3fffec891fac6b4da5e10c2e664a6ce, type: 2}
   <description>k__BackingField: {fileID: 11400000, guid: 350ae611a60e6f449b12f84b4f445710, type: 2}
-  <basePayrate>k__BackingField: 100
+  <basePayrate>k__BackingField: 50
   <payrateLevelDelta>k__BackingField: 50

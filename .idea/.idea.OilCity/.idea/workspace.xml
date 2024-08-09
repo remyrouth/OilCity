@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Events/Event_1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle/NewspaperTitle SDF.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle/NewspaperTitle SDF.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle/NewspaperTitle.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/art/fonts/NewspaperTitle/NewspaperTitle.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/CreditsPanel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/CreditsPanel.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Texts/UI/Credits.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Texts/UI/Credits.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Texts/UI/Help.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Texts/UI/Help.asset.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,6 +119,7 @@
       <workItem from="1722930298800" duration="725000" />
       <workItem from="1723016188186" duration="6720000" />
       <workItem from="1723103112292" duration="2895000" />
+      <workItem from="1723193125643" duration="639000" />
     </task>
     <servers />
   </component>
