@@ -6,7 +6,7 @@ namespace Game.Tutorial
     {
         [SerializeField] private DialogueSO dialogueText;
         [SerializeField] private Sprite portraitImage;
-    
+
         public virtual void Initialize()
         {
             DialogueUI.Instance.ChangeText(dialogueText);
@@ -18,7 +18,8 @@ namespace Game.Tutorial
         protected void FinishStep()
         {
             TutorialManager.Instance.GoToNextStep();
-            Destroy(gameObject);
+            if (this)
+                Destroy(gameObject);
         }
     }
 
