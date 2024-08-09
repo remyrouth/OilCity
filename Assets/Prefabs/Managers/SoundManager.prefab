@@ -62,6 +62,13 @@ MonoBehaviour:
     musicTrackoreder: 2
   - musicTrack: {fileID: 8300000, guid: 50d0ed8709de4bd46bb4b61a9478980c, type: 3}
     musicTrackoreder: 3
+  citySoundList:
+  - musicTrack: {fileID: 8300000, guid: 35d616d2a05004321bba19022828ae4b, type: 3}
+    musicTrackoreder: 1
+  - musicTrack: {fileID: 8300000, guid: 4f5d2fd54b33747449955cf1eb0dd72e, type: 3}
+    musicTrackoreder: 2
+  - musicTrack: {fileID: 8300000, guid: 151b8a0bfc62c476b85c416a504b269e, type: 3}
+    musicTrackoreder: 3
   buildingClick: {fileID: 4307375788796852804}
   buttonClick: {fileID: 2921372561070751491}
   destroyBuilding: {fileID: 6678971136501968466}
