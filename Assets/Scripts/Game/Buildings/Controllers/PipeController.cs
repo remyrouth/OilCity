@@ -14,14 +14,14 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     private Vector2Int m_startPipePos; // position of the start pipe
     private Vector2Int m_endPipePos; // position of the end pipe
 
-    private bool m_hasEndPipeAtStart = false;
-    private bool m_hasEndPipeAtEnd = false;
+    private GameObject m_endpipeAtStart;
+    private GameObject m_endpipeAtEnd;
 
     private List<Vector2Int> m_pipes; 
 
     [SerializeField] private PipeSpillageEffect _oilSpillout, _keroseneSpillout;
     [SerializeField] private PipeFlowGraphic m_graphic;
-    [SerializeField] private Sprite m_pipeEndSprite;
+    [SerializeField] private GameObject m_endpointPipe;
 
 #if UNITY_EDITOR
     [SerializeField] private Mesh m_debugMesh;
@@ -276,16 +276,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
             if (m_child != null && m_child is not PipeController)
             {
-                var rot = new PipeSpriteScript.PipeRotation
-                {
-                    Sprite = m_pipeEndSprite,
-                    Rotation = Vector2.SignedAngle(Vector2.down, Utilities.GetPipeFlowDirOffset(m_startDirection))
-                };
-                BoardManager.Instance.SetPipeTileInSupermap(
-                    m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection),
-                    rot);
+                var rot = Vector2.SignedAngle(Vector2.down, Utilities.GetPipeFlowDirOffset(m_startDirection));
 
-                m_hasEndPipeAtStart = true;
+                m_endpipeAtStart = Instantiate(m_endpointPipe);
+                m_endpipeAtStart.transform.position = Utilities.Vector2IntToVector3(m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection)) + new Vector3(0.5f, 0.5f);
+                m_endpipeAtStart.transform.Rotate(0f, 0f, rot);
             }
         }
 
@@ -299,11 +294,10 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     {
         if (m_child != null && m_child.Equals(child))
         {
-            if (m_child is not PipeController && m_hasEndPipeAtStart)
+            if (m_child is not PipeController && m_endpipeAtStart != null)
             {
-                BoardManager.Instance.ClearSupermapTile(m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection));
-
-                m_hasEndPipeAtStart = false;
+                Destroy(m_endpipeAtStart);
+                m_endpipeAtStart = null;
             }
 
             m_child = null;
@@ -355,22 +349,16 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         // sprite view at end of pipe
         if (parent != null && parent is not PipeController)
         {
-            var rot = new PipeSpriteScript.PipeRotation
-            {
-                Sprite = m_pipeEndSprite,
-                Rotation = -Vector2.SignedAngle(Vector2.down, Utilities.GetPipeFlowDirOffset(m_endDirection))
-            };
-            BoardManager.Instance.SetPipeTileInSupermap(
-                pos,
-                rot);
+            var rot = Vector2.SignedAngle(Vector2.down, Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_endDirection)));
 
-            m_hasEndPipeAtEnd = true;
+            m_endpipeAtEnd = Instantiate(m_endpointPipe);
+            m_endpipeAtEnd.transform.position = Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)) + new Vector3(0.5f, 0.5f);
+            m_endpipeAtEnd.transform.Rotate(0f, 0f, rot);
         }
-        else if (parent == null && m_hasEndPipeAtEnd)
+        if (parent == null && m_endpipeAtEnd != null)
         {
-            BoardManager.Instance.ClearSupermapTile(pos);
-
-            m_hasEndPipeAtEnd = false;
+            Destroy(m_endpipeAtEnd);
+            m_endpipeAtEnd = null;
         }
 
         m_parent = parent;
@@ -445,10 +433,16 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         Destroy(m_graphic);
 
-        if (m_hasEndPipeAtStart)
-            BoardManager.Instance.ClearSupermapTile(m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection));
-        if (m_hasEndPipeAtEnd)
-            BoardManager.Instance.ClearSupermapTile(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection));
+        if (m_endpipeAtEnd)
+        {
+            Destroy(m_endpipeAtEnd);
+            m_endpipeAtEnd = null;
+        }
+        if (m_endpipeAtStart)
+        {
+            Destroy(m_endpipeAtStart);
+            m_endpipeAtStart = null;
+        }
 
         // clear all relevant pipe tiles from supermap
         foreach (var pos in m_pipes)

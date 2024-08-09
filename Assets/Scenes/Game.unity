@@ -54385,7 +54385,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1850073789}
-  - {fileID: 2119364389}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!210 &929915907
@@ -82514,6 +82513,8 @@ GameObject:
   - component: {fileID: 2119364389}
   - component: {fileID: 2119364391}
   - component: {fileID: 2119364390}
+  - component: {fileID: 2119364392}
+  - component: {fileID: 2119364393}
   m_Layer: 0
   m_Name: PipeTileMap
   m_TagString: Untagged
@@ -82534,7 +82535,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 929915906}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &2119364390
 TilemapRenderer:
@@ -82623,6 +82624,30 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!210 &2119364392
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119364388}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!156049354 &2119364393
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119364388}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
 --- !u!223 &317563776639957445
 Canvas:
   m_ObjectHideFlags: 0
@@ -85763,7 +85788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6202773402116066392, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6202773402116066392, guid: 633a53a529bff7945b511daff03bc261, type: 3}
       propertyPath: m_SortingOrder
@@ -85883,6 +85908,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 287986757}
+  - {fileID: 2119364389}
   - {fileID: 929915906}
   - {fileID: 1246100214}
   - {fileID: 2985886566380463532}
