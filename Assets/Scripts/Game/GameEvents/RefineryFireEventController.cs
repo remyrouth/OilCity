@@ -16,8 +16,8 @@ public class RefineryFireEventController : SingleEventController
         random.StopWorkingTimer = ticksToStop;
         Instantiate(firePrefab, random.Anchor.ToVector3(), Quaternion.identity)
             .GetComponent<RefineryFireEffect>()
-            .Initialize(8);
-        CameraController.Instance.TargetPosition = random.Anchor.ToVector3() 
+            .Initialize(ticksToStop, random);
+        CameraController.Instance.TargetPosition = random.Anchor.ToVector3()
             + Vector3.forward * CameraController.Instance.TargetPosition.z;
     }
 }

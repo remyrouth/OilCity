@@ -7,6 +7,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 {
     private float baseRefineryFlowrate;
     private float keroseneMultiplier;
+    public bool underFire = false;
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
@@ -220,7 +221,13 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                 vfx.Stop();
         }
     }
-
+    public override List<TileAction> GetActions()
+    {
+        var actions = base.GetActions();
+        if (underFire)
+            actions.RemoveAt(1);
+        return actions;
+    }
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
     {
         return (FlowType.Oil, FlowType.Kerosene);
