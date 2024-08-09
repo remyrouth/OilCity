@@ -70,6 +70,7 @@ MonoBehaviour:
   _oilSpillout: {fileID: 2259515733599905677}
   _keroseneSpillout: {fileID: 8562081783982675506}
   m_graphic: {fileID: -7569275394492071248}
+  m_endpointPipe: {fileID: 4146010908677713640, guid: 479d83dd604ec5948b73576c5f2fdd99, type: 3}
   m_debugMesh: {fileID: -2432090755550338912, guid: c7309ae32cff9ef4fa19b167aa5c7ec3, type: 3}
 --- !u!1001 &3768304642239176195
 PrefabInstance:

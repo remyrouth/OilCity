@@ -74,22 +74,26 @@ public class SoundManager : Singleton<SoundManager>
     }
     public void AddCameraSoundTrack(List<MusicTrack> trackList, SingleSoundPlayer SFXPlayer, ref int currentTrackIndex, SingleSoundPlayer.SoundType soundType)
     {
-        if (currentTrackIndex >= trackList.Count) return;
+        try {
+            if (currentTrackIndex >= trackList.Count) return;
 
-        if (SFXPlayer == null) {
-            SFXPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
-        }
-        SFXPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, soundType);
+            if (SFXPlayer == null) {
+                SFXPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+            }
+            SFXPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, soundType);
 
-        if (currentTrackIndex < trackList.Count - 1)
-        {
+
             int index = currentTrackIndex;
             // Invoke("ContinuePlayingTracks", trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
             // this.Invoke(() => AddCameraSoundTrack(trackList, SFXPlayer, currentTrackIndex), trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
+            currentTrackIndex++;
             StartCoroutine(ContinuePlayingTracksCoroutine(trackList, SFXPlayer, currentTrackIndex, soundType, trackList[currentTrackIndex].musicTrack.length - trackLeadTime));
+
+            // currentTrackIndex++;
+        } catch (Exception error) {
+
         }
 
-        currentTrackIndex++;
     }
 
 
@@ -132,8 +136,13 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     public void PauseContinuousSounds() {
-        cameraMusicPlayer.PauseWithForeignTrigger();
-        cameraAmbiencePlayer.PauseWithForeignTrigger();
+       if (cameraMusicPlayer == null) {
+            Debug.Log("cameraMusicPlayer is not null");
+       } else {
+            Debug.Log("cameraMusicPlayer not null");
+       }
+        cameraMusicPlayer?.PauseWithForeignTrigger();
+        cameraAmbiencePlayer?.PauseWithForeignTrigger();
     }
 
     public void PlayContinuousSounds() {

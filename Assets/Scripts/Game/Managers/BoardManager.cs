@@ -285,14 +285,14 @@ public class BoardManager : Singleton<BoardManager>
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        /*Gizmos.color = Color.yellow;
+        Gizmos.color = Color.yellow;
         foreach (var building in InitialBuildings)
         {
             Vector3 middle = new Vector3(building.pos.x, building.pos.y, 0);
             middle += new Vector3(building.config.size.x, building.config.size.y, 0) / 2;
             Vector3 size = new Vector3(building.config.size.x, building.config.size.y, 0);
             Gizmos.DrawCube(middle, size);
-        }*/
+        }
     }
 #endif
 }

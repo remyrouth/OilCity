@@ -241,7 +241,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: f3508ceb988d44767889f334adf36f4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -402,6 +402,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1bed6fc2bbe796a41b46fa53cc620c56, type: 2}
   _demolishEffect: {fileID: 335666598439193946}
   _spilloutEffect: {fileID: 4594135719596490040}
+  ignacy: {fileID: 8921091757360805718}
 --- !u!114 &-7377717032735671978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,7 +516,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ca8f52fed6e994b4da50b28b5acca84c, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -536,15 +537,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f3508ceb988d44767889f334adf36f4b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 3c16d32f0b5516644bd78094750ec733, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7101698693641317563
@@ -725,7 +726,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5691190586157005203, guid: 2e6ae2f1beb20d54f8b6249b866dc443, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.447
+      value: 0.086
       objectReference: {fileID: 0}
     - target: {fileID: 5691190586157005203, guid: 2e6ae2f1beb20d54f8b6249b866dc443, type: 3}
       propertyPath: m_LocalPosition.y
@@ -775,6 +776,11 @@ PrefabInstance:
 --- !u!4 &6851521497591227810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5691190586157005203, guid: 2e6ae2f1beb20d54f8b6249b866dc443, type: 3}
+  m_PrefabInstance: {fileID: 1292063803958090801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8921091757360805718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7647183089670040423, guid: 2e6ae2f1beb20d54f8b6249b866dc443, type: 3}
   m_PrefabInstance: {fileID: 1292063803958090801}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5370581342571571885

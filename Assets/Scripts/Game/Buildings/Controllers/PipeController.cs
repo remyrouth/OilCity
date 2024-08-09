@@ -14,10 +14,14 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     private Vector2Int m_startPipePos; // position of the start pipe
     private Vector2Int m_endPipePos; // position of the end pipe
 
+    private GameObject m_endpipeAtStart;
+    private GameObject m_endpipeAtEnd;
+
     private List<Vector2Int> m_pipes; 
 
     [SerializeField] private PipeSpillageEffect _oilSpillout, _keroseneSpillout;
     [SerializeField] private PipeFlowGraphic m_graphic;
+    [SerializeField] private GameObject m_endpointPipe;
 
 #if UNITY_EDITOR
     [SerializeField] private Mesh m_debugMesh;
@@ -257,6 +261,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <returns></returns>
     public (bool can_input, bool can_output) GetInOutConfig() => (true, true);
 
+
     #region tree stuff
     /// <summary>
     /// If the pipe has no child source or the current child isn't the input child, reassign.
@@ -268,7 +273,15 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         if (m_child == null || !m_child.Equals(child))
         {
             m_child = child;
-            //PingSpot(m_connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
+
+            if (m_child != null && m_child is not PipeController)
+            {
+                var rot = Vector2.SignedAngle(Vector2.down, Utilities.GetPipeFlowDirOffset(m_startDirection));
+
+                m_endpipeAtStart = Instantiate(m_endpointPipe);
+                m_endpipeAtStart.transform.position = Utilities.Vector2IntToVector3(m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection)) + new Vector3(0.5f, 0.5f);
+                m_endpipeAtStart.transform.Rotate(0f, 0f, rot);
+            }
         }
 
     }
@@ -281,9 +294,14 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     {
         if (m_child != null && m_child.Equals(child))
         {
+            if (m_child is not PipeController && m_endpipeAtStart != null)
+            {
+                Destroy(m_endpipeAtStart);
+                m_endpipeAtStart = null;
+            }
+
             m_child = null;
             ToggleSystem(true, false); // disable the left pipe system
-            // PingSpot(m_noConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
     }
 
@@ -321,11 +339,28 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     /// <param name="parent"></param>
     public void SetParent(IFlowable parent)
     {
+        var pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
+
         if (parent == null)
         {
             ToggleSystem(false, false); // disable the right pipe system
         }
-        
+
+        // sprite view at end of pipe
+        if (parent != null && parent is not PipeController)
+        {
+            var rot = Vector2.SignedAngle(Vector2.down, Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_endDirection)));
+
+            m_endpipeAtEnd = Instantiate(m_endpointPipe);
+            m_endpipeAtEnd.transform.position = Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)) + new Vector3(0.5f, 0.5f);
+            m_endpipeAtEnd.transform.Rotate(0f, 0f, rot);
+        }
+        if (parent == null && m_endpipeAtEnd != null)
+        {
+            Destroy(m_endpipeAtEnd);
+            m_endpipeAtEnd = null;
+        }
+
         m_parent = parent;
         _oilSpillout.Stop();
         _keroseneSpillout.Stop();
@@ -397,6 +432,17 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         base.OnDestroy();
 
         Destroy(m_graphic);
+
+        if (m_endpipeAtEnd)
+        {
+            Destroy(m_endpipeAtEnd);
+            m_endpipeAtEnd = null;
+        }
+        if (m_endpipeAtStart)
+        {
+            Destroy(m_endpipeAtStart);
+            m_endpipeAtStart = null;
+        }
 
         // clear all relevant pipe tiles from supermap
         foreach (var pos in m_pipes)

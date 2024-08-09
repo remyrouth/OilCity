@@ -4,9 +4,8 @@ public class KerosenePriceChangeEventController : SingleEventController
 {
     [SerializeField] private int tickTime;
     [SerializeField] private AnimationCurve multiplier;
-    protected override void OnEnable()
+    protected void OnEnable()
     {
-        base.OnEnable();
         KeroseneManager.Instance.EnqueuePriceMultiplier(tickTime, multiplier);
     }
 }

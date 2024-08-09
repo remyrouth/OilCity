@@ -136,7 +136,7 @@ public class TrainStationController : BuildingController<BuildingScriptableObjec
     private void SellKerosene()
     {
         PopupValuesPool.Instance.GetFromPool<SimpleTextPopup>(PopupValuesPool.PopupValueType.EarnedMoney)
-            .Initialize(((int)KeroseneManager.Instance.AmountToSell() * KeroseneManager.Instance.GetKerosenePrice()).ToString(), ActionsPivot);
+            .Initialize(((int)KeroseneManager.Instance.AmountToSell() * KeroseneManager.Instance.GetKerosenePrice()).ToString("0.00"), ActionsPivot);
         KeroseneManager.Instance.SellKerosene();
     }
 
