@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e3c7a0522b2e69439d447dffcf38fcb, type: 3}
-  m_Name: Dont_Want_Tutorial
+  m_Name: Event_2_Effect
   m_EditorClassIdentifier: 
   text:
-  - No
-  - Nie
+  - 'Effects: random refinery is on fire and stopped working for 20 seconds'
+  - "Efekt: losowa rafineria jest w p\u0142omieniach i przesta\u0142a dzia\u0142a\u0107
+    na 20 sekund"

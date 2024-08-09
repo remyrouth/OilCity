@@ -18,11 +18,17 @@ public class PipeFlowGraphic : MonoBehaviour
     private bool m_doLhsDisableAfterLockout = false;
     private bool m_doRhsDisableAfterLockout = false;
 
+    private bool m_invalidLhs = false;
+    private bool m_invalidRhs = false;
+
     public void SetupSystems(Vector2Int lhs, Vector2Int rhs, PipeFlowDirection lhs_dir, PipeFlowDirection rhs_dir)
     {
         m_doLhsDisableAfterLockout = false;
         m_doRhsDisableAfterLockout = false;
         m_flowType = FlowType.None;
+
+        m_invalidLhs = false;
+        m_invalidRhs = false;
         
         var lhs_dir_offset = Utilities.GetPipeFlowDirOffset(lhs_dir);
         var rhs_dir_offset = Utilities.GetPipeFlowDirOffset(rhs_dir);
@@ -96,7 +102,7 @@ public class PipeFlowGraphic : MonoBehaviour
 
     public void SetFlow(FlowType flow)
     {
-        if (flow == m_flowType) return;
+        if (flow == m_flowType && (!m_invalidRhs && !m_invalidLhs)) return;
 
         if (flow == FlowType.Kerosene) SetColor(m_keroseneColor);
         if (flow == FlowType.Oil) SetColor(m_oilColor);
@@ -111,6 +117,8 @@ public class PipeFlowGraphic : MonoBehaviour
 
         cache = m_systems.lhs.main;
         cache.startColor = color;
+
+        m_invalidLhs = m_invalidRhs = false;
     }
 
     public void SetColor(bool is_start, Color color)
@@ -120,11 +128,14 @@ public class PipeFlowGraphic : MonoBehaviour
             var cache = m_systems.rhs.main;
             cache.startColor = color;
 
+            m_invalidRhs = color.Equals(Color.red);
         }
         else
         {
             var cache = m_systems.lhs.main;
             cache.startColor = color;
+
+            m_invalidLhs = color.Equals(Color.red);
         }
     }
 

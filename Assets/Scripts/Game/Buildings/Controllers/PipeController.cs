@@ -123,7 +123,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
                 child_obj.SetParent(this);
                 AddChild(child_obj);
                 ToggleSystem(child_pos, true);
-                m_graphic.SetFlow(child_obj.GetFlowConfig().out_type);
+                // m_graphic.SetFlow(child_obj.GetFlowConfig().out_type);
                 QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
             else
@@ -149,7 +149,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             parent_obj.AddChild(this);
             SetParent(parent_obj);
             ToggleSystem(parent_pos, true);
-            m_graphic.SetFlow(parent_obj.GetFlowConfig().in_type);
+            // m_graphic.SetFlow(parent_obj.GetFlowConfig().in_type);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
         else
@@ -164,8 +164,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
     {
         // removes self and has relationships dereference us
         TimeManager.Instance.DeregisterReceiver(this);
-
-
 
         // dereference our relationships
         SetParent(null);
@@ -283,6 +281,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
                 m_endpipeAtStart = Instantiate(m_endpointPipe);
                 m_endpipeAtStart.transform.position = Utilities.Vector2IntToVector3(m_startPipePos - Utilities.GetPipeFlowDirOffset(m_startDirection)) + new Vector3(0.5f, 0.5f);
                 m_endpipeAtStart.transform.Rotate(0f, 0f, rot);
+
+                m_graphic.SetFlow(m_child.GetFlowConfig().out_type);
             }
         }
 
@@ -354,8 +354,10 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             var rot = Vector2.SignedAngle(Vector2.down, Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_endDirection)));
 
             m_endpipeAtEnd = Instantiate(m_endpointPipe);
-            m_endpipeAtEnd.transform.position = Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)) + new Vector3(0.5f, 0.5f);
+            m_endpipeAtEnd.transform.position = Utilities.Vector2IntToVector3(pos) + new Vector3(0.5f, 0.5f);
             m_endpipeAtEnd.transform.Rotate(0f, 0f, rot);
+
+            m_graphic.SetFlow(parent.GetFlowConfig().in_type);
         }
         if (parent == null && m_endpipeAtEnd != null)
         {

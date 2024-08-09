@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3c7a0522b2e69439d447dffcf38fcb, type: 3}
-  m_Name: Dont_Want_Tutorial
+  m_Script: {fileID: 11500000, guid: 881cd7adf2fcb47bfb8fa0a9c00da540, type: 3}
+  m_Name: VolumeSaveData
   m_EditorClassIdentifier: 
-  text:
-  - No
-  - Nie
+  float1: 0
+  float2: 0
+  float3: 0
