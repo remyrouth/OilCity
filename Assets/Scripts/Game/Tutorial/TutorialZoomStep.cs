@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game.Tutorial
@@ -11,6 +12,11 @@ namespace Game.Tutorial
         {
             DialogueUI.Instance.OnDialogueClicked += FinishStep;
             base.Initialize();
+            
+        }
+
+        public void LateUpdate()
+        {
             CameraController.Instance.TargetPosition = targetPosition;
             CameraController.Instance.TargetZoom = targetZoom;
         }

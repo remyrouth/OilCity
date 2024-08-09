@@ -44,8 +44,8 @@ public class CameraController : Singleton<CameraController>
 
     private void Update()
     {
-        HandleCameraMovement();
         HandleCameraZoom();
+        HandleCameraMovement();
         AdjustCameraBounds();
     }
     private void HandleCameraMovement()

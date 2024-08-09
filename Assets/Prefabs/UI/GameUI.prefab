@@ -482,6 +482,7 @@ GameObject:
   - component: {fileID: 6811300728487095138}
   - component: {fileID: 2240123993068510713}
   - component: {fileID: 4687728903283967457}
+  - component: {fileID: 433436195205601821}
   m_Layer: 5
   m_Name: Wood Cutter
   m_TagString: Untagged
@@ -608,6 +609,18 @@ MonoBehaviour:
   _costLabel: {fileID: 3379540850887970862}
   _buildingIcon: {fileID: 1538017140152623306}
   _descriptorView: {fileID: 2396290219433005572}
+--- !u!114 &433436195205601821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957931747011457576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4576939a2a54090877bb089aa2ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1570669957819057836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2684,6 +2697,7 @@ GameObject:
   - component: {fileID: 3310725407376453505}
   - component: {fileID: 5790012056426629536}
   - component: {fileID: 7043610789084770720}
+  - component: {fileID: 8185303146101545847}
   m_Layer: 5
   m_Name: Geologist
   m_TagString: Untagged
@@ -2810,6 +2824,18 @@ MonoBehaviour:
   _costLabel: {fileID: 6903835150062357868}
   _buildingIcon: {fileID: 1026888810989479542}
   _descriptorView: {fileID: 2396290219433005572}
+--- !u!114 &8185303146101545847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730456581125148066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4576939a2a54090877bb089aa2ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4253085775199026028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2994,6 +3020,7 @@ GameObject:
   - component: {fileID: 4137106939841977242}
   - component: {fileID: 6149407821289925625}
   - component: {fileID: 7514022595911066724}
+  - component: {fileID: 4047125734285558965}
   m_Layer: 5
   m_Name: Cinema
   m_TagString: Untagged
@@ -3120,6 +3147,18 @@ MonoBehaviour:
   _costLabel: {fileID: 7709340847678183273}
   _buildingIcon: {fileID: 8677646580629759170}
   _descriptorView: {fileID: 2396290219433005572}
+--- !u!114 &4047125734285558965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537241464617687712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4576939a2a54090877bb089aa2ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4565518139216997918
 GameObject:
   m_ObjectHideFlags: 0
@@ -4420,6 +4459,7 @@ GameObject:
   - component: {fileID: 4671809814884144616}
   - component: {fileID: 56978690373093525}
   - component: {fileID: 5449111007161145369}
+  - component: {fileID: 4031683287423430788}
   m_Layer: 5
   m_Name: PipeButton
   m_TagString: Untagged
@@ -4546,6 +4586,18 @@ MonoBehaviour:
   _costLabel: {fileID: 5952274796298915341}
   _buildingIcon: {fileID: 1327320740640595363}
   _descriptorView: {fileID: 2396290219433005572}
+--- !u!114 &4031683287423430788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6703336319929650667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4576939a2a54090877bb089aa2ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6783537638018371988
 GameObject:
   m_ObjectHideFlags: 0
@@ -4710,6 +4762,7 @@ GameObject:
   - component: {fileID: 2122592737359771204}
   - component: {fileID: 8813952456365325705}
   - component: {fileID: 3940316471699395955}
+  - component: {fileID: 3474106938243924526}
   m_Layer: 5
   m_Name: Oil Well
   m_TagString: Untagged
@@ -4836,6 +4889,18 @@ MonoBehaviour:
   _costLabel: {fileID: 4149645750934621128}
   _buildingIcon: {fileID: 9181135777894968004}
   _descriptorView: {fileID: 2396290219433005572}
+--- !u!114 &3474106938243924526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201911361645464019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4576939a2a54090877bb089aa2ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7442762021412640538
 GameObject:
   m_ObjectHideFlags: 0
@@ -5035,6 +5100,7 @@ GameObject:
   - component: {fileID: 7256965066245844370}
   - component: {fileID: 9075011020916788768}
   - component: {fileID: 7035809973432253055}
+  - component: {fileID: 2706030141189760676}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -5156,6 +5222,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetState: 0
+--- !u!114 &2706030141189760676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7941093503267453315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4576939a2a54090877bb089aa2ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7961398393215179690
 GameObject:
   m_ObjectHideFlags: 0
@@ -5378,6 +5456,7 @@ GameObject:
   - component: {fileID: 5522188488214114275}
   - component: {fileID: 9186459128025900001}
   - component: {fileID: 8633959967008733750}
+  - component: {fileID: 2428758333023616759}
   m_Layer: 5
   m_Name: Refinery
   m_TagString: Untagged
@@ -5504,6 +5583,18 @@ MonoBehaviour:
   _costLabel: {fileID: 6784759547723116171}
   _buildingIcon: {fileID: 7407798283922271280}
   _descriptorView: {fileID: 2396290219433005572}
+--- !u!114 &2428758333023616759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035883750969133567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4576939a2a54090877bb089aa2ac26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8103556131370468326
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class PollutionManager : Singleton<PollutionManager>, ITickReceiver
 
     private void Start()
     {
+        TimeManager.Instance.RegisterReceiver(this);
         SetPollution(0);
     }
     public void CalculateNewPollution()
