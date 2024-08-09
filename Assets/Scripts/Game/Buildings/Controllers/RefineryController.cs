@@ -133,7 +133,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 
     public float GetBaseRefineryFlowrate()
     {
-        return OilWellController.BASE_OIL_RATE * ((int)CurrentPaymentMode + 1);
+        return OilWellController.BASE_OIL_RATE * ((int)CurrentPaymentMode + 1) * 0.3f;
     }
     private float GetKeroseneMultiplier()
     {
