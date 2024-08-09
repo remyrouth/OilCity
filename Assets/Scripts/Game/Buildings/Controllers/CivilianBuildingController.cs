@@ -41,6 +41,7 @@ public sealed class CivilianBuildingController : BuildingController<BuildingScri
     {
         Sprite[] sprites = pickNewer ? this.sprites : old_sprites;
         _spriteRenderer.sprite = sprites[_gfxSeed % sprites.Length];
-        _outline.sprite = outlines[_gfxSeed % outlines.Length];
+        if (_outline != null)
+            _outline.sprite = outlines[_gfxSeed % outlines.Length];
     }
 }

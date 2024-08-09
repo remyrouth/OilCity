@@ -421,8 +421,11 @@ MonoBehaviour:
   TileActions: []
   _demolishEffect: {fileID: 0}
   _spriteRenderer: {fileID: 4791686998052556758}
+  _outline: {fileID: 0}
   sprites:
   - {fileID: 21300000, guid: 0562df56431e55e49a8f244d44d07441, type: 3}
+  outlines:
+  - {fileID: 0}
   old_sprites:
   - {fileID: 21300000, guid: 0562df56431e55e49a8f244d44d07441, type: 3}
   maxRandomOffset: {x: 0, y: 0}
