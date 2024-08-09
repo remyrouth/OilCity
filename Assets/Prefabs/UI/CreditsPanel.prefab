@@ -3370,12 +3370,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Aaron Cai,Anastasiya Mashkina, Evgeniia Glushkova, Janset Ece Ko\xE7,
-    Laurel Parsons, Lily Kravchenko,Oleksandr Smirnov, Oskar Kalbarczyk, Berkay G\xFCney,
-    Irina Ryabova, \r\nKevin McGrath, Kevin Rodriguez, Lily Jawadiwar, Luca Sandoval,
-    Marek Kisieli\u0144ski, \nMykola Ihnatenko, Yan Rybchynskyi, Ben Jaccaci, Igor
-    Sienkiewicz, Isaac Polite, Ivan Havrylenko, Jeremi Surzyn, Karol Kozio\u0142,
-    Logan Chandler, Maria Niczyporuk, Rafael Moroz, Zuzia Schabowska\r"
+  m_text: "Cleo Trumbull, Aaron Cai, Anastasiya Mashkina, Evgeniia Glushkova, Janset
+    Ece Ko\xE7, Laurel Parsons, Lily Kravchenko,Oleksandr Smirnov, Oskar Kalbarczyk,
+    Berkay G\xFCney, Irina Ryabova, Kevin McGrath, Kevin Rodriguez, Lily Jawadiwar,
+    Luca Sandoval, Marek Kisieli\u0144ski, Mykola Ihnatenko, Yan Rybchynskyi, Ben
+    Jaccaci, Igor Sienkiewicz, Isaac Polite, Ivan Havrylenko, Jeremi Surzyn, Karol
+    Kozio\u0142, Logan Chandler, Maria Niczyporuk, Rafael Moroz, Zuzia Schabowska\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53668daf71c59054c93ee30651b5f3df, type: 2}
   m_sharedMaterial: {fileID: 2049269147911872467, guid: 53668daf71c59054c93ee30651b5f3df, type: 2}
