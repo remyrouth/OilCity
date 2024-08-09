@@ -10,6 +10,7 @@ public class EndingUI : UIState
     public override GameState type => GameState.EndingUI;
     [SerializeField] private Transform _graphPivot;
     [SerializeField] private Image _background;
+    [SerializeField] private SingleSoundPlayer SFXLossPlayer;
 
 
 
@@ -30,6 +31,8 @@ public class EndingUI : UIState
         _graphPivot.DOMove(startPosition, 2);
         _background.DOColor(new Color(0, 0, 0, 0.75f), 1);
         SoundManager.Instance.PauseContinuousSounds();
+        SFXLossPlayer.ActivateWithForeignTrigger();
+        Debug.Log("Activating ending method");
     }
 
 

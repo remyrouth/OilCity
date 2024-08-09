@@ -132,8 +132,13 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     public void PauseContinuousSounds() {
-        cameraMusicPlayer.PauseWithForeignTrigger();
-        cameraAmbiencePlayer.PauseWithForeignTrigger();
+       if (cameraMusicPlayer == null) {
+            Debug.Log("cameraMusicPlayer is not null");
+       } else {
+            Debug.Log("cameraMusicPlayer not null");
+       }
+        cameraMusicPlayer?.PauseWithForeignTrigger();
+        cameraAmbiencePlayer?.PauseWithForeignTrigger();
     }
 
     public void PlayContinuousSounds() {

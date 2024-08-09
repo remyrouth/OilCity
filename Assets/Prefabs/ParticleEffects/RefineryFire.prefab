@@ -104,6 +104,26 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: ShapeModule.type
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: ShapeModule.m_Rotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -201,6 +221,10 @@ PrefabInstance:
     - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
       propertyPath: lengthInSec
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -312,6 +336,22 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: ShapeModule.type
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: ShapeModule.m_Rotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -409,6 +449,10 @@ PrefabInstance:
     - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
       propertyPath: lengthInSec
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680919061492963560, guid: 67060e592c22aa640b1e0d40862e4df7, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

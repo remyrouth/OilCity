@@ -116,7 +116,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
 
     private void OnDisable()
     {
-        FindObjectOfType<SoundManager>().RemoveSoundScript(this);
+        SoundManager.Instance.RemoveSoundScript(this);
         Destroy(audioSource);
 
         switch (soundType)
