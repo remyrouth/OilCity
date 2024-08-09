@@ -61,9 +61,9 @@ public class SoundManager : Singleton<SoundManager>
 
     private void Awake()
     {
-        AddCameraSoundTrack(citySoundList, cameraMusicPlayer, ref citySoundListIndex);
-        AddCameraSoundTrack(ambientTrackList, cameraAmbiencePlayer, ref currentAmbienceTrackIndex);
-        AddCameraSoundTrack(musicTrackList, citySoundPlayer, ref currentMusicTrackIndex);
+        AddCameraSoundTrack(citySoundList, cameraMusicPlayer, ref citySoundListIndex, SingleSoundPlayer.SoundType.AmbientSoundEffect);
+        AddCameraSoundTrack(ambientTrackList, cameraAmbiencePlayer, ref currentAmbienceTrackIndex, SingleSoundPlayer.SoundType.AmbientSoundEffect);
+        AddCameraSoundTrack(musicTrackList, citySoundPlayer, ref currentMusicTrackIndex, SingleSoundPlayer.SoundType.MusicTrack);
         // AddCamerAmbientTrack();
         Camera.main.gameObject.GetComponent<AudioSource>().enabled = false;
         
@@ -72,28 +72,28 @@ public class SoundManager : Singleton<SoundManager>
     private void Start() {
         Camera.main.gameObject.GetComponent<AudioSource>().enabled = true;
     }
-    public void AddCameraSoundTrack(List<MusicTrack> trackList, SingleSoundPlayer SFXPlayer, ref int currentTrackIndex)
+    public void AddCameraSoundTrack(List<MusicTrack> trackList, SingleSoundPlayer SFXPlayer, ref int currentTrackIndex, SingleSoundPlayer.SoundType soundType)
     {
         if (currentTrackIndex >= trackList.Count) return;
 
-        SFXPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, SingleSoundPlayer.SoundType.MusicTrack);
+        SFXPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, soundType);
 
         if (currentTrackIndex < trackList.Count - 1)
         {
             int index = currentTrackIndex;
             // Invoke("ContinuePlayingTracks", trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
             // this.Invoke(() => AddCameraSoundTrack(trackList, SFXPlayer, currentTrackIndex), trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
-            StartCoroutine(ContinuePlayingTracksCoroutine(trackList, SFXPlayer, currentTrackIndex, trackList[currentTrackIndex].musicTrack.length - trackLeadTime));
+            StartCoroutine(ContinuePlayingTracksCoroutine(trackList, SFXPlayer, currentTrackIndex, soundType, trackList[currentTrackIndex].musicTrack.length - trackLeadTime));
         }
 
         currentTrackIndex++;
     }
 
 
-    private IEnumerator ContinuePlayingTracksCoroutine(List<MusicTrack> trackList, SingleSoundPlayer SFXPlayer, int currentTrackIndex, float delay)
+    private IEnumerator ContinuePlayingTracksCoroutine(List<MusicTrack> trackList, SingleSoundPlayer SFXPlayer, int currentTrackIndex, SingleSoundPlayer.SoundType soundType, float delay)
     {
         yield return new WaitForSeconds(delay);
-        AddCameraSoundTrack(trackList, SFXPlayer, ref currentTrackIndex);
+        AddCameraSoundTrack(trackList, SFXPlayer, ref currentTrackIndex, soundType);
     }
 
 
