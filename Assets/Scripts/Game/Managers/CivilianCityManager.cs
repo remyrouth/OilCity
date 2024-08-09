@@ -9,6 +9,7 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     private int _tickTimer = 0;
     private int _decayTimer = 0;
     public const int BASE_BUILD_TICK_INTERVAL = 10;
+    public const int STARTING_INITIAL_BUILDINGS = 3;
 
     public const int DECAY_LENGTH = 30;
     private readonly Queue<(Vector2Int, float)> _destroyedTTL = new();
@@ -20,6 +21,10 @@ public class CivilianCityManager : Singleton<CivilianCityManager>, ITickReceiver
     public void Start()
     {
         TimeManager.Instance.RegisterReceiver(this);
+        for (int i = 0; i < STARTING_INITIAL_BUILDINGS; i++)
+        {
+            InvokeAction();
+        }
     }
     /// <summary>
     /// Checks how much worker satisfaction the player currently has, based on that it changes the tickNumberInterval

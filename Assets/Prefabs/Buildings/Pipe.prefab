@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4922028137024311275}
-  - component: {fileID: -6834380623506478134}
   - component: {fileID: -7569275394492071248}
+  - component: {fileID: -1514931091655041141}
   m_Layer: 0
   m_Name: Pipe
   m_TagString: Untagged
@@ -35,26 +35,6 @@ Transform:
   - {fileID: 458827230403519359}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6834380623506478134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5033716508396579517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a6d4c6072136a74e8f764dce72cc7db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _actionsPivot: {x: 0.5, y: 0.5}
-  TileActions:
-  - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
-  _demolishEffect: {fileID: 0}
-  _oilSpillout: {fileID: 2259515733599905677}
-  _keroseneSpillout: {fileID: 8562081783982675506}
-  m_graphic: {fileID: -7569275394492071248}
-  m_debugMesh: {fileID: -2432090755550338912, guid: c7309ae32cff9ef4fa19b167aa5c7ec3, type: 3}
 --- !u!114 &-7569275394492071248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +50,27 @@ MonoBehaviour:
   m_keroseneColor: {r: 0.9433962, g: 0.79646826, b: 0.37824848, a: 1}
   m_oilColor: {r: 0, g: 0, b: 0, a: 1}
   m_flowSystem: {fileID: 8000366944631912488, guid: d96af4cda0e7a4a46b81d436c6b74dce, type: 3}
+--- !u!114 &-1514931091655041141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033716508396579517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6d4c6072136a74e8f764dce72cc7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionsPivot: {x: 0.5, y: 0.5}
+  TileActions:
+  - {fileID: 11400000, guid: 158e4fed8e8fd2542adec1b0a73324d4, type: 2}
+  - {fileID: 11400000, guid: 6cf8d47a9a09f49459dbf570ef313f8a, type: 2}
+  _demolishEffect: {fileID: 0}
+  _oilSpillout: {fileID: 2259515733599905677}
+  _keroseneSpillout: {fileID: 8562081783982675506}
+  m_graphic: {fileID: -7569275394492071248}
+  m_debugMesh: {fileID: -2432090755550338912, guid: c7309ae32cff9ef4fa19b167aa5c7ec3, type: 3}
 --- !u!1001 &3768304642239176195
 PrefabInstance:
   m_ObjectHideFlags: 0
