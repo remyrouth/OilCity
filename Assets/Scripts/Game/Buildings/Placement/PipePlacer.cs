@@ -132,6 +132,8 @@ public class PipePlacer : BuildingPlacer
             bool is_current_occupied = BoardManager.Instance.IsTileOccupied(current);
             bool is_current_src_occupied = is_current_occupied && BoardManager.Instance.tileDictionary[current].Equals(src_to_ignore);
             bool is_current_dest_occupied = is_current_occupied && BoardManager.Instance.tileDictionary[current].Equals(dest_to_ignore);
+            bool is_src_current_pipe = is_current_src_occupied && src_to_ignore is PipeController;
+            bool is_dest_current_pipe = is_current_dest_occupied && dest_to_ignore is PipeController;
 
             if (current == end) break;
 
@@ -144,6 +146,7 @@ public class PipePlacer : BuildingPlacer
                 // traversal logic:
                 // - if this tile is occupied (and not ignored), it is uber expensive
                 // - if this tile is a src/dest and the neighbor is the opposite, it is uber expensive
+                //  - unless either are pipes, in which case it's great.
                 // - if this tile is a src, it is slightly expensive
                 // - if this tile is a dest, it is slightly expensive
 
@@ -151,15 +154,26 @@ public class PipePlacer : BuildingPlacer
                 bool is_neighbor_occupied = BoardManager.Instance.IsTileOccupied(npos);
                 bool is_neighbor_src = is_neighbor_occupied && BoardManager.Instance.tileDictionary[npos].Equals(src_to_ignore);
                 bool is_neighbor_dest = is_neighbor_occupied && BoardManager.Instance.tileDictionary[npos].Equals(dest_to_ignore);
+                bool is_src_neighbor_pipe = is_neighbor_src && src_to_ignore is PipeController;
+                bool is_dest_neighbor_pipe = is_neighbor_dest && dest_to_ignore is PipeController;
 
                 int cost_mod = 1;
 
+                if (is_current_occupied) cost_mod = 999;
+                if (is_current_src_occupied || is_current_dest_occupied) cost_mod = 25;
+                if ((is_current_dest_occupied && is_neighbor_src) || (is_current_src_occupied && is_neighbor_dest)) cost_mod = 999;
+                if ((is_current_src_occupied && is_dest_neighbor_pipe) || (is_current_dest_occupied && is_src_neighbor_pipe)) cost_mod = 1;
+                if ((is_src_current_pipe && is_neighbor_dest) || (is_dest_current_pipe && is_neighbor_src)) cost_mod = 1;
 
-                if (is_neighbor_dest || is_neighbor_src) cost_mod = 5;
-                if ((is_current_occupied && !is_current_src_occupied && !is_current_dest_occupied)
-                    || (is_current_src_occupied && is_neighbor_dest)
-                    || (is_current_dest_occupied && is_neighbor_src)) cost_mod = 999;
 
+                /*
+                if (is_neighbor_dest || is_neighbor_src) cost_mod = 25;
+                else if (
+                    (is_current_occupied && !is_current_src_occupied && !is_current_dest_occupied) // if current is just occupied
+                    || ((is_current_src_occupied && is_neighbor_dest) || (is_current_dest_occupied && is_neighbor_src))) // if we are next to our dest
+                    cost_mod = 999;
+                if (is_src_neighbor_pipe || is_dest_neighbor_pipe) cost_mod = 1;
+                */
 
                 int new_cost = cost_so_far[current] + cost_mod;
 
@@ -375,8 +389,7 @@ public class PipePlacer : BuildingPlacer
 
         var io = flowable.GetInOutConfig();
         var ft = flowable.GetFlowConfig();
-        Debug.Log(m_first + " " + m_ioConfig + " " + m_ftConfig); // false true | none oil
-        Debug.Log(flowable + " " + io + " " + ft);  // true true | any any
+
         if (io.can_input)
         {
             bool has_dir = m_ioConfig.c_o;
@@ -451,31 +464,83 @@ public class PipePlacer : BuildingPlacer
                     return;
                 }
 
-                s_controller.UpdateFlowAndVisual(m_start, m_end, true);
-                e_controller.UpdateFlowAndVisual(m_end, m_start, false);
+                s_controller.UpdateFlowAndVisual(m_start, m_end, !m_needsFlip);
+                e_controller.UpdateFlowAndVisual(m_end, m_start, m_needsFlip);
 
-                s_controller.SetParent(e_controller);
-                e_controller.AddChild(s_controller);
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_start));
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_end));
+
+                if (m_needsFlip)
+                {
+                    e_controller.SetParent(s_controller);
+                    s_controller.AddChild(e_controller);
+
+                    s_controller.ToggleSystem(false, true);
+                    e_controller.ToggleSystem(true, true);
+                }
+                else
+                {
+                    s_controller.SetParent(e_controller);
+                    e_controller.AddChild(s_controller);
+
+                    s_controller.ToggleSystem(true, true);
+                    e_controller.ToggleSystem(false, true);
+                }
 
                 TimeManager.Instance.LiteDeregister(s_controller);
             }
             else if (has_start_pipe && BoardManager.Instance.TryGetTypeAt<IFlowable>(m_end, out var e_flowable))
             {
-                s_controller.UpdateFlowAndVisual(m_start, m_end, true);
+                s_controller.UpdateFlowAndVisual(m_start, m_end, !m_needsFlip);
 
-                s_controller.SetParent(e_flowable);
-                e_flowable.AddChild(s_controller);
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_start));
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_end));
 
-                TimeManager.Instance.LiteDeregister(s_controller);
+                if (m_needsFlip)
+                {
+                    e_flowable.SetParent(s_controller);
+                    s_controller.AddChild(e_flowable);
+
+                    s_controller.ToggleSystem(true, true);
+                }
+                else
+                {
+                    s_controller.SetParent(e_flowable);
+                    e_flowable.AddChild(s_controller);
+
+                    s_controller.ToggleSystem(false, true);
+                }
+
+                TimeManager.Instance.LiteDeregister(e_flowable);
             }
             else if (BoardManager.Instance.TryGetTypeAt<IFlowable>(m_start, out var s_flowable) && has_end_pipe)
             {
-                e_controller.UpdateFlowAndVisual(m_end, m_start, false);
+                e_controller.UpdateFlowAndVisual(m_end, m_start, m_needsFlip);
 
-                e_controller.AddChild(s_flowable);
-                s_flowable.SetParent(e_controller);
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_start));
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_end));
+
+                if (m_needsFlip)
+                {
+                    s_flowable.AddChild(e_controller);
+                    e_controller.SetParent(s_flowable);
+
+                    e_controller.ToggleSystem(false, true);
+                }
+                else
+                {
+                    e_controller.AddChild(s_flowable);
+                    s_flowable.SetParent(e_controller);
+
+                    e_controller.ToggleSystem(true, true);
+                }
 
                 TimeManager.Instance.LiteDeregister(s_flowable);
+            }
+            else
+            {
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_start));
+                QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_end));
             }
         }
         else

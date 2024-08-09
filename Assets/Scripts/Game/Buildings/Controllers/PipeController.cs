@@ -246,6 +246,9 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         BoardManager.Instance.SetPipeTileInSupermap(
             endpoint, 
             BuildingManager.Instance.GetPipeRotation(in_pos, endpoint, out_pos));
+
+        m_graphic.ClearObjs();
+        m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
     }
 
     /// <summary>
