@@ -168,8 +168,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         m_graphic.ClearObjs();
 
         FlipPipeData();
-        CreateInitialConnections(new(0, 0)); // arg unused
         m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
+        CreateInitialConnections(new(0, 0)); // arg unused
 
         TimeManager.Instance.RegisterReceiver(this);
     }
@@ -461,7 +461,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             if (m_parent is PipeController)
             {
-                m_parentFlow = GetFlowOfChild();
+                m_parentFlow = GetFlowOfParent();
             }
             else
             {

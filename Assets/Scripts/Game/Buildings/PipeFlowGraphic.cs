@@ -20,6 +20,10 @@ public class PipeFlowGraphic : MonoBehaviour
 
     public void SetupSystems(Vector2Int lhs, Vector2Int rhs, PipeFlowDirection lhs_dir, PipeFlowDirection rhs_dir)
     {
+        m_doLhsDisableAfterLockout = false;
+        m_doRhsDisableAfterLockout = false;
+        m_flowType = FlowType.None;
+        
         var lhs_dir_offset = Utilities.GetPipeFlowDirOffset(lhs_dir);
         var rhs_dir_offset = Utilities.GetPipeFlowDirOffset(rhs_dir);
 
