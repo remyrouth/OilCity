@@ -77,7 +77,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         return audioSource.clip.length;
     }
 
-    public void InitializeFromSoundManager(AudioClip musicTrack, SoundType enumSoundType) {
+    public void InitializeFromSoundManager(AudioClip musicTrack, float newMaxVolume, SoundType enumSoundType) {
         // print prior sound type?
         soundType = enumSoundType;
         settingsManager.OnSoundEffectVolumeChanged -= ChangePercentOutput;
@@ -94,7 +94,7 @@ public class SingleSoundPlayer : Singleton<SingleSoundPlayer>
         }
         SettingsManager.Instance.VolumeInitializationForSoundPlayers();
         shouldLoop = false;
-        maxVolume = 1f;
+        maxVolume = newMaxVolume;
         soundClip = musicTrack;
         usesForeignTrigger = true;
         if (audioSource != null) {
