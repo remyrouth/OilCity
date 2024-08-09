@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class UIStateMachine : Singleton<UIStateMachine>
 {
     private Dictionary<GameState, UIState> _states;
+    private GameState _previousState;
 
     [SerializeField] private GameState initialGameState;
     private Dictionary<GameState, UIState> States
@@ -39,8 +40,10 @@ public class UIStateMachine : Singleton<UIStateMachine>
             Debug.LogError("Tried to change UI state to non-existing one!");
             return;
         }
-        if (CurrentState != null)
+        if (CurrentState != null){
+            _previousState = CurrentState.type;
             CurrentState.OnExit();
+        }
         CurrentState = States[state];
         CurrentState.OnEnter();
         Debug.Log(CurrentStateType);
@@ -50,6 +53,10 @@ public class UIStateMachine : Singleton<UIStateMachine>
     /// Changes game Scene
     /// </summary>
     /// <param name="sceneIndex"></param>
+    public void ReturnToPreviousState()
+    {
+        ChangeState(_previousState);
+    }
     public void ChangeScene(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
