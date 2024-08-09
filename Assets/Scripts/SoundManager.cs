@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SoundManager : Singleton<SoundManager>
 {
+
     [Serializable]
     public class MusicTrack {
         public AudioClip musicTrack;
