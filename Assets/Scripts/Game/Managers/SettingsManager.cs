@@ -28,7 +28,6 @@ namespace Game.Managers
         private void Awake()
         {
             SetLanguage();
-            SetTutorialEnabled();
             SetCameraMovementInversion();
             
             // _masterVolume = PlayerPrefs.GetFloat("MasterVolume");
@@ -86,14 +85,6 @@ namespace Game.Managers
             if (PlayerPrefs.HasKey("CameraInversion"))
             {
                 CameraController.Instance.Invert = PlayerPrefs.GetInt("CameraInversion") == 1;
-            }
-        }
-        
-        private void SetTutorialEnabled()
-        {
-            if (PlayerPrefs.HasKey("TutorialEnabled"))
-            {
-                TutorialManager.Instance.TutorialEnabled = PlayerPrefs.GetInt("TutorialEnabled") == 1;
             }
         }
 
