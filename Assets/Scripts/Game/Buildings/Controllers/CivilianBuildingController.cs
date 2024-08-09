@@ -5,7 +5,9 @@ using UnityEngine;
 public sealed class CivilianBuildingController : BuildingController<BuildingScriptableObject>, IGraphicsChangeable
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _outline;
     [SerializeField] private Sprite[] sprites;
+    [SerializeField] private Sprite[] outlines;
     [SerializeField] private Sprite[] old_sprites;
     [SerializeField] private Vector2 maxRandomOffset;
 
@@ -39,5 +41,6 @@ public sealed class CivilianBuildingController : BuildingController<BuildingScri
     {
         Sprite[] sprites = pickNewer ? this.sprites : old_sprites;
         _spriteRenderer.sprite = sprites[_gfxSeed % sprites.Length];
+        _outline.sprite = outlines[_gfxSeed % outlines.Length];
     }
 }
