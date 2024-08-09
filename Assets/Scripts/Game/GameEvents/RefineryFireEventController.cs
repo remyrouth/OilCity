@@ -7,9 +7,8 @@ public class RefineryFireEventController : SingleEventController
     [SerializeField] private GameObject firePrefab;
     [SerializeField] private int ticksToStop;
 
-    protected override void OnEnable()
+    protected void OnEnable()
     {
-        base.OnEnable();
         if (!BoardManager.Instance.tileDictionary.Values.Any(e => e is RefineryController))
             return;
         var refineries = BoardManager.Instance.tileDictionary.Values.OfType<RefineryController>().ToList();

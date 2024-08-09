@@ -69,19 +69,19 @@ public class CameraController : Singleton<CameraController>
     {
         _targetZoom = Mathf.Clamp(_targetZoom - Input.mouseScrollDelta.y, zoomMin, zoomMax);
     }
-
+    private const int MAX_TILES_OUTSIDE = 2;
     private void AdjustCameraBounds()
     {
         float screenRatio = (float)Screen.width / Screen.height;
         Vector3 adjustDelta = Vector3.zero;
-        if (_targetPosition.x - _cam.orthographicSize * screenRatio < bottomLeftCorner.x)
+        if (_targetPosition.x - _cam.orthographicSize * screenRatio < bottomLeftCorner.x - MAX_TILES_OUTSIDE)
             adjustDelta.x += 1;
-        if (_targetPosition.x + _cam.orthographicSize * screenRatio > upperRightCorner.x)
+        if (_targetPosition.x + _cam.orthographicSize * screenRatio > upperRightCorner.x + MAX_TILES_OUTSIDE)
             adjustDelta.x -= 1;
 
-        if (_targetPosition.y - _cam.orthographicSize < bottomLeftCorner.y)
+        if (_targetPosition.y - _cam.orthographicSize < bottomLeftCorner.y - MAX_TILES_OUTSIDE)
             adjustDelta.y += 1;
-        if (_targetPosition.y + _cam.orthographicSize > upperRightCorner.y)
+        if (_targetPosition.y + _cam.orthographicSize > upperRightCorner.y + MAX_TILES_OUTSIDE)
             adjustDelta.y -= 1;
         _targetPosition += adjustDelta * Time.deltaTime * 20;
     }
