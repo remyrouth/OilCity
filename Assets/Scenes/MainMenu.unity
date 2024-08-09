@@ -3005,6 +3005,10 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1241074077527996683, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1427249252052881998, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -26,7 +26,7 @@ public abstract class OilMapController : MonoBehaviour, IAmountGiver<float>
     /// <returns></returns>
     public float GetValueAtPosition(int x, int y)
     {
-        float value = GetBaseValue(x, y)*0.5f;
+        float value = GetBaseValue(x, y)*0.25f;
         if (alreadyMined.ContainsKey(new Vector2Int(x, y)))
             value -= alreadyMined[new Vector2Int(x, y)];
         if (!searched.Contains(new Vector2Int(x, y)))
