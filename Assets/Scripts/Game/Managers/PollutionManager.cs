@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class PollutionManager : Singleton<PollutionManager>
+public class PollutionManager : Singleton<PollutionManager>, ITickReceiver
 {
     public float PollutionAmount { get; private set; } = 0;
 
@@ -32,6 +32,10 @@ public class PollutionManager : Singleton<PollutionManager>
     {
         PollutionAmount = Mathf.Clamp01(amount);
         OnPollutionChanged?.Invoke(PollutionAmount);
+    }
+    public void OnTick()
+    {
+        CalculateNewPollution();
     }
 
 #if UNITY_EDITOR
