@@ -51,14 +51,12 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                         return;
                     }
 
-                    pipe.AddChild(this);
                     SetParent(pipe);
                     pipe.ToggleSystem(peripheral_to, true);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(peripheral_to) && valid)
                 {
-                    pipe.SetParent(this);
                     AddChild(pipe);
                     pipe.ToggleSystem(peripheral_to, true);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
