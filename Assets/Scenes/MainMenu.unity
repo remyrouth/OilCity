@@ -750,6 +750,22 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5186415107485585548, guid: 901c6d29e93d1ed4b8cbac89eca6c4a8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d449b3a6c8c7ac94dbd1c92f8526fb25, type: 3}
+    - target: {fileID: 5186415107485585548, guid: 901c6d29e93d1ed4b8cbac89eca6c4a8, type: 3}
+      propertyPath: m_Color.b
+      value: 0.46666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186415107485585548, guid: 901c6d29e93d1ed4b8cbac89eca6c4a8, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186415107485585548, guid: 901c6d29e93d1ed4b8cbac89eca6c4a8, type: 3}
+      propertyPath: m_Color.r
+      value: 0.7764706
+      objectReference: {fileID: 0}
     - target: {fileID: 8080665978845337170, guid: 901c6d29e93d1ed4b8cbac89eca6c4a8, type: 3}
       propertyPath: m_Name
       value: Cursor
