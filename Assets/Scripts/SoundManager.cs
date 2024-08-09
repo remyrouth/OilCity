@@ -72,7 +72,7 @@ public class SoundManager : Singleton<SoundManager>
     private void Start() {
         Camera.main.gameObject.GetComponent<AudioSource>().enabled = true;
     }
-    public void AddCameraSoundTrack(List<MusicTrack> trackList, SingleSoundPlayer SFXPlayer, ref int currentTrackIndex, SingleSoundPlayer.SoundType soundType)
+    public void AddCameraSoundTrack(List<MusicTrack> trackList, ref SingleSoundPlayer SFXPlayer, ref int currentTrackIndex, SingleSoundPlayer.SoundType soundType)
     {
         if (currentTrackIndex >= trackList.Count) return;
 
@@ -132,8 +132,13 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     public void PauseContinuousSounds() {
-        cameraMusicPlayer.PauseWithForeignTrigger();
-        cameraAmbiencePlayer.PauseWithForeignTrigger();
+       if (cameraMusicPlayer == null) {
+            Debug.Log("cameraMusicPlayer is not null");
+       } else {
+            Debug.Log("cameraMusicPlayer not null");
+       }
+        cameraMusicPlayer?.PauseWithForeignTrigger();
+        cameraAmbiencePlayer?.PauseWithForeignTrigger();
     }
 
     public void PlayContinuousSounds() {

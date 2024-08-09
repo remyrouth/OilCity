@@ -32,6 +32,7 @@ public class EndingUI : UIState
         _background.DOColor(new Color(0, 0, 0, 0.75f), 1);
         SoundManager.Instance.PauseContinuousSounds();
         SFXLossPlayer.ActivateWithForeignTrigger();
+        Debug.Log("Activating ending method");
     }
 
 
