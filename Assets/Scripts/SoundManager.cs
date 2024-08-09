@@ -61,6 +61,15 @@ public class SoundManager : Singleton<SoundManager>
 
     private void Awake()
     {
+        // if (SFXPlayer == null) {
+        //     SFXPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+        // }
+        cameraMusicPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+        cameraAmbiencePlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+        citySoundPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+
+
+
         AddCameraSoundTrack(citySoundList, cameraMusicPlayer, ref citySoundListIndex, SingleSoundPlayer.SoundType.AmbientSoundEffect);
         AddCameraSoundTrack(ambientTrackList, cameraAmbiencePlayer, ref currentAmbienceTrackIndex, SingleSoundPlayer.SoundType.AmbientSoundEffect);
         AddCameraSoundTrack(musicTrackList, citySoundPlayer, ref currentMusicTrackIndex, SingleSoundPlayer.SoundType.MusicTrack);
@@ -77,9 +86,9 @@ public class SoundManager : Singleton<SoundManager>
         try {
             if (currentTrackIndex >= trackList.Count) return;
 
-            if (SFXPlayer == null) {
-                SFXPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
-            }
+            // if (SFXPlayer == null) {
+            //     SFXPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+            // }
             SFXPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, soundType);
 
 
@@ -141,8 +150,8 @@ public class SoundManager : Singleton<SoundManager>
        } else {
             Debug.Log("cameraMusicPlayer not null");
        }
-        cameraMusicPlayer?.PauseWithForeignTrigger();
-        cameraAmbiencePlayer?.PauseWithForeignTrigger();
+        cameraMusicPlayer.PauseWithForeignTrigger();
+        cameraAmbiencePlayer.PauseWithForeignTrigger();
     }
 
     public void PlayContinuousSounds() {
