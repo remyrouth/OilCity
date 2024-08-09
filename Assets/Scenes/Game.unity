@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -82934,6 +82934,22 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 75
       objectReference: {fileID: 0}
+    - target: {fileID: 1196396659812296302, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 40.2814
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196396659812296302, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40.9539
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196396659812296302, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.168
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196396659812296302, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0561
+      objectReference: {fileID: 0}
     - target: {fileID: 1276547673533465308, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
       propertyPath: m_fontSize
       value: 75
@@ -83194,6 +83210,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -53.7296
       objectReference: {fileID: 0}
+    - target: {fileID: 3321092725509618400, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e6dc1258142c2094daa20a980332747a, type: 3}
     - target: {fileID: 3445932721721231153, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -83408,7 +83428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4713629556114601222, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -47.102936
+      value: -47.1029
       objectReference: {fileID: 0}
     - target: {fileID: 4713878154032135830, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
       propertyPath: m_fontSize
@@ -83620,7 +83640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6491425637951390771, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -394.84515
+      value: -394.84512
       objectReference: {fileID: 0}
     - target: {fileID: 6537190864011493434, guid: ee5a7eb4d0df1074bafadb4379e35bf2, type: 3}
       propertyPath: m_AnchorMax.y
