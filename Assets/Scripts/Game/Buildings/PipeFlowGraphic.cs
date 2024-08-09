@@ -124,6 +124,12 @@ public class PipeFlowGraphic : MonoBehaviour
         }
     }
 
+    public void ClearObjs()
+    {
+        if (m_systems.lhs != null) Destroy(m_systems.lhs.gameObject);
+        if (m_systems.rhs != null) Destroy(m_systems.rhs.gameObject);
+    }
+
     private IEnumerator Pulse()
     {
         ToggleSystem(true, true);
@@ -142,7 +148,6 @@ public class PipeFlowGraphic : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (m_systems.lhs != null) Destroy(m_systems.lhs);
-        if (m_systems.rhs != null) Destroy(m_systems.rhs);
+        ClearObjs();
     }
 }

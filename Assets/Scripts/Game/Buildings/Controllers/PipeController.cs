@@ -54,12 +54,17 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         if (flip)
         {
-            (m_endPipePos, m_startPipePos) = (m_startPipePos, m_endPipePos);
-            (m_endDirection, m_startDirection) = (Utilities.FlipFlow(m_startDirection), Utilities.FlipFlow(m_endDirection));
-            m_pipes.Reverse();
+            FlipPipeData();
         }
 
         m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
+    }
+
+    private void FlipPipeData()
+    {
+        (m_endPipePos, m_startPipePos) = (m_startPipePos, m_endPipePos);
+        (m_endDirection, m_startDirection) = (Utilities.FlipFlow(m_startDirection), Utilities.FlipFlow(m_endDirection));
+        m_pipes.Reverse();
     }
 
     public bool WouldFlowContentsBeValid(IFlowable with, Vector2Int at_pos)
@@ -114,6 +119,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
                 child_obj.SetParent(this);
                 AddChild(child_obj);
                 ToggleSystem(child_pos, true);
+                m_graphic.SetFlow(child_obj.GetFlowConfig().out_type);
                 QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
             else
@@ -139,6 +145,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             parent_obj.AddChild(this);
             SetParent(parent_obj);
             ToggleSystem(parent_pos, true);
+            m_graphic.SetFlow(parent_obj.GetFlowConfig().in_type);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
         else
@@ -147,6 +154,24 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             MarkSystemInvalid(parent_pos);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
+    }
+    
+    public void FlipPipe()
+    {
+        // removes self and has relationships dereference us
+        TimeManager.Instance.DeregisterReceiver(this);
+
+        // dereference our relationships
+        SetParent(null);
+        m_child = null; // pipes only have one child, so this is fine.
+
+        m_graphic.ClearObjs();
+
+        FlipPipeData();
+        CreateInitialConnections(new(0, 0)); // arg unused
+        m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
+
+        TimeManager.Instance.RegisterReceiver(this);
     }
 
     /// <summary>
