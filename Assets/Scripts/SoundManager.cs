@@ -86,11 +86,12 @@ public class SoundManager : Singleton<SoundManager>
             int index = currentTrackIndex;
             // Invoke("ContinuePlayingTracks", trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
             // this.Invoke(() => AddCameraSoundTrack(trackList, SFXPlayer, currentTrackIndex), trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
-            StartCoroutine(ContinuePlayingTracksCoroutine(trackList, SFXPlayer, currentTrackIndex, soundType, trackList[++currentTrackIndex].musicTrack.length - trackLeadTime));
+            currentTrackIndex++;
+            StartCoroutine(ContinuePlayingTracksCoroutine(trackList, SFXPlayer, currentTrackIndex, soundType, trackList[currentTrackIndex].musicTrack.length - trackLeadTime));
 
             // currentTrackIndex++;
         } catch (Exception error) {
-            
+
         }
 
     }
