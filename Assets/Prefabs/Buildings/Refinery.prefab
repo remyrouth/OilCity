@@ -860,7 +860,6 @@ MonoBehaviour:
   _demolishEffect: {fileID: 5682973966208056575}
   _spilloutEffect: {fileID: 2490702565218730050}
   _workingSmokeEffects:
-  - {fileID: 0}
   - {fileID: 3012146283990413345}
 --- !u!114 &4031655360067556307
 MonoBehaviour:
