@@ -195,7 +195,7 @@ public sealed class GeologistController : AOEBuildingController
         if (textComponent != null)
         {
             // Set the text to display the oil value
-            textComponent.text = oilValue.ToString() + "%";
+            textComponent.text = (oilValue * 2).ToString() + "%";
         }
     }
     private Vector2Int? GetRandomWithinRange()
