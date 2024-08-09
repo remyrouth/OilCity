@@ -371,15 +371,16 @@ public class PipePlacer : BuildingPlacer
     private bool CheckOptionsForValidConnection(Vector2Int at_pos)
     {
         if (!BoardManager.Instance.TryGetTypeAt<IFlowable>(at_pos, out var flowable)) return false;
+        if (m_first == null) return true;
 
         var io = flowable.GetInOutConfig();
         var ft = flowable.GetFlowConfig();
-        Debug.Log(m_ioConfig + " " + m_ftConfig); // true false | kerosene none
-        Debug.Log(io + " " + ft);  // false true | none oil
+        Debug.Log(m_first + " " + m_ioConfig + " " + m_ftConfig); // false true | none oil
+        Debug.Log(flowable + " " + io + " " + ft);  // true true | any any
         if (io.can_input)
         {
             bool has_dir = m_ioConfig.c_o;
-            bool has_flow = m_ftConfig.output == ft.in_type || m_ftConfig.output == FlowType.Any;
+            bool has_flow = ValidateFlowConnection(m_first, flowable, false);
 
             if (has_dir && has_flow)
             {
@@ -392,7 +393,7 @@ public class PipePlacer : BuildingPlacer
         if (io.can_output)
         {
             bool has_dir = m_ioConfig.c_i;
-            bool has_flow = m_ftConfig.input == ft.out_type || m_ftConfig.output == FlowType.Any;
+            bool has_flow = ValidateFlowConnection(m_first, flowable, true);
 
             if (has_dir && has_flow)
             {
@@ -403,6 +404,29 @@ public class PipePlacer : BuildingPlacer
         }
 
         return false;
+    }
+
+    public static bool ValidateFlowConnection(IFlowable from, IFlowable to, bool is_right_left)
+    {
+        var from_config = from.GetFlowConfig();
+        var to_config = to.GetFlowConfig();
+
+        if (is_right_left)
+        {
+            return (from_config.in_type != FlowType.None && to_config.out_type != FlowType.None) // this might be redundant, but i dont care.
+                &&
+                from_config.in_type == to_config.out_type
+                || from_config.in_type == FlowType.Any
+                || to_config.out_type == FlowType.Any;
+        }
+        else
+        {
+            return (from_config.out_type != FlowType.None && to_config.in_type != FlowType.None) // this might be redundant, but i dont care.
+                &&
+                from_config.out_type == to_config.in_type
+                || from_config.out_type == FlowType.Any
+                || to_config.in_type == FlowType.Any;
+        }
     }
 
     /// <summary>
