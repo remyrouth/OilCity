@@ -5,7 +5,7 @@ public class AnimalManager : Singleton<AnimalManager>
 {
     [SerializeField] private GameObject[] _prefabs;
     private readonly List<GameObject> _animals = new();
-    private const int START_ANIMALS_NUMBER = 50;
+    private const int START_ANIMALS_NUMBER = 100;
     private void Start()
     {
         for (int i = 0; i < 10; i++)

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -84550,6 +84550,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2886531790533164852}
     - target: {fileID: 5000693691405214277, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
+      propertyPath: cityMaxVol
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000693691405214277, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
+      propertyPath: musicMaxVol
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000693691405214277, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
+      propertyPath: ambientMaxVol
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000693691405214277, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
       propertyPath: destroyBuilding
       value: 
       objectReference: {fileID: 2886531790533164847}
@@ -84828,6 +84840,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2863870123387964244, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
+      propertyPath: m_text
+      value: 'text text text text text text text text text text '
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863870123387964244, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863870123387964244, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: d46ac07829eb8b64dbb6241716d4ea46, type: 2}
@@ -84835,6 +84855,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -1633465409437183613, guid: d46ac07829eb8b64dbb6241716d4ea46, type: 2}
+    - target: {fileID: 2863870123387964244, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2863870123387964244, guid: 99292693030e0ea41964fdfaac8ac466, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -85003,7 +85027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1552, y: 75}
+  m_AnchoredPosition: {x: 1690, y: 75}
   m_SizeDelta: {x: 96, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5283272490848002476

@@ -586,7 +586,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7535017978457641841
@@ -652,7 +652,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 54cfa0dc728251640b9fdbf5e7b19560, type: 2}
   - {fileID: 11400000, guid: 1bed6fc2bbe796a41b46fa53cc620c56, type: 2}
   _demolishEffect: {fileID: 7670631915055800252}
-  _workerAmount: 2
+  _workerAmount: 4
   _workerVisualPrefab: {fileID: 2605606135709966149, guid: 52dc04ef9763d8b44a3af81ce4e1400c, type: 3}
 --- !u!114 &1672116433222527363
 MonoBehaviour:
