@@ -165,9 +165,11 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         // removes self and has relationships dereference us
         TimeManager.Instance.DeregisterReceiver(this);
 
+
+
         // dereference our relationships
         SetParent(null);
-        m_child = null; // pipes only have one child, so this is fine.
+        if (m_child != null) DisownChild(m_child);
 
         m_graphic.ClearObjs();
 

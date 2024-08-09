@@ -3,6 +3,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Unity.VisualScripting;
 
 public sealed class GeologistController : AOEBuildingController
 {
@@ -178,11 +179,15 @@ public sealed class GeologistController : AOEBuildingController
     private void PingSpot(Vector2Int pos, float oilValue)
     {
         // Instantiate the ping prefab
-        var obj = Instantiate(_oilPingPrefab, new Vector3(pos.x, pos.y, -0.01f), Quaternion.identity);
+        var obj = Instantiate(_oilPingPrefab, new Vector3(pos.x, pos.y, -3f), Quaternion.identity);
 
         // Set the scale animation
         obj.transform.localScale = Vector3.zero;
-        obj.transform.DOScale(Vector3.one, 0.25f);
+        var seq = DOTween.Sequence();
+        seq.Append(obj.transform.DOScale(Vector3.one, 0.25f));
+        seq.AppendInterval(9.5f);
+        seq.Append(obj.transform.DOScale(Vector3.zero, 0.25f));
+        seq.AppendCallback(() => Destroy(obj));
 
         // Find the text component in the prefab
         var textComponent = obj.GetComponentInChildren<TMPro.TextMeshPro>();
@@ -190,11 +195,8 @@ public sealed class GeologistController : AOEBuildingController
         if (textComponent != null)
         {
             // Set the text to display the oil value
-            textComponent.text = oilValue.ToString() + "%";
+            textComponent.text = (oilValue * 4).ToString() + "%";
         }
-
-        // Destroy the ping object after 10 seconds
-        Destroy(obj, 10);
     }
     private Vector2Int? GetRandomWithinRange()
     {
