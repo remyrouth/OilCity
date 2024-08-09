@@ -82432,7 +82432,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1665236634493891976, guid: ad1289f9d7b1d944894e18227ab526e7, type: 3}
       propertyPath: ticksPerYear
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1665236634493891976, guid: ad1289f9d7b1d944894e18227ab526e7, type: 3}
       propertyPath: timelineSlider
