@@ -128,8 +128,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 54
-        height: 45
+        width: 86
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,10 +147,10 @@ TextureImporter:
       name: spritesheet_bird_1
       rect:
         serializedVersion: 2
-        x: 54
+        x: 86
         y: 0
-        width: 54
-        height: 45
+        width: 86
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +168,10 @@ TextureImporter:
       name: spritesheet_bird_2
       rect:
         serializedVersion: 2
-        x: 108
+        x: 172
         y: 0
-        width: 54
-        height: 45
+        width: 86
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,10 +189,10 @@ TextureImporter:
       name: spritesheet_bird_3
       rect:
         serializedVersion: 2
-        x: 162
+        x: 258
         y: 0
-        width: 54
-        height: 45
+        width: 86
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
