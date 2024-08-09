@@ -43,7 +43,7 @@ public class OilWellController : PayrateBuildingController, IFlowable
                 float oilAvailable = BoardManager.Instance.OilEvaluator.GetValueAtPosition(Anchor.x + x, Anchor.y + y);
                 float minedFromTile = Mathf.Clamp(oilAvailable, 0, flowRate);
                 amountMined += minedFromTile;
-                BoardManager.Instance.OilEvaluator.IncreaseAmountMinedAtPosition(Anchor.x + x, Anchor.y + y, minedFromTile);
+                BoardManager.Instance.OilEvaluator.IncreaseAmountMinedAtPosition(Anchor.x + x, Anchor.y + y, minedFromTile * 2);
             }
         }
         OnOilMined?.Invoke(amountMined);

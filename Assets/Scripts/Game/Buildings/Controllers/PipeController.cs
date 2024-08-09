@@ -54,12 +54,17 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         if (flip)
         {
-            (m_endPipePos, m_startPipePos) = (m_startPipePos, m_endPipePos);
-            (m_endDirection, m_startDirection) = (Utilities.FlipFlow(m_startDirection), Utilities.FlipFlow(m_endDirection));
-            m_pipes.Reverse();
+            FlipPipeData();
         }
 
         m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
+    }
+
+    private void FlipPipeData()
+    {
+        (m_endPipePos, m_startPipePos) = (m_startPipePos, m_endPipePos);
+        (m_endDirection, m_startDirection) = (Utilities.FlipFlow(m_startDirection), Utilities.FlipFlow(m_endDirection));
+        m_pipes.Reverse();
     }
 
     public bool WouldFlowContentsBeValid(IFlowable with, Vector2Int at_pos)
@@ -100,14 +105,21 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         var parent_pos = m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection);
 
         var (connect_to_child, connect_to_parent) = ValidatePipesAndConnect(child_pos, parent_pos);
-        IFlowable obj = null;
-        if (connect_to_child && BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out obj) && obj.GetInOutConfig().can_output)
+
+        bool has_child = BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var child_obj);
+        bool has_parent = BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var parent_obj);
+
+        if (connect_to_child
+            && has_child
+            && child_obj.GetInOutConfig().can_output
+            && (parent_obj == null || PipePlacer.ValidateFlowConnection(child_obj, parent_obj, false)))
         {
-            if (obj.GetParent() == null)
+            if (child_obj.GetParent() == null)
             {
-                obj.SetParent(this);
-                AddChild(obj);
+                child_obj.SetParent(this);
+                AddChild(child_obj);
                 ToggleSystem(child_pos, true);
+                m_graphic.SetFlow(child_obj.GetFlowConfig().out_type);
                 QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
             }
             else
@@ -125,12 +137,15 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_startPipePos + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection))));
         }
 
-        if (connect_to_parent && BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var pobj) && pobj.GetInOutConfig().can_input && 
-            (obj == null || (obj.GetFlowConfig().out_type == pobj.GetFlowConfig().in_type))) // to prevent soft connections from well to train station
+        if (connect_to_parent 
+            && has_parent
+            && parent_obj.GetInOutConfig().can_input
+            && (child_obj == null || PipePlacer.ValidateFlowConnection(child_obj, parent_obj, false)))
         {
-            pobj.AddChild(this);
-            SetParent(pobj);
+            parent_obj.AddChild(this);
+            SetParent(parent_obj);
             ToggleSystem(parent_pos, true);
+            m_graphic.SetFlow(parent_obj.GetFlowConfig().in_type);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
         else
@@ -139,6 +154,24 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             MarkSystemInvalid(parent_pos);
             QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset((m_endDirection))));
         }
+    }
+    
+    public void FlipPipe()
+    {
+        // removes self and has relationships dereference us
+        TimeManager.Instance.DeregisterReceiver(this);
+
+        // dereference our relationships
+        SetParent(null);
+        m_child = null; // pipes only have one child, so this is fine.
+
+        m_graphic.ClearObjs();
+
+        FlipPipeData();
+        m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
+        CreateInitialConnections(new(0, 0)); // arg unused
+
+        TimeManager.Instance.RegisterReceiver(this);
     }
 
     /// <summary>
@@ -213,6 +246,9 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         BoardManager.Instance.SetPipeTileInSupermap(
             endpoint, 
             BuildingManager.Instance.GetPipeRotation(in_pos, endpoint, out_pos));
+
+        m_graphic.ClearObjs();
+        m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
     }
 
     /// <summary>
@@ -410,30 +446,77 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
     {
-        FlowType through_flow = FlowType.Any;
-        
-        if (m_child != null) through_flow = m_child.GetFlowConfig().out_type;
-        if (m_parent != null)
+        var m_childFlow = FlowType.Any;
+        if (m_child != null)
         {
-            if (m_parent is not PipeController)
+            if (m_child is PipeController)
             {
-                var parent_flow = m_parent.GetFlowConfig().in_type;
-
-                if (through_flow == FlowType.Any)
-                {
-                    through_flow = parent_flow;
-                }
-                else if (through_flow != parent_flow)
-                {
-                    // ERROR? How did this happen?!
-                    BoardManager.Instance.Destroy(this);
-                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.WhatTheHell, Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)));
-                }
+                m_childFlow = GetFlowOfChild();
+            }
+            else
+            {
+                m_childFlow = m_child.GetFlowConfig().out_type;
             }
         }
 
-        return (through_flow, through_flow);
+        var m_parentFlow = FlowType.Any; 
+        if (m_parent != null)
+        {
+            if (m_parent is PipeController)
+            {
+                m_parentFlow = GetFlowOfParent();
+            }
+            else
+            {
+                m_parentFlow = m_parent.GetFlowConfig().in_type;
+            }
+        }
+
+        bool any_child = m_childFlow == FlowType.Any;
+        bool any_parent = m_parentFlow == FlowType.Any;
+        if (any_child && !any_parent) m_childFlow = m_parentFlow;
+        if (!any_child && any_parent) m_parentFlow = m_childFlow;
+
+        if (m_childFlow != m_parentFlow)
+        {
+            return (FlowType.None, FlowType.None);
+        }
+
+        return (m_childFlow, m_parentFlow);
     }
+
+    private FlowType GetFlowOfChild()
+    {
+        if (m_child != null && m_child is PipeController pipe_controller)
+        {
+            return pipe_controller.GetFlowOfChild();
+        }
+        else if (m_child != null)
+        {
+            return m_child.GetFlowConfig().out_type;
+        }
+        else
+        {
+            return FlowType.Any;
+        }
+    }
+
+    private FlowType GetFlowOfParent()
+    {
+        if (m_parent != null && m_parent is PipeController pipe_controller)
+        {
+            return pipe_controller.GetFlowOfParent();
+        }
+        else if (m_parent != null)
+        {
+            return m_parent.GetFlowConfig().in_type;
+        }
+        else
+        {
+            return FlowType.Any;
+        }
+    }
+
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {
