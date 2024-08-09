@@ -314,10 +314,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 05cdb6725da22bd4d847ca50940949a0, type: 3}
   - {fileID: 21300000, guid: a4977a3c252a377469da22f4ea2132f6, type: 3}
   outlines:
-  - {fileID: 21300000, guid: 95affbe9b6743d14c9e805b5da9b65c9, type: 3}
-  - {fileID: 21300000, guid: 95affbe9b6743d14c9e805b5da9b65c9, type: 3}
-  - {fileID: 21300000, guid: 693f53290a0179048b8c139ed235cfa2, type: 3}
-  - {fileID: 21300000, guid: 693f53290a0179048b8c139ed235cfa2, type: 3}
+  - {fileID: 21300000, guid: 1d839bef6d064664ea9ab648bd66535f, type: 3}
+  - {fileID: 21300000, guid: 1d839bef6d064664ea9ab648bd66535f, type: 3}
+  - {fileID: 21300000, guid: 06a694d584fc17b44ba0b5c7f5b4ebed, type: 3}
+  - {fileID: 21300000, guid: 06a694d584fc17b44ba0b5c7f5b4ebed, type: 3}
   old_sprites:
   - {fileID: -2025687455, guid: eb249fbcbf3270345bcd643155ef0528, type: 3}
   - {fileID: -1389183322, guid: eb249fbcbf3270345bcd643155ef0528, type: 3}
