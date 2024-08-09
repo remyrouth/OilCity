@@ -94,7 +94,6 @@ public class OilWellController : PayrateBuildingController, IFlowable
                         return;
                     }
 
-                    pipe.AddChild(this);
                     SetParent(pipe);
                     pipe.ToggleSystem(peripheral_to, true);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
