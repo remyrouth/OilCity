@@ -18,6 +18,8 @@ public class TutorialChooseUI : UIState
     {
         base.OnEnter();
         TimeManager.Instance.TicksPerMinute = 0;
+        BuildingPanelUI.Instance.DisableAllButtons();
+
     }
     public override void OnExit()
     {
