@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e3c7a0522b2e69439d447dffcf38fcb, type: 3}
-  m_Name: Dont_Want_Tutorial
+  m_Name: Event_3_Effect
   m_EditorClassIdentifier: 
   text:
-  - No
-  - Nie
+  - 'Effects: kerosene price increases'
+  - 'Efekt: cena ropy wzrasta'
