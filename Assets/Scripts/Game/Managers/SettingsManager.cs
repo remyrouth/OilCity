@@ -18,6 +18,12 @@ namespace Game.Managers
         private float _ambientSoundVolume = 1f;
         private float _musicVolume = 1f;
 
+        [SerializeField]
+        private VolumePreferences preferences;
+        
+        [SerializeField]
+        private bool willRestartPrefsOnLoad = false;
+
         public void Update() {
             // Debug.Log("MasterVolume:" + _masterVolume + 
             // "  SoundEffect:" + _soundEffectVolume + 
@@ -29,6 +35,15 @@ namespace Game.Managers
         {
             SetLanguage();
             SetCameraMovementInversion();
+
+            if (willRestartPrefsOnLoad) {
+                preferences.ResetPreferences();
+            } else {
+                _masterVolume = preferences.masterVolume;
+                _soundEffectVolume = preferences.musicVolume;
+                _ambientSoundVolume = preferences.ambientVolume;
+                _musicVolume = preferences.soundEffectVolume;
+            }
             
             // _masterVolume = PlayerPrefs.GetFloat("MasterVolume");
             // _musicVolume = PlayerPrefs.GetFloat("MusicVolume");

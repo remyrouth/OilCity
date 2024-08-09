@@ -46,7 +46,7 @@ public sealed class WoodCutterController : AOEBuildingController
     }
     public override void OnTick()
     {
-        for (int i = WorkersCount - 1; i >= 4; i--)
+        for (int i = WorkersCount - 1; i >= 6; i--)
         {
             FireWorker(_workers[i]);
         }
@@ -173,6 +173,8 @@ public sealed class WoodCutterController : AOEBuildingController
         {
             case PaymentMode.MEDIUM:
                 CreateWorker();
+                _workers.Last()._sequenceActions.Enqueue(null);
+                CreateWorker();
                 break;
             case PaymentMode.HIGH:
                 CreateWorker();
@@ -193,6 +195,7 @@ public sealed class WoodCutterController : AOEBuildingController
                 FireWorker(_workers[WorkersCount - 1]);
                 break;
             case PaymentMode.LOW:
+                FireWorker(_workers[WorkersCount - 1]);
                 FireWorker(_workers[WorkersCount - 1]);
                 break;
             default:

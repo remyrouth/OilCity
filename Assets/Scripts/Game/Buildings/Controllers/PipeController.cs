@@ -167,7 +167,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         // dereference our relationships
         SetParent(null);
-        m_child = null; // pipes only have one child, so this is fine.
+        if (m_child != null) DisownChild(m_child);
 
         m_graphic.ClearObjs();
 
@@ -352,7 +352,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
             var rot = Vector2.SignedAngle(Vector2.down, Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_endDirection)));
 
             m_endpipeAtEnd = Instantiate(m_endpointPipe);
-            m_endpipeAtEnd.transform.position = Utilities.Vector2IntToVector3(m_endPipePos + Utilities.GetPipeFlowDirOffset(m_endDirection)) + new Vector3(0.5f, 0.5f);
+            m_endpipeAtEnd.transform.position = Utilities.Vector2IntToVector3(pos) + new Vector3(0.5f, 0.5f);
             m_endpipeAtEnd.transform.Rotate(0f, 0f, rot);
         }
         if (parent == null && m_endpipeAtEnd != null)

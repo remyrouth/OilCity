@@ -7,6 +7,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
 {
     private float baseRefineryFlowrate;
     private float keroseneMultiplier;
+    public bool underFire = false;
 
     private IFlowable m_output;
     private List<IFlowable> m_inputs;
@@ -51,14 +52,12 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                         return;
                     }
 
-                    pipe.AddChild(this);
                     SetParent(pipe);
                     pipe.ToggleSystem(peripheral_to, true);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
                 }
                 else if (pipe.DoesPipeSystemOutputToTile(peripheral_to) && valid)
                 {
-                    pipe.SetParent(this);
                     AddChild(pipe);
                     pipe.ToggleSystem(peripheral_to, true);
                     QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.Connection, Utilities.Vector2IntToVector3(peripheral_to));
@@ -220,7 +219,13 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
                 vfx.Stop();
         }
     }
-
+    public override List<TileAction> GetActions()
+    {
+        var actions = base.GetActions();
+        if (underFire)
+            actions.RemoveAt(1);
+        return actions;
+    }
     public (FlowType in_type, FlowType out_type) GetFlowConfig()
     {
         return (FlowType.Oil, FlowType.Kerosene);
