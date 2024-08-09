@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f23affeb9bbd044bd35cd095b4e7b5, type: 3}
   m_Name: Pipe
   m_EditorClassIdentifier: 
-  <placementCost>k__BackingField: 100
+  <placementCost>k__BackingField: 0
   <removalCost>k__BackingField: 50
   <removalSatisfactionCost>k__BackingField: 0
   <icon>k__BackingField: {fileID: 21300000, guid: 37839ad66ff58b043a481aa57fd86fc0, type: 3}
