@@ -388,8 +388,8 @@ MonoBehaviour:
   m_text: Will the Polish Oil Industry Go Up in Flames? Refinery Fire Tests Polish
     Oil Resilience
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
-  m_sharedMaterial: {fileID: -7551883835502994205, guid: 148a1cfa92d9962478419baeaefd4c30, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f7da30aa2d625bd44b2adac2b8969d5e, type: 2}
+  m_sharedMaterial: {fileID: 8788596217708278491, guid: f7da30aa2d625bd44b2adac2b8969d5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 17
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0

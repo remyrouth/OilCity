@@ -19,6 +19,6 @@ public class CreditsUI : MenuUIState
         creditsCanvas.DOFade(1, 1).SetDelay(1); 
         blackCanvas.DOFade(1,1.5f);
         blackCanvas.DOFade(0,1).SetDelay(1.5f);
-        creditsPivot.DOLocalMoveY(endingY, 40).SetDelay(6);
+        creditsPivot.DOLocalMoveY(endingY, 60).SetDelay(6);
     }
 }

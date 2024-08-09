@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 51b258f15e0cebd4f95b2a3cb75526ed
+guid: 0fe12c36fb1b561419f4157f5ba108c9
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Bodoni MT
+  - Libre Bodoni
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

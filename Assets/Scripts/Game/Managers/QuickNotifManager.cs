@@ -8,7 +8,8 @@ public class QuickNotifManager : Singleton<QuickNotifManager>
     public enum PingType
     {
         Connection,
-        NoConnection
+        NoConnection,
+        WhatTheHell
     }
 
     [System.Serializable]
