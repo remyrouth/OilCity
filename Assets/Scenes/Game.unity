@@ -84550,6 +84550,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2886531790533164852}
     - target: {fileID: 5000693691405214277, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
+      propertyPath: cityMaxVol
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000693691405214277, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
+      propertyPath: musicMaxVol
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000693691405214277, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
+      propertyPath: ambientMaxVol
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000693691405214277, guid: bd4fa4c7d624a4adf95e1f300351b551, type: 3}
       propertyPath: destroyBuilding
       value: 
       objectReference: {fileID: 2886531790533164847}
