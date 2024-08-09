@@ -1392,6 +1392,18 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
+      propertyPath: ForceModule.x.scalar
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
+      propertyPath: ForceModule.y.scalar
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
+      propertyPath: ForceModule.x.minScalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
       propertyPath: ShapeModule.m_Rotation.z
       value: 0
       objectReference: {fileID: 0}
@@ -1402,6 +1414,26 @@ PrefabInstance:
     - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 40.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.6313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042633247246721449, guid: f2af325887c2b51459391d5416eba275, type: 3}
+      propertyPath: InitialModule.startColor.minColor.a
+      value: 0.8666667
       objectReference: {fileID: 0}
     - target: {fileID: 6495438109088311975, guid: f2af325887c2b51459391d5416eba275, type: 3}
       propertyPath: m_LocalPosition.x
