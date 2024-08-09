@@ -76,6 +76,9 @@ public class SoundManager : Singleton<SoundManager>
     {
         if (currentTrackIndex >= trackList.Count) return;
 
+        if (SFXPlayer == null) {
+            SFXPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+        }
         SFXPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, soundType);
 
         if (currentTrackIndex < trackList.Count - 1)
