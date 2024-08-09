@@ -49,4 +49,4 @@ MonoBehaviour:
   buildingName: WoodCutter
   buttonToUnlockIndex: 4
   targetPosition: {x: 21, y: 34, z: -10}
-  targetZoom: 6
+  targetZoom: 8
