@@ -402,6 +402,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1bed6fc2bbe796a41b46fa53cc620c56, type: 2}
   _demolishEffect: {fileID: 335666598439193946}
   _spilloutEffect: {fileID: 4594135719596490040}
+  ignacy: {fileID: 8921091757360805718}
 --- !u!114 &-7377717032735671978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,7 +545,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7101698693641317563
@@ -775,6 +776,11 @@ PrefabInstance:
 --- !u!4 &6851521497591227810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5691190586157005203, guid: 2e6ae2f1beb20d54f8b6249b866dc443, type: 3}
+  m_PrefabInstance: {fileID: 1292063803958090801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8921091757360805718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7647183089670040423, guid: 2e6ae2f1beb20d54f8b6249b866dc443, type: 3}
   m_PrefabInstance: {fileID: 1292063803958090801}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5370581342571571885
