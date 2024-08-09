@@ -44,6 +44,7 @@ public class GameUI : UIState
         if (!TutorialManager.Instance.InTutorial)
         {
             TimeManager.Instance.TicksPerMinute = 60;
+            BuildingPanelUI.Instance.EnableAllButtons();
         }
     }
     public override void OnExit() //similar to base.OnExit but don't hide it

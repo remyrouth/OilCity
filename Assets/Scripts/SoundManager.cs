@@ -36,6 +36,14 @@ public class SoundManager : Singleton<SoundManager>
 
 
 
+    // this variable will be used to make tracks
+    // started by this manager start sooner
+    // mateo noticed there was a blank pause
+    // between tracks. this will fix it.
+    private float trackLeadTime = 0.5f;
+
+
+
     private  List<SingleSoundPlayer> soundClipList = new List<SingleSoundPlayer>();
 
     private void Awake()
@@ -63,7 +71,7 @@ public class SoundManager : Singleton<SoundManager>
 
         cameraAmbiencePlayer.InitializeFromSoundManager(ambientTrackList[currentAmbienceTrackIndex].musicTrack, SingleSoundPlayer.SoundType.AmbientSoundEffect);
         if (currentAmbienceTrackIndex < ambientTrackList.Count - 1) {
-            Invoke("AddCamerAmbientTrack", ambientTrackList[currentAmbienceTrackIndex].musicTrack.length);
+            Invoke("AddCamerAmbientTrack", ambientTrackList[currentAmbienceTrackIndex].musicTrack.length - trackLeadTime);
             currentAmbienceTrackIndex++;
         }
     }
@@ -81,7 +89,7 @@ public class SoundManager : Singleton<SoundManager>
 
         cameraMusicPlayer.InitializeFromSoundManager(musicTrackList[currentMusicTrackIndex].musicTrack, SingleSoundPlayer.SoundType.MusicTrack);
         if (currentMusicTrackIndex < musicTrackList.Count - 1) {
-            Invoke("AddCameraMusicTrack", musicTrackList[currentMusicTrackIndex].musicTrack.length);
+            Invoke("AddCameraMusicTrack", musicTrackList[currentMusicTrackIndex].musicTrack.length - trackLeadTime);
             currentMusicTrackIndex++;
         }
 
