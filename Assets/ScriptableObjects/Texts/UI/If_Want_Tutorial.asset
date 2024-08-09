@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: If_Want_Tutorial
   m_EditorClassIdentifier: 
   text:
-  - Ayoo u want tutorial?
-  - Chcesz tutorial kurde ten?
+  - Do you want to play the tutorial?
+  - "Czy chcesz w\u0142\u0105czy\u0107 samouczek?"
