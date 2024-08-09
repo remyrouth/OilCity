@@ -13,14 +13,23 @@ public class SoundManager : Singleton<SoundManager>
 
 
     [Header("Music Track List Variables")]
+
     [SerializeField]
     private List<MusicTrack> musicTrackList = new List<MusicTrack>();
+    private SingleSoundPlayer cameraMusicPlayer = null;
+    private int currentMusicTrackIndex = 0;
+    [Header("Ambient Track List Variables")]
+
     [SerializeField]
     private List<MusicTrack> ambientTrackList = new List<MusicTrack>();
-    private SingleSoundPlayer cameraMusicPlayer = null;
     private SingleSoundPlayer cameraAmbiencePlayer = null;
-    private int currentMusicTrackIndex = 0;
     private int currentAmbienceTrackIndex = 0;
+
+    [Header("City Track List Variables")]
+    [SerializeField]
+    private List<MusicTrack> citySoundList = new List<MusicTrack>();
+    private SingleSoundPlayer citySoundPlayer;
+    private int citySoundListIndex = 0;
 
 
     [Header("UI Sound Effect Variables")]
@@ -28,11 +37,15 @@ public class SoundManager : Singleton<SoundManager>
     private SingleSoundPlayer buildingClick;
     [SerializeField]
     private SingleSoundPlayer buttonClick;
+
+    [Header("AfterEffects Sound Variables")]
     [SerializeField]
     private SingleSoundPlayer destroyBuilding;
 
     [SerializeField]
     private SingleSoundPlayer placePipe;
+
+
 
 
 
@@ -48,8 +61,10 @@ public class SoundManager : Singleton<SoundManager>
 
     private void Awake()
     {
-        AddCameraMusicTrack();
-        AddCamerAmbientTrack();
+        AddCameraSoundTrack(citySoundList, ref citySoundListIndex);
+        AddCameraSoundTrack(ambientTrackList, ref currentAmbienceTrackIndex);
+        AddCameraSoundTrack(musicTrackList, ref currentMusicTrackIndex);
+        // AddCamerAmbientTrack();
         Camera.main.gameObject.GetComponent<AudioSource>().enabled = false;
         
     }
@@ -57,43 +72,72 @@ public class SoundManager : Singleton<SoundManager>
     private void Start() {
         Camera.main.gameObject.GetComponent<AudioSource>().enabled = true;
     }
+    public void AddCameraSoundTrack(List<MusicTrack> trackList, ref int currentTrackIndex)
+    {
+        if (currentTrackIndex >= trackList.Count) return;
 
-    private void AddCamerAmbientTrack() {
-        if (cameraAmbiencePlayer != null) {
-            cameraAmbiencePlayer.enabled = false;
-            Destroy(cameraAmbiencePlayer);
-            cameraAmbiencePlayer = null;
+        SingleSoundPlayer soundPlayer = null;
+
+        if (trackList == musicTrackList)
+        {
+            soundPlayer = cameraMusicPlayer;
+        }
+        else if (trackList == ambientTrackList)
+        {
+            soundPlayer = cameraAmbiencePlayer;
+        }
+        else if (trackList == citySoundList)
+        {
+            soundPlayer = citySoundPlayer;
         }
 
-        cameraAmbiencePlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
-        cameraAmbiencePlayer.ActivateWithForeignTrigger();
+        if (soundPlayer != null)
+        {
+            soundPlayer.enabled = false;
+            Destroy(soundPlayer);
+        }
 
+        soundPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
+        soundPlayer.ActivateWithForeignTrigger();
 
-        cameraAmbiencePlayer.InitializeFromSoundManager(ambientTrackList[currentAmbienceTrackIndex].musicTrack, SingleSoundPlayer.SoundType.AmbientSoundEffect);
-        if (currentAmbienceTrackIndex < ambientTrackList.Count - 1) {
-            Invoke("AddCamerAmbientTrack", ambientTrackList[currentAmbienceTrackIndex].musicTrack.length - trackLeadTime);
-            currentAmbienceTrackIndex++;
+        soundPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, SingleSoundPlayer.SoundType.MusicTrack);
+
+        if (currentTrackIndex < trackList.Count - 1)
+        {
+            int index = currentTrackIndex;
+            Invoke("ContinuePlayingTracks", trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
+        }
+
+        currentTrackIndex++;
+
+        // Update the appropriate player reference
+        if (trackList == musicTrackList)
+        {
+            cameraMusicPlayer = soundPlayer;
+        }
+        else if (trackList == ambientTrackList)
+        {
+            cameraAmbiencePlayer = soundPlayer;
+        }
+        else if (trackList == citySoundList)
+        {
+            citySoundPlayer = soundPlayer;
         }
     }
 
-    private void AddCameraMusicTrack() {
-        if (currentMusicTrackIndex >= musicTrackList.Count) return; // dev bugfix
-
-        if (cameraMusicPlayer != null) {
-            cameraMusicPlayer.enabled = false;
-            Destroy(cameraMusicPlayer);
-            cameraMusicPlayer = null;
-        }
-        cameraMusicPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
-        cameraMusicPlayer.ActivateWithForeignTrigger();
-
-        cameraMusicPlayer.InitializeFromSoundManager(musicTrackList[currentMusicTrackIndex].musicTrack, SingleSoundPlayer.SoundType.MusicTrack);
-        if (currentMusicTrackIndex < musicTrackList.Count - 1) {
-            Invoke("AddCameraMusicTrack", musicTrackList[currentMusicTrackIndex].musicTrack.length - trackLeadTime);
-            currentMusicTrackIndex++;
-        }
-
+    // This method continues playing the remaining tracks
+    private void ContinuePlayingTracks()
+    {
+        AddCameraSoundTrack(musicTrackList, ref currentMusicTrackIndex);
+        AddCameraSoundTrack(ambientTrackList, ref currentAmbienceTrackIndex);
+        AddCameraSoundTrack(citySoundList, ref citySoundListIndex);
     }
+
+
+
+
+
+    
 
     public void AddSoundScript(SingleSoundPlayer addition) {
         soundClipList.Add(addition);
