@@ -10,16 +10,13 @@ namespace UIScripts.Settings
         [SerializeField] private Slider slider;
         [SerializeField] private TextMeshProUGUI valueLabel;
         
-        // public void OnEnable()
-        // {
-        //     if (PlayerPrefs.HasKey("MusicVolume"))
-        //     {
-        //         var prefValue = PlayerPrefs.GetFloat("MusicVolume");
-        //         slider.value = prefValue;
-        //         var intValue = (int)(prefValue * 100);
-        //         valueLabel.text = intValue.ToString();
-        //     }
-        // }
+        public void OnEnable()
+        {
+            var prefValue = SettingsManager.Instance.MusicVolume;
+            slider.value = prefValue;
+            var intValue = (int)(prefValue * 100);
+            valueLabel.text = intValue.ToString();
+        }
 
         public void SetMusicVolume(float value)
         {

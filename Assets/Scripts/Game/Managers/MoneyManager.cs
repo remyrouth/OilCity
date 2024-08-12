@@ -31,6 +31,4 @@ public class MoneyManager : Singleton<MoneyManager>
         Money = Mathf.Round(Money * 100f) / 100f - Mathf.Round(amount * 100f) / 100f;
         OnMoneyChanged?.Invoke(Money);
     }
-
-
 }

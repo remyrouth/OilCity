@@ -38,8 +38,7 @@ public class SoundManager : Singleton<SoundManager>
     private float cityMaxVol = 1f;
     private SingleSoundPlayer citySoundPlayer;
     private int citySoundListIndex = 0;
-
-
+    
     [Header("UI Sound Effect Variables")]
     [SerializeField]
     private SingleSoundPlayer buildingClick;
@@ -53,18 +52,12 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField]
     private SingleSoundPlayer placePipe;
 
-
-
-
-
     // this variable will be used to make tracks
     // started by this manager start sooner
     // mateo noticed there was a blank pause
     // between tracks. this will fix it.
     private float trackLeadTime = 0.5f;
-
-
-
+    
     private  List<SingleSoundPlayer> soundClipList = new List<SingleSoundPlayer>();
 
     private void Awake()
@@ -129,21 +122,13 @@ public class SoundManager : Singleton<SoundManager>
         }
 
     }
-
-
+    
     private IEnumerator ContinuePlayingTracksCoroutine(List<MusicTrack> trackList, SingleSoundPlayer SFXPlayer, int currentTrackIndex, float newMaxVolume, SingleSoundPlayer.SoundType soundType, float delay)
     {
         yield return new WaitForSeconds(delay);
         AddCameraSoundTrack(trackList, SFXPlayer, ref currentTrackIndex, newMaxVolume, soundType);
     }
-
-
-
-
-
-
     
-
     public void AddSoundScript(SingleSoundPlayer addition) {
         soundClipList.Add(addition);
     }
