@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881cd7adf2fcb47bfb8fa0a9c00da540, type: 3}
   m_Name: VolumeSaveData
   m_EditorClassIdentifier: 
-  masterVolume: 0.54
-  musicVolume: 0.426
-  ambientVolume: 0.239
-  soundEffectVolume: 0.824
+  masterVolume: 1
+  musicVolume: 1
+  ambientVolume: 1
+  soundEffectVolume: 1
