@@ -54,12 +54,16 @@ namespace Game.Managers
         private void Start() {
             VolumeInitializationForSoundPlayers();
             Invoke("VolumeInitializationForSoundPlayers", 0.25f);
+
+            // Debug.Log("Vol prefs||    _masterVolume" + _masterVolume
+            // + "_soundEffectVolume "+ _soundEffectVolume
+            // + " " + " " + " ");
         }
 
         public void VolumeInitializationForSoundPlayers() {
             OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
-            OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
-            OnMusicVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
+            OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _ambientSoundVolume);
+            OnMusicVolumeChanged?.Invoke(_masterVolume * _musicVolume);
         }
         
         public void SetLanguage(Language newLanguage)
