@@ -67,6 +67,7 @@ public class TimeLineEventManager : Singleton<TimeLineEventManager>, ITickReceiv
 
         var newspaperObject = Instantiate(newsPaperPrefabImage, matchedPercentagePosition, timelineSlider.gameObject.transform.rotation);
         newspaperObject.transform.SetParent(timelineSlider.transform, true);
+        newspaperObject.transform.localScale = Vector3.one;
 
         newsSFXPlayer.ActivateWithForeignTrigger();
     }
