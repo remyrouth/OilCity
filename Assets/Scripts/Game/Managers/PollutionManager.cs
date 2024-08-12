@@ -15,16 +15,16 @@ public class PollutionManager : Singleton<PollutionManager>, ITickReceiver
     }
     public void CalculateNewPollution()
     {
-        var timePercentage = TimeLineEventManager.Instance.GetTimePercentage();
+        var timePercentage = Mathf.Clamp01(TimeLineEventManager.Instance.GetTimePercentage());
 
         var amountOfRafineries = BoardManager.Instance.tileDictionary.Values
             .OfType<RefineryController>().Distinct().Count();
         var amountOfOilWells = BoardManager.Instance.tileDictionary.Values
                     .OfType<OilWellController>().Distinct().Count();
 
-        float pollution = timePercentage * 0.75f
-            + (amountOfOilWells + amountOfRafineries) / 20
-            + Mathf.Clamp(KeroseneManager.Instance.KeroseneSumAmount / 50, 0, 0.1f);
+        float pollution = Mathf.Clamp01(timePercentage * 0.75f
+            + (float)(amountOfOilWells + amountOfRafineries) / 100
+            + Mathf.Clamp(KeroseneManager.Instance.KeroseneSumAmount / 50, 0, 0.1f));
 
         SetPollution(pollution);
     }
