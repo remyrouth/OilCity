@@ -137,7 +137,7 @@ public sealed class RefineryController : PayrateBuildingController, IFlowable
         {
             PaymentMode.LOW => 0.3f,
             PaymentMode.MEDIUM => 0.6f,
-            PaymentMode.HIGH => 1f,
+            PaymentMode.HIGH => 1.5f,
             _ => 0,
         };
     }
