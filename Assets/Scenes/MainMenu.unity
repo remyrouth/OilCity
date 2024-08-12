@@ -4837,21 +4837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44df1ff4c86e043bc85f0edced6f834d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicTrackList:
-  - musicTrack: {fileID: 8300000, guid: 5443e0a2309edba4199c8ab5074bc8f1, type: 3}
-    musicTrackoreder: 1
-  - musicTrack: {fileID: 8300000, guid: b6f9b85134c9c9b47953497316c2589f, type: 3}
-    musicTrackoreder: 2
-  - musicTrack: {fileID: 8300000, guid: 924dfb09031909746b6ba18674a456d9, type: 3}
-    musicTrackoreder: 3
+  musicTrackList: []
   musicMaxVol: 1
-  ambientTrackList:
-  - musicTrack: {fileID: 8300000, guid: 309249dcba869dc498df2c3ec0d79ebc, type: 3}
-    musicTrackoreder: 1
-  - musicTrack: {fileID: 8300000, guid: 07bf6c2980f8b3741ad6ea9020c98a66, type: 3}
-    musicTrackoreder: 2
-  - musicTrack: {fileID: 8300000, guid: 50d0ed8709de4bd46bb4b61a9478980c, type: 3}
-    musicTrackoreder: 3
+  ambientTrackList: []
   ambientMaxVol: 1
   citySoundList:
   - musicTrack: {fileID: 8300000, guid: 35d616d2a05004321bba19022828ae4b, type: 3}

@@ -137,35 +137,41 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     public void SelectBuildingSFXTrigger() {
-        Debug.Log("SoundEffect Building occured");
-        buildingClick.ActivateWithForeignTrigger();
+        if (buildingClick) {
+            buildingClick.ActivateWithForeignTrigger();
+        }
     }
 
     public void SelectButtonSFXTrigger() {
-        buttonClick.ActivateWithForeignTrigger();
+        if (buttonClick) {
+            buttonClick.ActivateWithForeignTrigger();
+        }
     }
 
     public void SelectBuildingDestroySFXTrigger() {
-        destroyBuilding.ActivateWithForeignTrigger();
+        if (destroyBuilding) {
+            destroyBuilding.ActivateWithForeignTrigger();
+        }
     }
 
     public void SelectPipeSFXTrigger() {
-        placePipe.ActivateWithForeignTrigger();
+        if (placePipe) {
+            placePipe.ActivateWithForeignTrigger();
+        }
     }
 
     public void PauseContinuousSounds() {
-       if (cameraMusicPlayer == null) {
-            Debug.Log("cameraMusicPlayer is not null");
-       } else {
-            Debug.Log("cameraMusicPlayer not null");
-       }
-        cameraMusicPlayer.PauseWithForeignTrigger();
-        cameraAmbiencePlayer.PauseWithForeignTrigger();
+        if (cameraMusicPlayer && cameraAmbiencePlayer) {
+            cameraMusicPlayer.PauseWithForeignTrigger();
+            cameraAmbiencePlayer.PauseWithForeignTrigger();
+        }
     }
 
     public void PlayContinuousSounds() {
-        cameraMusicPlayer.ActivateWithForeignTrigger();
-        cameraAmbiencePlayer.ActivateWithForeignTrigger();
+        if (cameraMusicPlayer && cameraAmbiencePlayer) {
+            cameraMusicPlayer.ActivateWithForeignTrigger();
+            cameraAmbiencePlayer.ActivateWithForeignTrigger();
+        }
     }
 
 }
