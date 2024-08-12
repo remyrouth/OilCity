@@ -77,8 +77,6 @@ public class SoundManager : Singleton<SoundManager>
             }
         }
 
-        DontDestroyOnLoad(gameObject);
-
         // if (SFXPlayer == null) {
         //     SFXPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
         // }
@@ -90,7 +88,7 @@ public class SoundManager : Singleton<SoundManager>
 
         AddCameraSoundTrack(citySoundList, citySoundPlayer, ref citySoundListIndex, cityMaxVol, SingleSoundPlayer.SoundType.AmbientSoundEffect);
         AddCameraSoundTrack(ambientTrackList, cameraAmbiencePlayer, ref currentAmbienceTrackIndex, ambientMaxVol, SingleSoundPlayer.SoundType.AmbientSoundEffect);
-        AddCameraSoundTrack(musicTrackList, cameraMusicPlayer, ref currentMusicTrackIndex, musicMaxVol, SingleSoundPlayer.SoundType.MusicTrack);
+        // AddCameraSoundTrack(musicTrackList, cameraMusicPlayer, ref currentMusicTrackIndex, musicMaxVol, SingleSoundPlayer.SoundType.MusicTrack);
         // AddCamerAmbientTrack();
         Camera.main.gameObject.GetComponent<AudioSource>().enabled = false;
         
@@ -104,9 +102,6 @@ public class SoundManager : Singleton<SoundManager>
         try {
             if (currentTrackIndex >= trackList.Count) return;
 
-            // if (SFXPlayer == null) {
-            //     SFXPlayer = Camera.main.gameObject.AddComponent<SingleSoundPlayer>();
-            // }
             SFXPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, maxVol, soundType);
 
 
@@ -128,6 +123,10 @@ public class SoundManager : Singleton<SoundManager>
         yield return new WaitForSeconds(delay);
         AddCameraSoundTrack(trackList, SFXPlayer, ref currentTrackIndex, newMaxVolume, soundType);
     }
+
+    public void BeginMusicTrackFromTutorial() {
+        AddCameraSoundTrack(musicTrackList, cameraMusicPlayer, ref currentMusicTrackIndex, musicMaxVol, SingleSoundPlayer.SoundType.MusicTrack);
+    }
     
     public void AddSoundScript(SingleSoundPlayer addition) {
         soundClipList.Add(addition);
@@ -138,35 +137,41 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     public void SelectBuildingSFXTrigger() {
-        Debug.Log("SoundEffect Building occured");
-        buildingClick.ActivateWithForeignTrigger();
+        if (buildingClick) {
+            buildingClick.ActivateWithForeignTrigger();
+        }
     }
 
     public void SelectButtonSFXTrigger() {
-        buttonClick.ActivateWithForeignTrigger();
+        if (buttonClick) {
+            buttonClick.ActivateWithForeignTrigger();
+        }
     }
 
     public void SelectBuildingDestroySFXTrigger() {
-        destroyBuilding.ActivateWithForeignTrigger();
+        if (destroyBuilding) {
+            destroyBuilding.ActivateWithForeignTrigger();
+        }
     }
 
     public void SelectPipeSFXTrigger() {
-        placePipe.ActivateWithForeignTrigger();
+        if (placePipe) {
+            placePipe.ActivateWithForeignTrigger();
+        }
     }
 
     public void PauseContinuousSounds() {
-       if (cameraMusicPlayer == null) {
-            Debug.Log("cameraMusicPlayer is not null");
-       } else {
-            Debug.Log("cameraMusicPlayer not null");
-       }
-        cameraMusicPlayer.PauseWithForeignTrigger();
-        cameraAmbiencePlayer.PauseWithForeignTrigger();
+        if (cameraMusicPlayer && cameraAmbiencePlayer) {
+            cameraMusicPlayer.PauseWithForeignTrigger();
+            cameraAmbiencePlayer.PauseWithForeignTrigger();
+        }
     }
 
     public void PlayContinuousSounds() {
-        cameraMusicPlayer.ActivateWithForeignTrigger();
-        cameraAmbiencePlayer.ActivateWithForeignTrigger();
+        if (cameraMusicPlayer && cameraAmbiencePlayer) {
+            cameraMusicPlayer.ActivateWithForeignTrigger();
+            cameraAmbiencePlayer.ActivateWithForeignTrigger();
+        }
     }
 
 }

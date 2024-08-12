@@ -9,9 +9,22 @@ public class TutorialChooseUI : UIState
     [SerializeField] private Button yesButton, noButton;
     private void Awake()
     {
-        yesButton.onClick.AddListener(() => { TutorialManager.Instance.TutorialEnabled = true; GoToGame(); });
-        noButton.onClick.AddListener(() => { TutorialManager.Instance.TutorialEnabled = false; GoToGame(); });
+        yesButton.onClick.AddListener(() => { 
+            // SoundManager.Instance.PauseContinuousSounds();
+            TutorialManager.Instance.TutorialEnabled = true; GoToGame(); 
+        });
+
+        noButton.onClick.AddListener(() => { 
+            // SoundManager.Instance.PlayContinuousSounds();
+            SoundManager.Instance.BeginMusicTrackFromTutorial();
+            TutorialManager.Instance.TutorialEnabled = false; GoToGame(); 
+        });
+
         normalTickRate = TimeManager.Instance.TicksPerMinute;
+    }
+
+    private void Start() {
+        SoundManager.Instance.PauseContinuousSounds();
     }
     private int normalTickRate;
     public override void OnEnter()

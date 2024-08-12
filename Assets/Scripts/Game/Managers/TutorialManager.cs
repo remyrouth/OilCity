@@ -34,12 +34,37 @@ public class TutorialManager : Singleton<TutorialManager>
         }
     }
     private TutorialStep _currentStep = null;
+    // public void GoToNextStep()
+    // {
+    //     if (_currentStep!= null)
+    //         _currentStep.Deinitialize();
+    //     _currentStep = Instantiate(tutorialSteps[_nextStepIndex], transform).GetComponent<TutorialStep>();
+    //     _currentStep.Initialize();
+    //     _nextStepIndex++;
+    // }
+
     public void GoToNextStep()
     {
-        if (_currentStep!= null)
+        if (_currentStep != null)
             _currentStep.Deinitialize();
-        _currentStep = Instantiate(tutorialSteps[_nextStepIndex], transform).GetComponent<TutorialStep>();
-        _currentStep.Initialize();
-        _nextStepIndex++;
+
+        if (_nextStepIndex < tutorialSteps.Count)
+        {
+            _currentStep = Instantiate(tutorialSteps[_nextStepIndex], transform).GetComponent<TutorialStep>();
+            _currentStep.Initialize();
+            _nextStepIndex++;
+        }
+        else
+        {
+            // Debug.Log("Tutorial completed.");
+            _inTutorial = false;
+            OnTutorialCompleted();
+        }
+    }
+
+    private void OnTutorialCompleted()
+    {
+        // SoundManager.Instance.PauseContinuousSounds();
+        SoundManager.Instance.BeginMusicTrackFromTutorial();
     }
 }
