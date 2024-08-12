@@ -113,9 +113,11 @@ public class SingleSoundPlayer : MonoBehaviour
 
     private void OnDisable()
     {
-        if (SoundManager) {
-            SoundManager.Instance.RemoveSoundScript(this);
+
+        if(!this) {
+            return;
         }
+        SoundManager.Instance.RemoveSoundScript(this);
         Destroy(audioSource);
 
         switch (soundType)

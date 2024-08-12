@@ -62,18 +62,25 @@ public class SoundManager : Singleton<SoundManager>
 
     private void Awake()
     {
-        // Find all instances of SoundManager
-        SoundManager[] soundManagers = FindObjectsOfType<SoundManager>();
+        // // Find all instances of SoundManager
+        // SoundManager[] soundManagers = FindObjectsOfType<SoundManager>();
 
-        // If there are multiple instances, destroy all but one
-        if (soundManagers.Length > 1)
-        {
-            foreach (SoundManager sm in soundManagers)
+        // // If there are multiple instances, destroy all but one
+        // if (soundManagers.Length > 1)
+        // {
+        //     foreach (SoundManager sm in soundManagers)
+        //     {
+        //         if (sm != this && sm != null) // Keep the current instance and destroy others
+        //         {
+        //             Destroy(sm.gameObject);
+        //         }
+        //     }
+        // }
+        if(Instance != null) {
+            if(Instance != this)
             {
-                if (sm != this && sm != null) // Keep the current instance and destroy others
-                {
-                    Destroy(sm.gameObject);
-                }
+                Destroy(gameObject);
+                return;
             }
         }
 
@@ -172,6 +179,11 @@ public class SoundManager : Singleton<SoundManager>
             cameraMusicPlayer.ActivateWithForeignTrigger();
             cameraAmbiencePlayer.ActivateWithForeignTrigger();
         }
+    }
+
+    private void OnDisable()
+    {
+        Destroy(gameObject);
     }
 
 }
