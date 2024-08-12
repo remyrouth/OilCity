@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_1_Introduction_part_2
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: "I'm Ignacy \u0141ukasiewicz, and I'm telling you, this industry
-    is going to be big in the future. People think of oil as the next gold, but in
-    black."
+  dialogueTextEnglish: "I am Ignacy \u0141ukasiewicz, and I assure you, this industry
+    holds great promise for the future. Many already liken oil to gold, though it
+    flows in black."
   dialogueTextPolish: "Uwa\u017Cam, \u017Ce w przysz\u0142o\u015Bci ta bran\u017Ca
     si\u0119 rozro\u015Bnie do niespotykanych wcze\u015Bniej rozmiar\xF3w. Nie bez
-    powodu m\u0142odzi nazywaj\u0105 naft\u0119 czarnym z\u0142otem. \r"
+    powodu m\u0142odzi nazywaj\u0105 naft\u0119 czarnym z\u0142otem. "

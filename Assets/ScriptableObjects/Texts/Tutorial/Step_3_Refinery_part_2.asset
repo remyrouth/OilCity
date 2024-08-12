@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_3_Refinery_part_2
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: However if you give a refinery more oil than it can handle
-    it will spill.
+  dialogueTextEnglish: "But be forewarned\u2014should a refinery receive more oil
+    than it can manage, it shall overflow.\r\n"
   dialogueTextPolish: "Musisz uwa\u017Ca\u0107, poniewa\u017C doprowadzenie zbyt
     du\u017Cej ilo\u015B\u0107 ropy tak\u017Ce spowoduje wyciek w rafinerii."

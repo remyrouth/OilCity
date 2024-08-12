@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_3_Refinery_part_3
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: 'We only sell Kerosene as it''s much more useful than oil
-    in fact it lights up our worlds. Afterall I would know as I made the Kerosene
-    lamp.
-
-'
+  dialogueTextEnglish: We trade only in kerosene, for it is far more useful than
+    crude oil; indeed, it illuminates our very world. After all, I speak with authority,
+    having crafted the kerosene lamp myself.
   dialogueTextPolish: "Oczyszczona nafta posiada wiele w\u0142a\u015Bciwo\u015Bci,
     mo\u017Cemy na przyk\u0142ad u\u017Cy\u0107 jej do lamp naftowych, czyli mojego
     innego wynalazku. "

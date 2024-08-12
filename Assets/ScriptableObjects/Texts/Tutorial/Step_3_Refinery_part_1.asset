@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_3_Refinery_part_1
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: "Now, let\u2019s build a refinery. This is where we transform
-    oil into kerosene, the prized product everyone\u2019s after."
+  dialogueTextEnglish: Now, let us proceed to construct a refinery. Here, we shall
+    transform the oil into kerosene, that most coveted of products.
   dialogueTextPolish: "Zbudujmy teraz rafineri\u0119. Pozwoli nam ona oczy\u015Bci\u0107
-    rop\u0119, kt\xF3r\u0105 potem mo\u017Cemy sprzeda\u0107."
+    rop\u0119, kt\xF3r\u0105 potem mo\u017Cemy sprzeda\u0107.\r\n"

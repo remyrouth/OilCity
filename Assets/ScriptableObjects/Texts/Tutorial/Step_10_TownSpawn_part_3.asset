@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Step_10_TownSpawn_part_3
   m_EditorClassIdentifier: 
   dialogueTextEnglish: If a house is in your way and you need to remove it, you can
-    pay the family to move out. However, the community won't like that.
+    offer compensation to the family to move out. Be mindful, though, that such actions
+    may not be well-received by the community.
   dialogueTextPolish: "Je\u017Celi jakie\u015B domostwo stoi ci na drodze mo\u017Cesz
     im zap\u0142aci\u0107, aby si\u0119 wyprowadzili, a ty b\u0119dziesz m\xF3g\u0142
     wyburzy\u0107 budynek. Jednak\u017Ce uwa\u017Caj, bo mieszka\u0144com si\u0119
