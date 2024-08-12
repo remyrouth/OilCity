@@ -26,7 +26,9 @@ public class DialogueUI : Singleton<DialogueUI>
     
     public void EnableDialogue()
     {
-        panel.SetActive(true);
+        panel.GetComponent<CanvasGroup>().alpha = 1;
+        panel.GetComponent<CanvasGroup>().interactable = true;
+        panel.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
     
     public void ChangeText(DialogueSO dialogueText)
@@ -52,7 +54,9 @@ public class DialogueUI : Singleton<DialogueUI>
     
     public void DisableDialogue()
     {
-        panel.SetActive(false);
+        panel.GetComponent<CanvasGroup>().alpha = 0;
+        panel.GetComponent<CanvasGroup>().interactable = false;
+        panel.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     
     public void ToggleIndicator()

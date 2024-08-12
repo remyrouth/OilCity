@@ -5,26 +5,19 @@ public class BuildingPanelView : MonoBehaviour
 {
     [SerializeField] private float _openPosX, _closedPosX;
     private RectTransform _rectTransform;
-    [SerializeField] private GameObject tutorialArrow;
 
     private const float speed = 400;
 
     public void Open()
     {
-        if(tutorialArrow is not null)
-        {
-            TutorialArrow.Instance.Enable();
-        }
         MoveTo(true);
+        TutorialArrow.Instance.Enable();
     }
 
     public void Close()
     {
-        if(tutorialArrow is not null)
-        {
-            TutorialArrow.Instance.Disable();
-        }
         MoveTo(false);
+        TutorialArrow.Instance.Disable();
     } 
     private void MoveTo(bool toOpen)
     {
