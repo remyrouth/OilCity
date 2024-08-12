@@ -62,12 +62,12 @@ public class DialogueUI : Singleton<DialogueUI>
     
     public void EnableArrow(string animationName)
     {
-        arrow.SetActive(true);
-        arrow.GetComponent<Animator>().Play(animationName);
+        arrow.GetComponent<CanvasGroup>().alpha = 1;
+        arrow.GetComponentInChildren<Animator>(true).Play(animationName);
     }
     public void DisableArrow()
     {
-        arrow.SetActive(false);
+        arrow.GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public void ClickDialogue()

@@ -11,6 +11,7 @@ namespace Game.Tutorial
         {
             base.Initialize();
             BoardManager.Instance.OnBuildingPlaced += FinishStep;
+            DialogueUI.Instance.DisableArrow();
             DialogueUI.Instance.EnableArrow(buildingName);
             BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
         }
