@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5205,6 +5205,20 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0f4c4a1bc31397b4a842c53eb528d191, type: 3}
+    - target: {fileID: 642836354097234283, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_text
+      value: "<B><allcaps>Biana Rybchynska</allcaps></B>\nArt Direction, 2D Artist,
+        Animator, Game Design\r\n\n<B><allcaps>Carlos Garza</allcaps></B>\nProgrammer,
+        QA, Game Design, Narrative Lead\r\n\n<B><allcaps>Mateo Jacolow</allcaps></B>\nSound
+        Design Lead, Music Lead, Game Design\r\n\n<B><allcaps>Nathan Gooneratne</allcaps></B>\nProgrammer,
+        Game Design,  Pipe specialist\n\r\n<B><allcaps>Oskar Rojek</allcaps></B>\nProgrammer,
+        Game Design, Polish Localization\n\n<B><allcaps>Piotr Nowicki</allcaps></B>\nProgrammer,
+        Game Design\r\n\n<B><allcaps>Piotr Trze\u015Bniowski</allcaps></B> \nLead
+        Programmer, Game Design, Technical Artist\r\n\n<B><allcaps>Remy Routh</allcaps></B>
+        \nProgrammer, Game Design, Sound Engineer\r\n\n<B><allcaps>Taisa Kazakevich</allcaps></B>
+        \nCo-Art Direction, 2D Artist, Animator, Game Design\r\n\n<B><allcaps>Roman
+        Badiere</allcaps></B>\nProgrammer, Game Design"
+      objectReference: {fileID: 0}
     - target: {fileID: 732924705646899393, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -5336,6 +5350,29 @@ PrefabInstance:
     - target: {fileID: 4126471570925779971, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_Alpha
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235148425527458188, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_text
+      value: 'Daniel Shek - Techland
+
+        Frank Radecki -  Bloober Team
+
+        Katsiaryna
+        Harelik - Zakazane
+
+        Lukasz Szybaldin - Hyperstage
+
+        Anastasia
+        Yurinok - Moon Active
+
+        Adam Mirkowski - 11 bit studios
+
+        Adriana
+        Bielak  - 11 bit studios
+
+        Aleksander Kauch - 11 bit studios
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 4253424459540577266, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_AnchorMax.y
