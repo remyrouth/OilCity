@@ -60,10 +60,10 @@ public class KeroseneManager : Singleton<KeroseneManager>, ITickReceiver
         switch (GameDiffucultyManager.difficulty)
         {
             case Difficulty.StoryMode:
-                multiplier *= 1.2f;
+                multiplier *= 1.25f;
                 break;
             case Difficulty.ClassicMode:
-                multiplier *= 1.1f;
+                multiplier *= 1.15f;
                 break;
         };
         foreach (var effect in effects)
