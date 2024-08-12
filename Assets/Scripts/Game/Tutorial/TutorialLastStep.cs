@@ -7,6 +7,7 @@ namespace Game.Tutorial
         public override void Initialize()
         {
             DialogueUI.Instance.OnDialogueClicked += FinishStep;
+            DialogueUI.Instance.ToggleIndicator();
             base.Initialize();
         }
 
@@ -17,6 +18,8 @@ namespace Game.Tutorial
     
         private new void FinishStep()
         {
+            Destroy(GameObject.Find("TutorialArrow"));
+            DialogueUI.Instance.ToggleIndicator();
             DialogueUI.Instance.DisableDialogue();
             BuildingPanelUI.Instance.EnableAllButtons();
             TimeManager.Instance.TicksPerMinute = 60;

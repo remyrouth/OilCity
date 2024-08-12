@@ -14,6 +14,8 @@ namespace Game.Tutorial
         {
             BoardManager.Instance.OnBuildingPlaced += FinishStep;
             base.Initialize();
+            DialogueUI.Instance.DisableArrow();
+            DialogueUI.Instance.EnableArrow(buildingName);
             CameraController.Instance.TargetPosition = targetPosition;
             CameraController.Instance.TargetZoom = targetZoom;
             BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
@@ -28,6 +30,7 @@ namespace Game.Tutorial
         {
             if (buildingSO.name.Equals(buildingName))
             {
+                DialogueUI.Instance.DisableArrow();
                 BuildingPanelUI.Instance.ToggleHighlight(buttonToUnlockIndex);
                 FinishStep();
             }
