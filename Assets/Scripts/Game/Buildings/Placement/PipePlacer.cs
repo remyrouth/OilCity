@@ -533,7 +533,7 @@ public class PipePlacer : BuildingPlacer
                     s_controller.ToggleSystem(false, true);
                 }
 
-                TimeManager.Instance.LiteDeregister(e_flowable);
+                TimeManager.Instance.LiteDeregister(s_controller);
             }
             else if (BoardManager.Instance.TryGetTypeAt<IFlowable>(m_start, out var s_flowable) && has_end_pipe)
             {
