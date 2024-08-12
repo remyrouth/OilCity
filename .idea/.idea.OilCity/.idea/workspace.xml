@@ -6,20 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="fa54f208-40d5-4338-9135-da26096f7c69" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OilCity/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Shaders/Trees/TreesMat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Shaders/Trees/TreesMat.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Managers/MoneyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Managers/MoneyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Managers/SettingsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Managers/SettingsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Shared/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Shared/Singleton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SingleSoundPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SingleSoundPlayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SoundManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SoundManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/AmbientVolumeChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/AmbientVolumeChanger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/MasterVolumeChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/MasterVolumeChanger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/MusicVolumeChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/MusicVolumeChanger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/SfxVolumeChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UIScripts/Settings/Volume/SfxVolumeChanger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tutorial/Step_3_Refinery_part_1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tutorial/Step_3_Refinery_part_1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tutorial/Step_6_LumberJack.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tutorial/Step_6_LumberJack.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tutorial/Step_8_Cinema.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tutorial/Step_8_Cinema.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/GameUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/GameUI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialBuildingStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialBuildingStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialBuildingWithZoomStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialBuildingWithZoomStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialDialogueStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialDialogueStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialFirstStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialFirstStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialHighlightStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialHighlightStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialHighlightWithZoomStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialHighlightWithZoomStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialLastStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialLastStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialPipeStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialPipeStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialZoomStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Tutorial/TutorialZoomStep.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/UI/States/DialogueUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/UI/States/DialogueUI.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,25 +50,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\s25723\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\s25723\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\s25723\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\s25723\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\s25723\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\s25723\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity 2022.3.9f1\Editor\Unity.exe" />

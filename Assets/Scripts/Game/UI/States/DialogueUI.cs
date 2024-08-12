@@ -9,6 +9,15 @@ public class DialogueUI : Singleton<DialogueUI>
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Image portrait;
+    [SerializeField] private Image clickIndicator;
+    [SerializeField] private GameObject arrow;
+
+    public GameObject Arrow
+    {
+        get => arrow;
+        set => arrow = value;
+    }
+
     private DialogueSO _currentDialogue;
 
     public DialogueSO CurrentDialogue => _currentDialogue;
@@ -44,6 +53,21 @@ public class DialogueUI : Singleton<DialogueUI>
     public void DisableDialogue()
     {
         panel.SetActive(false);
+    }
+    
+    public void ToggleIndicator()
+    {
+        clickIndicator.gameObject.SetActive(!clickIndicator.gameObject.activeSelf);
+    }
+    
+    public void EnableArrow(string animationName)
+    {
+        arrow.SetActive(true);
+        arrow.GetComponent<Animator>().Play(animationName);
+    }
+    public void DisableArrow()
+    {
+        arrow.SetActive(false);
     }
 
     public void ClickDialogue()

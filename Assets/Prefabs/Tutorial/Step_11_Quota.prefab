@@ -49,3 +49,4 @@ MonoBehaviour:
   targetPosition: {x: 21, y: 34, z: -10}
   targetZoom: 8
   highlightIndexToToggle: 1
+  animationName: Quota

@@ -11,6 +11,7 @@ namespace Game.Tutorial
         {
             PipeEvents.OnPipePlaced += FinishStep;
             base.Initialize();
+            DialogueUI.Instance.EnableArrow("Pipe");
             BuildingPanelUI.Instance.ToggleButtonInteractableWithHighlight(buttonToUnlockIndex);
             PipePlacer.IsValidPlaceOverride = OverriddenPipePredicate;
         }
@@ -23,6 +24,7 @@ namespace Game.Tutorial
 
         private new void FinishStep()
         {
+            DialogueUI.Instance.DisableArrow();
             BuildingPanelUI.Instance.ToggleHighlight(buttonToUnlockIndex);
             base.FinishStep();
         }
