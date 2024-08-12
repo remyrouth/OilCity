@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yearRange: {x: 1850, y: 1890}
   currentYear: 0
-  ticksPerYear: 24
+  ticksPerYear: 14
   currentTick: 0
   events:
   - {fileID: 2421549254056547533, guid: 076c08d28ed00054d8329acad0ba64f9, type: 3}
@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 2421549254056547533, guid: e9c40e769a1e4894b98ad2b5b4c0571e, type: 3}
   - {fileID: 2421549254056547533, guid: 5f5865075e6334b4abebca1bffc0cc0b, type: 3}
   - {fileID: 2421549254056547533, guid: 935c7a1a5d13dba42bcffc6eb1b69a97, type: 3}
+  - {fileID: 2421549254056547533, guid: 0c365b885dfecb54b813264c56f18be3, type: 3}
   currentEventIndex: 0
   timelineSlider: {fileID: 0}
   newsPaperPrefabImage: {fileID: 6747949654655670300, guid: 9e464b3aa97a648afbded8f833e7c1de, type: 3}
