@@ -117,6 +117,9 @@ public class SingleSoundPlayer : MonoBehaviour
         if(!this) {
             return;
         }
+        if (SoundManager.Instance == null) {
+            return;
+        }
         SoundManager.Instance.RemoveSoundScript(this);
         Destroy(audioSource);
 

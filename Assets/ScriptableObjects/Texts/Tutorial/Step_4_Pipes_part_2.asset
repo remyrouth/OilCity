@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueTextEnglish: Once the kerosene is refined, it must be promptly removed;
     otherwise, it may overflow. Could you arrange for a pipe to be connected from
-    here to the train station, so it may be transported and sold?
+    the refinery to the train station, so it may be transported and sold?
   dialogueTextPolish: "\u015Awietnie. Teraz musimy doprowadzi\u0107 rurami oczyszczon\u0105
     rop\u0119 do stacji kolejowej, aby zapobiec wyciekowi w rafinerii, a tak\u017Ce
-    umo\u017Cliwi\u0107 jej sprzeda\u017C. "
+    umo\u017Cliwi\u0107 jej sprzeda\u017C."

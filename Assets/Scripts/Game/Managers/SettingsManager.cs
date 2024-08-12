@@ -25,10 +25,7 @@ namespace Game.Managers
         private bool willRestartPrefsOnLoad = false;
 
         public void Update() {
-            // Debug.Log("MasterVolume:" + _masterVolume + 
-            // "  SoundEffect:" + _soundEffectVolume + 
-            // " AmbientSound:" + _ambientSoundVolume + 
-            // " Music:" +_musicVolume);
+
         }
         
         private void Awake()
@@ -43,35 +40,8 @@ namespace Game.Managers
             SetLanguage();
             SetCameraMovementInversion();
 
-            // if (willRestartPrefsOnLoad) {
-            //     preferences.ResetPreferences();
-            // } else {
-            //     _masterVolume = preferences.masterVolume;
-            //     _soundEffectVolume = preferences.musicVolume;
-            //     _ambientSoundVolume = preferences.ambientVolume;
-            //     _musicVolume = preferences.soundEffectVolume;
-            // }
-
-            // _masterVolume = PlayerPrefs.GetFloat("MasterVolume");
-            // _musicVolume = PlayerPrefs.GetFloat("MusicVolume");
-            // _soundEffectVolume = PlayerPrefs.GetFloat("SoundEffectVolume");
-            // _ambientSoundVolume = PlayerPrefs.GetFloat("AmbientSoundVolume");
         }
 
-        // private void Start() {
-        //     VolumeInitializationForSoundPlayers();
-        //     Invoke("VolumeInitializationForSoundPlayers", 0.25f);
-        //
-        //     // Debug.Log("Vol prefs||    _masterVolume" + _masterVolume
-        //     // + "_soundEffectVolume "+ _soundEffectVolume
-        //     // + " " + " " + " ");
-        // }
-        //
-        // public void VolumeInitializationForSoundPlayers() {
-        //     OnSoundEffectVolumeChanged?.Invoke(_masterVolume * _soundEffectVolume);
-        //     OnAmbientSoundVolumeChanged?.Invoke(_masterVolume * _ambientSoundVolume);
-        //     OnMusicVolumeChanged?.Invoke(_masterVolume * _musicVolume);
-        // }
         
         public void SetLanguage(Language newLanguage)
         {
