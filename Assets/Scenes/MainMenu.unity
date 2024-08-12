@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4850,22 +4850,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44df1ff4c86e043bc85f0edced6f834d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicTrackList: []
+  musicTrackList:
+  - musicTrack: {fileID: 8300000, guid: 5443e0a2309edba4199c8ab5074bc8f1, type: 3}
+    musicTrackoreder: 1
+  - musicTrack: {fileID: 8300000, guid: b6f9b85134c9c9b47953497316c2589f, type: 3}
+    musicTrackoreder: 2
+  - musicTrack: {fileID: 8300000, guid: 924dfb09031909746b6ba18674a456d9, type: 3}
+    musicTrackoreder: 3
   musicMaxVol: 1
   ambientTrackList: []
   ambientMaxVol: 0.15
-  citySoundList:
-  - musicTrack: {fileID: 8300000, guid: 35d616d2a05004321bba19022828ae4b, type: 3}
-    musicTrackoreder: 1
-  - musicTrack: {fileID: 8300000, guid: 4f5d2fd54b33747449955cf1eb0dd72e, type: 3}
-    musicTrackoreder: 2
-  - musicTrack: {fileID: 8300000, guid: 151b8a0bfc62c476b85c416a504b269e, type: 3}
-    musicTrackoreder: 3
+  citySoundList: []
   cityMaxVol: 0.15
   buildingClick: {fileID: 2749057751958808173}
   buttonClick: {fileID: 3849045912301249322}
   destroyBuilding: {fileID: 4706326327733138043}
   placePipe: {fileID: 7478083559275356836}
+  canSelfActivateMusic: 1
 --- !u!1 &6732946473685770727
 GameObject:
   m_ObjectHideFlags: 0

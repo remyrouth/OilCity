@@ -51,7 +51,8 @@ public class SoundManager : Singleton<SoundManager>
 
     [SerializeField]
     private SingleSoundPlayer placePipe;
-
+    [SerializeField]
+    private bool canSelfActivateMusic = false;
     // this variable will be used to make tracks
     // started by this manager start sooner
     // mateo noticed there was a blank pause
@@ -82,6 +83,9 @@ public class SoundManager : Singleton<SoundManager>
 
         AddCameraSoundTrack(citySoundList, citySoundPlayer, ref citySoundListIndex, cityMaxVol, SingleSoundPlayer.SoundType.AmbientSoundEffect);
         AddCameraSoundTrack(ambientTrackList, cameraAmbiencePlayer, ref currentAmbienceTrackIndex, ambientMaxVol, SingleSoundPlayer.SoundType.AmbientSoundEffect);
+        if (canSelfActivateMusic) {
+            AddCameraSoundTrack(musicTrackList, cameraMusicPlayer, ref currentMusicTrackIndex, musicMaxVol, SingleSoundPlayer.SoundType.MusicTrack);
+        }
         // AddCameraSoundTrack(musicTrackList, cameraMusicPlayer, ref currentMusicTrackIndex, musicMaxVol, SingleSoundPlayer.SoundType.MusicTrack);
         // AddCamerAmbientTrack();
         Camera.main.gameObject.GetComponent<AudioSource>().enabled = false;
