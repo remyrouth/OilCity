@@ -6,8 +6,8 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Deer
+  m_Name: SquirrelUI
   m_Controller: {fileID: 9100000, guid: 28d9ce8bf7abfc149b4659fa88d5a40e, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 2463c3b9297089845a765b38012fb2de, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: ffc5f0eeeab3d7a4fb0fa8ba9440146b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0626aeccf427444458aa2e4aabd29d93, type: 2}
