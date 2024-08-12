@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5348,6 +5348,16 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2e1d1e84a46d8974fabdc14a9b01256f, type: 3}
+    - target: {fileID: 4897338286579095019, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_text
+      value: "Cleo Trumbull, Ma\u0142gorzata Wiewi\xF3ra, Aaron Cai, Anastasiya Mashkina,
+        Evgeniia Glushkova, Janset Ece Ko\xE7, Laurel Parsons, Lily Kravchenko,Oleksandr
+        Smirnov, Oskar Kalbarczyk, Berkay G\xFCney, Irina Ryabova, Kevin McGrath,
+        Kevin Rodriguez, Lily Jawadiwar, Luca Sandoval, Marek Kisieli\u0144ski, Mykola
+        Ihnatenko, Yan Rybchynskyi, Ben Jaccaci, Igor Sienkiewicz, Isaac Polite,
+        Ivan Havrylenko, Jeremi Surzyn, Karol Kozio\u0142, Logan Chandler, Maria
+        Niczyporuk, Rafael Moroz, Zuzia Schabowska\r"
+      objectReference: {fileID: 0}
     - target: {fileID: 5179443668512602820, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -5528,6 +5538,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 16af0f0b5674b0a41b02cf6fcdd7c694, type: 3}
+    - target: {fileID: 8578724961763957692, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 36dd1ad97f1469f48b3c26d2df05a87b, type: 3}
     - target: {fileID: 8794254472790488947, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_Sprite
       value: 
