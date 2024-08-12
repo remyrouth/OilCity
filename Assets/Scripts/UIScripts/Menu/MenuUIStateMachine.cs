@@ -25,5 +25,5 @@ public class MenuUIStateMachine : Singleton<MenuUIStateMachine>
             Current.OnUpdate();
     }
 
-    public enum MenuUIType { Main, Settings, Credits }
+    public enum MenuUIType { Main, Settings, Credits, DifficultyChoose }
 }

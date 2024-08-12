@@ -56,6 +56,16 @@ public class KeroseneManager : Singleton<KeroseneManager>, ITickReceiver
     public float GetKerosenePrice()
     {
         float multiplier = m_falloffCurve.Evaluate(TimeLineEventManager.Instance.GetTimePercentage());
+
+        switch (GameDiffucultyManager.difficulty)
+        {
+            case Difficulty.StoryMode:
+                multiplier *= 1.2f;
+                break;
+            case Difficulty.ClassicMode:
+                multiplier *= 1.1f;
+                break;
+        };
         foreach (var effect in effects)
             multiplier *= effect.multiplier.Evaluate((float)effect.timeElapsed / effect.length);
         return KEROSINE_PRICE * multiplier;
