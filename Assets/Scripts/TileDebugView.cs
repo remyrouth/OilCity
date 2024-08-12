@@ -5,7 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class TileDebugView : MonoBehaviour
 {
-   private void OnDrawGizmos()
+#if UNITY_EDITOR 
+
+    private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
 
@@ -19,4 +21,5 @@ public class TileDebugView : MonoBehaviour
             }
         }
     }
+#endif
 }
