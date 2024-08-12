@@ -51,31 +51,19 @@ public class SoundManager : Singleton<SoundManager>
 
     [SerializeField]
     private SingleSoundPlayer placePipe;
-
+    [SerializeField]
+    private bool canSelfActivateMusic = false;
     // this variable will be used to make tracks
     // started by this manager start sooner
     // mateo noticed there was a blank pause
     // between tracks. this will fix it.
-    private float trackLeadTime = 0.5f;
+    private float trackLeadTime = 0f;
     
     private  List<SingleSoundPlayer> soundClipList = new List<SingleSoundPlayer>();
 
     private void Awake()
     {
-        // // Find all instances of SoundManager
-        // SoundManager[] soundManagers = FindObjectsOfType<SoundManager>();
 
-        // // If there are multiple instances, destroy all but one
-        // if (soundManagers.Length > 1)
-        // {
-        //     foreach (SoundManager sm in soundManagers)
-        //     {
-        //         if (sm != this && sm != null) // Keep the current instance and destroy others
-        //         {
-        //             Destroy(sm.gameObject);
-        //         }
-        //     }
-        // }
         if(Instance != null) {
             if(Instance != this)
             {
@@ -95,6 +83,9 @@ public class SoundManager : Singleton<SoundManager>
 
         AddCameraSoundTrack(citySoundList, citySoundPlayer, ref citySoundListIndex, cityMaxVol, SingleSoundPlayer.SoundType.AmbientSoundEffect);
         AddCameraSoundTrack(ambientTrackList, cameraAmbiencePlayer, ref currentAmbienceTrackIndex, ambientMaxVol, SingleSoundPlayer.SoundType.AmbientSoundEffect);
+        if (canSelfActivateMusic) {
+            AddCameraSoundTrack(musicTrackList, cameraMusicPlayer, ref currentMusicTrackIndex, musicMaxVol, SingleSoundPlayer.SoundType.MusicTrack);
+        }
         // AddCameraSoundTrack(musicTrackList, cameraMusicPlayer, ref currentMusicTrackIndex, musicMaxVol, SingleSoundPlayer.SoundType.MusicTrack);
         // AddCamerAmbientTrack();
         Camera.main.gameObject.GetComponent<AudioSource>().enabled = false;
@@ -109,6 +100,12 @@ public class SoundManager : Singleton<SoundManager>
         try {
             if (currentTrackIndex >= trackList.Count) return;
 
+
+
+            if (SFXPlayer == cameraAmbiencePlayer) {
+                Debug.Log("Ambience Length: " + trackList[currentTrackIndex].musicTrack.length);
+            }
+
             SFXPlayer.InitializeFromSoundManager(trackList[currentTrackIndex].musicTrack, maxVol, soundType);
 
 
@@ -116,7 +113,7 @@ public class SoundManager : Singleton<SoundManager>
             // Invoke("ContinuePlayingTracks", trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
             // this.Invoke(() => AddCameraSoundTrack(trackList, SFXPlayer, currentTrackIndex), trackList[currentTrackIndex].musicTrack.length - trackLeadTime);
             currentTrackIndex++;
-            StartCoroutine(ContinuePlayingTracksCoroutine(trackList, SFXPlayer, currentTrackIndex, maxVol, soundType, trackList[currentTrackIndex].musicTrack.length - trackLeadTime));
+            StartCoroutine(ContinuePlayingTracksCoroutine(trackList, SFXPlayer, currentTrackIndex, maxVol, soundType, trackList[index].musicTrack.length - trackLeadTime));
 
             // currentTrackIndex++;
         } catch (Exception error) {
@@ -127,6 +124,10 @@ public class SoundManager : Singleton<SoundManager>
     
     private IEnumerator ContinuePlayingTracksCoroutine(List<MusicTrack> trackList, SingleSoundPlayer SFXPlayer, int currentTrackIndex, float newMaxVolume, SingleSoundPlayer.SoundType soundType, float delay)
     {
+        if (SFXPlayer == cameraAmbiencePlayer) {
+            Debug.Log("Delay Started");
+            Debug.Log("Ambience Length: " + trackList[currentTrackIndex].musicTrack.length);
+        }
         yield return new WaitForSeconds(delay);
         AddCameraSoundTrack(trackList, SFXPlayer, ref currentTrackIndex, newMaxVolume, soundType);
     }
@@ -175,8 +176,11 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     public void PlayContinuousSounds() {
-        if (cameraMusicPlayer && cameraAmbiencePlayer) {
+        if (cameraMusicPlayer) {
             cameraMusicPlayer.ActivateWithForeignTrigger();
+        }
+
+        if (cameraAmbiencePlayer) {
             cameraAmbiencePlayer.ActivateWithForeignTrigger();
         }
     }
