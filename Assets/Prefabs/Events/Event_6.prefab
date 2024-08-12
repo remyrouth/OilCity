@@ -460,8 +460,8 @@ MonoBehaviour:
   m_text: Russian Oil Monopoly, Poland's oil wells have run dry, leaving the nation
     with no choice but to shut down its operations. The end of this fierce struggle
     not only marks the demise of a once-thriving industry but also raises poignant
-    questions about the true cost of this relentless pursuit. Overall was any of
-    it really worth it.
+    questions about the true cost of this relentless pursuit. Overall,  was any of
+    this  really worth it?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
   m_sharedMaterial: {fileID: 7781647505266917343, guid: 42c27563a6229944caeab5819da9bcbd, type: 2}
@@ -488,7 +488,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.8
+  m_fontSize: 26.9
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -766,8 +766,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 793332562
-  m_fontColor: {r: 0.3207547, g: 0.2956248, b: 0.28595585, a: 0.18431373}
+    rgba: 1850297170
+  m_fontColor: {r: 0.3207547, g: 0.2956248, b: 0.28595585, a: 0.43137255}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
