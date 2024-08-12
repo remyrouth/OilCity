@@ -19,9 +19,9 @@ public class PipePlacer : BuildingPlacer
     private Vector2Int m_end;
     private PipeFlowDirection m_startDir = PipeFlowDirection.Invalid;
     private PipeFlowDirection m_endDir = PipeFlowDirection.Invalid;
+
     private bool m_wasStartPlaced = false;
     private (bool c_i, bool c_o) m_ioConfig;
-    private (FlowType input, FlowType output) m_ftConfig;
     private bool m_needsFlip;
     private IFlowable m_first;
 
@@ -51,7 +51,6 @@ public class PipePlacer : BuildingPlacer
         m_pointList = new List<Vector2Int>();
 
         m_ioConfig = (true, true);
-        m_ftConfig = (FlowType.Any, FlowType.Any);
     }
 
     #region callbacks
@@ -73,6 +72,7 @@ public class PipePlacer : BuildingPlacer
         if (m_singlePipePreview == null) return;
 
         var mousePos = TileSelector.Instance.MouseToGrid();
+
         m_singlePipePreview.transform.position = new Vector3(mousePos.x + HARDCODED_OFFSET, mousePos.y + HARDCODED_OFFSET, 0);
         var can_be_built = IsValidPlacement(m_so);
 
@@ -109,7 +109,6 @@ public class PipePlacer : BuildingPlacer
 
             m_pathfindingPreview.positionCount = m_pointList.Count;
             m_pathfindingPreview.SetPositions(array);
-
         }
     }
 
@@ -231,6 +230,8 @@ public class PipePlacer : BuildingPlacer
     public override bool IsValidPlacement(BuildingScriptableObject so)
     {
         var mousePos = TileSelector.Instance.MouseToGrid();
+        if (BoardManager.Instance.IsPositionOutsideBoard(mousePos)) return false;
+
         if (IsValidPlaceOverride != null)
             return IsValidPlaceOverride.Invoke((mousePos, m_wasStartPlaced));
         if (BoardManager.Instance.AreTilesOccupiedForBuilding(mousePos, so))
@@ -275,13 +276,18 @@ public class PipePlacer : BuildingPlacer
     {
         while (true)
         {
-            UpdatePreview();
+            var mousePos = TileSelector.Instance.MouseToGrid();
 
-            bool is_placement_valid = IsValidPlacement(m_so);
+            if (!BoardManager.Instance.IsPositionOutsideBoard(mousePos))
+            {
+                UpdatePreview();
 
-            UpdateCurrentSinglePreview(is_placement_valid);
+                bool is_placement_valid = IsValidPlacement(m_so);
 
-            if (WasMouseClicked && is_placement_valid) break;
+                UpdateCurrentSinglePreview(is_placement_valid);
+
+                if (WasMouseClicked && is_placement_valid) break;
+            }
 
             yield return null;
         }
@@ -379,7 +385,6 @@ public class PipePlacer : BuildingPlacer
         m_first = flowable;
 
         m_ioConfig = flowable.GetInOutConfig();
-        m_ftConfig = flowable.GetFlowConfig();
     }
 
     private bool CheckOptionsForValidConnection(Vector2Int at_pos)
@@ -388,7 +393,6 @@ public class PipePlacer : BuildingPlacer
         if (m_first == null) return true;
 
         var io = flowable.GetInOutConfig();
-        var ft = flowable.GetFlowConfig();
 
         if (io.can_input)
         {
@@ -457,10 +461,12 @@ public class PipePlacer : BuildingPlacer
             {
                 if (s_controller.Equals(e_controller) // prevents self-connections
                     || (s_controller.GetParent() != null && s_controller.GetParent().Equals(e_controller)) // prevents repeated reparenting connections
-                    || s_controller.GetPositions().start.Equals(m_start) // prevents wrong-way connections (start of pipe cannot connect to the end of another pipe)
-                    || e_controller.GetPositions().end.Equals(m_end)) // prevents wrong-way connections (see above, most likely redundant)
+                    || (!s_controller.IsSingletonPipe() && s_controller.GetPositions().start.Equals(m_start)) // prevents wrong-way connections (start of pipe cannot connect to the end of another pipe)
+                    || (!e_controller.IsSingletonPipe() && e_controller.GetPositions().end.Equals(m_end))) // prevents wrong-way connections (see above, most likely redundant)
                 {
                     Debug.LogWarning("Invalid pipe connection! See comments for reasoning. Aborting...");
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_start));
+                    QuickNotifManager.Instance.PingSpot(QuickNotifManager.PingType.NoConnection, Utilities.Vector2IntToVector3(m_end));
                     return;
                 }
 

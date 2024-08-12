@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEditor.Experimental.GraphView;
 
 public sealed class PipeController : BuildingController<BuildingScriptableObject>, IFlowable
 {
@@ -16,6 +17,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
     private GameObject m_endpipeAtStart;
     private GameObject m_endpipeAtEnd;
+
+    private bool m_wasCreatedFlipped;
 
     private List<Vector2Int> m_pipes; 
 
@@ -62,6 +65,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         }
 
         m_graphic.SetupSystems(m_startPipePos, m_endPipePos, m_startDirection, m_endDirection);
+
+        m_wasCreatedFlipped = flip;
     }
 
     private void FlipPipeData()
@@ -112,6 +117,8 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         bool has_child = BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var child_obj);
         bool has_parent = BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var parent_obj);
+        //bool flow_valid_l_r = has_child && has_parent && PipePlacer.ValidateFlowConnection(child_obj, parent_obj, false);
+       // bool flow_valid_r_l = has_child && has_parent && PipePlacer.ValidateFlowConnection(child_obj, parent_obj, true);
 
         if (connect_to_child
             && has_child
@@ -192,7 +199,10 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             var (_, end) = c_pipe.GetPositions();
 
-            is_child_valid = end.Equals(child_end) && c_pipe.GetOpenStatus().open_end; // to prevent stealing a pipe from one that already has a connection
+            is_child_valid =
+                end.Equals(child_end) // are we connected correctly?
+                && c_pipe.GetOpenStatus().open_end // to prevent stealing a pipe from one that already has a connection
+                && (!c_pipe.IsSingletonPipe() || m_startDirection != Utilities.FlipFlow(c_pipe.m_startDirection)); // prevents singleton pipes from connecting same-side output/inputs
 
             if (is_child_valid) c_pipe.UpdateFlowAndVisual(end, m_startPipePos, true); // we're connecting to their end, so our start is the endpoint and their end is the pipe. Therefore, flip the flow dir.
         }
@@ -203,7 +213,10 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         {
             var (start, _) = p_pipe.GetPositions();
 
-            is_parent_valid = start.Equals(parent_end) && p_pipe.GetOpenStatus().open_start; // to prevent connecting to a pipe that already has a connection
+            is_parent_valid = 
+                start.Equals(parent_end) // are we connected correctly?
+                && p_pipe.GetOpenStatus().open_start // to prevent connecting to a pipe that already has a connection
+                && (!p_pipe.IsSingletonPipe() || m_endDirection != Utilities.FlipFlow(p_pipe.m_endDirection)); // prevents singleton pipes from connecting same-side output/inputs
 
             if (is_parent_valid) p_pipe.UpdateFlowAndVisual(start, m_endPipePos, false); // don't flip the flowdir bc we are flowing into their start from our endpoint.
         }
@@ -231,18 +244,37 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         var out_pos = Vector2Int.zero;
         var my_status = GetOpenStatus();
 
-        // change flowdir for endpoint
-        if (endpoint.Equals(m_startPipePos) && my_status.open_start)
+        // this couldve been handled better, but crunch is crunch :(
+        if (IsSingletonPipe())
         {
-            in_pos = pipe;
-            out_pos = m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(m_endDirection);
-            m_startDirection = flow_direction;
+            if (my_status.open_end)
+            {
+                m_endDirection = flow_direction;
+            }
+            if (my_status.open_start)
+            {
+                m_startDirection = flow_direction;
+            }
+
+            // startpos = endpos bc we're a singleton
+            in_pos = endpoint - Utilities.GetPipeFlowDirOffset(m_startDirection);
+            out_pos = endpoint + Utilities.GetPipeFlowDirOffset(m_endDirection);
         }
-        else if (endpoint.Equals(m_endPipePos) && my_status.open_end)
+        else
         {
-            in_pos = m_pipes.Count > 1 ? m_pipes[^2] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
-            out_pos = pipe;
-            m_endDirection = flow_direction;
+            // change flowdir for endpoint
+            if (endpoint.Equals(m_startPipePos) && my_status.open_start)
+            {
+                in_pos = pipe; // pipe 
+                out_pos = m_pipes.Count > 1 ? m_pipes[1] : endpoint + Utilities.GetPipeFlowDirOffset(m_endDirection); // endpoint + ...
+                m_startDirection = flow_direction;
+            }
+            else if (endpoint.Equals(m_endPipePos) && my_status.open_end)
+            {
+                in_pos = m_pipes.Count > 1 ? m_pipes[^2] : endpoint + Utilities.GetPipeFlowDirOffset(Utilities.FlipFlow(m_startDirection));
+                out_pos = pipe;
+                m_endDirection = flow_direction;
+            }
         }
 
         // change visual for endpoint
@@ -535,6 +567,7 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         return (m_childFlow, m_parentFlow);
     }
 
+    public bool IsSingletonPipe() => m_pipes.Count == 1;
     private FlowType GetFlowOfChild()
     {
         if (m_child != null && m_child is PipeController pipe_controller)

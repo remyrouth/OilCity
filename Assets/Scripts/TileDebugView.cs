@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class TileDebugView : MonoBehaviour
 {
- /*   private void OnDrawGizmos()
+   private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
 
@@ -18,5 +18,5 @@ public class TileDebugView : MonoBehaviour
                 UnityEditor.Handles.Label(new Vector3(x + 0.1f, y + 0.1f), string.Format("({0}, {1})", x, y));
             }
         }
-    }*/
+    }
 }
