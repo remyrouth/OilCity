@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_9_Satisfaction_part_2
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: Higher satisfaction means workers are more likely to move
-    in, but be careful not to let it get too low. If satisfaction drops, your employees
-    might quit, which would be disastrous.
-  dialogueTextPolish: "\rIm bardziej pracownicy s\u0105 zadowoleni tym bardziej ludzie
+  dialogueTextEnglish: Increased satisfaction will encourage more workers to take
+    up residence. However, be vigilant not to allow satisfaction to fall too low.
+    Should it decline, there is a risk that employees may depart, which could have
+    dire consequences.
+  dialogueTextPolish: "Im bardziej pracownicy s\u0105 zadowoleni tym bardziej ludzie
     b\u0119d\u0105 sk\u0142onni, aby wprowadza\u0107 si\u0119 do naszego miasteczka.
     Uwa\u017Caj jednak, by zadowolenie nie by\u0142o zbyt niskie bo pracownicy mog\u0105
-    zaprzesta\u0107 pracy, co by\u0142oby niepo\u017C\u0105dane.\r"
+    zaprzesta\u0107 pracy, co by\u0142oby niepo\u017C\u0105dane."

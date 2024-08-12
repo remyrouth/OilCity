@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_1_Introduction_part_3
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: 'Well, I''m sure you''re eager to get started, so let me introduce
-    you to the key component that makes all of this possible.
-
-'
-  dialogueTextPolish: "Jak pewnie wiesz, nazywam si\u0119 Ignacy \u0141ukasiewicz
+  dialogueTextEnglish: I trust you are eager to embark upon this venture, so allow
+    me to acquaint you with the essential element that underpins it all.
+  dialogueTextPolish: "Jak pewnie wiesz nazywam si\u0119 Ignacy \u0141ukasiewicz
     i uzna\u0142em, \u017Ce jeste\u015B idealn\u0105 osob\u0105, aby zamieni\u0107
     te ziemie w imperium nafty. Pozw\xF3l zatem, \u017Ce poka\u017C\u0119 ci kluczowy
     element, kt\xF3ry to umo\u017Cliwi."

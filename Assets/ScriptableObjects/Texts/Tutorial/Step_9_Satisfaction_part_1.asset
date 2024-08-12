@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_9_Satisfaction_part_1
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: Over time high wages and having a cinema will increase worker
-    satisfaction and I am satisfied knowing that.
-  dialogueTextPolish: "Wysoka p\u0142aca oraz kina zwi\u0119kszaj\u0105 og\xF3lne
-    zadowolenie pracownik\xF3w wraz z up\u0142ywem czasu. "
+  dialogueTextEnglish: In time, offering generous wages and providing a cinema will
+    greatly enhance worker satisfaction.
+  dialogueTextPolish: "Wysoka p\u0142aca oraz wbudowane kina zwi\u0119kszaj\u0105
+    og\xF3lne zadowolenie pracownik\xF3w wraz z up\u0142ywem czasu. "

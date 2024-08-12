@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3a6f8fb1541a45b5bb6b4e7ddac2b, type: 3}
   m_Name: Step_8_Cinema
   m_EditorClassIdentifier: 
-  dialogueTextEnglish: If you want your workers to be reeling with happiness, consider
-    opening a cinema. You'll see their satisfaction soar off the charts.
+  dialogueTextEnglish: "If you want your workers to be reeling with happiness, consider
+    opening a cinema. You shall witness their satisfaction rise to remarkable heights.\r"
   dialogueTextPolish: "Ka\u017Cdy pracownik potrzebuje miejsca, aby si\u0119 rozerwa\u0107.
     Wybudowanie kina z pewno\u015Bci\u0105 podniesie ich zadowolenie."

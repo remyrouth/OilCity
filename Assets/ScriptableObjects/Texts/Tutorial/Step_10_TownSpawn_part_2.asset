@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Step_10_TownSpawn_part_2
   m_EditorClassIdentifier: 
   dialogueTextEnglish: The higher it is, the more people will want to move in. However,
-    this also means more buildings will occupy this space.
+    this also means the newly built buildings will occupy more space.
   dialogueTextPolish: "Szcz\u0119\u015Bliwi ludzie s\u0105 bardziej sk\u0142onni
     do zamieszkania w twoim mie\u015Bcie. Jednak\u017Ce oznacza to, \u017Ce wi\u0119cej
     budynk\xF3w b\u0119dzie zabiera\u0142o cenn\u0105 przestrze\u0144."
