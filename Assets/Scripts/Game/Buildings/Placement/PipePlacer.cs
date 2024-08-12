@@ -370,6 +370,22 @@ public class PipePlacer : BuildingPlacer
             if (in_bounds && m_pointList[i].Equals(m_end)) in_bounds = false;
         }
 
+        // last minute soft-connection check. only do this if we didn't hard-connect to a start flowable
+        if (m_first != null || BoardManager.Instance.TryGetTypeAt<IFlowable>(m_start - Utilities.GetPipeFlowDirOffset(m_startDir), out m_first))
+        {
+            if (CheckOptionsForValidConnection(m_end + Utilities.GetPipeFlowDirOffset(m_endDir)))
+            {
+                // hard/soft connection established with soft connection
+                // we don't care for the contents, we just want the side effects of m_needsFlip
+            }
+            else if (CheckOptionsForValidConnection(m_end))
+            {
+                // redundant? Nope. Soft connection established with hard connection needs validation.
+                // we don't care for the contents, we just want the side effects of m_needsFlip
+            }
+        }
+
+
         // setup the pipe
         component.InitializePipe(m_start, m_end, m_startDir, m_endDir, m_pointList, m_needsFlip);
 

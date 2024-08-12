@@ -117,8 +117,6 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
 
         bool has_child = BoardManager.Instance.TryGetTypeAt<IFlowable>(child_pos, out var child_obj);
         bool has_parent = BoardManager.Instance.TryGetTypeAt<IFlowable>(parent_pos, out var parent_obj);
-        //bool flow_valid_l_r = has_child && has_parent && PipePlacer.ValidateFlowConnection(child_obj, parent_obj, false);
-       // bool flow_valid_r_l = has_child && has_parent && PipePlacer.ValidateFlowConnection(child_obj, parent_obj, true);
 
         if (connect_to_child
             && has_child
