@@ -34,7 +34,6 @@ public class UIStateMachine : Singleton<UIStateMachine>
     /// <param name="state"></param>
     public void ChangeState(GameState state)
     {
-        Debug.Log(state);
         if (!States.ContainsKey(state))
         {
             Debug.LogError("Tried to change UI state to non-existing one!");
@@ -46,7 +45,6 @@ public class UIStateMachine : Singleton<UIStateMachine>
         }
         CurrentState = States[state];
         CurrentState.OnEnter();
-        Debug.Log(CurrentStateType);
     }
 
     /// <summary>

@@ -18,6 +18,7 @@ namespace Game.Tutorial
     
         private new void FinishStep()
         {
+            Destroy(GameObject.Find("TutorialArrow"));
             DialogueUI.Instance.ToggleIndicator();
             DialogueUI.Instance.DisableDialogue();
             BuildingPanelUI.Instance.EnableAllButtons();

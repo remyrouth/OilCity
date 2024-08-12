@@ -7,8 +7,18 @@ public class BuildingPanelView : MonoBehaviour
     private RectTransform _rectTransform;
 
     private const float speed = 400;
-    public void Open() => MoveTo(true);
-    public void Close() => MoveTo(false);
+
+    public void Open()
+    {
+        MoveTo(true);
+        TutorialArrow.Instance.Enable();
+    }
+
+    public void Close()
+    {
+        MoveTo(false);
+        TutorialArrow.Instance.Disable();
+    } 
     private void MoveTo(bool toOpen)
     {
         float desiredX = toOpen ? _openPosX : _closedPosX;
