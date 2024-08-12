@@ -5399,6 +5399,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3110500595874066163, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_text
+      value: 'Benjamin Hanussek - Polish-Japanese Academy of Information Technology
+
+        Christopher
+        Barney - Northeastern University
+
+        Staff:
+
+        Cleo Trumbull -
+        Northeastern University'
+      objectReference: {fileID: 0}
     - target: {fileID: 3421647394441292992, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5476,13 +5488,13 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 2e1d1e84a46d8974fabdc14a9b01256f, type: 3}
     - target: {fileID: 4897338286579095019, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_text
-      value: "Cleo Trumbull, Ma\u0142gorzata Wiewi\xF3ra, Aaron Cai, Anastasiya Mashkina,
-        Evgeniia Glushkova, Janset Ece Ko\xE7, Laurel Parsons, Lily Kravchenko,Oleksandr
-        Smirnov, Oskar Kalbarczyk, Berkay G\xFCney, Irina Ryabova, Kevin McGrath,
-        Kevin Rodriguez, Lily Jawadiwar, Luca Sandoval, Marek Kisieli\u0144ski, Mykola
-        Ihnatenko, Yan Rybchynskyi, Ben Jaccaci, Igor Sienkiewicz, Isaac Polite,
-        Ivan Havrylenko, Jeremi Surzyn, Karol Kozio\u0142, Logan Chandler, Maria
-        Niczyporuk, Rafael Moroz, Zuzia Schabowska\r"
+      value: "Ma\u0142gorzata Wiewi\xF3ra, Aaron Cai, Anastasiya Mashkina, Evgeniia
+        Glushkova, Janset Ece Ko\xE7, Laurel Parsons, Lily Kravchenko,Oleksandr Smirnov,
+        Oskar Kalbarczyk, Berkay G\xFCney, Irina Ryabova, Kevin McGrath, Kevin Rodriguez,
+        Lily Jawadiwar, Luca Sandoval, Marek Kisieli\u0144ski, Mykola Ihnatenko,
+        Yan Rybchynskyi, Ben Jaccaci, Igor Sienkiewicz, Isaac Polite, Ivan Havrylenko,
+        Jeremi Surzyn, Karol Kozio\u0142, Logan Chandler, Maria Niczyporuk, Rafael
+        Moroz, Zuzia Schabowska\r"
       objectReference: {fileID: 0}
     - target: {fileID: 5179443668512602820, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_fontAsset
@@ -5627,6 +5639,10 @@ PrefabInstance:
     - target: {fileID: 7187245170556545520, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187245170556545520, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 225
       objectReference: {fileID: 0}
     - target: {fileID: 7187245170556545520, guid: d7b851c81d1635d42bd1c00116dbc4ab, type: 3}
       propertyPath: m_AnchoredPosition.x
