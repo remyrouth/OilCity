@@ -16,7 +16,8 @@ public class KeroseneListenerView : MonoBehaviour
     }
     private void OnDestroy()
     {
-        KeroseneManager.Instance.OnKeroseneChanged -= UpdateLabel;
+        if (KeroseneManager.Instance != null)
+            KeroseneManager.Instance.OnKeroseneChanged -= UpdateLabel;
     }
     private void FixedUpdate()
     {

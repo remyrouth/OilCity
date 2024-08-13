@@ -33,7 +33,8 @@ public class MoneyListenerView : MonoBehaviour
 
     private void OnDestroy()
     {
-        MoneyManager.Instance.OnMoneyChanged -= AccumulateChange; // Unsubscribe from the event to avoid memory leaks
+        if (MoneyManager.Instance != null)
+            MoneyManager.Instance.OnMoneyChanged -= AccumulateChange; // Unsubscribe from the event to avoid memory leaks
     }
 
     private const int DELTA = 10;
@@ -115,7 +116,7 @@ public class MoneyListenerView : MonoBehaviour
         {
             float t = elapsed / duration;
             text.color = new Color(initialColor.r, initialColor.g, initialColor.b, 0.85f - t); // Fade out the text color
-            indicator.transform.position = initialPosition + new Vector3(0, t *50, 0); // Move the indicator upwards
+            indicator.transform.position = initialPosition + new Vector3(0, t * 50, 0); // Move the indicator upwards
             elapsed += Time.deltaTime;
             yield return null;
         }

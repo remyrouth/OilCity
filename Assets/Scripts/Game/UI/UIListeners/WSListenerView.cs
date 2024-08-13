@@ -11,6 +11,7 @@ public class WSListenerView : MonoBehaviour
     }
     private void OnDestroy()
     {
+        if(WorkerSatisfactionManager.Instance != null)
         WorkerSatisfactionManager.Instance.OnWorkersSatisfactionChanged -= UpdateLabel;
     }
     private float _desiredValue = 1;

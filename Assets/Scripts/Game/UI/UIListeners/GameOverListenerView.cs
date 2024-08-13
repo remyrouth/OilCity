@@ -19,7 +19,8 @@ public class GameOverListenerView : MonoBehaviour
     }
     private void OnDestroy()
     {
-        GameStateManager.Instance.OnGameEnded -= UpdateLabel;
+        if (GameStateManager.Instance != null)
+            GameStateManager.Instance.OnGameEnded -= UpdateLabel;
     }
     private void UpdateLabel()
     {

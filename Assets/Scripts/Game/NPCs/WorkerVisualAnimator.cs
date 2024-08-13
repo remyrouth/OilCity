@@ -25,7 +25,8 @@ public class WorkerVisualAnimator : MonoBehaviour
     }
     private void OnDisable()
     {
-        TimeManager.Instance.OnTicksPerMinuteChanged -= UpdateSpeed;
+        if (TimeManager.Instance != null)
+            TimeManager.Instance.OnTicksPerMinuteChanged -= UpdateSpeed;
     }
     protected void UpdateSpeed(int newTickRate)
     {

@@ -19,12 +19,14 @@ public class GameUI : UIState
     }
     private void OnDestroy()
     {
-        ControlManager.Instance.leftClickActivationButtontrigger -= LeftMouseClick;
+        if (ControlManager.Instance != null)
+            ControlManager.Instance.leftClickActivationButtontrigger -= LeftMouseClick;
     }
 
     private void LeftMouseClick()
     {
-        if (UIStateMachine.Instance.CurrentStateType != type) {
+        if (UIStateMachine.Instance.CurrentStateType != type)
+        {
             return;
         }
         if (!EventSystem.current.IsPointerOverGameObject())
@@ -32,7 +34,7 @@ public class GameUI : UIState
             TileSelector.Instance.OnMouseClick();
         }
     }
-    
+
     public void ChangeDialoguePanelVisibility()
     {
         dialoguePanel.SetActive(!dialoguePanel.activeSelf);
