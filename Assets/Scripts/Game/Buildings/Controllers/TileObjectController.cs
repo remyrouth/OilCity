@@ -13,6 +13,7 @@ public class TileObjectController : MonoBehaviour
     public virtual bool CheckIfDestroyable() => false;
     public virtual Action GetCreateAction(Vector2Int pos) => null;
     public virtual BuildingScriptableObject Config => null;
+    public virtual void OnDestroyed() { }
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

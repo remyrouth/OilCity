@@ -23,7 +23,7 @@ public abstract class BuildingController<T> : TileObjectController
 
     }
     public override List<TileAction> GetActions() => TileActions;
-    protected virtual void OnDestroy()
+    public override void OnDestroyed()
     {
         MakeDestroyEffect();
         WorkerSatisfactionManager.Instance.DecreaseSatisfaction(config.removalSatisfactionCost);
