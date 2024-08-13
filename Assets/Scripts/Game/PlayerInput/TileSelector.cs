@@ -32,10 +32,16 @@ public class TileSelector : Singleton<TileSelector>
             EndFocus();
             return;
         }
-        if (BoardManager.Instance.tileDictionary[MouseToGrid()].TryGetComponent(out TileObjectController building))
-            BeginFocus(building);
+        if (!BoardManager.Instance.IsPositionOutsideBoard(MouseToGrid()))
+        {
+            if (BoardManager.Instance.tileDictionary[MouseToGrid()].TryGetComponent(out TileObjectController building))
+                BeginFocus(building);
+            else
+                EndFocus();
+        }
         else
             EndFocus();
+
     }
 
     [SerializeField] private GameObject _actionPrefab;
@@ -66,7 +72,7 @@ public class TileSelector : Singleton<TileSelector>
             if (upsideDown)
                 angle = -130 - (i - 1) * 50;
             else
-                angle = -50 + (i-1) * 50;
+                angle = -50 + (i - 1) * 50;
 
             var visual = actions[i].Create(_actionsCanvas.transform
                 , angle, _currentSelected, this, upsideDown);
