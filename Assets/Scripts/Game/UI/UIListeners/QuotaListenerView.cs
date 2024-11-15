@@ -16,7 +16,8 @@ public class QuotaListenerView : MonoBehaviour
     }
     private void OnDestroy()
     {
-        QuotaManager.Instance.OnQuotaChanged += UpdateLabel;
+        if (QuotaManager.Instance != null)
+            QuotaManager.Instance.OnQuotaChanged += UpdateLabel;
     }
     private const int DELTA = 10;
     private void FixedUpdate()

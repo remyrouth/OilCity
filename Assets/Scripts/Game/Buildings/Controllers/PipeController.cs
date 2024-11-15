@@ -459,9 +459,9 @@ public sealed class PipeController : BuildingController<BuildingScriptableObject
         m_graphic.SetColor(is_start, Color.red);
     }
 
-    protected override void OnDestroy()
+    public override void OnDestroyed()
     {
-        base.OnDestroy();
+        base.OnDestroyed();
 
         Destroy(m_graphic);
 

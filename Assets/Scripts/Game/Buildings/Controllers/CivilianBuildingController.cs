@@ -31,10 +31,10 @@ public sealed class CivilianBuildingController : BuildingController<BuildingScri
             return new List<TileAction>();
         return base.GetActions();
     }
-    protected override void OnDestroy()
+    public override void OnDestroyed()
     {
         CivilianCityManager.Instance.NumOfBuildings--;
-        base.OnDestroy();
+        base.OnDestroyed();
     }
 
     public void ChangeGraphics(bool pickNewer)

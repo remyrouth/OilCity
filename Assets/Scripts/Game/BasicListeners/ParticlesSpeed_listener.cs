@@ -22,7 +22,8 @@ public sealed class ParticlesSpeed_listener : MonoBehaviour
     }
     private void OnDisable()
     {
-        TimeManager.Instance.OnTicksPerMinuteChanged -= UpdateSpeed;
+        if (TimeManager.Instance != null)
+            TimeManager.Instance.OnTicksPerMinuteChanged -= UpdateSpeed;
     }
     private void UpdateSpeed(int newTickRate)
     {

@@ -256,6 +256,7 @@ public class BoardManager : Singleton<BoardManager>
         foreach (Vector2Int position in tiles)
             Destroy(position);
         OnBuildingDestroyed?.Invoke(tileObject.Anchor, tileObject);
+        tileObject.OnDestroyed();
         Destroy(tileObject.gameObject);
     }
     private void Destroy(Vector2Int position)

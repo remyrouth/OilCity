@@ -30,6 +30,8 @@ public class BuildingUI : UIState
     }
     private void OnDestroy()
     {
+        if (ControlManager.Instance == null)
+            return;
         ControlManager.Instance.leftClickActivationButtontrigger -= LeftMouseClick;
         ControlManager.Instance.ClickButtonTriggerEnd -= SelectEnd;
     }
