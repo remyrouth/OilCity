@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3c7a0522b2e69439d447dffcf38fcb, type: 3}
+  m_Name: Event_6_Paragraph
+  m_EditorClassIdentifier: 
+  text:
+  - Russian Oil Monopoly, Poland's oil wells have run dry, leaving the nation with
+    no choice but to shut down its operations. The end of this fierce struggle not
+    only marks the demise of a once-thriving industry but also raises poignant questions
+    about the true cost of this relentless pursuit. Overall was any of it really
+    worth it.
+  - "Polskie szyby naftowe wysch\u0142y, nie zostawiaj\u0105c naszemu narodowi wyboru
+    poza zaprzestaniem dalszej dzia\u0142alno\u015Bci. Koniec tej zaci\u0119tej walki
+    nie tylko oznacza upadek niegdy\u015B kwitn\u0105cej bran\u017Cy, ale r\xF3wnie\u017C
+    rodzi pytania na temat konsekwencji naszych dzia\u0142a\u0144. Czy to wszystko
+    by\u0142o tego warte?"

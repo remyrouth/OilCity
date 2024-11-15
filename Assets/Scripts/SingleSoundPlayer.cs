@@ -8,20 +8,22 @@ using Game.Managers;
 public class SingleSoundPlayer : MonoBehaviour
 {
     [SerializeField] private bool shouldLoop;
-    [SerializeField] [Range(0, 1)] private float maxVolume = 1f;
+    [SerializeField][Range(0, 1)] private float maxVolume = 1f;
     [SerializeField] private AudioClip soundClip;
     [SerializeField] private SoundType soundType = SoundType.SoundEffect;
     [SerializeField] private bool usesForeignTrigger;
 
-    private AudioSource audioSource;
-    
-    private void Awake()
+    private AudioSource _audioSource;
+    private AudioSource audioSource
     {
-        if (audioSource is null)
+        get
         {
-            audioSource = gameObject.AddComponent<AudioSource>();
+            if (_audioSource == null)
+                _audioSource = gameObject.AddComponent<AudioSource>();
+            return _audioSource;
         }
     }
+
 
     private void OnEnable()
     {
@@ -48,37 +50,42 @@ public class SingleSoundPlayer : MonoBehaviour
 
         audioSource.volume = soundType switch
         {
-            SoundType.SoundEffect => Math.Min(SettingsManager.Instance.MasterVolume * 
+            SoundType.SoundEffect => Math.Min(SettingsManager.Instance.MasterVolume *
                                               SettingsManager.Instance.SoundEffectVolume, maxVolume),
-            SoundType.AmbientSoundEffect => Math.Min(SettingsManager.Instance.MasterVolume * 
+            SoundType.AmbientSoundEffect => Math.Min(SettingsManager.Instance.MasterVolume *
                                                      SettingsManager.Instance.AmbientSoundVolume, maxVolume),
-            SoundType.MusicTrack => Math.Min(SettingsManager.Instance.MasterVolume * 
+            SoundType.MusicTrack => Math.Min(SettingsManager.Instance.MasterVolume *
                                              SettingsManager.Instance.MusicVolume, maxVolume),
             _ => throw new ArgumentOutOfRangeException(nameof(soundType), soundType, null)
         };
-        
+
         audioSource.loop = shouldLoop;
         audioSource.clip = soundClip;
-        if (!usesForeignTrigger) {
+        if (!usesForeignTrigger)
+        {
             audioSource.Play();
         }
     }
 
-    public void ActivateWithForeignTrigger() {
+    public void ActivateWithForeignTrigger()
+    {
         // Debug.Log("ActivateWithForeignTrigger method happened");
         audioSource.Play();
     }
 
-    public void PauseWithForeignTrigger() {
+    public void PauseWithForeignTrigger()
+    {
         // Debug.Log("PauseWithForeignTrigger method happened");
         audioSource.Pause();
     }
 
-    public float GetSoundEffectLength() {
+    public float GetSoundEffectLength()
+    {
         return audioSource.clip.length;
     }
 
-    public void InitializeFromSoundManager(AudioClip musicTrack, float newMaxVolume, SoundType enumSoundType) {
+    public void InitializeFromSoundManager(AudioClip musicTrack, float newMaxVolume, SoundType enumSoundType)
+    {
         // print prior sound type?
         soundType = enumSoundType;
         SettingsManager.Instance.OnSoundEffectVolumeChanged -= ChangePercentOutput;
@@ -96,7 +103,8 @@ public class SingleSoundPlayer : MonoBehaviour
         maxVolume = newMaxVolume;
         soundClip = musicTrack;
         usesForeignTrigger = true;
-        if (audioSource != null) {
+        if (audioSource != null)
+        {
             audioSource.clip = soundClip;
             audioSource.volume = 1f;
         }
@@ -108,16 +116,20 @@ public class SingleSoundPlayer : MonoBehaviour
     // we are allowed to output
     private void ChangePercentOutput(float newPercent)
     {
+        if (!this)
+            return;
         audioSource.volume = maxVolume * newPercent;
     }
 
     private void OnDisable()
     {
 
-        if(!this) {
+        if (!this)
+        {
             return;
         }
-        if (SoundManager.Instance == null) {
+        if (SoundManager.Instance == null)
+        {
             return;
         }
         SoundManager.Instance.RemoveSoundScript(this);
